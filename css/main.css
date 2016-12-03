@@ -1,0 +1,376 @@
+html.js .loader
+{
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background: none repeat scroll 0 0 #fff;
+}
+html.js .loader_inner
+{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    width: 60px;
+    height: 60px;
+    margin-top: -30px;
+    margin-left: -30px;
+
+    background-color: #fff;
+    background-image: url('../img/preloader.gif');
+    background-repeat: no-repeat;
+    background-position: center center;
+    -webkit-background-size: cover;
+            background-size: cover;
+}
+*
+{
+    margin: 0;
+    padding: 0;
+}
+body
+{
+    font-family: 'RobotoRegular', sans-serif;
+    font-size: 10px;
+}
+/* выделение текста */
+::-moz-selection
+{
+    background: #b3d4fc;
+    text-shadow: none;
+}
+::selection
+{
+    background: #b3d4fc;
+    text-shadow: none;
+}
+/* Сообщение об устаревшем браузере */
+.browsehappy
+{
+    margin: .2em 0;
+    padding: .2em 0;
+
+    color: #000;
+    background: #ccc;
+}
+a
+{
+    color: #000;
+}
+a:visited,
+a:hover,
+a:focus,
+a:active
+{
+    text-decoration: none;
+
+    color: #000;
+    outline: none;
+}
+ul,
+ol
+{
+    list-style-type: none;
+}
+.flex-container
+{
+    display: -moz-flex;
+    display:  -ms-flex;
+    display:   -o-flex;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display:      flex;
+        flex-direction: row;
+
+    -ms-flex-pack: distribute;
+    justify-content: space-around;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+}
+#player
+{
+    width: 320px;
+    height: 420px;
+    margin: 10px auto 0;
+    padding: 1em 0 1em 1em;
+
+    border: 4px solid #0ff;
+    -webkit-border-radius: 5px;
+            border-radius: 5px;
+}
+#player .trackContainer
+{
+    height: 48%;
+}
+#player .info
+{
+    font-size: 1.2em;
+
+    height: 60px;
+}
+#player .find
+{
+    font-size: 1.4em;
+
+    height: 40px;
+
+    text-align: center;
+}
+#player .find input
+{
+    padding: 5px;
+}
+#player .view
+{
+    height: 40px;
+}
+#player .controls div
+{
+    display: inline-block;
+}
+#player .controls .button
+{
+    width: 30px;
+    height: 30px;
+
+    cursor: pointer;
+
+    -webkit-border-radius: 100%;
+            border-radius: 100%;
+    background: #0ff;
+}
+#player .controls .button + .button
+{
+    margin-left: 10px;
+}
+#player .controls [type='range']
+{
+    width: 88px;
+}
+#player .playlistContainer
+{
+    overflow-y: scroll;
+
+    height: 52%;
+}
+#player .track
+{
+    position: relative;
+
+    height: 42px;
+    padding: 6px;
+
+    cursor: default;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+
+    -webkit-border-radius: 2px;
+            border-radius: 2px;
+
+    tansition: all .3s;
+}
+#player .track .url
+{
+    font-size: .8em;
+    font-style: italic;
+
+    overflow: hidden;
+
+    height: 14px;
+}
+#player .track .delete
+{
+    position: absolute;
+    top: 10px;
+    right: 2px;
+
+    display: none;
+
+    width: 24px;
+    height: 24px;
+
+    cursor: pointer;
+    -webkit-transition: all .3s;
+            transition: all .3s;
+
+    -webkit-border-radius: 100%;
+            border-radius: 100%;
+    background-color: rgba(0, 255, 0, .4);
+}
+#player .track .delete i
+{
+    font-size: 1.7em;
+    font-weight: 100;
+
+    color: #777;
+}
+#player .track .delete:hover
+{
+    background-color: rgba(0, 255, 0, .8);
+}
+#player .track:hover
+{
+    background: #ddd;
+}
+#player .track.hovered .delete
+{
+    display: -moz-flex;
+    display:  -ms-flex;
+    display:   -o-flex;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display:      flex;
+        flex-direction: row;
+
+    -ms-flex-pack: distribute;
+    justify-content: space-around;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+}
+#player .track.selected
+{
+    background-color: #eee;
+}
+.searchContainer
+{
+    font-size: 1.2em;
+
+    position: relative;
+
+    display: none;
+    float: left;
+    overflow: auto;
+
+    width: 320px;
+    height: 420px;
+    padding: 10px;
+
+    border: 2px solid #0ff;
+    -webkit-border-radius: 5px;
+            border-radius: 5px;
+}
+.searchContainer .close
+{
+    position: absolute;
+    z-index: 10;
+    top: 10px;
+    right: 10px;
+
+    cursor: pointer;
+}
+.searchContainer .close i
+{
+    font-size: 2em;
+    font-weight: 100;
+
+    color: #777;
+}
+.searchContainer .total
+{
+    font-size: 1.4em;
+
+    display: inline-block;
+
+    margin-bottom: 8px;
+
+    border-bottom: 2px solid #9ff;
+}
+.searchContainer .station
+{
+    position: relative;
+
+    height: 42px;
+    margin-bottom: 10px;
+    padding: 6px;
+
+    cursor: default;
+
+    -webkit-border-radius: 2px;
+            border-radius: 2px;
+
+    tansition: all .3s;
+}
+.searchContainer .station .title
+{
+    text-decoration: underline;
+}
+.searchContainer .station .url
+{
+    font-size: .8em;
+    font-style: italic;
+
+    overflow: hidden;
+
+    height: 14px;
+    margin-left: 10px;
+}
+.searchContainer .station .add
+{
+    position: absolute;
+    top: 10px;
+    right: 2px;
+
+    display: none;
+
+    width: 24px;
+    height: 24px;
+
+    cursor: pointer;
+    -webkit-transition: all .3s;
+            transition: all .3s;
+
+    -webkit-border-radius: 100%;
+            border-radius: 100%;
+    background-color: rgba(0, 255, 0, .4);
+}
+.searchContainer .station .add i
+{
+    font-size: 1.7em;
+    font-weight: 100;
+
+    color: #777;
+}
+.searchContainer .station .add:hover
+{
+    background-color: rgba(0, 255, 0, .8);
+}
+.searchContainer .station:hover
+{
+    background: #ddd;
+}
+.searchContainer .station:hover .add
+{
+    display: -moz-flex;
+    display:  -ms-flex;
+    display:   -o-flex;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display:      flex;
+        flex-direction: row;
+
+    -ms-flex-pack: distribute;
+    justify-content: space-around;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+}

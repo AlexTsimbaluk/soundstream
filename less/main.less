@@ -1,0 +1,270 @@
+html.js .loader
+{
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background: none repeat scroll 0 0 #fff;
+}
+html.js .loader_inner
+{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    width: 60px;
+    height: 60px;
+    margin-top: -30px;
+    margin-left: -30px;
+
+    background-color: #fff;
+    background-image: url('../img/preloader.gif');
+    background-repeat: no-repeat;
+    background-position: center center;
+    -webkit-background-size: cover;
+            background-size: cover;
+}
+
+*
+{
+    margin: 0;
+    padding: 0;
+}
+
+body
+{
+	font-size: 10px;
+    font-family: "RobotoRegular", sans-serif;
+    
+}
+
+// body.onload
+// {
+//     overflow: hidden;
+// }
+
+/* выделение текста */
+::-moz-selection
+{
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+::selection
+{
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+/* Сообщение об устаревшем браузере */
+.browsehappy
+{
+    margin: .2em 0;
+    padding: .2em 0;
+
+    color: #000;
+    background: #ccc;
+}
+
+a {
+    color: #000;
+
+    &:visited,
+    &:hover,
+    &:focus,
+    &:active {
+        color: #000;
+        outline: none;
+        text-decoration: none;
+    }
+}
+ul, ol {
+    list-style-type: none;
+}
+
+// Display Flex
+// контейнер для выравниваемых элементов
+.flex-container {
+    justify-content: space-around;  // выравнивание по главной оси, блоки равномерно распределены вдоль главной оси
+    align-items: center;        // выравнивание по поперечной оси, блоки располагаются в центре поперечной оси
+    flex-direction: row;       // Направление главной оси flex-контейнера, row по умолчанию, слева направо (в rtl справа налево)
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+}
+
+// colors
+@color1:#0ff;
+
+#player {
+	border: 4px solid @color1;
+	border-radius: 5px;
+	margin: 10px auto 0;
+	padding: 1em 0 1em 1em;
+	height: 420px;
+	width: 320px;
+	.trackContainer {
+		height: 48%;
+	}
+	.info {
+		font-size: 1.2em;
+		height: 60px;	
+	}
+	.find {
+		font-size: 1.4em;
+		height: 40px;
+		text-align: center;
+		input {
+			padding: 5px;
+		}
+	}
+	.view {
+		height: 40px;
+	}
+	.controls {
+		div {display: inline-block;}
+		.button {
+			background: @color1;
+			border-radius: 100%;
+			cursor: pointer;
+			height: 30px;
+			width: 30px;
+		}
+		.button + .button {margin-left: 10px;}
+		[type="range"] {width: 88px;}
+	}
+	.playlistContainer {
+		height: 52%;
+		overflow-y: scroll;
+	}
+	.track {
+		border-radius: 2px;
+		cursor: default;
+		padding: 6px;
+		height: 42px;
+		tansition: all .3s;
+		position: relative;
+		user-select: none;
+		.title {}
+		.url {
+			font-size: .8em;
+			font-style: italic;
+			overflow: hidden;
+			height: 14px;
+		}
+		.delete {
+			background-color: rgba(0, 255, 0, .4);
+			border-radius: 100%;
+			cursor: pointer;
+			display: none;
+			height: 24px;
+			width: 24px;
+			position: absolute;
+			right: 2px;
+			top: 10px;
+			transition: all .3s;
+			i {
+				color: #777;
+				font-size: 1.7em;
+				font-weight: 100;
+			}
+			&:hover {
+				background-color: rgba(0, 255, 0, .8);
+			}
+		}
+		&:hover {
+			background: #ddd;
+			// border: 1px solid #ddd;
+		}
+		&.hovered {
+			.delete {.flex-container;}
+		}
+		&.selected{
+			background-color: #eee;
+		}
+	}
+}
+
+.searchContainer {
+	border: 2px solid @color1;
+	border-radius: 5px;
+	display: none;
+	float: left;
+	font-size: 1.2em;
+	overflow: auto;
+	padding: 10px;
+	position: relative;
+	height: 420px;
+	width: 320px;
+	.close {
+		cursor: pointer;
+		position: absolute;
+		right: 10px;
+		top: 10px;
+		z-index: 10;
+		i {
+			color: #777;
+			font-size: 2em;
+			font-weight: 100;
+		}
+	}
+	.total {
+		border-bottom: 2px solid lighten(@color1, 30%);
+		display: inline-block;
+		font-size: 1.4em;
+		margin-bottom: 8px;
+		// padding-bottom: 5px;
+		// text-align: center;
+	}
+	.station {
+		border-radius: 2px;
+		cursor: default;
+		margin-bottom: 10px;
+		padding: 6px;
+		height: 42px;
+		tansition: all .3s;
+		position: relative;
+		.title {
+			text-decoration: underline;
+		}
+		.url {
+			font-size: .8em;
+			font-style: italic;
+			margin-left: 10px;
+			overflow: hidden;
+			height: 14px;
+		}
+		.add {
+			background-color: rgba(0, 255, 0, .4);
+			border-radius: 100%;
+			cursor: pointer;
+			display: none;
+			height: 24px;
+			width: 24px;
+			position: absolute;
+			right: 2px;
+			top: 10px;
+			transition: all .3s;
+			i {
+				color: #777;
+				font-size: 1.7em;
+				font-weight: 100;
+			}
+			&:hover {
+				background-color: rgba(0, 255, 0, .8);
+			}
+		}
+		&:hover {
+			background: #ddd;
+			.add {.flex-container;}
+		}
+	}
+}
