@@ -12,17 +12,31 @@ function secureData($fieldData) {
 	return htmlspecialchars(stripslashes(trim($fieldData)));
 }
 
-function getStationsList() {
+function getStationsList($arrId) {
 
 	$data = array();
-	$query ="select * from stations order by station_title desc";
-	$result = mysql_query($query);
-	if (!$result) {
-		echo mysql_error();
-	} else {
+	for($i = 0; $i <count($arrId); $i++) {
+		$query ="select * from stations where station_id=" . $arrId[$i];
+		// echo $query . ', ';
+		$result = mysql_query($query);
+		if (!$result) {
+			echo mysql_error();
+		} else {
 		// echo 'Good';
+		}
+		if(mysql_num_rows($result) > 0) {
+			while ($row = mysql_fetch_assoc($result)) {
+				$data[] = $row;
+			}
+		} else {
+			echo "No entries";
+		}
 	}
-	if(mysql_num_rows($result) > 0) {
+	$data = json_encode($data);
+	// d($data);
+	echo $data;
+	
+	/*if(mysql_num_rows($result) > 0) {
 		while ($row = mysql_fetch_assoc($result)) {
 			$data[] = $row;
 		}
@@ -30,8 +44,7 @@ function getStationsList() {
 		echo $data;
 	} else {
 		echo "No entries";
-	}
-
+	}*/
 }
 
 function searchStation($target) {

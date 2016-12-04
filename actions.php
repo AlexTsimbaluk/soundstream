@@ -4,8 +4,8 @@ include_once 'db_connection.php';
 include_once 'functions.php';
 
 // Получение всех станций
-if ($_POST['action'] == "initUrlList") {
-	getStationsList();
+if ($_POST['action'] == "getTargetStations" && !empty($_POST['id'])) {
+	getStationsList($_POST['id']);
 }
 
 // Получение одной станции

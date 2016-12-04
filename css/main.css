@@ -184,7 +184,7 @@ ol
 }
 #player .track .url
 {
-    font-size: .8em;
+    font-size: .9em;
     font-style: italic;
 
     overflow: hidden;
@@ -225,7 +225,7 @@ ol
 {
     background: #ddd;
 }
-#player .track.hovered .delete
+#player .track:hover .delete
 {
     display: -moz-flex;
     display:  -ms-flex;

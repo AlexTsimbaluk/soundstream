@@ -7,8 +7,100 @@ $(document).ready(function() {
 	var player = new Audio();
 	// Объект состояния плеера
 	var playerState = {
-		volume : player.volume
+		playlists: [{
+			active: true,
+			name: 'Default',
+			tracks: [],
+			currentTrack: {}
+		}],
+		currentPlaylist: 0,
+		volume : player.volume,
+		paused: player.paused
 	};
+
+
+	if(Cookies.get('playerState') == undefined) {
+	// if(undefined == getPlayerState()) {
+		console.log('cookie undefined');
+		Cookies.set('playerState', JSON.stringify(playerState), {expires: 180, path: "/"});
+	} else {
+		playerState = JSON.parse(Cookies.get('playerState'));
+		player.volume = playerState.volume;
+		player.src = playerState.playlists[0].currentTrack.url;
+		player.paused = playerState.paused;
+		if(!playerState.paused) {
+			player.play();
+		}
+		/*runAjax('POST', {'action': 'getStation', 'id': id}, function(data) {
+			console.log('add');
+			var response = JSON.parse(data);
+			var playlist = $('.playlistContainer .playlist');
+			var markup = '';
+			var track = response[0];
+			markup += '<div class="track" data-station-id="' + track.station_id + '" data-station-title="' + track.station_title + '" data-station-url="' + track.station_url + '"><div class="delete"><i class="fa fa-minus"></i></div><div class="title">' + track.station_title +
+			'</div><div class="url">' + track.station_url + '</div></div>';
+			playerState.playlists[0].tracks.push(+track.station_id);
+			Cookies.set('playerState', JSON.stringify(playerState), {expires: 180, path: "/"});
+			playlist.html(playlist.html() + markup);
+			playlist.find('.track:first').addClass('selected');
+		});*/
+		// player.src = playerState.playlists[0].currentTrack['src'];
+		/*player.volume = getPlayerState('volume');
+		$('#player .volume input').val(player.volume * 100);
+		player.paused = getPlayerState('paused');
+		player.currentPlaylist = getPlayerState('currentPlaylist');
+		playerState.playlists[0].tracks = */
+		var targetStations = JSON.parse(Cookies.get('playerState')).playlists[0].tracks;
+		runAjax('POST', {'action': 'getTargetStations', 'id': targetStations}, function(data) {
+			var response = JSON.parse(data);
+			var playlist = $('.playlistContainer .playlist');
+			var markup = '';
+			for(var i = 0; i < response.length; i++) {
+				var track = response[i];
+				markup += '<div class="track" data-station-id="' + track.station_id + '" data-station-title="' + track.station_title + '" data-station-url="' + track.station_url + '"><div class="delete"><i class="fa fa-minus"></i></div><div class="title">' + track.station_title +
+				'</div><div class="url">' + track.station_url + '</div></div>';
+			}
+			playlist.html(playlist.html() + markup);
+			playlist.find('.track:first').addClass('selected');
+		});
+		/*for (var i = 0; i < targetStations.length; i++) {
+			addToPlaylist(targetStations[i]);
+		}*/
+	}
+	/*console.log(player.src);
+	console.log(player.currentPlaylist);*/
+	/*var a = JSON.parse(Cookies.get('playerState')).playlists;
+	console.log(a[0].tracks);*/
+
+	// Установить свойство состояния объекта и записать в куки
+	function setPlayerState(prop, val) {
+		playerState[prop] = val;
+		Cookies.set('playerState', JSON.stringify(playerState), {expires: 180, path: "/"});
+	}
+
+	// Получить свойство состояния объекта из в куки
+	function getPlayerState(prop) {
+		if(!prop) {
+			return JSON.parse(Cookies.get('playerState'));	
+		} else {
+			return JSON.parse(Cookies.get('playerState'))[prop];
+		}
+	}
+
+	function getStation(id) {
+		runAjax('POST', {'action': 'getStation', 'id': id}, function(data) {
+			var response = JSON.parse(data);
+			var track = response[0];
+			// console.log(track);
+			var station = {
+				id: track.station_id,
+				title: track.station_title,
+				url: track.station_url
+			};
+			// console.log(station);
+			return station;
+		});
+	}
 
 	function runAjax(type_, data_, callback) {
 		$.ajax({
@@ -32,10 +124,12 @@ $(document).ready(function() {
 		});
 	}
 
+	// Отобразить название станции при восроизведении
 	function displayState(el) {
 		$('#player .info').html(el.data('stationTitle'));
 	}
 
+	// Отобразить время восроизведения
 	function updateTime() {
 		var s = ('0' + parseInt(player.currentTime % 60)).slice(-2);
 		var m = ('0' + parseInt((player.currentTime / 60) % 60)).slice(-2);
@@ -43,67 +137,68 @@ $(document).ready(function() {
 		$('#player .time .minutes').html(m);
 		$('#player .time .seconds').html(s);
 	}
-
+	
+	// console.log(getPlayerState('playlists'));
+	// Добавить станцию в плейлист
 	function addToPlaylist(id) {
-		console.log(id);
+		var station = getStation(+id);
+		console.log(getStation(+id));
 		runAjax('POST', {'action': 'getStation', 'id': id}, function(data) {
 			var response = JSON.parse(data);
-			var playlistContainer = $('.playlistContainer');
+			var playlist = $('.playlistContainer .playlist');
 			var markup = '';
-			for(var i = 0; i < response.length; i++) {
-				var track = response[i];
-				markup += '<div class="track" data-station-id="' + track.station_id + '" data-station-title="' + track.station_title + '" data-station-url="' + track.station_url + '"><div class="delete"><i class="fa fa-minus"></i></div><div class="title">' + track.station_title +
-				'</div><div class="url">' + track.station_url + '</div></div>';
-			}
-			playlistContainer.html(playlistContainer.html() + markup);
-			playlistContainer.find('.track:first').addClass('selected');
+			var track = response[0];
+			markup += '<div class="track" data-station-id="' + track.station_id + '" data-station-title="' + track.station_title + '" data-station-url="' + track.station_url + '"><div class="delete"><i class="fa fa-minus"></i></div><div class="title">' + track.station_title +
+			'</div><div class="url">' + track.station_url + '</div></div>';
+			playerState.playlists[0].tracks.push(+track.station_id);
+			Cookies.set('playerState', JSON.stringify(playerState), {expires: 180, path: "/"});
+			playlist.html(playlist.html() + markup);
+			playlist.find('.track:first').addClass('selected');
 		});
 	}
-	
+
 
 	$('#player .play').click(function(e) {
-		if($('.playlistContainer').children('.selected').length > 0) {
+		if($('.playlist').children('.selected').length > 0) {
 			player.src = $('.playlistContainer .selected').data('stationUrl');
-			console.log(player.src);
 			player.play();
-			displayState($('.playlistContainer .selected'));
+			playerState.playlists[0].currentTrack = {
+				id: $('.playlistContainer .selected').data('stationId'),
+				url: player.src,
+				title: $('.playlistContainer .selected').data('stationTitle')
+			};
+			playerState.paused = player.paused;
+			Cookies.set('playerState', JSON.stringify(playerState), {expires: 180, path: "/"});
+			displayState($('.playlist .selected'));
 			updateTime();
 			setInterval(function() {
 				updateTime();
 			}, 1000);
 		}
 	});
-
 	$('#player .stop').click(function(e) {
 		player.pause();
+		playerState.paused = player.paused;
+		Cookies.set('playerState', JSON.stringify(playerState), {expires: 180, path: "/"});
 		player.currentTime = 0;
 		$('#player .info').html('');
 	});
 
-	playerState.volume = player.volume;
-
-	if(undefined == Cookies.get('volume')) {
-		Cookies.set('volume', player.volume, {expires: 180, path: "/"});
-	} /*else {
-		Cookies.set('volume', $('#player .volume input').val() / 100, {expires: 180, path: "/"});
-	}*/
-
-	player.volume = Cookies.get('volume');
+	
 	$('#player .volume input').val(player.volume * 100);
 
 	$('#player .volume input').on('input', function(e) {
 		player.volume = parseFloat($(this).val() / 100);
 		$('#player .volume .val').html($(this).val());
-		Cookies.set('volume', player.volume, {expires: 180, path: "/"});
+		setPlayerState('volume', player.volume);
 	});
 
-	$('.playlistContainer').on('mouseover', '.track', function(e) {
+	/*$('.playlistContainer').on('mouseover', '.track', function(e) {
 		$(this).addClass('hovered');
 	});
-
 	$('.playlistContainer').on('mouseout', '.track', function(e) {
 		$(this).removeClass('hovered');
-	});
+	});*/
 
 	$('.playlistContainer').on('mousedown', '.track', function(e) {
 		// console.log($(this).parent().find('.selected'));
@@ -115,10 +210,19 @@ $(document).ready(function() {
 	$('.playlistContainer').on('dblclick', '.track', function(e) {
 		var url = $(this).data('stationUrl');
 		player.src = url;
-		console.log($(this));
+		player.play();
+		playerState.playlists[0].currentTrack = {
+			id: $('.playlistContainer .selected').data('stationId'),
+			url: player.src,
+			title: $('.playlistContainer .selected').data('stationTitle')
+		};
+		playerState.paused = player.paused;
+		Cookies.set('playerState', JSON.stringify(playerState), {expires: 180, path: "/"});
 		displayState($(this));
 		updateTime();
-		player.play();
+		setInterval(function() {
+			updateTime();
+		}, 1000);
 	});
 
 	$('#player .find input').on('keyup', function(e) {
