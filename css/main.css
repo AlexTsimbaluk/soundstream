@@ -74,6 +74,10 @@ a:active
     color: #000;
     outline: none;
 }
+input:focus
+{
+    outline: none;
+}
 ul,
 ol
 {
