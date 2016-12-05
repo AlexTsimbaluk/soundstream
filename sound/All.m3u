@@ -1,9 +1,3 @@
-<?php
-
-
-$stationsStr = "
-***Club Bollywood *-*
-http://radiotunes_clubbollywood_aacplus
 ***258 *-*
 http://streaming211.radionomy.com:80/258
 ***RADIOGAIAhits *-*
@@ -34,7 +28,7 @@ http://sr9.inmystream.info:8008/live
 http://janus.cdnstream.com:5308/autodj
 ***. *-*
 http://breddstream.unrealhosting.hu:4090/live.mp3
-***ErdAÂ©lyiSzAÂ©kelyRA?diA? *-*
+***ErdA©lyiSzA©kelyRA?diA? *-*
 http://79.172.194.189:9000/live.mp3
 ***A.RADIO00sJUICE *-*
 http://streaming207.radionomy.com:80/A-RADIO-00s-JUICE
@@ -1002,8 +996,6 @@ http://streaming211.radionomy.com:80/Vitamine-80
 http://live9.avf.ch:8000/ipmusicslow128
 ***.113FM Retro -  1970 *-*
 http://streaming307.radionomy.com:80/113FMRetro-1970
-
-
 ***A.0.0.00Radio:All 80s All The Time *-*
 http://streaming307.radionomy.com:80/80sPlanet
 ***1HITS80s *-*
@@ -1222,7 +1214,7 @@ http://streaming210.radionomy.com:80/FLMEX
 http://streaming211.radionomy.com:80/radiolivranceinter
 ***Antenne Niedersachsen Feel Good *-*
 http://stream.antenne.com:80/feelgood/aac-48/xiph
-***..:: RUSSIAN HIT - ÃÃ“Ã‘Ã‘ÃŠÃˆÃ‰ Ã•ÃˆÃ’ ::.. *-*
+***..:: RUSSIAN HIT - ÐÓÑÑÊÈÉ ÕÈÒ ::.. *-*
 http://s6.imgradio.pro:80/RusHit48
 ***Radio-im-Internet.de *-*
 http://stream.radio-im-internet.de:8080/mp3
@@ -1238,7 +1230,7 @@ http://stream.antenne.com:80/oldies/mp3-128/xiph
 http://stream.antenne.com:80/feelgood/mp3-192/xiph
 ***Antenne Niedersachsen Rock *-*
 http://stream.antenne.com:80/rock/mp3-64/xiph
-***..:: RUSSIAN HIT - ÃÃ“Ã‘Ã‘ÃŠÃˆÃ‰ Ã•ÃˆÃ’ ::.. *-*
+***..:: RUSSIAN HIT - ÐÓÑÑÊÈÉ ÕÈÒ ::.. *-*
 http://s10.imgradio.pro:80/RusHit48
 ***Antenne Niedersachsen 80er *-*
 http://stream.antenne.com:80/antenne-nds-80er/mp3-192/xiph
@@ -1250,9 +1242,9 @@ http://stream.antenne.com:80/feelgood/aac-64/xiph
 http://streaming307.radionomy.com:80/113FMHitz
 ***SoftHitsAndLostHits *-*
 http://streaming210.radionomy.com:80/soft-hits-and-lost-hits
-***..:: RUSSIAN HIT - ÃÃ“Ã‘Ã‘ÃŠÃˆÃ‰ Ã•ÃˆÃ’ ::.. *-*
+***..:: RUSSIAN HIT - ÐÓÑÑÊÈÉ ÕÈÒ ::.. *-*
 http://s4.imgradio.pro:80/RusHit48
-***..:: RUSSIAN HIT - ÃÃ“Ã‘Ã‘ÃŠÃˆÃ‰ Ã•ÃˆÃ’ ::.. *-*
+***..:: RUSSIAN HIT - ÐÓÑÑÊÈÉ ÕÈÒ ::.. *-*
 http://s5.imgradio.pro:80/RusHit48
 ***BlazeFM.co.uk *-*
 http://streaming211.radionomy.com:80/BlazeFMcouk
@@ -1270,9 +1262,9 @@ http://stream.antenne.com:80/schlager/mp3-128/xiph
 http://stream.antenne.com:80/schlager/aac-48/xiph
 ***Antenne Niedersachsen *-*
 http://stream.antenne.com:80/antenne-nds/mp3-192/xiph
-***..:: RUSSIAN HIT - ÃÃ“Ã‘Ã‘ÃŠÃˆÃ‰ Ã•ÃˆÃ’ ::.. *-*
+***..:: RUSSIAN HIT - ÐÓÑÑÊÈÉ ÕÈÒ ::.. *-*
 http://mp3.imgradio.pro:80/RusHit48
-***..:: RUSSIAN HIT - ÃÃ“Ã‘Ã‘ÃŠÃˆÃ‰ Ã•ÃˆÃ’ ::.. *-*
+***..:: RUSSIAN HIT - ÐÓÑÑÊÈÉ ÕÈÒ ::.. *-*
 http://ruhit.imgradio.pro:80/RusHit48
 ***MusicalJustice *-*
 http://streaming211.radionomy.com:80/MusicalJustice
@@ -1320,7 +1312,7 @@ http://stream.antenne.com:80/feelgood/mp3-64/xiph
 http://178.19.116.251:8000/40up1_aac
 ***Antenne Niedersachsen Feel Good *-*
 http://stream.antenne.com:80/feelgood/mp3-128/xiph
-***..:: RUSSIAN HIT - ÃÃ“Ã‘Ã‘ÃŠÃˆÃ‰ Ã•ÃˆÃ’ ::.. *-*
+***..:: RUSSIAN HIT - ÐÓÑÑÊÈÉ ÕÈÒ ::.. *-*
 http://s3.imgradio.pro:80/RusHit48
 ***MODULATION-100 *-*
 http://streaming207.radionomy.com:80/MODULATION---100-POP
@@ -1336,7 +1328,7 @@ http://streaming307.radionomy.com:80/113FMStar
 http://streaming211.radionomy.com:80/OceanBreeze
 ***..:: PILOT FM - MINSK ::.. *-*
 http://air.volna.top:80/PilotBy48
-***..:: RUSSIAN HIT - ÃÃ“Ã‘Ã‘ÃŠÃˆÃ‰ Ã•ÃˆÃ’ ::.. *-*
+***..:: RUSSIAN HIT - ÐÓÑÑÊÈÉ ÕÈÒ ::.. *-*
 http://s11.imgradio.pro:80/RusHit48
 ***.113FM Lovers Lane *-*
 http://streaming308.radionomy.com:80/113FMLoversLane
@@ -1350,7 +1342,7 @@ http://streaming.espectador.com:80/conciertourbana
 http://streaming307.radionomy.com:80/113FMHitz2014
 ***Antenne Niedersachsen 80er *-*
 http://stream.antenne.com:80/antenne-nds-80er/mp3-64/xiph
-***..:: RUSSIAN HIT - ÃÃ“Ã‘Ã‘ÃŠÃˆÃ‰ Ã•ÃˆÃ’ ::.. *-*
+***..:: RUSSIAN HIT - ÐÓÑÑÊÈÉ ÕÈÒ ::.. *-*
 http://s7.imgradio.pro:80/RusHit48
 ***OceanBreeze *-*
 http://streaming213.radionomy.com:80/OceanBreeze
@@ -1358,7 +1350,7 @@ http://streaming213.radionomy.com:80/OceanBreeze
 http://live9.avf.ch:8000/globalfmne
 ***Martini Lounge *-*
 http://kmr.iad.streamguys1.com:80/singers
-***..:: RUSSIAN HIT - ÃÃ“Ã‘Ã‘ÃŠÃˆÃ‰ Ã•ÃˆÃ’ ::.. *-*
+***..:: RUSSIAN HIT - ÐÓÑÑÊÈÉ ÕÈÒ ::.. *-*
 http://s9.imgradio.pro:80/RusHit48
 ***SoftHitsAndLostHits *-*
 http://streaming211.radionomy.com:80/soft-hits-and-lost-hits
@@ -1568,7 +1560,7 @@ http://173.236.48.82:80/3wk-ca-mp3-hi
 http://radio.feedbucket.com:9000/stream
 ***RadioXUS *-*
 http://streaming211.radionomy.com:80/RadioXUS
-***ÃÃ Ã¤Ã¨Ã® Ã•Ã‡ *-*
+***Ðàäèî ÕÇ *-*
 http://80.251.113.35:8002/live
 ***Radio Cardiowave *-*
 http://91.206.30.79:8000/CW256
@@ -2002,8 +1994,6 @@ http://streaming211.radionomy.com:80/RadioGo-
 http://streaming210.radionomy.com:80/Subarashii
 ***Subarashii *-*
 http://streaming211.radionomy.com:80/Subarashii
-
-
 ***Phate Radio *-*
 http://phate.io/listen.ogg
 ***1OtakuMusicRadio *-*
@@ -2962,7 +2952,7 @@ http://s2.stationplaylist.com:9280/listen.aac
 http://ice2.zradio.org:80/h/high.mp3
 ***ChroniclesChristianRadio *-*
 http://streaming210.radionomy.com:80/Chronicles-Christian-Radio
-***Ã’Ã°Ã Ã­Ã±Ã«Ã¿Ã¶Â³Ã¿ ÃÃŠÃ: *-*
+***Òðàíñëÿö³ÿ ÐÊÁ: *-*
 http://noasrv.caster.fm:10001/autodj
 ***Life 102.5 - Madison, WI *-*
 http://nwmedia-wnwc-fm.streamguys.com:80/wnwc-aac
@@ -3002,8 +2992,6 @@ http://streaming210.radionomy.com:80/PurposeCity
 http://cp6.serverse.com:7033/live
 ***Radio 7 Albania *-*
 http://cp6.serverse.com:7025/live
-
-
 ***ChroniclesChristianRadio *-*
 http://streaming207.radionomy.com:80/Chronicles-Christian-Radio
 ***Abiding Radio - Sacred *-*
@@ -3130,6 +3118,8 @@ http://air.radiolla.com:80/ilma.32k.mp3
 http://streaming207.radionomy.com:80/ClassicRockLengendsRadio
 ***Lucerne University of Applied Sciences and Arts - Classic Department *-*
 http://musicradio.hslu.ch:8000/channel2.mp3
+***Radio 531pi *-*
+http://eu1.outcastdigital.com:8000/531pi
 ***Beatlesarama *-*
 http://173.236.48.82:80/beatles.mp3
 ***ATXTheLastRadioShow *-*
@@ -4000,8 +3990,6 @@ http://streaming2.thai-radio.net:80/trlq2
 http://206.190.135.28:8055/autodj
 ***TheBuffalo *-*
 http://streaming211.radionomy.com:80/The-Buffalo
-
-
 ***CountryGirlRadio *-*
 http://streaming211.radionomy.com:80/CountryGirlRadio
 ***ACOUNTRYDREAM-Western24H *-*
@@ -5000,8 +4988,6 @@ http://radio.full-vibes.com:8000/FullVibes128.ogg
 http://streaming210.radionomy.com:80/goodradio-music
 ***/dubfun *-*
 http://hearme.fm:8713/stream
-
-
 ***LanochedelhombrelobO - Dubfun - mp3 128kbs *-*
 http://dubfun.lobocast.org.es:8003/dubfun
 ***/dubfun *-*
@@ -6000,8 +5986,6 @@ http://radiart.eu:10035/amysfm_autodj
 http://ml0.t4e.dj:80/rnbradio_high.mp3
 ***laut.fm/movibes *-*
 http://stream.laut.fm:80/movibes
-
-
 ***RnBradio *-*
 http://ml1.t4e.dj:80/rnbradio_low.aac
 ***RnBradio *-*
@@ -6886,6 +6870,10 @@ http://streaming211.radionomy.com:80/ilovehaze
 http://streaming211.radionomy.com:80/NY2LA
 ***BCBHIPHOPRADIO *-*
 http://streaming211.radionomy.com:80/BCBHIPHOPRADIO
+***Niu FM *-*
+http://eu1.outcastdigital.com:8000/niufm
+***Niu FM *-*
+http://eu1.outcastdigital.com:8000/niufm-relay
 ***95Loud2 *-*
 http://streaming211.radionomy.com:80/95Loud2
 ***Houston925 *-*
@@ -6996,8 +6984,6 @@ http://streaming308.radionomy.com:80/113FMHitz2010
 http://ice.kultradio.fm:80/kult128.mp3
 ***TOP20Radio *-*
 http://streaming213.radionomy.com:80/-TOP20-Radio
-
-
 ***MadeinHits *-*
 http://streaming207.radionomy.com:80/MadeinHits
 ***TopClub *-*
@@ -7626,7 +7612,7 @@ http://streaming211.radionomy.com:80/humorzender
 http://streaming207.radionomy.com:80/humorzender
 ***humorzender *-*
 http://streaming210.radionomy.com:80/humorzender
-***ÃžÃ¬Ã®Ã° FM, ÃÃ¨Ã¦Ã­Ã¨Ã© ÃÃ®Ã¢Ã£Ã®Ã°Ã®Ã¤, 107.4 FM *-*
+***Þìîð FM, Íèæíèé Íîâãîðîä, 107.4 FM *-*
 http://188.128.117.99:8000/humor
 ***humorzender *-*
 http://streaming213.radionomy.com:80/humorzender
@@ -7686,25 +7672,25 @@ http://hearme.fm:8637/stream
 http://hearme.fm:8755/stream
 ***Another Music Project *-*
 http://hearme.fm:8620/stream
-***..:: RUSSKIY ROCK - ÃÃ“Ã‘Ã‘ÃŠÃˆÃ‰ ÃÃŽÃŠ ::.. *-*
+***..:: RUSSKIY ROCK - ÐÓÑÑÊÈÉ ÐÎÊ ::.. *-*
 http://imgradio.pro:80/RusRock
 ***..:: RADIO FRESH ::.. *-*
 http://relay2.imgradio.pro:80/Fresh
-***..:: DETSKIY HIT - Ã„Ã…Ã’Ã‘ÃŠÃˆÃ‰ Ã•ÃˆÃ’ ::.. *-*
+***..:: DETSKIY HIT - ÄÅÒÑÊÈÉ ÕÈÒ ::.. *-*
 http://imgradio.pro:80/DetiHit
 ***..:: CHILLA FM ::.. *-*
 http://relay2.imgradio.pro:80/ChillaFM
-***..:: RETRO HIT - ÃÃ…Ã’ÃÃŽ Ã•ÃˆÃ’ ::.. *-*
+***..:: RETRO HIT - ÐÅÒÐÎ ÕÈÒ ::.. *-*
 http://relay3.imgradio.pro:80/RetroHit
-***..:: RUSSKIY ROCK - ÃÃ“Ã‘Ã‘ÃŠÃˆÃ‰ ÃÃŽÃŠ ::.. *-*
+***..:: RUSSKIY ROCK - ÐÓÑÑÊÈÉ ÐÎÊ ::.. *-*
 http://relay2.imgradio.pro:80/RusRock
-***..:: RETRO HIT - ÃÃ…Ã’ÃÃŽ Ã•ÃˆÃ’ ::.. *-*
+***..:: RETRO HIT - ÐÅÒÐÎ ÕÈÒ ::.. *-*
 http://relay2.imgradio.pro:80/RetroHit
-***..:: DETSKIY HIT - Ã„Ã…Ã’Ã‘ÃŠÃˆÃ‰ Ã•ÃˆÃ’ ::.. *-*
+***..:: DETSKIY HIT - ÄÅÒÑÊÈÉ ÕÈÒ ::.. *-*
 http://relay2.imgradio.pro:80/DetiHit
 ***..:: RADIO FRESH ::.. *-*
 http://imgradio.pro:80/Fresh
-***..:: RETRO HIT - ÃÃ…Ã’ÃÃŽ Ã•ÃˆÃ’ ::.. *-*
+***..:: RETRO HIT - ÐÅÒÐÎ ÕÈÒ ::.. *-*
 http://imgradio.pro:80/RetroHit
 ***Radio Manila - www.radiomanilafm.it - sms in diretta: 3385038908 *-*
 http://stream15.top-ix.org:80/radiomanila
@@ -7770,7 +7756,7 @@ http://streaming211.radionomy.com:80/IndieImaginationRadio
 http://radio.canstream.co.uk:8072/high2.mp3
 ***Louder *-*
 http://whooshserver.net:10003/live
-***LouderÂ·Radio *-*
+***Louder·Radio *-*
 http://streaming211.radionomy.com:80/Louder-Radio
 ***YouTAZ.net *-*
 http://stream.youtaz.net:80/youtaz_128
@@ -7996,8 +7982,6 @@ http://streaming210.radionomy.com:80/RADIOCOVERUNO-MSE
 http://streaming211.radionomy.com:80/RADIOCOVERUNO-MSE
 ***Radio Prima *-*
 http://stream05.warm.fm:8000/prima
-
-
 ***Energy Italiana *-*
 http://sirius.shoutca.st:8919/aac32
 ***Energy Italiana *-*
@@ -8134,6 +8118,8 @@ http://streaming213.radionomy.com:80/-BACO-LIBROS-Y-CAF--RADIO
 http://streaming211.radionomy.com:80/BestofJazz-LudwigRadiocom
 ***A.1.ONE.BAR.LOUNGE.DE.PARIS *-*
 http://streaming207.radionomy.com:80/A1ONEBARLOUNGEDEPARIS
+***Groove 107.7FM Wgtn Live! *-*
+http://eu1.outcastdigital.com:8000/groove_low
 ***RadioCrazy - Jazz *-*
 http://friends-of-radius.ethz.ch:80/radiocrazy-jazz.mp3
 ***Jazz - Latin Jazz *-*
@@ -8986,7 +8972,7 @@ http://streaming210.radionomy.com:80/The-Lounge-Channel
 http://streaming207.radionomy.com:80/Absolutely-Love
 ***GlossyRadio *-*
 http://streaming210.radionomy.com:80/GlossyRadio
-***Ã‚ Ã‹Ã¾Ã¡Ã¢Ã¨ Ã± Ã‹Ã¾Ã¡Ã®Ã¢Ã¼Ã¾ Ã‚Ã®Ã§Ã°Ã®Ã¦Ã¤Ã Ã¥Ã¬Ã±Ã¿ Ã¢ ÃˆÃ±Ã²Ã¨Ã­Ã¥ Ã® Ã‘Ã¥Ã¡Ã¥! *-*
+***Â Ëþáâè ñ Ëþáîâüþ Âîçðîæäàåìñÿ â Èñòèíå î Ñåáå! *-*
 http://portal-preobrazenie.ru:8000/radio32
 ***slow4u *-*
 http://streaming210.radionomy.com:80/slow4u
@@ -8994,8 +8980,6 @@ http://streaming210.radionomy.com:80/slow4u
 http://streaming211.radionomy.com:80/Absolutely-Love
 ***Breeze AM *-*
 http://whooshserver.net:9068/live
-
-
 ***141RadioLove *-*
 http://streaming207.radionomy.com:80/141RadioLove
 ***LoveSongradio *-*
@@ -9018,7 +9002,7 @@ http://streaming210.radionomy.com:80/100-SoftRIWLOVECHANNEL
 http://streaming211.radionomy.com:80/love-2-love-radio
 ***MusiqueDetenteLaRadioLove *-*
 http://streaming207.radionomy.com:80/MusiqueDetenteLaRadioLove
-***ÃÃ Ã¤Ã¨Ã® ÃÃ°Ã¥Ã®Ã¡Ã°Ã Ã¦Ã¥Ã­Ã¨Ã¥ ÃÃ«Ã¾Ã± / Transfiguration Plus Radio *-*
+***Ðàäèî Ïðåîáðàæåíèå Ïëþñ / Transfiguration Plus Radio *-*
 http://portal-preobrazenie.ru:8000/radioom
 ***2LoveRadio *-*
 http://streaming211.radionomy.com:80/2LoveRadio
@@ -9040,7 +9024,7 @@ http://streaming210.radionomy.com:80/1RadioLove
 http://streaming210.radionomy.com:80/2LoveRadio
 ***HIT'SMYMUSIC *-*
 http://streaming207.radionomy.com:80/HIT-S-MY-MUSIC
-***ÃÃ Ã¤Ã¨Ã® ÃÃ°Ã¥Ã®Ã¡Ã°Ã Ã¦Ã¥Ã­Ã¨Ã¥ ÃÃ«Ã¾Ã± / Transfiguration Plus Radio *-*
+***Ðàäèî Ïðåîáðàæåíèå Ïëþñ / Transfiguration Plus Radio *-*
 http://portal-preobrazenie.ru:8000/radio128
 ***SlowRadio.Com *-*
 http://www.radioson.ru:8009/SlowRomantic.RadioSon.ru.mp3
@@ -9366,7 +9350,7 @@ http://livemajlis.com:8000/whitenoise4
 http://castor.webhost-fr.net:8000/blpradio-LQ
 ***This Masjid is currently not streaming. The next program will start shortly In-sha-Allah *-*
 http://livemajlis.com:8000/whitenoise2
-***ÃÃ Ã¤Ã¨Ã® Ã•Ã¥Ã«Ã¨ÃªÃ®Ã­ *-*
+***Ðàäèî Õåëèêîí *-*
 http://radio.helikon.bg:9000/live_128
 ***Maxxima - 3G Stream *-*
 http://maxxima.mine.nu:80/maxxima32.aac
@@ -9382,7 +9366,7 @@ http://srv3.listen.radiogora.ru:8800/etc320
 http://air.radiorecord.ru:805/ps_aac
 ***Radio ATD radiogora.ru *-*
 http://srv3.listen.radiogora.ru:8800/atd320
-***ÃÃ Ã¤Ã¨Ã® Ã•Ã¥Ã«Ã¨ÃªÃ®Ã­ *-*
+***Ðàäèî Õåëèêîí *-*
 http://radio.helikon.bg:9000/live_64_autodj
 ***Metalwebsradio.com *-*
 http://interwebsradio.com:80/metal
@@ -9470,7 +9454,7 @@ http://srv3.listen.radiogora.ru:8800/rednoise64
 http://srv3.listen.radiogora.ru:8800/rednoise128
 ***Radio HITMIX radiogora.ru *-*
 http://srv3.listen.radiogora.ru:8800/hitmix32
-***ÃÃ Ã¤Ã¨Ã® Ã•Ã¥Ã«Ã¨ÃªÃ®Ã­ *-*
+***Ðàäèî Õåëèêîí *-*
 http://radio.helikon.bg:9000/live_256_autodj
 ***/dc_64 *-*
 http://air.radiorecord.ru:8102/dc_64
@@ -9510,7 +9494,7 @@ http://abqfm.net:8009/stream
 http://radio.canstream.co.uk:8100/parischanson.aac
 ***Radio REDNOISE radiogora.ru *-*
 http://srv2.listen.radiogora.ru:8800/rednoise128
-***? ÃÃ Ã¤Ã¨Ã® Ã‘Ã®Ã¾Ã§ (Radio Soyouz) *-*
+***? Ðàäèî Ñîþç (Radio Soyouz) *-*
 http://radio.fiatlux.tk:80/soyouz.aac
 ***TDT NetRadio *-*
 http://81.174.172.244:9000/listen
@@ -9536,7 +9520,7 @@ http://air.radiorecord.ru:805/deep_aac
 http://srv4.listen.radiogora.ru:8800/rednoise64
 ***WANY Sports *-*
 http://streaming307.radionomy.com:80/WANYSports
-***ÃÃ Ã¤Ã¨Ã® Ã•Ã¥Ã«Ã¨ÃªÃ®Ã­ *-*
+***Ðàäèî Õåëèêîí *-*
 http://radio.helikon.bg:9000/live_acc
 ***Azmara FM *-*
 http://azmarafm.onlivestreaming.net:9700/live
@@ -9602,7 +9586,7 @@ http://radio-octopus.org:8000/192.mp3
 http://ascolta.radiogibson.net:80/servizio
 ***The Mix 94.3 Liberal Kansas KTWI *-*
 http://ktwi.radioca.st:80/streams/64kbps?yp=6
-***ÃÃ Ã¤Ã¨Ã® Ã•Ã¥Ã«Ã¨ÃªÃ®Ã­ *-*
+***Ðàäèî Õåëèêîí *-*
 http://radio.helikon.bg:9000/live_64
 ***Infinity Roleo *-*
 http://sc02.loudstreaming.net:8086/taacp
@@ -9648,7 +9632,7 @@ http://srv4.listen.radiogora.ru:8800/rednoise128
 http://livemajlis.com:8000/whitenoise7
 ***Star FM Cebu *-*
 http://streaming308.radionomy.com:80/StarFMCebu
-***ÃÃ Ã¤Ã¨Ã® Ã•Ã¥Ã«Ã¨ÃªÃ®Ã­ *-*
+***Ðàäèî Õåëèêîí *-*
 http://radio.helikon.bg:9000/live_128_autodj
 ***Fiat+/-Lux Trad *-*
 http://radio.fiatlux.tk:80/trad.aac
@@ -9670,9 +9654,9 @@ http://streaming307.radionomy.com:80/roswelluforadio
 http://air.radiorecord.ru:805/dub_64
 ***/ps_128 *-*
 http://air.radiorecord.ru:805/ps_128
-***ÃÃ Ã¤Ã¨Ã® Ã•Ã¥Ã«Ã¨ÃªÃ®Ã­ *-*
+***Ðàäèî Õåëèêîí *-*
 http://radio.helikon.bg:9000/live_acc_autodj
-***ÃÃ Ã¤Ã¨Ã® Ã•Ã¥Ã«Ã¨ÃªÃ®Ã­ *-*
+***Ðàäèî Õåëèêîí *-*
 http://radio.helikon.bg:9000/live_ogg_autodj
 ***CSFF Odessa Vocaloid NonStop Radio Mp3 *-*
 http://csff.od.ua:8000/vocaloid.mp3
@@ -9694,7 +9678,7 @@ http://capeant.antfarm.co.za:9000/TankwaRadio
 http://icecast.secousse.org:80/secousse
 ***Blues *-*
 http://abqfm.net:8113/stream
-***ÃÃ Ã¤Ã¨Ã® Ã•Ã¥Ã«Ã¨ÃªÃ®Ã­ *-*
+***Ðàäèî Õåëèêîí *-*
 http://radio.helikon.bg:9000/live_256
 ***Inception Radio Network *-*
 http://streaming308.radionomy.com:80/InceptionRadioNetwork-StudioC-
@@ -9706,6 +9690,8 @@ http://srv3.listen.radiogora.ru:8800/oldies128
 http://radio.fiatlux.tk:80/monde.aac
 ***Austin *-*
 http://abqfm.net:8110/stream
+***Radio Mapa *-*
+http://eu1.outcastdigital.com:8000/radiomapa
 ***listen.mp3 *-*
 http://s.kantorad.io:30000/listen.mp3
 ***Radio DRIVE radiogora.ru *-*
@@ -9716,7 +9702,7 @@ http://srv3.listen.radiogora.ru:8800/etc128
 http://server.metronom.ro:8000/metronom128
 ***The Liberty Fm : Internet Radio - Be Free *-*
 http://50.7.77.178:8372/autodj
-***ÃÃ Ã¤Ã¨Ã® Ã•Ã¥Ã«Ã¨ÃªÃ®Ã­ *-*
+***Ðàäèî Õåëèêîí *-*
 http://radio.helikon.bg:9000/live_ogg
 ***Radio Finlandia Costa Del Sol 102,6MHz *-*
 http://cp6.serverse.com:7000/radiofinlandia
@@ -9728,6 +9714,8 @@ http://srv4.listen.radiogora.ru:8800/etc320
 http://158.69.27.124:10905/live
 ***Radio ATD radiogora.ru *-*
 http://srv2.listen.radiogora.ru:8800/atd128
+***Radio Control *-*
+http://eu1.outcastdigital.com:8000/radiocontrol
 ***1FM *-*
 http://clickfm.livecdn.biz:80/1FM
 ***Vinyl Jazz *-*
@@ -9990,8 +9978,6 @@ http://streaming210.radionomy.com:80/DinomDanommulatosradio
 http://184.71.252.78:8000/stream
 ***SHOUTCast OCRemix *-*
 http://sound.egg82.ninja:443/radio3
-
-
 ***Danko Radio (ogg) *-*
 http://stream002.radio.hu:80/mr7.ogg
 ***Antenne Niedersachsen Oldies *-*
@@ -10990,8 +10976,6 @@ http://streaming213.radionomy.com:80/Toppers-van-Toen
 http://199.180.72.58:8000/128K
 ***THE OLDIE STATION *-*
 http://theoldiestation.dyndns.org:8020/stream.ogg
-
-
 ***QMR Classic Gold *-*
 http://78.129.146.97:7006/stream2_autodj
 ***RadioNostalgia *-*
@@ -11076,6 +11060,10 @@ http://streaming211.radionomy.com:80/All-Jazz-Radio
 http://streaming210.radionomy.com:80/All-Jazz-Radio
 ***BeethovenRadio *-*
 http://streaming214.radionomy.com:80/Beethoven-Radio
+***RDU 98.5 FM - Christchurch / New Zealand *-*
+http://eu1.outcastdigital.com:8000/rdu
+***RDU 98.5 FM - Christchurch / New Zealand *-*
+http://eu1.outcastdigital.com:8000/rdu-relay
 ***OnlineFM *-*
 http://37.187.93.104:8749/live
 ***BeethovenRadio *-*
@@ -11318,7 +11306,7 @@ http://440hz-radio.de:8080/pop.mp3
 http://stream2.blueboxstreaming.co.uk:8000/vectis
 ***FrequenceSud *-*
 http://streaming210.radionomy.com:80/FrequenceSud
-***ÃÃ¨Ã«Ã®Ã² FM, Ã…ÃªÃ Ã²Ã¥Ã°Ã¨Ã­Ã¡Ã³Ã°Ã£, 100.4 FM *-*
+***Ïèëîò FM, Åêàòåðèíáóðã, 100.4 FM *-*
 http://188.254.50.254:8000/pilot_aacplus
 ***Radio Beats - The Hitz Channel *-*
 http://streaming308.radionomy.com:80/BeatsFM-BR
@@ -11330,7 +11318,7 @@ http://ice.abradio.cz:80/cityzl128.mp3
 http://streaming207.radionomy.com:80/CAENFMNET
 ***radio City zona lasky *-*
 http://ice.abradio.cz:80/cityzl64.aac
-*****RADIO SHTORM - ÃÃ€Ã„ÃˆÃŽ Ã˜Ã’ÃŽÃÃŒ** *-*
+*****RADIO SHTORM - ÐÀÄÈÎ ØÒÎÐÌ** *-*
 http://radio.russkoe.fm:8000/aac_gold
 ***Radio BLANIK *-*
 http://ice.abradio.cz:80/blanikfm128.mp3
@@ -11342,7 +11330,7 @@ http://streaming207.radionomy.com:80/HitsandBeats
 http://217.146.71.24:80/uuno_high.mp3
 ***antenne 1 Pforzheim *-*
 http://81.201.157.218:80/a1pf/livestream2.mp3
-***..:: DUSHEVNOE RADIO - Ã„Ã“Ã˜Ã…Ã‚ÃÃŽÃ… ÃÃ€Ã„ÃˆÃŽ ::.. *-*
+***..:: DUSHEVNOE RADIO - ÄÓØÅÂÍÎÅ ÐÀÄÈÎ ::.. *-*
 http://air.volna.top:80/DushevnoeRadio48
 ***laut.fm/strawberryfm *-*
 http://stream.laut.fm:80/strawberryfm
@@ -11358,7 +11346,7 @@ http://streaming207.radionomy.com:80/kax-s
 http://webradio.antennevorarlberg.at:80/live.aac
 ***4LobosPop&OldiesRadioStation *-*
 http://streaming207.radionomy.com:80/4LobosPop-OldiesRadioStation
-***ÃÃ Ã¤Ã¨Ã® ÃŠÃ°Ã Ã±Ã­Ã®Ã³Ã´Ã¨Ã¬Ã±Ãª *-*
+***Ðàäèî Êðàñíîóôèìñê *-*
 http://radio.ksk66.ru:8000/mp3
 ***Radio-Satisfaction.de ~ Push Me ~ -Dabei sein ist alles! *-*
 http://81.169.229.251:9500/radiolive
@@ -11428,7 +11416,7 @@ http://81.201.157.218:80/80er/livestream2.mp3
 http://ice.abradio.cz:80/citymi64.mp3
 ***rostelecom.mp3 *-*
 http://radioaurora.am:8010/rostelecom.mp3
-***ÃÃ Ã¤Ã¨Ã® ÃŒÃ¥Ã£Ã Ã¯Ã®Ã«Ã¨Ã±, Ã‘Ã Ã¬Ã Ã°Ã , 103.6 FM *-*
+***Ðàäèî Ìåãàïîëèñ, Ñàìàðà, 103.6 FM *-*
 http://188.128.117.99:8000/megapolis_mp3
 ***Pilot Secret *-*
 http://188.254.50.254:8000/pilot_secret_mp3
@@ -11438,7 +11426,7 @@ http://stream.evsportugal.net:8010/stream2_autodj
 http://streaming211.radionomy.com:80/stradiost2
 ***TOP EsLa Radio (((Live Radio))) *-*
 http://195.154.182.222:25769/live
-***Ã„Ã¦Ã¥Ã¬ FM, Ã…ÃªÃ Ã²Ã¥Ã°Ã¨Ã­Ã¡Ã³Ã°Ã£, 102.5 FM *-*
+***Äæåì FM, Åêàòåðèíáóðã, 102.5 FM *-*
 http://188.128.117.99:8000/jam
 ***QMR Two *-*
 http://78.129.146.97:7003/stream2_autodj
@@ -11478,7 +11466,7 @@ http://icecastgreen.argovia.ch:8080/argovia-rc-96-aac
 http://www.galaxyansbach.de:8000/aac48
 ***Hits4U *-*
 http://streaming207.radionomy.com:80/Hits4U
-***ÃÃ Ã¤Ã¨Ã® Ã‘Ãˆ, Ã…ÃªÃ Ã²Ã¥Ã°Ã¨Ã­Ã¡Ã³Ã°Ã£, 103.7 FM *-*
+***Ðàäèî ÑÈ, Åêàòåðèíáóðã, 103.7 FM *-*
 http://188.128.117.99:8000/radioc
 ***radio1-koleda.ogg *-*
 http://stream.radioreklama.bg:80/radio1-koleda.ogg
@@ -11510,9 +11498,9 @@ http://94.100.24.141:80/FavoriteFM
 http://stream.vibestream.dk:8001/app
 ***Radio Max *-*
 http://netradio.radiomax.dk:8002/max.mp3
-*****RADIO SHTORM - ÃÃ€Ã„ÃˆÃŽ Ã˜Ã’ÃŽÃÃŒ** *-*
+*****RADIO SHTORM - ÐÀÄÈÎ ØÒÎÐÌ** *-*
 http://radio.russkoe.fm:8000/mp3
-***ÃÃ¨Ã«Ã®Ã² FM, Ã…ÃªÃ Ã²Ã¥Ã°Ã¨Ã­Ã¡Ã³Ã°Ã£, 100.4 FM *-*
+***Ïèëîò FM, Åêàòåðèíáóðã, 100.4 FM *-*
 http://188.254.50.254:8000/pilot
 ***wunschradio.fm 80er *-*
 http://server15.radiostreamserver.de:80/wunschradio-80er.mp3
@@ -11656,7 +11644,7 @@ http://ice.abradio.cz:80/cityfm64.mp3
 http://server14.radiostreamserver.de:80/wunschradio-80er.mp3
 ***Fajn Radio *-*
 http://ice.abradio.cz:80/fajnlife128.mp3
-*****RADIO SHTORM - ÃÃ€Ã„ÃˆÃŽ Ã˜Ã’ÃŽÃÃŒ** *-*
+*****RADIO SHTORM - ÐÀÄÈÎ ØÒÎÐÌ** *-*
 http://radio.russkoe.fm:8000/aac_rushtorm
 ***radiolac 64 Kbps *-*
 http://radio4.pro-fhi.net:9075/stream2_autodj
@@ -11696,7 +11684,7 @@ http://87.230.103.8:80/top100station.mp3
 http://icecastgreen.argovia.ch:8080/actd-mp3-srp
 ***Planet Hits Radio - Smooth Sounds *-*
 http://5.79.85.136:8000/smooth
-***ÃÃ Ã¤Ã¨Ã® Ã‘Ã¯Ã³Ã²Ã­Ã¨Ãª Ã­Ã  107FM, Ã…ÃªÃ Ã²Ã¥Ã°Ã¨Ã­Ã¡Ã³Ã°Ã£ *-*
+***Ðàäèî Ñïóòíèê íà 107FM, Åêàòåðèíáóðã *-*
 http://188.128.117.99:8000/sputnik107_aacplus
 ***Fajn Radio *-*
 http://ice.abradio.cz:80/fajn64.mp3
@@ -11722,9 +11710,9 @@ http://mp3channels.webradio.antenne.de:80/das-schlager-karussell
 http://streaming210.radionomy.com:80/best80poprock
 ***Happy FM *-*
 http://s1.streamaudio.de:8000/happy-fm
-*****RADIO SHTORM - ÃÃ€Ã„ÃˆÃŽ Ã˜Ã’ÃŽÃÃŒ** *-*
+*****RADIO SHTORM - ÐÀÄÈÎ ØÒÎÐÌ** *-*
 http://radio.russkoe.fm:8000/mp3_rushtorm
-***ÃŠÃ°Ã Ã±Ã­Ã®Ã¿Ã°Ã±Ãª FM, 96.2 FM *-*
+***Êðàñíîÿðñê FM, 96.2 FM *-*
 http://188.128.117.99:8000/krasnoyarskfm_mp3
 ***Fajn Radio Agara *-*
 http://ice.abradio.cz:80/fajnagara64.aac
@@ -11740,7 +11728,7 @@ http://217.146.71.24:80/uuno.mp3
 http://ml1.t4e.dj:80/chartsradio_high.aac
 ***top100station - Germanys No.1 Web Hit Station *-*
 http://87.230.101.12:80/top100station.mp3
-***ÃÃ¨Ã«Ã®Ã² FM, Ã…ÃªÃ Ã²Ã¥Ã°Ã¨Ã­Ã¡Ã³Ã°Ã£, 100.4 FM *-*
+***Ïèëîò FM, Åêàòåðèíáóðã, 100.4 FM *-*
 http://188.254.50.254:8000/pilot32
 ***Radio Chioggia Sottomarina *-*
 http://stream.wifi4all.it:8000/rcs
@@ -11800,7 +11788,7 @@ http://arabella.stream.kapper.net:8005/arabellaaustropop
 http://streams.radio90.pl:8000/radio90_64kbps_stereo.aac
 ***Radio Ton - Baden Wurttemberg *-*
 http://stream.w3man.com:80/live-na
-***ÃÃ Ã¤Ã¨Ã® Ã‘Ã¯Ã³Ã²Ã­Ã¨Ãª Ã­Ã  107FM, Ã…ÃªÃ Ã²Ã¥Ã°Ã¨Ã­Ã¡Ã³Ã°Ã£ *-*
+***Ðàäèî Ñïóòíèê íà 107FM, Åêàòåðèíáóðã *-*
 http://188.128.117.99:8000/sputnik107
 ***Declic - 101.1 FM dans la valee du rhone *-*
 http://live.francra.org:8000/DeclicRadio
@@ -11924,7 +11912,7 @@ http://fm.kesmeseker.de:8000/rap.mp3
 http://streaming211.radionomy.com:80/GoldHitsRadio
 ***Radyo MoNo *-*
 http://95.169.188.39:8000/monoauto
-***Ã‚Ã®Ã«Ã£Ã®Ã£Ã°Ã Ã¤ FM, 101.5 FM *-*
+***Âîëãîãðàä FM, 101.5 FM *-*
 http://188.128.117.99:8000/volgogradfm
 ***Simone FM | Hits & Classics *-*
 http://84.22.99.112:80/simonefm
@@ -11944,7 +11932,7 @@ http://streams.radio90.pl:8000/jura_24kbps_stereo.aac
 http://streaming207.radionomy.com:80/0ldies
 ***Argovia Hit Mix *-*
 http://icecastgreen.argovia.ch:8080/ahm-mp3-srp
-***Ã„Ã®Ã°Ã®Ã¦Ã­Ã®Ã¥ Ã°Ã Ã¤Ã¨Ã®, ÃŠÃ Ã«Ã¨Ã­Ã¨Ã­Ã£Ã°Ã Ã¤, 105.9 FM *-*
+***Äîðîæíîå ðàäèî, Êàëèíèíãðàä, 105.9 FM *-*
 http://188.128.117.99:8000/dr_kln
 ***Raadio Uuno *-*
 http://217.146.71.24:80/uuno_low.mp3
@@ -11968,7 +11956,7 @@ http://streaming211.radionomy.com:80/LiteRockbyYimagocom
 http://streaming210.radionomy.com:80/-WeLiveRadioMx-
 ***Pilot Secret *-*
 http://188.254.50.254:8000/pilot_secret
-***Ã‚Ã®Ã«Ã£Ã®Ã£Ã°Ã Ã¤ FM, 101.5 FM *-*
+***Âîëãîãðàä FM, 101.5 FM *-*
 http://188.128.117.99:8000/vfm
 ***RADIOPULSAR *-*
 http://192.99.9.193:8010/radiopulsar
@@ -11986,8 +11974,6 @@ http://stream.radioreklama.bg:80/radio1-koleda.aac
 http://ice.abradio.cz:80/citymi64.aac
 ***RADIO BASE DANCE *-*
 http://stream.wifi4all.it:8000/rbasedance.ogg
-
-
 ***antenne 1 Pforzheim *-*
 http://81.201.157.218:80/a1pf/livestream1.aac
 ***Tropical Sat *-*
@@ -12020,13 +12006,13 @@ http://fm.kesmeseker.de:8000/arabic.mp3
 http://s2.fatcatstreaming.com:12500/mixfm
 ***kesmeseker fm *-*
 http://fm.kesmeseker.de:8000/dj.mp3
-*****RADIO SHTORM - ÃÃ€Ã„ÃˆÃŽ Ã˜Ã’ÃŽÃÃŒ** *-*
+*****RADIO SHTORM - ÐÀÄÈÎ ØÒÎÐÌ** *-*
 http://radio.russkoe.fm:8000/rushtorm-aac
 ***radio City milenium *-*
 http://ice.abradio.cz:80/citymi128.mp3
 ***RadioIceAge *-*
 http://streaming210.radionomy.com:80/RadioIceAge
-*****RADIO SHTORM - ÃÃ€Ã„ÃˆÃŽ Ã˜Ã’ÃŽÃÃŒ** *-*
+*****RADIO SHTORM - ÐÀÄÈÎ ØÒÎÐÌ** *-*
 http://radio.russkoe.fm:8000/mp3_gold
 ***Argovia Season *-*
 http://icecastgreen.argovia.ch:8080/aseason-mp3-srp
@@ -12040,7 +12026,7 @@ http://217.146.71.24:80/spinfm_high.mp3
 http://217.146.71.24:80/uuno.ogg
 ***Life Radio *-*
 http://liferadio.stream.kapper.net:8000/liferadio
-***ÃŠÃ°Ã Ã±Ã­Ã®Ã¿Ã°Ã±Ãª FM, 96.2 FM *-*
+***Êðàñíîÿðñê FM, 96.2 FM *-*
 http://188.128.117.99:8000/krasnoyarskfm
 ***ANTENNE BAYERN Top 40 *-*
 http://hearme.fm:8722/stream
@@ -12120,7 +12106,7 @@ http://s1.streamaudio.de:8000/radio-neerlandika
 http://streaming11.tdiradio.com:8000/kopaonik-skikuca
 ***ChartsradioFM *-*
 http://ml1.t4e.dj:80/chartsradio_low.aac
-***ÃÃ Ã¤Ã¨Ã® 106.9 FM, Ã’Ã®Ã«Ã¼Ã¿Ã²Ã²Ã¨ *-*
+***Ðàäèî 106.9 FM, Òîëüÿòòè *-*
 http://188.128.117.99:8000/106i9
 ***Radio-Continental Chelyabinsk *-*
 http://stream01.radiocon.ru:8000/aac32
@@ -12172,13 +12158,13 @@ http://classics01.olympia-classics.nl:80/aac64
 http://streaming210.radionomy.com:80/-LoveRadio
 ***Emen Valley Radio AAC+ 128kb *-*
 http://stream.emenvalleyradio.com:8000/stream
-***ÃÃ Ã¤Ã¨Ã® Ã€Ã«Ã¼Ã´Ã , ÃÃ¥Ã°Ã¬Ã¼, 104.1 FM *-*
+***Ðàäèî Àëüôà, Ïåðìü, 104.1 FM *-*
 http://188.128.117.99:8000/alfa
 ***Radio Holiday - Suedtirol *-*
 http://stream.radioholiday.it:8002/96
 ***QMR Xtra! *-*
 http://78.129.146.97:7125/autodj
-***ÃÃ Ã¤Ã¨Ã® ÃŒÃ¥Ã£Ã Ã¯Ã®Ã«Ã¨Ã±, Ã‘Ã Ã¬Ã Ã°Ã , 103.6 FM *-*
+***Ðàäèî Ìåãàïîëèñ, Ñàìàðà, 103.6 FM *-*
 http://188.128.117.99:8000/megapolis
 ***93.4 FM C RADIO SEMARANG *-*
 http://server.radioidola.com:8000/cradio
@@ -12232,7 +12218,7 @@ http://streamingecuador.net:9350/FM_88
 http://streaming210.radionomy.com:80/LesTalentsOndesVitales
 ***RadioNordAdriatico_1 *-*
 http://s1.radionordadriatico.eu:8000/stream1
-*****RADIO SHTORM - ÃÃ€Ã„ÃˆÃŽ Ã˜Ã’ÃŽÃÃŒ** *-*
+*****RADIO SHTORM - ÐÀÄÈÎ ØÒÎÐÌ** *-*
 http://radio.russkoe.fm:8000/aac64
 ***Radio Golf *-*
 http://ice.abradio.cz:80/golf128.mp3
@@ -12272,7 +12258,7 @@ http://aktivradio.hu:8000/radio.aac
 http://78.129.146.97:7003/autodj
 ***radio gran paradiso *-*
 http://stream15.top-ix.org:80/radiogranparadiso
-***ÃÃ Ã¤Ã¨Ã® Ã‘Ã¯Ã³Ã²Ã­Ã¨Ãª Ã­Ã  107FM, Ã…ÃªÃ Ã²Ã¥Ã°Ã¨Ã­Ã¡Ã³Ã°Ã£ *-*
+***Ðàäèî Ñïóòíèê íà 107FM, Åêàòåðèíáóðã *-*
 http://188.128.117.99:8000/sputnik107_32
 ***Hitradio Vysoeina *-*
 http://ice.abradio.cz:80/hitvysocina64.mp3
@@ -12308,7 +12294,7 @@ http://84.22.99.112:80/gl8media_aac
 http://ice.abradio.cz:80/hitvysocina128.mp3
 ***HerniradioLF.CZ *-*
 http://streaming211.radionomy.com:80/HerniradioLFCZ
-***ÃžÃ¬Ã®Ã° FM, ÃÃ¨Ã¦Ã­Ã¨Ã© ÃÃ®Ã¢Ã£Ã®Ã°Ã®Ã¤, 107.4 FM *-*
+***Þìîð FM, Íèæíèé Íîâãîðîä, 107.4 FM *-*
 http://188.128.117.99:8000/humor_mp3
 ***Trendy Radio Online 128kbps *-*
 http://stream.trendyradio.pl:8000/mi
@@ -12986,8 +12972,6 @@ http://strm.pistache.org:8443/pistache.mp3
 http://plustech.pl:8000/stream9.ogg
 ***LibreAntenne.org MP3 *-*
 http://stream.libreantenne.org:8000/listen.mp3
-
-
 ***RADIOBELFORTAINE *-*
 http://streaming211.radionomy.com:80/RADIOBELFORTAINE
 ***Radio Mayak Chita 128 *-*
@@ -13118,6 +13102,8 @@ http://tophits.radiomonster.fm/320.mp3
 http://streaming211.radionomy.com:80/Radioplaynl
 ***Radiopower-mix *-*
 http://streaming210.radionomy.com:80/Radiopower-mix
+***RadioActive 88.6 *-*
+http://eu1.outcastdigital.com:8000/ractive-relay
 ***RadioActive 88.6 *-*
 http://us1.outcastdigital.com:8000/ractive-relay
 ***RadioActive 88.6 *-*
@@ -13708,7 +13694,7 @@ http://metis.guardian.co.tt:8000/aakashvaniradio
 http://198.143.144.226:8310/autodj
 ***95.1 The Best Mix *-*
 http://metis.guardian.co.tt:8000/951thebestmix
-***ÃÃ Ã¤Ã¨Ã® Ã€Ã«Ã¼Ã´Ã , ÃÃ¥Ã°Ã¬Ã¼, 104.1 FM *-*
+***Ðàäèî Àëüôà, Ïåðìü, 104.1 FM *-*
 http://188.128.117.99:8000/alfa_mp3
 ***M2 LOVE - ONLY LOVE SONGS - Live From Paris France - www.m2radio.fr *-*
 http://neo.m2stream.fr:8000/m2love-128.mp3
@@ -13796,6 +13782,8 @@ http://streaming211.radionomy.com:80/RadioElVinilo
 http://streaming211.radionomy.com:80/RadioViennaat
 ***GONZOFM *-*
 http://streaming211.radionomy.com:80/GONZOFM
+***Radio Windy *-*
+http://eu1.outcastdigital.com:8000/radiowindy
 ***SpacioRadio *-*
 http://streaming211.radionomy.com:80/SpacioRadio
 ***LIBERTYROCK *-*
@@ -13812,7 +13800,7 @@ http://radioeileen.dlinkddns.com:8000/live.ogg
 http://streaming210.radionomy.com:80/100-PROGRESSIVEROCK
 ***SpacioRadio *-*
 http://streaming210.radionomy.com:80/SpacioRadio
-***RetroRock&PopÂ©Latino *-*
+***RetroRock&Pop©Latino *-*
 http://streaming211.radionomy.com:80/RetroRock-Pop-Latino
 ***SixtyYearsOfHits *-*
 http://streaming211.radionomy.com:80/SixtyYearsOfHits
@@ -13982,8 +13970,6 @@ http://streaming207.radionomy.com:80/A-ROCK-FM-WEB
 http://stream.antenne.com:80/rock/mp3-128/xiph
 ***A-ROCK-FM-WEB *-*
 http://streaming211.radionomy.com:80/A-ROCK-FM-WEB
-
-
 ***/Avtoradio_256 *-*
 http://95.56.234.40:8080/Avtoradio_256
 ***ROCK ANTENNE Heavy Metal *-*
@@ -14074,7 +14060,7 @@ http://95.110.164.54:8000/mirror64kbps
 http://streaming211.radionomy.com:80/DisarrangedArrangement
 ***42fm radio station *-*
 http://listen.42fm.ru:8000/stealkill-3.0.ogg
-***Rock Arsenal, Ã…ÃªÃ Ã²Ã¥Ã°Ã¨Ã­Ã¡Ã³Ã°Ã£, 104.5 FM *-*
+***Rock Arsenal, Åêàòåðèíáóðã, 104.5 FM *-*
 http://188.128.117.99:8000/rockarsenal
 ***r.ahaus *-*
 http://streaming213.radionomy.com:80/rahaus
@@ -14174,7 +14160,7 @@ http://37.59.45.148:8000/rgo
 http://ns508363.ip-198-100-145.net:8000/onlyrockradio.mp3
 ***Internet Radio Eileen *-*
 http://radioeileen.dlinkddns.com:8000/live.aac
-***Rock Arsenal, Ã…ÃªÃ Ã²Ã¥Ã°Ã¨Ã­Ã¡Ã³Ã°Ã£, 104.5 FM *-*
+***Rock Arsenal, Åêàòåðèíáóðã, 104.5 FM *-*
 http://188.128.117.99:8000/rockarsenal32
 ***ISSAtlantisRadio *-*
 http://streaming211.radionomy.com:80/ISSAtlantisRadio
@@ -14290,12 +14276,14 @@ http://hearme.fm:8563/stream
 http://stream15.top-ix.org:80/radiotrs
 ***Radio Ton - aktuelle Hits *-*
 http://stream.w3man.com:80/rt-mobile-aktuelleHits
-***Rock Arsenal, Ã…ÃªÃ Ã²Ã¥Ã°Ã¨Ã­Ã¡Ã³Ã°Ã£, 104.5 FM *-*
+***Rock Arsenal, Åêàòåðèíáóðã, 104.5 FM *-*
 http://188.128.117.99:8000/rockarsenal_aacplus
 ***Junction Poland Radio *-*
 http://www.junctionpoland.com:8000/128.ogg
 ***beaufm *-*
 http://s2.stationplaylist.com:9090/beaufm.mp3
+***Radio Nukualofa *-*
+http://eu1.outcastdigital.com:8000/radionukualofa-relay
 ***Addict Alternative - My Choice, My Music! - www.AddictRadio.net *-*
 http://stream8.addictradio.net:80/addictalternative.aacp
 ***Nombre de la radio *-*
@@ -14588,15 +14576,15 @@ http://neo.m2stream.fr:8000/m2sunshine-128.mp3
 http://streaming210.radionomy.com:80/killabass-sound-radio
 ***M2 SUNSHINE - ONLY ROOTS REGGAE - Live From Paris France - www.m2radio.fr *-*
 http://neo.m2stream.fr:8000/m2sunshine-64.aac
-*****HOROSHEE FM - ?????Â ???????? ?Â¤??** *-*
+*****HOROSHEE FM - ????? ???????? ?¤??** *-*
 http://hearme.fm:8752/stream
-*****HOROSHEE FM - ?????Â ???????? ?Â¤??** *-*
+*****HOROSHEE FM - ????? ???????? ?¤??** *-*
 http://hearme.fm:8753/stream
-***..:: RUSSIAN HIT - ÃÃ“Ã‘Ã‘ÃŠÃˆÃ‰ Ã•ÃˆÃ’ - KANSK 104.3 FM ::.. *-*
+***..:: RUSSIAN HIT - ÐÓÑÑÊÈÉ ÕÈÒ - KANSK 104.3 FM ::.. *-*
 http://ruhit.imgradio.pro:80/RusHitKansk48
 ***Russkoe FM *-*
 http://radio.russkoe.fm:8000/russkoefm_192_mp3
-*****HOROSHEE FM - ?????Â ???????? ?Â¤??** *-*
+*****HOROSHEE FM - ????? ???????? ?¤??** *-*
 http://hearme.fm:8724/stream
 ***RTVSUPERBACOINS *-*
 http://streaming211.radionomy.com:80/RTVSUPERBACOINS
@@ -14604,11 +14592,11 @@ http://streaming211.radionomy.com:80/RTVSUPERBACOINS
 http://www.radioson.ru:8009/KeksFm.mp3
 ***Royal Russian *-*
 http://185.39.195.90:8000/rusradio_128
-***..:: RUSSIAN HIT - ÃÃ“Ã‘Ã‘ÃŠÃˆÃ‰ Ã•ÃˆÃ’ ::.. *-*
+***..:: RUSSIAN HIT - ÐÓÑÑÊÈÉ ÕÈÒ ::.. *-*
 http://ruhit.imgradio.pro:80/RusHit32
 ***Russkoe Radio *-*
 http://air.radiorecord.ru:8104/ruradio
-***.: RUSSIAN WAVE - ÃÃ“Ã‘Ã‘ÃŠÃ€ÃŸ Ã‚ÃŽÃ‹ÃÃ€ :. *-*
+***.: RUSSIAN WAVE - ÐÓÑÑÊÀß ÂÎËÍÀ :. *-*
 http://air.volna.top:80/RuWave48
 ***RoyalRadio Russian *-*
 http://185.39.195.90:8000/royal_russian
@@ -14980,8 +14968,6 @@ http://streaming210.radionomy.com:80/54www-SmoothJazz
 http://streaming211.radionomy.com:80/DeepGrooveLounge
 ***Vybez Station *-*
 http://us2.internet-radio.com:8281/live
-
-
 ***soufrierehillsradio *-*
 http://streaming211.radionomy.com:80/soufrierehillsradio
 ***Radio Talpa *-*
@@ -15980,8 +15966,6 @@ http://streaming211.radionomy.com:80/top100-germany
 http://radiostreamserver.de:80/wunschradio.mp3
 ***wunschradio.fm Top100 *-*
 http://server15.radiostreamserver.de:80/wunschradio-top100.mp3
-
-
 ***wunschradio.fm Top100 *-*
 http://radiostreamserver.de:80/wunschradio-top100.mp3
 ***skala.fm - Odense  AAC+ *-*
@@ -16016,7 +16000,7 @@ http://netradio.skala.fm:80/aabenraa.aac
 http://netradio.skala.fm:80/esbjergdab
 ***NINTAFM.COM -=[: Feel the Beat :]=- *-*
 http://live2.hunter.fm:83/nintafm
-***.: RUSSIAN WAVE - ÃÃ“Ã‘Ã‘ÃŠÃ€ÃŸ Ã‚ÃŽÃ‹ÃÃ€ :. *-*
+***.: RUSSIAN WAVE - ÐÓÑÑÊÀß ÂÎËÍÀ :. *-*
 http://air.volna.top:80/RuWaveHD
 ***skala.fm - Haderslev AAC+ *-*
 http://netradio.skala.fm:80/haderslev.aac
@@ -16628,7 +16612,7 @@ http://music.cyber-fm.com:8000/Xtreme2.mp3
 http://music.cyber-fm.com:8000/Xtreme5.mp3
 ***Orsozoxi Radio *-*
 http://www.orsozoxi.com:8000/stream24_autodj
-***Ã€Ã¢Ã²Ã® DJ *-*
+***Àâòî DJ *-*
 http://eu3.radioboss.fm:8104/autodj
 ***Estacao Jovem *-*
 http://radio.novotempohost.com.br:8048/estacaojovem_autodj
@@ -16980,8 +16964,6 @@ http://comet.shoutca.st:8521/autodj
 http://radios.rarserver.net:8154/live
 ***URUGUAYFMMIX *-*
 http://streaming210.radionomy.com:80/URUGUAYFMMIX
-
-
 ***Radio La96.1 *-*
 http://streamingecuador.net:7644/la961_autodj
 ***FM Triunfo 93.1 Mhz *-*
@@ -17266,7 +17248,7 @@ http://50.7.53.2:80/SoulfulClassics_lo.mp3
 http://gtrk22.ru:8000/heartfm
 ***Lincs FM 102.2 *-*
 http://lincs.planetwideradio.com:8000/lincsfmaac
-***?eOCaÂ«OAÂ§Â»eIÂ§aA?OaI *-*
+***?eOCa«OA§»eI§aA?OaI *-*
 http://sv2.hostpleng.com:8243/live
 ***LibyanaHITS FM *-*
 http://s07.whooshclouds.net:8028/live
@@ -17618,7 +17600,7 @@ http://ice1.impek.com:80/flashfm
 http://stream3.rbm.cl:8010/tunein.aac
 ***ThePowerPig *-*
 http://icecast.wildghosts.com:8000/ThePowerPig.ogg
-***ÃÃ Ã¤Ã¨Ã® ÃÃ³Ã±Ã±ÃªÃ¨Ã© Ã•Ã¨Ã² *-*
+***Ðàäèî Ðóññêèé Õèò *-*
 http://dev.kigen.co:8000/rus
 ***creative commons *-*
 http://stream.creativecommons.gr:8000/live5
@@ -17980,8 +17962,6 @@ http://stream.creativecommons.gr:8000/live4
 http://195.154.182.216:8046/live
 ***Radio Antena M *-*
 http://radioservis.me:8010/antenamlive
-
-
 ***Radio VLR Fredericia/Fyn ACC+ *-*
 http://netradio.vlr.dk:80/fyn.aac
 ***Radio des Suds, en direct d'Arles *-*
@@ -18052,6 +18032,8 @@ http://184.107.188.36:80/cqd_talca
 http://167.114.210.20:8046/live.mp3
 ***TekGroove *-*
 http://198.50.250.195:7046/64kbps
+***Twisted Radio *-*
+http://eu1.outcastdigital.com:8000/twistedradio
 ***KBOO 90.7fm Portland, Oregon, USA *-*
 http://listen.kboo.fm:8000/high
 ***Maverick Radio *-*
@@ -18364,6 +18346,8 @@ http://80.82.229.202:8000/webradio-sun12.mp3
 http://radio-cl.origin.mdstrm.com:8000/52cd6376c15957053d1c2847.ogg
 ***Monte Carlo *-*
 http://air.radiorecord.ru:8104/monte
+***Zabavni Radio *-*
+http://c1.hostingcentar.com:7006/live
 ***Global FM+ Global Sport SUISSE *-*
 http://live7.avf.ch:8000/globalfm
 ***Radio 3ABN Russia *-*
@@ -18660,6 +18644,8 @@ http://vrx.30au.net:8000/stream-192
 http://streaming210.radionomy.com:80/RadioVocaloid
 ***RadioVocaloid *-*
 http://streaming211.radionomy.com:80/RadioVocaloid
+***SIMR Glenorchy *-*
+http://eu1.outcastdigital.com:8000/simr
 ***Alles Oberkrain *-*
 http://80.73.98.131:8000/allesoberkrain
 ***BWR - Studio Arnbruck mit Thomas-Wunsch Dir was!!! *-*
@@ -18932,4 +18918,3 @@ http://radio.embros.gr:8000/embros_192
 http://radio.embros.gr:8000/embros_128
 ***?????????????????? ?????? *-*
 http://radio.embros.gr:8000/embros_320
-";

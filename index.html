@@ -40,6 +40,7 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="libs/font-awesome-4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="libs/custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css" />
     
     <!-- bootstrap-grid-custom.min.css -->
     <link rel="stylesheet" href="css/bootstrap-grid-custom.min.css">
@@ -104,6 +105,12 @@
 		<div class="trackContainer">
 			<div class="info"></div>
 
+			<div class="time">
+				<span class="hours">00</span>
+				<span class="minutes">00</span>
+				<span class="seconds">00</span>
+			</div>
+
 			<div class="find">
 				<input type="text" placeholder="Search" />
 			</div>
@@ -111,35 +118,24 @@
 			<div class="view"></div>
 
 			<div class="controls">
-				<div class="play button"></div>
-				<div class="stop button"></div>
-				<div class="prev button"></div>
-				<div class="next button"></div>
+				<div class="play button"><div class="iconWrapper"><i class="fa fa-play"></i></div></div>
+				<div class="stop button"><div class="iconWrapper"><i class="fa fa-stop"></i></div></div>
+				<div class="prev button"><div class="iconWrapper"><i class="fa fa-step-backward"></i></div></div>
+				<div class="next button"><div class="iconWrapper"><i class="fa fa-step-forward"></i></div></div>
 
 				<div class="volume">
 					<input type="range" min="0" max="100" step="1" value="100" /><span class="val"></span>
 				</div>
 			</div>
-
-			<div class="time">
-				<span class="hours">00</span>
-				<span class="minutes">00</span>
-				<span class="seconds">00</span>
-			</div>
+			
 		</div>
 
-		<div class="playlistContainer">
+		<div class="playlistContainer mCustomScrollbar">
 			<div class="playlist active"></div>
 		</div>
 	</div>
 
 	
-	
-	<div class="playerContainer"></div>
-
-	
-	<!-- <div class="pageText"></div> -->
-
 	<!--[if lt IE 9]>
 	<script src="libs/html5shiv/es5-shim.min.js"></script>
 	<script src="libs/html5shiv/html5shiv.min.js"></script>
@@ -149,7 +145,7 @@
 
 	<script src="libs/jquery/jquery-2.1.4.min.js"></script>
 	<script src="libs/js.cookie.js"></script>
-	<!-- <script src="libs/audiojs/audio.min.js"></script> -->
+	<script src="libs/custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
 	
 	<script src="js/functions.js"></script>
 	<script src="js/common.js"></script>

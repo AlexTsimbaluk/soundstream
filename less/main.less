@@ -105,31 +105,48 @@ ul, ol {
 @color1:#0ff;
 
 #player {
+	background: #212121;
 	border: 4px solid @color1;
 	border-radius: 5px;
+	color: #eee;
 	margin: 10px auto 0;
-	padding: 1em 0 1em 1em;
+	padding: 1em;
 	height: 420px;
 	width: 320px;
+	position: relative;
 	.trackContainer {
 		height: 48%;
 	}
 	.info {
 		font-size: 1.2em;
-		height: 60px;	
+		height: 40px;	
 	}
 	.find {
+		background: #555;
+		border-radius: 2px;
 		font-size: 1.4em;
+		padding: 4px 0;
 		height: 40px;
 		text-align: center;
 		input {
-			padding: 5px;
+			background: #333;
+			border: 1px solid @color1;
+			border-radius: 4px;
+			padding: 4px;
+			height: 100%;
 		}
 	}
 	.view {
 		height: 40px;
 	}
+	.time {
+		position: absolute;
+		right: 10px;
+		top: 10px;
+	}
 	.controls {
+		border-bottom: 1px solid @color1;
+		padding-bottom: 6px;
 		div {display: inline-block;}
 		.button {
 			background: @color1;
@@ -137,13 +154,125 @@ ul, ol {
 			cursor: pointer;
 			height: 30px;
 			width: 30px;
+			i {
+				font-size: 1.6em;
+			}
+			.iconWrapper {
+				.flex-container;
+				width: 100%;
+				height: 100%;
+			} 
 		}
 		.button + .button {margin-left: 10px;}
-		[type="range"] {width: 88px;}
+
+		.volume {
+			position: relative;
+			bottom: 9px;
+		}
+		/* Chrome, Opera, Safari */
+		.volume:not(*:root) {bottom: 4px;}
+		
+
+		input[type=range] {
+			-webkit-appearance: none;
+			height: auto;
+			width: 80px;
+		}
+		input[type=range]::-webkit-slider-runnable-track {
+			background-color: #fff;
+			border: 1px solid #bdc3c7;
+			border-radius: 8px;
+			width: 80px;
+			height: 0;
+		}
+		input[type=range]::-ms-track { /* должен следовать после -webkit- */
+			background-color: #fff;
+			border-color: transparent;
+			// border: 1px solid #bdc3c7;
+			border-radius: 8px;
+			color: transparent;
+			width: 80px;
+			height: 5px;
+		}
+		input[type=range]::-moz-range-track {
+			background-color: #fff;
+			border: 1px solid #bdc3c7;
+			border-radius: 8px;
+			width: 80px;
+			height: 0;
+		}
+
+		/* input[type="range"]::-webkit-fill-lower {
+			background: #f3ae36;
+		}  
+		input[type="range"]::-webkit-fill-upper {
+			background: #f5f6f8;
+		}
+		input[type="range"]::-ms-fill-lower {
+			background: #f3ae36;
+		}  
+		input[type="range"]::-ms-fill-upper {
+			background: #f5f6f8;
+		}
+		input[type="range"]::-moz-fill-lower {
+			background: #f3ae36;
+		}  
+		input[type="range"]::-moz-fill-upper {
+			background: #f5f6f8;
+		} */
+		
+		input[type=range]::-webkit-slider-thumb {
+			-webkit-appearance: none;
+			background-color: #ecf0f1;
+			border: 1px solid #bdc3c7;
+			border-radius: 10px;
+			cursor: pointer;
+			width: 10px;
+			height: 10px;
+			position: relative;
+			bottom: 5px;
+		}
+		input[type=range]::-ms-thumb { /* должен следовать после -webkit- */
+			background-color: @color1;
+			border: 1px solid #bdc3c7;
+			border-radius: 10px;
+			cursor: pointer;
+			width: 10px;
+			height: 20px;
+		}
+		input[type=range]::-moz-range-thumb {
+			background-color: #ecf0f1;
+			border: 1px solid #bdc3c7;
+			border-radius: 10px;
+			cursor: pointer;
+			width: 10px;
+			height: 10px;
+		}
+		
+		/*IE hack*/
+		/* input[type="range"] {
+			padding: 20px;
+			border: 1px solid #e4e6ec;
+			box-sizing: border-box;
+			border-radius: 4px;
+			height: 80px;
+		}
+		input[type="range"]::-ms-fill-lower {
+			background: #f3ae36;
+		}  
+		input[type="range"]::-ms-fill-upper {
+			background: #f5f6f8;
+		}
+		input[type="range"]::-ms-thumb {
+			border: 1px solid #333;
+			height: 20px; width: 20px;
+			background: #50a2de;
+			border-radius: 50%;
+		} */
 	}
 	.playlistContainer {
 		height: 52%;
-		overflow-y: scroll;
+		// overflow-y: scroll;
 	}
 	.track {
 		border-radius: 2px;
@@ -153,15 +282,20 @@ ul, ol {
 		tansition: all .3s;
 		position: relative;
 		user-select: none;
-		.title {}
+		.title {
+			font-size: 1.2em;
+			height: 18px;
+			overflow: hidden;
+		}
 		.url {
-			font-size: .9em;
-			font-style: italic;
+			color: #bbb;
+			font-size: 1.1em;
+			font-style: italic; 
 			overflow: hidden;
 			height: 14px;
 		}
 		.delete {
-			background-color: rgba(0, 255, 0, .4);
+			background-color: rgba(0, 255, 225, .6);
 			border-radius: 100%;
 			cursor: pointer;
 			display: none;
@@ -172,24 +306,25 @@ ul, ol {
 			top: 10px;
 			transition: all .3s;
 			i {
-				color: #777;
 				font-size: 1.7em;
 				font-weight: 100;
 			}
 			&:hover {
-				background-color: rgba(0, 255, 0, .8);
+				background-color: rgba(0, 255, 225, .8);
 			}
 		}
 		&:hover {
-			background: #ddd;
-			// border: 1px solid #ddd;
+			background: #777;
 			.delete {.flex-container;}
 		}
 		&.selected{
-			background-color: #eee;
+			background-color: #666;
 		}
 	}
 }
+/* IE hacks */
+[data-useragent*="Trident"] #player .controls .volume {bottom: 13px;}
+
 
 .searchContainer {
 	border: 2px solid @color1;
@@ -241,7 +376,7 @@ ul, ol {
 			height: 14px;
 		}
 		.add {
-			background-color: rgba(0, 255, 0, .4);
+			background-color: rgba(0, 255, 225, .4);
 			border-radius: 100%;
 			cursor: pointer;
 			display: none;
@@ -257,7 +392,7 @@ ul, ol {
 				font-weight: 100;
 			}
 			&:hover {
-				background-color: rgba(0, 255, 0, .8);
+				background-color: rgba(0, 255, 225, .8);
 			}
 		}
 		&:hover {
@@ -266,3 +401,15 @@ ul, ol {
 		}
 	}
 }
+
+/* Custom ScrollBar */
+.mCSB_inside > .mCSB_container {
+	margin-right: 10px;
+}
+.mCSB_scrollTools {
+	width: 30px;
+	right: -13px;
+}
+
+/* IE hacks */
+[data-useragent*="Trident"] #player .controls .volume {bottom: 10px;}

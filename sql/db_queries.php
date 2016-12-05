@@ -13,25 +13,17 @@ include_once '../functions.php';
 /*ALTER TABLE users CHANGE user_reg_date user_reg_date VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;*/
 
 // $query = "DROP TABLE stations";
-/*$query = "DELETE FROM `stations` WHERE `stations`.`station_id` = 1";*/
+
 /*$query = "delete from stations h where exists 
 		(select station_id from stations 
 		where station_title = h.station_title and station_url = h.station_url and station_id < h.station_id)";*/
 
+/*$query = "DELETE FROM `stations` WHERE `stations`.`station_id` = 1";*/
 // $query = "delete from stations where station_id in (select distinct station_id from stations group by station_id)";
 
-/*$query = "CREATE TABLE comments ( 
-	comment_id INT(11) UNSIGNED NOT NULL AUTO_INCREMENT , 
-	comment_content VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL , 
-	comment_signature VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL , 
-	comment_date VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL , 
-	PRIMARY KEY (comment_id)) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci";*/
-
 // Добавить запись
-/*$query = "insert into stations (station_title, station_url) 
-		values ('Club Bollywood', 'http://radiotunes_clubbollywood_aacplus');";*/
-$query = "insert into stations (station_title, station_url) 
-		values ('Liquid DnB', 'http://pub2.di.fm/di_liquiddnb_aac');";
+/*$query = "insert into stations (station_title, station_url) values ('Club Bollywood', 'http://radiotunes_clubbollywood_aacplus');";*/
+// $query = "insert into stations (station_title, station_url) values ('Liquid DnB', 'http://pub2.di.fm/di_liquiddnb_aac');";
 
 // Изменить значение записи
 // $query = "update stations set station_url = 'http://radiotunes_clubbollywood_aacplus' WHERE station_id = 9200;"

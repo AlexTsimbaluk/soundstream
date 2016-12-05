@@ -100,14 +100,18 @@ ol
 }
 #player
 {
+    position: relative;
+
     width: 320px;
     height: 420px;
     margin: 10px auto 0;
-    padding: 1em 0 1em 1em;
+    padding: 1em;
 
+    color: #eee;
     border: 4px solid #0ff;
     -webkit-border-radius: 5px;
             border-radius: 5px;
+    background: #212121;
 }
 #player .trackContainer
 {
@@ -117,23 +121,85 @@ ol
 {
     font-size: 1.2em;
 
-    height: 60px;
+    height: 40px;
 }
 #player .find
 {
     font-size: 1.4em;
 
     height: 40px;
+    padding: 4px 0;
 
     text-align: center;
+
+    -webkit-border-radius: 2px;
+            border-radius: 2px;
+    background: #555;
 }
 #player .find input
 {
-    padding: 5px;
+    height: 100%;
+    padding: 4px;
+
+    border: 1px solid #0ff;
+    -webkit-border-radius: 4px;
+            border-radius: 4px;
+    background: #333;
 }
 #player .view
 {
     height: 40px;
+}
+#player .time
+{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+#player .controls
+{
+    padding-bottom: 6px;
+
+    border-bottom: 1px solid #0ff;
+    /* Chrome, Opera, Safari */
+    /* input[type="range"]::-webkit-fill-lower {
+			background: #f3ae36;
+		}  
+		input[type="range"]::-webkit-fill-upper {
+			background: #f5f6f8;
+		}
+		input[type="range"]::-ms-fill-lower {
+			background: #f3ae36;
+		}  
+		input[type="range"]::-ms-fill-upper {
+			background: #f5f6f8;
+		}
+		input[type="range"]::-moz-fill-lower {
+			background: #f3ae36;
+		}  
+		input[type="range"]::-moz-fill-upper {
+			background: #f5f6f8;
+		} */
+    /*IE hack*/
+    /* input[type="range"] {
+			padding: 20px;
+			border: 1px solid #e4e6ec;
+			box-sizing: border-box;
+			border-radius: 4px;
+			height: 80px;
+		}
+		input[type="range"]::-ms-fill-lower {
+			background: #f3ae36;
+		}  
+		input[type="range"]::-ms-fill-upper {
+			background: #f5f6f8;
+		}
+		input[type="range"]::-ms-thumb {
+			border: 1px solid #333;
+			height: 20px; width: 20px;
+			background: #50a2de;
+			border-radius: 50%;
+		} */
 }
 #player .controls div
 {
@@ -150,18 +216,124 @@ ol
             border-radius: 100%;
     background: #0ff;
 }
+#player .controls .button i
+{
+    font-size: 1.6em;
+}
+#player .controls .button .iconWrapper
+{
+    display: -moz-flex;
+    display:  -ms-flex;
+    display:   -o-flex;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display:      flex;
+        flex-direction: row;
+
+    width: 100%;
+    height: 100%;
+
+    -ms-flex-pack: distribute;
+    justify-content: space-around;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+}
 #player .controls .button + .button
 {
     margin-left: 10px;
 }
-#player .controls [type='range']
+#player .controls .volume
 {
-    width: 88px;
+    position: relative;
+    bottom: 9px;
+}
+#player .controls .volume:not(*:root)
+{
+    bottom: 4px;
+}
+#player .controls input[type=range]
+{
+    width: 80px;
+    height: auto;
+
+    -webkit-appearance: none;
+}
+#player .controls input[type=range]::-webkit-slider-runnable-track
+{
+    width: 80px;
+    height: 0;
+
+    border: 1px solid #bdc3c7;
+    -webkit-border-radius: 8px;
+            border-radius: 8px;
+    background-color: #fff;
+}
+#player .controls input[type=range]::-ms-track
+{
+    width: 80px;
+    height: 5px;
+
+    color: transparent;
+    border-color: transparent;
+    border-radius: 8px;
+    /* должен следовать после -webkit- */
+    background-color: #fff;
+}
+#player .controls input[type=range]::-moz-range-track
+{
+    width: 80px;
+    height: 0;
+
+    border: 1px solid #bdc3c7;
+    border-radius: 8px;
+    background-color: #fff;
+}
+#player .controls input[type=range]::-webkit-slider-thumb
+{
+    position: relative;
+    bottom: 5px;
+
+    width: 10px;
+    height: 10px;
+
+    cursor: pointer;
+
+    border: 1px solid #bdc3c7;
+    -webkit-border-radius: 10px;
+            border-radius: 10px;
+    background-color: #ecf0f1;
+
+    -webkit-appearance: none;
+}
+#player .controls input[type=range]::-ms-thumb
+{
+    width: 10px;
+    height: 20px;
+
+    cursor: pointer;
+
+    border: 1px solid #bdc3c7;
+    border-radius: 10px;
+    /* должен следовать после -webkit- */
+    background-color: #0ff;
+}
+#player .controls input[type=range]::-moz-range-thumb
+{
+    width: 10px;
+    height: 10px;
+
+    cursor: pointer;
+
+    border: 1px solid #bdc3c7;
+    border-radius: 10px;
+    background-color: #ecf0f1;
 }
 #player .playlistContainer
 {
-    overflow-y: scroll;
-
     height: 52%;
 }
 #player .track
@@ -182,14 +354,24 @@ ol
 
     tansition: all .3s;
 }
+#player .track .title
+{
+    font-size: 1.2em;
+
+    overflow: hidden;
+
+    height: 18px;
+}
 #player .track .url
 {
-    font-size: .9em;
+    font-size: 1.1em;
     font-style: italic;
 
     overflow: hidden;
 
     height: 14px;
+
+    color: #bbb;
 }
 #player .track .delete
 {
@@ -208,22 +390,20 @@ ol
 
     -webkit-border-radius: 100%;
             border-radius: 100%;
-    background-color: rgba(0, 255, 0, .4);
+    background-color: rgba(0, 255, 225, .6);
 }
 #player .track .delete i
 {
     font-size: 1.7em;
     font-weight: 100;
-
-    color: #777;
 }
 #player .track .delete:hover
 {
-    background-color: rgba(0, 255, 0, .8);
+    background-color: rgba(0, 255, 225, .8);
 }
 #player .track:hover
 {
-    background: #ddd;
+    background: #777;
 }
 #player .track:hover .delete
 {
@@ -246,7 +426,12 @@ ol
 }
 #player .track.selected
 {
-    background-color: #eee;
+    background-color: #666;
+}
+/* IE hacks */
+[data-useragent*='Trident'] #player .controls .volume
+{
+    bottom: 13px;
 }
 .searchContainer
 {
@@ -338,7 +523,7 @@ ol
 
     -webkit-border-radius: 100%;
             border-radius: 100%;
-    background-color: rgba(0, 255, 0, .4);
+    background-color: rgba(0, 255, 225, .4);
 }
 .searchContainer .station .add i
 {
@@ -349,7 +534,7 @@ ol
 }
 .searchContainer .station .add:hover
 {
-    background-color: rgba(0, 255, 0, .8);
+    background-color: rgba(0, 255, 225, .8);
 }
 .searchContainer .station:hover
 {
@@ -373,4 +558,20 @@ ol
     -webkit-box-orient: horizontal;
     -webkit-box-direction: normal;
     -ms-flex-direction: row;
+}
+/* Custom ScrollBar */
+.mCSB_inside > .mCSB_container
+{
+    margin-right: 10px;
+}
+.mCSB_scrollTools
+{
+    right: -13px;
+
+    width: 30px;
+}
+/* IE hacks */
+[data-useragent*='Trident'] #player .controls .volume
+{
+    bottom: 10px;
 }

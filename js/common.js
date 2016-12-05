@@ -2,6 +2,10 @@ var dateStart = new Date().getTime();
 
 $(document).ready(function() {
 
+	var browser = $('body');
+	browser.attr('data-useragent', navigator.userAgent);
+	browser.attr('data-platform', navigator.platform );
+
 	var playerContainer = $('.playerContainer');
 
 	var player = new Audio();
