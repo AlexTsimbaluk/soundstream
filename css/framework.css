@@ -476,19 +476,35 @@ th
 }
 *::-webkit-input-placeholder
 {
-    color: #666;
+    color: #fff;
 }
 *:-moz-placeholder
 {
-    color: #666;
+    color: #fff;
 }
 *::-moz-placeholder
 {
-    color: #666;
+    color: #fff;
 }
 *:-ms-input-placeholder
 {
-    color: #666;
+    color: #fff;
+}
+:focus::-webkit-input-placeholder
+{
+    color: transparent;
+}
+:focus::-moz-placeholder
+{
+    color: transparent;
+}
+:focus:-moz-placeholder
+{
+    color: transparent;
+}
+:focus:-ms-input-placeholder
+{
+    color: transparent;
 }
 input[placeholder]
 {

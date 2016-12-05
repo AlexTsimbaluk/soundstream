@@ -35,25 +35,6 @@ $(document).ready(function() {
 		if(!playerState.paused) {
 			player.play();
 		}
-		/*runAjax('POST', {'action': 'getStation', 'id': id}, function(data) {
-			console.log('add');
-			var response = JSON.parse(data);
-			var playlist = $('.playlistContainer .playlist');
-			var markup = '';
-			var track = response[0];
-			markup += '<div class="track" data-station-id="' + track.station_id + '" data-station-title="' + track.station_title + '" data-station-url="' + track.station_url + '"><div class="delete"><i class="fa fa-minus"></i></div><div class="title">' + track.station_title +
-			'</div><div class="url">' + track.station_url + '</div></div>';
-			playerState.playlists[0].tracks.push(+track.station_id);
-			Cookies.set('playerState', JSON.stringify(playerState), {expires: 180, path: "/"});
-			playlist.html(playlist.html() + markup);
-			playlist.find('.track:first').addClass('selected');
-		});*/
-		// player.src = playerState.playlists[0].currentTrack['src'];
-		/*player.volume = getPlayerState('volume');
-		$('#player .volume input').val(player.volume * 100);
-		player.paused = getPlayerState('paused');
-		player.currentPlaylist = getPlayerState('currentPlaylist');
-		playerState.playlists[0].tracks = */
 		var targetStations = JSON.parse(Cookies.get('playerState')).playlists[0].tracks;
 		runAjax('POST', {'action': 'getTargetStations', 'id': targetStations}, function(data) {
 			var response = JSON.parse(data);
@@ -150,6 +131,7 @@ $(document).ready(function() {
 		runAjax('POST', {'action': 'getStation', 'id': id}, function(data) {
 			var response = JSON.parse(data);
 			var playlist = $('.playlistContainer .playlist');
+			playlist.html('<div class="playlist active"></div>');
 			var markup = '';
 			var track = response[0];
 			markup += '<div class="track" data-station-id="' + track.station_id + '" data-station-title="' + track.station_title + '" data-station-url="' + track.station_url + '"><div class="delete"><i class="fa fa-minus"></i></div><div class="title">' + track.station_title +

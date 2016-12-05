@@ -146,6 +146,11 @@ ol
             border-radius: 4px;
     background: #333;
 }
+#player .find input:focus
+{
+    -webkit-box-shadow: 0 0 5px 0 #0ff inset;
+            box-shadow: 0 0 5px 0 #0ff inset;
+}
 #player .view
 {
     height: 40px;
@@ -212,13 +217,12 @@ ol
 
     cursor: pointer;
 
+    border: 2px solid #0ff;
     -webkit-border-radius: 100%;
             border-radius: 100%;
-    background: #0ff;
-}
-#player .controls .button i
-{
-    font-size: 1.6em;
+    background: #333;
+
+    tansitions: all .3s;
 }
 #player .controls .button .iconWrapper
 {
@@ -242,6 +246,25 @@ ol
     -webkit-box-direction: normal;
     -ms-flex-direction: row;
 }
+#player .controls .button i
+{
+    font-size: 1.4em;
+
+    color: #80ffff;
+}
+#player .controls .button:hover
+{
+    -webkit-box-shadow: 0 0 5px .4px #0ff;
+            box-shadow: 0 0 5px .4px #0ff;
+}
+#player .controls .button:hover i
+{
+    color: #0ff;
+}
+#player .controls .button.stop i
+{
+    font-size: 1.2em;
+}
 #player .controls .button + .button
 {
     margin-left: 10px;
@@ -250,6 +273,8 @@ ol
 {
     position: relative;
     bottom: 9px;
+
+    margin-left: 20px;
 }
 #player .controls .volume:not(*:root)
 {
@@ -262,15 +287,22 @@ ol
 
     -webkit-appearance: none;
 }
+#player .controls input[type=range]:focus
+{
+    outline: none;
+}
+#player .controls input[type=range]::-moz-focus-outer
+{
+    border: 0;
+}
 #player .controls input[type=range]::-webkit-slider-runnable-track
 {
     width: 80px;
-    height: 0;
+    height: 2px;
 
-    border: 1px solid #bdc3c7;
     -webkit-border-radius: 8px;
             border-radius: 8px;
-    background-color: #fff;
+    background-color: #bdc3c7;
 }
 #player .controls input[type=range]::-ms-track
 {
@@ -278,31 +310,31 @@ ol
     height: 5px;
 
     color: transparent;
+    border: none;
     border-color: transparent;
     border-radius: 8px;
     /* должен следовать после -webkit- */
-    background-color: #fff;
+    background-color: #bdc3c7;
 }
 #player .controls input[type=range]::-moz-range-track
 {
     width: 80px;
-    height: 0;
+    height: 2px;
 
-    border: 1px solid #bdc3c7;
     border-radius: 8px;
-    background-color: #fff;
+    background-color: #bdc3c7;
 }
 #player .controls input[type=range]::-webkit-slider-thumb
 {
     position: relative;
-    bottom: 5px;
+    bottom: 4px;
 
     width: 10px;
     height: 10px;
 
     cursor: pointer;
 
-    border: 1px solid #bdc3c7;
+    border: 0;
     -webkit-border-radius: 10px;
             border-radius: 10px;
     background-color: #ecf0f1;
@@ -328,9 +360,17 @@ ol
 
     cursor: pointer;
 
-    border: 1px solid #bdc3c7;
+    border: 0;
     border-radius: 10px;
     background-color: #ecf0f1;
+}
+#player .controls input[type=range]:focus::-moz-range-track
+{
+    outline: none;
+}
+#player .controls input[type=range]:focus::-moz-range-thumb
+{
+    outline: none;
 }
 #player .playlistContainer
 {
@@ -574,4 +614,8 @@ ol
 [data-useragent*='Trident'] #player .controls .volume
 {
     bottom: 10px;
+}
+[type='range']:focus
+{
+    outline: 0 !important;
 }

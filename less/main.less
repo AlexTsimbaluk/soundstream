@@ -134,6 +134,7 @@ ul, ol {
 			border-radius: 4px;
 			padding: 4px;
 			height: 100%;
+			&:focus {box-shadow: 0 0 5px 0 #0ff inset;}
 		}
 	}
 	.view {
@@ -149,23 +150,36 @@ ul, ol {
 		padding-bottom: 6px;
 		div {display: inline-block;}
 		.button {
-			background: @color1;
+			background: #333;
+			border: 2px solid @color1;
 			border-radius: 100%;
 			cursor: pointer;
 			height: 30px;
 			width: 30px;
-			i {
-				font-size: 1.6em;
-			}
+			tansitions: all .3s;
 			.iconWrapper {
 				.flex-container;
 				width: 100%;
 				height: 100%;
-			} 
+			}
+			i {
+				color: lighten(@color1, 25%);
+				font-size: 1.4em;
+			}
+			&:hover {
+				box-shadow: 0px 0px 5px 0.4px @color1;
+				i {color: @color1;}
+			}
+			&.stop {
+				i {
+					font-size: 1.2em;
+				}
+			}
 		}
 		.button + .button {margin-left: 10px;}
 
 		.volume {
+			margin-left: 20px;
 			position: relative;
 			bottom: 9px;
 		}
@@ -177,29 +191,33 @@ ul, ol {
 			-webkit-appearance: none;
 			height: auto;
 			width: 80px;
+			&:focus {outline: none;}
 		}
+		input[type=range]::-moz-focus-outer {border: 0;} 
+
 		input[type=range]::-webkit-slider-runnable-track {
-			background-color: #fff;
-			border: 1px solid #bdc3c7;
+			background-color: #bdc3c7;
+			// border: 1px solid #bdc3c7;
 			border-radius: 8px;
 			width: 80px;
-			height: 0;
+			height: 2px;
 		}
 		input[type=range]::-ms-track { /* должен следовать после -webkit- */
-			background-color: #fff;
+			background-color: #bdc3c7;
 			border-color: transparent;
 			// border: 1px solid #bdc3c7;
 			border-radius: 8px;
+			border: none;
 			color: transparent;
 			width: 80px;
 			height: 5px;
 		}
 		input[type=range]::-moz-range-track {
-			background-color: #fff;
-			border: 1px solid #bdc3c7;
+			background-color: #bdc3c7;
+			// border: 1px solid #bdc3c7;
 			border-radius: 8px;
 			width: 80px;
-			height: 0;
+			height: 2px;
 		}
 
 		/* input[type="range"]::-webkit-fill-lower {
@@ -224,13 +242,13 @@ ul, ol {
 		input[type=range]::-webkit-slider-thumb {
 			-webkit-appearance: none;
 			background-color: #ecf0f1;
-			border: 1px solid #bdc3c7;
+			border: 0;
 			border-radius: 10px;
 			cursor: pointer;
 			width: 10px;
 			height: 10px;
 			position: relative;
-			bottom: 5px;
+			bottom: 4px;
 		}
 		input[type=range]::-ms-thumb { /* должен следовать после -webkit- */
 			background-color: @color1;
@@ -242,13 +260,17 @@ ul, ol {
 		}
 		input[type=range]::-moz-range-thumb {
 			background-color: #ecf0f1;
-			border: 1px solid #bdc3c7;
+			border: 0;
 			border-radius: 10px;
 			cursor: pointer;
 			width: 10px;
 			height: 10px;
+			// &:active {outline: none;}
 		}
-		
+		input[type=range]:focus::-moz-range-track {outline: none;}
+		// input[type=range]:active::-moz-range-track {outline: none; border: none;}
+		input[type=range]:focus::-moz-range-thumb {outline: none;}
+		// input[type=range]:active::-moz-range-thumb {outline: none; border: none;}
 		/*IE hack*/
 		/* input[type="range"] {
 			padding: 20px;
@@ -413,3 +435,7 @@ ul, ol {
 
 /* IE hacks */
 [data-useragent*="Trident"] #player .controls .volume {bottom: 10px;}
+
+[type="range"]:focus {
+	outline: 0 !important;
+}
