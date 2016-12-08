@@ -1,3 +1,5 @@
+@import 'func.less';
+
 html.js .loader
 {
     position: fixed;
@@ -342,7 +344,8 @@ ul, ol {
 			.delete {.flex-container;}
 		}
 		&.selected{
-			background-color: #666;
+			// background: #666;
+			.gradient-horizontal(#555, #777);
 		}
 	}
 }
@@ -351,8 +354,10 @@ ul, ol {
 
 
 .searchContainer {
+	background: #212121;
 	border: 2px solid @color1;
 	border-radius: 5px;
+	color: #eee;
 	display: none;
 	float: left;
 	font-size: 1.2em;
@@ -411,7 +416,6 @@ ul, ol {
 			top: 10px;
 			transition: all .3s;
 			i {
-				color: #777;
 				font-size: 1.7em;
 				font-weight: 100;
 			}
@@ -420,7 +424,7 @@ ul, ol {
 			}
 		}
 		&:hover {
-			background: #ddd;
+			background: #777;
 			.add {.flex-container;}
 		}
 	}

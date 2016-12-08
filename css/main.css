@@ -470,7 +470,11 @@ ol
 }
 #player .track.selected
 {
-    background-color: #666;
+    background: #555;
+    background: -webkit-gradient(linear, left top, right top, from(#555), to(#777));
+    background: linear-gradient(to right, #555 0%, #777 100%);
+
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='@start', endColorstr='@stop', GradientType=1);
 }
 /* IE hacks */
 [data-useragent*='Trident'] #player .controls .volume
@@ -491,9 +495,11 @@ ol
     height: 420px;
     padding: 10px;
 
+    color: #eee;
     border: 2px solid #0ff;
     -webkit-border-radius: 5px;
             border-radius: 5px;
+    background: #212121;
 }
 .searchContainer .close
 {
@@ -573,8 +579,6 @@ ol
 {
     font-size: 1.7em;
     font-weight: 100;
-
-    color: #777;
 }
 .searchContainer .station .add:hover
 {
@@ -582,7 +586,7 @@ ol
 }
 .searchContainer .station:hover
 {
-    background: #ddd;
+    background: #777;
 }
 .searchContainer .station:hover .add
 {
