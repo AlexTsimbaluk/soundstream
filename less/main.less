@@ -92,6 +92,53 @@ ul, ol {
     list-style-type: none;
 }
 
+
+// .cssload-container{
+// 	position:relative;
+// 	left: 17px;
+// 	top: -16px;
+// }
+	
+// .cssload-whirlpool,
+// .cssload-whirlpool::before,
+// .cssload-whirlpool::after {
+// 	position: absolute;
+// 	top: 50%;
+// 	left: 50%;
+// 	border: 1px solid rgb(204,204,204);
+// 	border-left-color: rgba(0,255,255,0.97);
+// 	border-radius: 674px;
+// }
+
+// .cssload-whirlpool {
+// 	margin: -17px 0 0 -17px;
+// 	height: 34px;
+// 	width: 34px;
+// 	animation: cssload-rotate 950ms linear infinite;
+// }
+
+// .cssload-whirlpool::before {
+// 	content: "";
+// 	margin: -16px 0 0 -16px;
+// 	height: 30px;
+// 	width: 30px;
+// 	animation: cssload-rotate 950ms linear infinite;
+// }
+
+// .cssload-whirlpool::after {
+// 	content: "";
+// 	margin: -20px 0 0 -20px;
+// 	height: 38px;
+// 	width: 38px;
+// 	animation: cssload-rotate 1900ms linear infinite;
+// }
+
+// @keyframes cssload-rotate {
+// 	100% {
+// 		transform: rotate(360deg);
+// 	}
+// }
+
 // Display Flex
 // контейнер для выравниваемых элементов
 .flex-container {
@@ -160,6 +207,7 @@ ul, ol {
 			cursor: pointer;
 			height: 30px;
 			width: 30px;
+			position: relative;
 			tansitions: all .3s;
 			.iconWrapper {
 				.flex-container;
@@ -173,6 +221,40 @@ ul, ol {
 			&:hover {
 				box-shadow: 0px 0px 5px 0.4px @color1;
 				i {color: @color1;}
+			}
+			&.play.visualisation:before {
+				content: "";
+				border: 2px solid transparent;
+				border-bottom-color: #0ff;
+				border-radius: 50%;
+				height: 34px;
+				width: 34px;
+				position: absolute;
+				left: -4px;
+				top: -4px;
+				animation: buttonRotateBack 2000ms ease-in-out infinite;
+			}
+			@keyframes buttonRotateBack {
+				100% {
+					transform: rotate(-360deg);
+				}
+			}
+			&.play.visualisation:after {
+				content: "";
+				border: 2px solid transparent;
+				border-top-color: #0ff;
+				border-radius: 50%;
+				height: 38px;
+				width: 38px;
+				position: absolute;
+				left: -6px;
+				top: -6px;
+				animation: buttonRotate 2000ms ease-in-out infinite;
+			}
+			@keyframes buttonRotate {
+				100% {
+					transform: rotate(360deg);
+				}
 			}
 			&.stop {
 				i {
@@ -340,12 +422,37 @@ ul, ol {
 			}
 		}
 		&:hover {
-			background: #777;
+			// background: #777;
+			.gradient-horizontal(#777, #666);
 			.delete {.flex-container;}
 		}
 		&.selected{
 			// background: #666;
 			.gradient-horizontal(#555, #777);
+		}
+		/* &.visualisation {
+			background-image: linear-gradient(to right, hsl(0, 60%, 50%) 0%, hsl(180, 60%, 50%) 100%);
+			animation: changeColor linear 9s infinite;
+		}
+		@keyframes changeColor {
+			0% { background-color: #33cccc; }   
+			// 0% { color: #0f0; }   
+			100% { background-color: #cc33cc; }
+			// 100% { color: #00f; }
+		} */
+		&.visualisation:before {
+			box-shadow: 0px 0px 8px 12px rgba(255, 255, 255, .4);
+			content: "";
+			height: 18px;
+			width: 0;
+			position: absolute;
+			left: -20px;
+			top: 10px;
+			animation: moveShadow linear 5s infinite;
+		}
+		@keyframes moveShadow {
+			80% { left: -20px; }   
+			100% { left: 104%; }
 		}
 	}
 }

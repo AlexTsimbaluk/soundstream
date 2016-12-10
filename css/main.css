@@ -216,6 +216,8 @@ ol
 }
 #player .controls .button
 {
+    position: relative;
+
     width: 30px;
     height: 30px;
 
@@ -264,6 +266,74 @@ ol
 #player .controls .button:hover i
 {
     color: #0ff;
+}
+#player .controls .button.play.visualisation:before
+{
+    position: absolute;
+    top: -4px;
+    left: -4px;
+
+    width: 34px;
+    height: 34px;
+
+    content: '';
+    -webkit-animation: buttonRotateBack 2000ms ease-in-out infinite;
+            animation: buttonRotateBack 2000ms ease-in-out infinite;
+
+    border: 2px solid transparent;
+    border-bottom-color: #0ff;
+    -webkit-border-radius: 50%;
+            border-radius: 50%;
+}
+@-webkit-keyframes buttonRotateBack
+{
+    100%
+    {
+        -webkit-transform: rotate(-360deg);
+                transform: rotate(-360deg);
+    }
+}
+@keyframes buttonRotateBack
+{
+    100%
+    {
+        -webkit-transform: rotate(-360deg);
+                transform: rotate(-360deg);
+    }
+}
+#player .controls .button.play.visualisation:after
+{
+    position: absolute;
+    top: -6px;
+    left: -6px;
+
+    width: 38px;
+    height: 38px;
+
+    content: '';
+    -webkit-animation: buttonRotate 2000ms ease-in-out infinite;
+            animation: buttonRotate 2000ms ease-in-out infinite;
+
+    border: 2px solid transparent;
+    border-top-color: #0ff;
+    -webkit-border-radius: 50%;
+            border-radius: 50%;
+}
+@-webkit-keyframes buttonRotate
+{
+    100%
+    {
+        -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+    }
+}
+@keyframes buttonRotate
+{
+    100%
+    {
+        -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+    }
 }
 #player .controls .button.stop i
 {
@@ -397,6 +467,16 @@ ol
             border-radius: 2px;
 
     tansition: all .3s;
+    /* &.visualisation {
+			background-image: linear-gradient(to right, hsl(0, 60%, 50%) 0%, hsl(180, 60%, 50%) 100%);
+			animation: changeColor linear 9s infinite;
+		}
+		@keyframes changeColor {
+			0% { background-color: #33cccc; }   
+			// 0% { color: #0f0; }   
+			100% { background-color: #cc33cc; }
+			// 100% { color: #00f; }
+		} */
 }
 #player .track .title
 {
@@ -448,6 +528,10 @@ ol
 #player .track:hover
 {
     background: #777;
+    background: -webkit-gradient(linear, left top, right top, from(#777), to(#666));
+    background: linear-gradient(to right, #777 0%, #666 100%);
+
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='@start', endColorstr='@stop', GradientType=1);
 }
 #player .track:hover .delete
 {
@@ -475,6 +559,44 @@ ol
     background: linear-gradient(to right, #555 0%, #777 100%);
 
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='@start', endColorstr='@stop', GradientType=1);
+}
+#player .track.visualisation:before
+{
+    position: absolute;
+    top: 10px;
+    left: -20px;
+
+    width: 0;
+    height: 18px;
+
+    content: '';
+    -webkit-animation: moveShadow linear 5s infinite;
+            animation: moveShadow linear 5s infinite;
+
+    -webkit-box-shadow: 0 0 8px 12px rgba(255, 255, 255, .4);
+            box-shadow: 0 0 8px 12px rgba(255, 255, 255, .4);
+}
+@-webkit-keyframes moveShadow
+{
+    80%
+    {
+        left: -20px;
+    }
+    100%
+    {
+        left: 104%;
+    }
+}
+@keyframes moveShadow
+{
+    80%
+    {
+        left: -20px;
+    }
+    100%
+    {
+        left: 104%;
+    }
 }
 /* IE hacks */
 [data-useragent*='Trident'] #player .controls .volume
