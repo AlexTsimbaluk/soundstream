@@ -10,14 +10,14 @@
     -khtml-opacity: @val/100;
     opacity: @val/100;
 }
-.gradient-vertical(@start: #000, @stop: #fff) {
+.gradient-vertical(@start: #000, @stop: #fff, @startPos: 0%, @endPos: 100%) {
     background: @start;
-    background: -moz-linear-gradient(top,  @start 0%, @stop 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,@start), color-stop(100%,@stop));
-    background: -webkit-linear-gradient(top,  @start 0%,@stop 100%);
-    background: -o-linear-gradient(top,  @start 0%,@stop 100%);
-    background: -ms-linear-gradient(top,  @start 0%,@stop 100%);
-    background: linear-gradient(to bottom,  @start 0%,@stop 100%);
+    background: -moz-linear-gradient(top,  @start @startPos, @stop @endPos);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(@startPos,@start), color-stop(@endPos,@stop));
+    background: -webkit-linear-gradient(top,  @start @startPos,@stop @endPos);
+    background: -o-linear-gradient(top,  @start @startPos,@stop @endPos);
+    background: -ms-linear-gradient(top,  @start @startPos,@stop @endPos);
+    background: linear-gradient(to bottom,  @start @startPos,@stop @endPos);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=@start, endColorstr=@stop,GradientType=0 );
 }
 .gradient-horizontal(@start: #000, @stop: #fff) {

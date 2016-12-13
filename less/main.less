@@ -41,6 +41,7 @@ html.js .loader_inner
 
 body
 {
+	background: rgba(0, 0, 0, 0) url("../img/bg.jpg") no-repeat scroll 0 0 / cover;
 	font-size: 10px;
     font-family: "RobotoRegular", sans-serif;
     
@@ -93,52 +94,6 @@ ul, ol {
 }
 
 
-// .cssload-container{
-// 	position:relative;
-// 	left: 17px;
-// 	top: -16px;
-// }
-	
-// .cssload-whirlpool,
-// .cssload-whirlpool::before,
-// .cssload-whirlpool::after {
-// 	position: absolute;
-// 	top: 50%;
-// 	left: 50%;
-// 	border: 1px solid rgb(204,204,204);
-// 	border-left-color: rgba(0,255,255,0.97);
-// 	border-radius: 674px;
-// }
-
-// .cssload-whirlpool {
-// 	margin: -17px 0 0 -17px;
-// 	height: 34px;
-// 	width: 34px;
-// 	animation: cssload-rotate 950ms linear infinite;
-// }
-
-// .cssload-whirlpool::before {
-// 	content: "";
-// 	margin: -16px 0 0 -16px;
-// 	height: 30px;
-// 	width: 30px;
-// 	animation: cssload-rotate 950ms linear infinite;
-// }
-
-// .cssload-whirlpool::after {
-// 	content: "";
-// 	margin: -20px 0 0 -20px;
-// 	height: 38px;
-// 	width: 38px;
-// 	animation: cssload-rotate 1900ms linear infinite;
-// }
-
-// @keyframes cssload-rotate {
-// 	100% {
-// 		transform: rotate(360deg);
-// 	}
-// }
-
 // Display Flex
 // контейнер для выравниваемых элементов
 .flex-container {
@@ -156,7 +111,7 @@ ul, ol {
 @color1:#0ff;
 
 #player {
-	background: #212121;
+	background: #111;
 	border: 4px solid @color1;
 	border-radius: 5px;
 	color: #eee;
@@ -166,26 +121,50 @@ ul, ol {
 	width: 320px;
 	position: relative;
 	.trackContainer {
-		height: 48%;
+		background: url(../img/logo.jpg) no-repeat center;
+		height: 44%;
+		position: relative;
+		.overlay {
+			background: rgba(0, 0, 0, .6);
+			height: 100%;
+			width: 100%;
+			position: absolute;
+			left: 0;
+			top: 0;
+		}
 	}
 	.info {
 		font-size: 1.2em;
-		height: 40px;	
+		height: 40px;
+		position: relative;
 	}
 	.find {
-		background: #555;
 		border-radius: 2px;
 		font-size: 1.4em;
-		padding: 4px 0;
+		padding: 4px 2px 4px 0;
 		height: 40px;
-		text-align: center;
+		text-align: right;
+		position: relative;
 		input {
-			background: #333;
+			background: rgba(51, 51, 51, .5);
 			border: 1px solid @color1;
 			border-radius: 4px;
+			// display: none;
 			padding: 4px;
+			opacity: 0;
 			height: 100%;
+			width: 0;
+			&.visible {
+				display: inline;
+			}
 			&:focus {box-shadow: 0 0 5px 0 #0ff inset;}
+		}
+		.showFieldSearch {
+			cursor: pointer;
+			height: 100%;
+		}
+		.showAll {
+			cursor: pointer;
 		}
 	}
 	.view {
@@ -193,11 +172,11 @@ ul, ol {
 	}
 	.time {
 		position: absolute;
-		right: 10px;
-		top: 10px;
+		right: 0;
+		top: 2px;
 	}
 	.controls {
-		border-bottom: 1px solid @color1;
+		
 		padding-bottom: 6px;
 		div {display: inline-block;}
 		.button {
@@ -222,7 +201,42 @@ ul, ol {
 				box-shadow: 0px 0px 5px 0.4px @color1;
 				i {color: @color1;}
 			}
-			&.play.visualisation:before {
+
+			&.play.visualisation {
+				.inner {
+					border: 2px solid transparent;
+					border-bottom-color: #0ff;
+					border-radius: 50%;
+					height: 34px;
+					width: 34px;
+					position: absolute;
+					left: -4px;
+					top: -4px;
+					animation: buttonRotateBack 2000ms linear infinite;
+				}
+				.outer {
+					border: 2px solid transparent;
+					border-top-color: #0ff;
+					border-radius: 50%;
+					height: 38px;
+					width: 38px;
+					position: absolute;
+					left: -6px;
+					top: -6px;
+					animation: buttonRotate 2000ms ease-in-out infinite;
+				}
+			}
+			@keyframes buttonRotateBack {
+				 100% {
+					transform: rotate(-360deg);
+				} 
+			}
+			@keyframes buttonRotate {
+				100% {
+					transform: rotate(360deg);
+				}
+			}
+			/* &.play.visualisation:before {
 				content: "";
 				border: 2px solid transparent;
 				border-bottom-color: #0ff;
@@ -232,14 +246,9 @@ ul, ol {
 				position: absolute;
 				left: -4px;
 				top: -4px;
-				animation: buttonRotateBack 2000ms ease-in-out infinite;
-			}
-			@keyframes buttonRotateBack {
-				100% {
-					transform: rotate(-360deg);
-				}
-			}
-			&.play.visualisation:after {
+				animation: buttonRotateBack 2000ms linear infinite;
+			} */
+			/* &.play.visualisation:after {
 				content: "";
 				border: 2px solid transparent;
 				border-top-color: #0ff;
@@ -250,12 +259,7 @@ ul, ol {
 				left: -6px;
 				top: -6px;
 				animation: buttonRotate 2000ms ease-in-out infinite;
-			}
-			@keyframes buttonRotate {
-				100% {
-					transform: rotate(360deg);
-				}
-			}
+			} */
 			&.stop {
 				i {
 					font-size: 1.2em;
@@ -357,30 +361,58 @@ ul, ol {
 		// input[type=range]:active::-moz-range-track {outline: none; border: none;}
 		input[type=range]:focus::-moz-range-thumb {outline: none;}
 		// input[type=range]:active::-moz-range-thumb {outline: none; border: none;}
-		/*IE hack*/
-		/* input[type="range"] {
-			padding: 20px;
-			border: 1px solid #e4e6ec;
-			box-sizing: border-box;
-			border-radius: 4px;
-			height: 80px;
+		
+
+		.volumeVisualisation {
+			box-shadow: 0 0 16px 14px @color1;
+			height: 0;
+			width: 0;
+			position: relative;
+			right: -20px;
+			top: -15px;
 		}
-		input[type="range"]::-ms-fill-lower {
-			background: #f3ae36;
-		}  
-		input[type="range"]::-ms-fill-upper {
-			background: #f5f6f8;
-		}
-		input[type="range"]::-ms-thumb {
-			border: 1px solid #333;
-			height: 20px; width: 20px;
-			background: #50a2de;
-			border-radius: 50%;
-		} */
 	}
 	.playlistContainer {
-		height: 52%;
+		height: 49%;
 		// overflow-y: scroll;
+	}
+	.playlistsPanel {
+		height: 5%;
+		margin: 4px 0;
+		position: relative;
+		.nav {
+			cursor: default;
+			// .flex-container;
+			// height: 20px;
+			position: absolute;
+			right: 4px;
+			top: -2px;
+			i {
+				color: #aaa;
+				cursor: pointer;
+				font-size: 2.2em;
+				&:hover {color: @color1;}
+			}
+			i + i {margin-left: 4px;}
+		}
+		.plName {
+			.gradient-vertical(#555, #73c8c8, 25%, 100%);
+			// border-bottom: 2px solid #333;
+			border-radius: 1px;
+			cursor: pointer;
+			display: inline-block;
+			font-size: 1.2em;
+			// line-height: 10px;
+			padding: 2px 5px;
+			text-align: center;
+			overflow: hidden;
+			height: 100%;
+			width: 84px;
+			&:hover {
+				.gradient-vertical(#555, #3ee1e1 , 25%, 100%);
+			}
+		}
+		.plName + .plName {margin-left: 4px;}
 	}
 	.track {
 		border-radius: 2px;
@@ -441,13 +473,13 @@ ul, ol {
 			// 100% { color: #00f; }
 		} */
 		&.visualisation:before {
-			box-shadow: 0px 0px 8px 12px rgba(255, 255, 255, .4);
+			box-shadow: 0px 0px 10px 12px rgba(255, 255, 255, .4);
 			content: "";
-			height: 18px;
+			height: 14px;
 			width: 0;
 			position: absolute;
 			left: -20px;
-			top: 10px;
+			top: 14px;
 			animation: moveShadow linear 5s infinite;
 		}
 		@keyframes moveShadow {
@@ -502,6 +534,8 @@ ul, ol {
 		tansition: all .3s;
 		position: relative;
 		.title {
+			height: 18px;
+			overflow: hidden;
 			text-decoration: underline;
 		}
 		.url {

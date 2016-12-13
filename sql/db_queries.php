@@ -18,7 +18,9 @@ include_once '../functions.php';
 		(select station_id from stations 
 		where station_title = h.station_title and station_url = h.station_url and station_id < h.station_id)";*/
 
-/*$query = "DELETE FROM `stations` WHERE `stations`.`station_id` = 1";*/
+// $query = "DELETE FROM `stations` WHERE `stations`.`station_id` = 1";
+// $query = "DELETE FROM `stations` WHERE `stations`.`station_id` = 10905";
+
 // $query = "delete from stations where station_id in (select distinct station_id from stations group by station_id)";
 
 // Добавить запись

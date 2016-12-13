@@ -3,6 +3,8 @@
 $host = "localhost";
 $user = "root";
 $password = "";
+/*$user = "soundstream";
+$password = "123456Seven";*/
 $database = "stations_icecast";
 
 /*$link = mysql_connect($host, $user, $password) or die("Ошибка " . mysql_error($link));
