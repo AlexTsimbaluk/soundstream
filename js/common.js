@@ -63,8 +63,11 @@ $(document).ready(function() {
 	
 
 	// Отобразить название станции при воспроизведении
-	function displayState(el) {
+	/*function displayState(el) {
 		$('#player .info').html(el.data('stationTitle'));
+	}*/
+	function displayState() {
+		$('#player .info').html(playerState.playlists[playerState.currentPlaylist].currentTrack.title);
 	}
 
 	// Отобразить время восроизведения
@@ -104,9 +107,9 @@ $(document).ready(function() {
 	}
 
 	// Удалить станцию из плейлиста
-	function deleteFromPlaylist(id, playlistName) {
+	/*function deleteFromPlaylist(id, playlistName) {
 		console.log(playlistName);
-	}
+	}*/
 
 
 	// Конструктор объекта Playlist
@@ -128,12 +131,12 @@ $(document).ready(function() {
 		player = new Audio(),
 		// Объект состояния плеера
 		playerState = {
-		playlists: {},
-		playlistsOrder: [],
-		currentPlaylist: '',
-		volume : player.volume,
-		paused: player.paused
-	};
+			playlists: {},
+			playlistsOrder: [],
+			currentPlaylist: '',
+			volume : player.volume,
+			paused: player.paused
+		};
 
 	if(localStorage.getItem('playerState') == undefined) {
 		// Объект плейлиста
@@ -156,9 +159,9 @@ $(document).ready(function() {
 		// Создаем контейнер для треков текущего (активного) плейлиста
 		playlistContainer.append(playerState.playlists[playerState.currentPlaylist].htmlEl);
 		// Получить плейлист и сформировать его
-		var targetStations = playerState.playlists[playerState.currentPlaylist].tracks;
+		var playlistTracks = playerState.playlists[playerState.currentPlaylist].tracks;
 		$.ajax({
-			data: {'action': 'getTargetStations', 'id': targetStations},
+			data: {'action': 'getPlaylistStations', 'id': playlistTracks},
 			success: function(data) {
 				var response = JSON.parse(data);
 				var playlist = playlistContainer.find('.playlist[data-name="' + playerState.currentPlaylist + '"]');
@@ -171,25 +174,26 @@ $(document).ready(function() {
 				playlist.html(playlist.html() + markup);
 				// playlist.find('.track:first').addClass('selected');
 				playlist.find('.track[data-station-id=' + playerState.playlists[playerState.currentPlaylist].currentTrack.id + ']').addClass('selected');
+				if(!playerState.paused) {
+					player.play();
+					displayState();
+					updateTime();
+					setInterval(function() {
+						updateTime();
+					}, 1000);
+					visualisation($('.playlistContainer .active [data-station-id=' + playerState.playlists[playerState.currentPlaylist].currentTrack.id + ']'));
+				}
 			}
 		});
-		if(!playerState.paused) {
-			player.play();
-			// $('#player .play').addClass('visualisation');
-			console.log($('.playlistContainer .active [data-station-id=' + playerState.playlists[playerState.currentPlaylist].currentTrack.id + ']'));
-			visualisation($('.playlistContainer .active [data-station-id=' + playerState.playlists[playerState.currentPlaylist].currentTrack.id + ']'));
-		}
+		
 	}
-	console.log($('.playlistContainer .active .track[data-station-id=' + playerState.playlists[playerState.currentPlaylist].currentTrack.id + ']'));
 	
 	var intervalVis = null;
-	// Визуализация выбранного играющего трека
+	// Визуализация выбранного играющего трека и кнопки play 
 	function visualisation(el) {
 		console.log(el);
-		
 		clearInterval(intervalVis);
-		// el.parent().children('.track:not(.selected)').removeClass('visualisation').css({backgroundImage: 'none'});
-		el.parent().children('.track:not(.selected)').removeClass('visualisation');
+		el.parent().children('.track:not(.selected)').removeClass('visualisation').removeAttr('style');
 		el.addClass('visualisation');
 		$('#player .play').addClass('visualisation');
 		$('#player .play span').remove();
@@ -205,50 +209,57 @@ $(document).ready(function() {
 			$('#player .play.visualisation .outer').css({'borderTopColor': 'hsl(' + ((++stepBorder1)%360)  + ', 100%, 50%)'});
 		}, 50);
 	}
-	$('#player .play').on('mouseover', function(e) {
-		$(this).css({'boxShadow': '0px 0px 5px 0.4px #0ff'});
-	});
-	$('#player .play').on('mouseout', function(e) {
-		$(this).css({'boxShadow': 'none'});
-	});
 	
 	// Остановка визуализации
 	function visualisationStop(el) {
 		clearInterval(intervalVis);
-		// el.removeClass('visualisation').css({'backgroundImage': 'linear-gradient(to right, hsl(0, 0%, 33%) 0%, hsl(0, 0%, 47%) 100%)'});
-		el.removeClass('visualisation').css({'backgroundImage': 'none'});
-		// el.css({'backgroundImage': 'linear-gradient(to right, hsl(0, 0%, 33%) 0%, hsl(0, 0%, 47%) 100%)'});
-		$('#player .play').removeClass('visualisation').css({'boxShadow': 'none', 'borderColor': '#0ff'});
+		el.removeClass('visualisation').css({'backgroundImage': 'none'}).removeAttr('style');
+		$('#player .play').removeClass('visualisation').css({'boxShadow': 'none', 'borderColor': '#0ff'}).removeAttr('style');
 		$('#player .play span').remove();
-		// $('#player .play').css({'boxShadow': 'none', 'borderColor': '#0ff'});
 	}
 
 
 	$('#player .play').click(function(e) {
 		if($('.playlist').children('.selected').length > 0) {
-			var track = $('.playlistContainer .active .selected');
-			var currentTrackEl = $('.playlistContainer .active [data-station-id=' + playerState.playlists[playerState.currentPlaylist].currentTrack.id + ']');
-			console.log(currentTrackEl);
-			player.src = $('.playlistContainer .selected').data('stationUrl');
 			playerState.playlists[playerState.currentPlaylist].currentTrack = {
 				id: $('.playlistContainer .selected').data('stationId'),
 				url: player.src,
 				title: $('.playlistContainer .selected').data('stationTitle')
 			};
+			var currentTrackEl = $('.playlistContainer .active [data-station-id=' + playerState.playlists[playerState.currentPlaylist].currentTrack.id + ']');
+			console.log(currentTrackEl);
+			player.src = $('.playlistContainer .selected').data('stationUrl');
 			player.play();
-			// $('#player .play').addClass('visualisation');
 			playerState.paused = player.paused;
-			// var currentTrackEl = $('.playlistContainer .active [data-station-id=' + playerState.playlists[0].currentTrack.id + ']');
-			// console.log(currentTrackEl);
-			localStorage.setItem('playerState', JSON.stringify(playerState));
-			// visualisation(playerState.playlists[0].currentTrack.el);
-			visualisation($('.active [data-station-id=' + playerState.playlists[playerState.currentPlaylist].currentTrack.id + ']'));
-			displayState($('.playlist .selected'));
+			visualisation(currentTrackEl);
+			// displayState($('.playlist .selected'));
+			displayState();
 			updateTime();
+			localStorage.setItem('playerState', JSON.stringify(playerState));
 			setInterval(function() {
 				updateTime();
 			}, 1000);
 		}
+	});
+	$('.playlistContainer').on('dblclick', '.track', function(e) {
+		var url = $(this).data('stationUrl');
+		player.src = url;
+		player.play();
+		playerState.playlists[playerState.currentPlaylist].currentTrack = {
+			id: $('.playlistContainer .selected').data('stationId'),
+			url: player.src,
+			title: $('.playlistContainer .selected').data('stationTitle')
+		};
+		var currentTrackEl = $('.playlistContainer .active [data-station-id=' + playerState.playlists[playerState.currentPlaylist].currentTrack.id + ']');
+		visualisation(currentTrackEl);
+		playerState.paused = player.paused;
+		localStorage.setItem('playerState', JSON.stringify(playerState));
+		// displayState($(this));
+		displayState();
+		updateTime();
+		setInterval(function() {
+			updateTime();
+		}, 1000);
 	});
 	$('#player .stop').click(function(e) {
 		// playerState = JSON.parse(Cookies.get('playerState'));
@@ -263,49 +274,29 @@ $(document).ready(function() {
 		$('#player .info').html('');
 	});
 
-	/*$('.playlistContainer').on('click', '.delete', function(e) {
-		var playlistName = $(this).parents('.playlist.active').data('name');
+	$('.playlistContainer').on('click', '.delete', function(e) {
+		/*var playlistName = $(this).parents('.playlist.active').data('name');
 		var id = $(this).parent().data('stationId');
-		var pl = 
-		console.log(playlistName, id);
-		// deleteFromPlaylist($(this).parent().data('stationId'), playlistName);
+		console.log(playlistName, id);*/
+		var id = $(this).parent().data('stationId');
+		var pl = playerState.playlists[playerState.currentPlaylist];
+		pl.tracks.splice(pl.tracks.indexOf(id), 1);
 		$(this).parent().remove();
-		for (var i = 0; i < playerState.playlists.length; i++) {
+		/*for (var i = 0; i < playerState.playlists.length; i++) {
 			var pl = playerState.playlists[i];
 			if(pl.name == playlistName) {
 				pl.tracks.splice(pl.tracks.indexOf(id), 1);
 			}
-		}
+		}*/
 		console.log(playerState);
-		Cookies.set('playerState', JSON.stringify(playerState), {expires: 180, path: "/"});
-	});*/
+		localStorage.setItem('playerState', JSON.stringify(playerState));
+	});
 
 	$('.playlistContainer').on('mousedown', '.track', function(e) {
 		// $(this).parent().find('.selected').removeClass('selected').css({backgroundImage: 'none'});
 		// $(this).addClass('selected').css({'backgroundImage': 'linear-gradient(to right, hsl(0, 0%, 33%) 0%, hsl(0, 0%, 47%) 100%)'});
 		$(this).parent().find('.selected').removeClass('selected');
 		$(this).addClass('selected');
-	});
-
-	$('.playlistContainer').on('dblclick', '.track', function(e) {
-		var url = $(this).data('stationUrl');
-		player.src = url;
-		player.play();
-		// $('#player .play').addClass('visualisation');
-		playerState.playlists[playerState.currentPlaylist].currentTrack = {
-			id: $('.playlistContainer .selected').data('stationId'),
-			url: player.src,
-			title: $('.playlistContainer .selected').data('stationTitle')
-		};
-		var currentTrackEl = $('.playlistContainer .active [data-station-id=' + playerState.playlists[playerState.currentPlaylist].currentTrack.id + ']');
-		visualisation(currentTrackEl);
-		playerState.paused = player.paused;
-		localStorage.setItem('playerState', JSON.stringify(playerState));
-		displayState($(this));
-		updateTime();
-		setInterval(function() {
-			updateTime();
-		}, 1000);
 	});
 
 	
@@ -329,7 +320,7 @@ $(document).ready(function() {
 	});*/
 
 
-	// Search stations
+	// Показать поле ввода для поиска
 	$('#player .find .showFieldSearch').click(function(e) {
 		var searchInput = $(this).parent().find('input');
 		if(searchInput.hasClass('visible') == false) {
@@ -339,15 +330,15 @@ $(document).ready(function() {
 			}, 300);
 		} else {
 			searchInput.removeClass('visible').animate({opacity: 0, width: 0}, 100).blur();
-			// searchInput.removeClass('visible').animate({opacity: 0, width: 0}, 100);
 		}
 	});
 
+	// Поиск и показ найденных станций
 	$('#player .find input').on('keyup', function(e) {
 		var target = $(this).val();
 		if(target.length > 2) {
 			$.ajax({
-				data: {'action': 'find', 'target': target},
+				data: {'action': 'search', 'target': target},
 				success: function(data) {
 					var response = JSON.parse(data);
 					var result = $('.searchContainer .result');
@@ -365,6 +356,26 @@ $(document).ready(function() {
 		}
 	});
 
+	// Получить все станции
+	$('#player .find .showAll').on('click', function(e) {
+		$.ajax({
+			data: {'action': 'getAllStations'},
+			success: function(data) {
+				var response = JSON.parse(data);
+				var result = $('.searchContainer .result');
+				result.html('');
+				var markup = '<div class="total"><span>' + response.length + '</span> stations is found</div>';
+				for(var i = 0; i < response.length; i++) {
+					var station = response[i];
+					markup += '<div class="station" data-station-id="' + station.station_id + '"><div class="add"><i class="fa fa-plus"></i></div><div class="title">' + station.station_title +
+					'</div><div class="url">' + station.station_url + '</div></div>';
+				}
+				result.html(markup);
+				$('.searchContainer').css({'display': 'inline-block'});
+			}
+		});
+	});
+
 	// Закрытие блока с результатами поиска
 	$('.searchContainer .close').on('click', function(e) {
 		$(this).parents('.searchContainer').slideUp(500);
@@ -377,7 +388,6 @@ $(document).ready(function() {
 		}, 50);
 		
 	});
-	
 	
 	// Добавление станций в плейлист
 	// Доделать, чтобы станции добавлялись в активный плэйлист
@@ -393,8 +403,8 @@ $(document).ready(function() {
 	/*Sortable plugin JQueryUI*/
 	$('.sortable').sortable({scroll: true});
 
-	playlistsPanel.append('<div class="plName" data-name="Default">Default</div>');
-	playlistsPanel.append('<div class="plName" data-name="Default">Default</div>');
+	// playlistsPanel.append('<div class="plName" data-name="Default">Default</div>');
+	// playlistsPanel.append('<div class="plName" data-name="Default">Default</div>');
 
 
 });
@@ -409,8 +419,6 @@ $(window).load(function() {
 	/*$(".loader_inner").fadeOut();
 	$(".loader").delay(400).fadeOut("slow");*/
 
-	playerState = JSON.parse(localStorage.getItem('playerState'));
-	console.log($('.playlistContainer .active [data-station-id=' + playerState.playlists[playerState.currentPlaylist].currentTrack.id + ']'));
 		
 });
 

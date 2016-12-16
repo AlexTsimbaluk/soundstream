@@ -3,17 +3,22 @@
 include_once 'db_connection.php';
 include_once 'functions.php';
 
-// Получение всех станций
-if ($_POST['action'] == "getTargetStations" && !empty($_POST['id'])) {
-	getStationsList($_POST['id']);
+// Получение станций текущего плейлиста и его формирование
+if ($_POST['action'] == "getPlaylistStations" && !empty($_POST['id'])) {
+	getPlaylistStations($_POST['id']);
 }
 
-// Получение одной станции
+// Получение и добавление одной станции в текущий плейлист
 if ($_POST['action'] == "getStation" && !empty($_POST['id'])) {
 	getStation($_POST['id']);
 }
 
-// Поиск
-if ($_POST['action'] == "find" && !empty($_POST['target'])) {
+// Поиск станций и показ результатов
+if ($_POST['action'] == "search" && !empty($_POST['target'])) {
 	searchStation($_POST['target']);
+}
+
+// Получение всех станций и показ результатов
+if ($_POST['action'] == "getAllStations") {
+	getAllStations();
 }
