@@ -39,8 +39,6 @@ body
 {
     font-family: 'RobotoRegular', sans-serif;
     font-size: 10px;
-
-    background: rgba(0, 0, 0, 0) url('../img/bg.jpg') no-repeat scroll 0 0 / cover;
 }
 /* выделение текста */
 ::-moz-selection
@@ -771,6 +769,10 @@ ol
     padding: 6px;
 
     cursor: default;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
 
     -webkit-border-radius: 2px;
             border-radius: 2px;

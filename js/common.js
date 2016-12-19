@@ -19,6 +19,17 @@ $(document).ready(function() {
 		}
 	});
 
+	// Получение случайного числа в заданном диапазоне
+	function getRandomInt(min, max) {
+		return Math.floor(Math.random() * (max - min + 1)) + min;
+	}
+
+	// Получение случайного цвета rgb
+	function getRandomRgbColor() {
+		var color = '';
+		return 'rgb(' + getRandomInt(0, 255) + ',' + getRandomInt(0, 255) + ',' + getRandomInt(0, 255) + ')';
+	}
+
 	// Установить свойство состояния объекта и записать в куки
 	function setPlayerState(prop, val) {
 		playerState[prop] = val;
@@ -405,6 +416,42 @@ $(document).ready(function() {
 
 	// playlistsPanel.append('<div class="plName" data-name="Default">Default</div>');
 	// playlistsPanel.append('<div class="plName" data-name="Default">Default</div>');
+
+
+	// Превоначальное случайное фоновое изображение для body
+	$('body').css({'background':'url("../img/bg/bg' + getRandomInt(1, 10) + '.jpg") no-repeat center / cover'});
+	/*Slider for background*/
+	$(function(){
+
+		function compareRandom(a, b) {
+			return Math.random() - 0.5;
+		}
+
+		var imageArr = new Array(10);
+		for (var i = 0; i < imageArr.length; i++) {
+			var path = '/img/bg/bg' + (i + 1) + '.jpg';
+			// console.log(path);
+			imageArr[i] = path;
+		}
+		// imageArr.sort(compareRandom);
+		// console.log(imageArr);
+
+		$.mbBgndGallery.buildGallery({
+			containment:"body",
+			timer:3000,
+			effTimer:11000,
+			shuffle:true,
+			effect:"fade",
+            // folderPath:"/img/bg/",
+            images: imageArr,
+
+            onChange:function(idx) {
+            	/*var effects = ['fade', 'zoom', 'slideUp', 'slideDown', 'slideRight', 'slideLeft'];
+            	var index = getRandomInt(0, effects.length);
+            	$.mbBgndGallery.changeEffect(effects[index]);*/
+            }
+        });
+	});
 
 
 });
