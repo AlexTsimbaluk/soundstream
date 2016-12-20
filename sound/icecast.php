@@ -2,8 +2,6 @@
 
 
 $stationsStr = "
-&&&Club Bollywood *-*
-http://radiotunes_clubbollywood_aacplus
 &&&258 *-*
 http://streaming211.radionomy.com:80/258
 &&&RADIOGAIAhits *-*

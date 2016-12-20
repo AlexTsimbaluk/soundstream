@@ -6,8 +6,8 @@ include_once '../functions.php';
 
 /*$query = "CREATE TABLE stations ( 
 	station_id INT(11) UNSIGNED NOT NULL AUTO_INCREMENT , 
-	station_title VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL , 
-	station_url VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL , 
+	station_title VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL UNIQUE, 
+	station_url VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, 
 	PRIMARY KEY (station_id)) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci";*/
 
 /*ALTER TABLE users CHANGE user_reg_date user_reg_date VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;*/
@@ -21,6 +21,9 @@ include_once '../functions.php';
 // $query = "DELETE FROM `stations` WHERE `stations`.`station_id` = 1";
 // $query = "DELETE FROM `stations` WHERE `stations`.`station_id` = 10905";
 // $query = "DELETE FROM `stations` WHERE  `station_id` = 2";
+
+// Удалить shoutcast, оставить icecast
+// $query = "DELETE FROM `stations` WHERE  `station_id` > 9200";
 
 // $query = "delete from stations where station_id in (select distinct station_id from stations group by station_id)";
 

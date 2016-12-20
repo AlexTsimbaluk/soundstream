@@ -421,11 +421,11 @@ $(document).ready(function() {
 	// Превоначальное случайное фоновое изображение для body
 	$('body').css({'background':'url("../img/bg/bg' + getRandomInt(1, 10) + '.jpg") no-repeat center / cover'});
 	/*Slider for background*/
-	$(function(){
+	$(function() {
 
-		function compareRandom(a, b) {
+		/*function compareRandom(a, b) {
 			return Math.random() - 0.5;
-		}
+		}*/
 
 		var imageArr = new Array(10);
 		for (var i = 0; i < imageArr.length; i++) {
