@@ -3,26 +3,22 @@
 $host = "localhost";
 $user = "root";
 $password = "";
-/*$user = "soundstream";
-$password = "123456Seven";*/
 $database = "stations_icecast";
 
-/*$link = mysql_connect($host, $user, $password) or die("Ошибка " . mysql_error($link));
-mysql_select_db($database, $link) or die (mysql_error());*/
 
-$link = mysql_connect($host, $user, $password);
+$link = mysqli_connect($host, $user, $password, $database);
 if(!$link) {
 	echo 'Ошибка подключения к MySQL<br>';
-	echo mysql_error($link);
+	echo mysqli_error($link);
 	exit();
 } else {
 	// echo 'Connect to MySQL<br>';
 }
 
 
-mysql_set_charset('utf8');
+mysqli_set_charset($link, 'utf8');
 
-if(!mysql_select_db($database, $link)) {
+if(!mysqli_select_db($link, $database)) {
 	echo 'Ошибка доступа подключения к базе данных ' . $database . '<br>';
 	exit();
 } else {

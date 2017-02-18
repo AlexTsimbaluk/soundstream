@@ -164,32 +164,31 @@ for ($i=0; $i < count($stationsArr); $i++) {
 	// $stationArr[$i] = explode(' *-*', $stationsArr[$i]);
 }
 
-for ($i=0; $i < count($stationParam); $i++) { 
-	// print_r($stationParam[$i][1] . '<br>');
-}
-
 include_once '../db_connection.php';
 set_time_limit(0);
 $good = $bad = 0;
+
+$start = microtime(true);
 for ($i=0; $i < count($stationParam); $i++) { 
 	$query = "insert into stations (station_title, station_url) 
 		VALUES ('".$stationParam[$i][0]."','"
 				  .$stationParam[$i][1]."');";
 
 	
-	$result = mysql_query($query);
+	$result = mysqli_query($link, $query);
 	if (!$result) {
-		echo mysql_error() . '<br>';
+		echo mysqli_error($link) . '<br>';
 		$bad++;
 	} else {
 		// echo 'GOOD QUERY!<br>';
 		$good++;
 	}
 }
+echo 'Время импорта: '.(microtime(true) - $start).' сек.';
 
 echo 'Total stations imported: ' . count($stationParam) . '<br>';
 echo 'Success import: ' . $good . '<br>';
 echo 'Error import: ' . $bad . '<br>';
 
-mysql_close($link);
+mysqli_close($link);
 

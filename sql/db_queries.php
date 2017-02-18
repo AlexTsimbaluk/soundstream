@@ -34,16 +34,16 @@ include_once '../functions.php';
 // Изменить значение записи
 // $query = "update stations set station_url = 'http://radiotunes_clubbollywood_aacplus' WHERE station_id = 9200;"
 
-echo $query . '<br>';
+echo '<br>' . $query . '<br>';
 
-$result = mysql_query($query);
+$result = mysqli_query($link, $query);
 
 if (!$result) {
-	echo '<br>' . mysql_error() . '<br>';
+	echo '<br>' . mysqli_error($link) . '<br>';
 } else {
 	echo '<br><br>Update SUCCES!<br><br>';
 }
 
-mysql_close($link);
+mysqli_close($link);
 
 ?>
