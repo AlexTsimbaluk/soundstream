@@ -1,5 +1,7 @@
 <?php
 
+include_once 'db_connection.php';
+
 function d($value = null, $stop = true) {
 	echo "<br><br>Debug:<br><br><pre>";
 	print_r($value);
@@ -26,7 +28,6 @@ function dbConnect() {
 		// echo 'Connect to MySQL<br>';
 	}
 
-
 	mysqli_set_charset($link, 'utf8');
 
 	if(!mysqli_select_db($link, $database)) {
@@ -51,6 +52,7 @@ function getPlaylistStations($arrId) {
 	} else {
 	// echo 'Connect to MySQL<br>';
 	}
+	mysqli_set_charset($link, 'utf8');
 
 	if(!mysqli_select_db($link, $database)) {
 		echo 'Ошибка доступа подключения к базе данных ' . $database . '<br>';
@@ -104,6 +106,7 @@ function getStation($id) {
 	} else {
 	// echo 'Connect to MySQL<br>';
 	}
+	mysqli_set_charset($link, 'utf8');
 
 	if(!mysqli_select_db($link, $database)) {
 		echo 'Ошибка доступа подключения к базе данных ' . $database . '<br>';
@@ -142,6 +145,7 @@ function searchStation($target) {
 	} else {
 	// echo 'Connect to MySQL<br>';
 	}
+	mysqli_set_charset($link, 'utf8');
 
 	if(!mysqli_select_db($link, $database)) {
 		echo 'Ошибка доступа подключения к базе данных ' . $database . '<br>';
@@ -184,6 +188,7 @@ function getAllStations() {
 	} else {
 	// echo 'Connect to MySQL<br>';
 	}
+	mysqli_set_charset($link, 'utf8');
 
 	if(!mysqli_select_db($link, $database)) {
 		echo 'Ошибка доступа подключения к базе данных ' . $database . '<br>';
@@ -191,15 +196,14 @@ function getAllStations() {
 	}
 
 	$query = "select * from stations order by station_id limit 100";
-	// $query = "select * from stations where station_title like '%green%'";
 	$result = mysqli_query($link, $query);
 	$data = array();
+
 	while ($row = mysqli_fetch_assoc($result)) {
 		$data[] = $row;
 	}
-	// echo json_encode($data);
-	$data = json_encode($data);
-	echo $data;
+	
+	echo json_encode($data);
 
 	if (!$result) {
 		echo mysqli_error($link);

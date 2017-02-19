@@ -18,9 +18,7 @@ include_once '../functions.php';
 		(select station_id from stations 
 		where station_title = h.station_title and station_url = h.station_url and station_id < h.station_id)";*/
 
-// $query = "DELETE FROM `stations` WHERE `stations`.`station_id` = 1";
-// $query = "DELETE FROM `stations` WHERE `stations`.`station_id` = 10905";
-// $query = "DELETE FROM `stations` WHERE  `station_id` = 2";
+// $query = "delete from stations where station_id = 1";
 
 // Удалить shoutcast, оставить icecast
 // $query = "DELETE FROM `stations` WHERE  `station_id` > 9200";

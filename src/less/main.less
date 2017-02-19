@@ -41,6 +41,7 @@ html.js .loader_inner
 
 body
 {
+	// .flex-container;
 	// background: rgba(0, 0, 0, 0) url("../img/bg.jpg") no-repeat scroll 0 0 / cover;
 	font-size: 10px;
     font-family: "RobotoRegular", sans-serif;
@@ -110,16 +111,46 @@ ul, ol {
 // colors
 @color1:#0ff;
 
+.wrapper {
+	display: inline-block;
+	height: 100%;
+	width: 100%;
+	position: relative;
+}
+
+.admin {
+	background-color: #ccc;
+	width: 30px;
+	position: absolute;
+	right: 0;
+	top: 0;
+	.adminItem {
+		height: 30px;
+		line-height: 30px;
+		text-align: center;
+		a {
+			display: block;
+			height: 100%;
+		}
+	}
+}
+
+
 #player {
 	background: #111;
 	border: 4px solid @color1;
 	border-radius: 5px;
 	color: #eee;
-	margin: 10px auto 0;
+	// margin: 0 auto;
 	padding: 1em;
 	height: 420px;
 	width: 320px;
 	position: relative;
+	left: 50%;
+	transform: translateX(-50%);
+	&.no-translate {
+		transform: none;
+	}
 	.trackContainer {
 		background: url(../img/logo.jpg) no-repeat center;
 		height: 44%;
@@ -492,17 +523,18 @@ ul, ol {
 
 .searchContainer {
 	background: #212121;
-	border: 2px solid @color1;
+	border: 4px solid @color1;
 	border-radius: 5px;
 	color: #eee;
 	display: none;
-	float: left;
+	// float: left;
 	font-size: 1.2em;
 	overflow: auto;
 	padding: 10px;
-	position: relative;
+	position: absolute;
 	height: 420px;
 	width: 320px;
+	// left: -330px;
 	.close {
 		cursor: pointer;
 		position: absolute;

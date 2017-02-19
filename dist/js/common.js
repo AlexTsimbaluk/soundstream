@@ -2,8 +2,6 @@ var dateStart = new Date().getTime();
 
 $(document).ready(function() {
 
-
-
 	$.ajaxSetup({
 		type: 'POST',
 		url: 'actions.php',
@@ -204,6 +202,7 @@ $(document).ready(function() {
 	var intervalVis = null;
 	// Визуализация выбранного играющего трека и кнопки play 
 	function visualisation(el) {
+		console.log(el);
 		clearInterval(intervalVis);
 		el.parent().children('.track:not(.selected)').removeClass('visualisation').removeAttr('style');
 		el.addClass('visualisation');
@@ -214,15 +213,12 @@ $(document).ready(function() {
 		var stepGrad2 = stepGrad1 + 180;
 		var stepBorder1 = Math.floor(Math.random() * 360);
 		var stepBorder2 = stepBorder1 + 180;
-		if(window.innerWidth > 700) {
-			intervalVis = setInterval(function() {
-				el.css({'backgroundImage': 'linear-gradient(to right, hsl(' + ((++stepGrad1)%360)  + ', 60%, 50%) 0%, hsl(' + ((++stepGrad2)%360)  + ', 60%, 50%) 100%)'});
-				$('#player .play.visualisation').css({'boxShadow': '0px 0px 5px 0.4px hsl(' + ((++stepBorder1)%360)  + ', 100%, 50%)', 'borderColor': 'hsl(' + ((++stepBorder1)%360)  + ', 100%, 50%)'});
-				$('#player .play.visualisation .inner').css({'borderBottomColor': 'hsl(' + ((++stepBorder1)%360)  + ', 100%, 50%)'});
-				$('#player .play.visualisation .outer').css({'borderTopColor': 'hsl(' + ((++stepBorder1)%360)  + ', 100%, 50%)'});
-			}, 50);
-		}
-		
+		intervalVis = setInterval(function() {
+			el.css({'backgroundImage': 'linear-gradient(to right, hsl(' + ((++stepGrad1)%360)  + ', 60%, 50%) 0%, hsl(' + ((++stepGrad2)%360)  + ', 60%, 50%) 100%)'});
+			$('#player .play.visualisation').css({'boxShadow': '0px 0px 5px 0.4px hsl(' + ((++stepBorder1)%360)  + ', 100%, 50%)', 'borderColor': 'hsl(' + ((++stepBorder1)%360)  + ', 100%, 50%)'});
+			$('#player .play.visualisation .inner').css({'borderBottomColor': 'hsl(' + ((++stepBorder1)%360)  + ', 100%, 50%)'});
+			$('#player .play.visualisation .outer').css({'borderTopColor': 'hsl(' + ((++stepBorder1)%360)  + ', 100%, 50%)'});
+		}, 50);
 	}
 	
 	// Остановка визуализации
@@ -242,6 +238,7 @@ $(document).ready(function() {
 				title: $('.playlistContainer .selected').data('stationTitle')
 			};
 			var currentTrackEl = $('.playlistContainer .active [data-station-id=' + playerState.playlists[playerState.currentPlaylist].currentTrack.id + ']');
+			console.log(currentTrackEl);
 			player.src = $('.playlistContainer .selected').data('stationUrl');
 			player.play();
 			playerState.paused = player.paused;
@@ -364,11 +361,7 @@ $(document).ready(function() {
 						'</div><div class="url">' + station.station_url + '</div></div>';
 					}
 					result.html(markup);
-					$('.searchContainer').css({'display': 'inline-block',
-											'left': -parseInt($('.searchContainer').css('width')),
-											'top': -parseInt($('.searchContainer').css('borderWidth'))})
-									.parent()
-									.addClass('no-translate');
+					$('.searchContainer').css({'display': 'inline-block'});
 				}
 			});
 		}
@@ -389,40 +382,23 @@ $(document).ready(function() {
 					'</div><div class="url">' + station.station_url + '</div></div>';
 				}
 				result.html(markup);
-				$('.searchContainer').css({
-										'display': 'inline-block',
-										'left': -parseInt($('.searchContainer').css('width')),
-										// 'top': -parseInt($('#player').css('borderWidth')) + 'px'
-										'top': '-4px'
-									})
-									.parent()
-									.addClass('no-translate');
+				$('.searchContainer').css({'display': 'inline-block'}).parent().addClass('no-translate');
 			}
 		});
 	});
 
 	// Закрытие блока с результатами поиска
 	$('.searchContainer .close').on('click', function(e) {
-		$(this).parents('.searchContainer').slideUp();
-		$('#player').removeClass('no-translate');
+		$(this).parents('.searchContainer').slideUp(500);
 	});
-
-
 
 	// Анимация кнопки "закрыть" при скроле блока с результатами поиска
-	$('.searchContainer').mCustomScrollbar({
-		callbacks: {
-			onScroll: function() {
-				animateCloseButton(this);
-			}
-		}
-	});
-
-	function animateCloseButton(el) {
+	$('.searchContainer').on('scroll', function(e) {
 		setTimeout(function() {
-			$('.searchContainer .close').animate({top: -(el.mcs.top - 10) + 'px'}, 150);
+			$('.searchContainer').find('.close').animate({top: ($('.searchContainer').scrollTop() + 10) + 'px'}, 100);
 		}, 50);
-	}
+		
+	});
 	
 	// Добавление станций в плейлист
 	// Доделать, чтобы станции добавлялись в активный плэйлист
@@ -475,11 +451,6 @@ $(document).ready(function() {
             	$.mbBgndGallery.changeEffect(effects[index]);*/
             }
         });
-	});
-
-	$('.clearLocalStorage').on('click', function(e) {
-		localStorage.clear();
-		return false;
 	});
 
 

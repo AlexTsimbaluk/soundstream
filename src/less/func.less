@@ -49,12 +49,12 @@
     -o-transition: @val;
     transition: @val;
 }
-.transform (@rotate: 90deg, @scale: 1, @skew: 0deg, @translate: 0px) {
-    -webkit-transform: rotate(@rotate) scale(@scale) skew(@skew) translate(@translate);
-    -moz-transform: rotate(@rotate) scale(@scale) skew(@skew) translate(@translate);
-    -o-transform: rotate(@rotate) scale(@scale) skew(@skew) translate(@translate);
-    -ms-transform: rotate(@rotate) scale(@scale) skew(@skew) translate(@translate);
-    transform: rotate(@rotate) scale(@scale) skew(@skew) translate(@translate);
+.transform (@rotate: 0deg, @scale: 1, @skew: 0deg, @translateX: 0px, @translateY: 0px) {
+    -webkit-transform: rotate(@rotate) scale(@scale) skew(@skew) translateX(@translateX) translateY(@translateY);
+    -moz-transform: rotate(@rotate) scale(@scale) skew(@skew) translateX(@translateX) translateY(@translateY);
+    -o-transform: rotate(@rotate) scale(@scale) skew(@skew) translateX(@translateX) translateY(@translateY);
+    -ms-transform: rotate(@rotate) scale(@scale) skew(@skew) translateX(@translateX) translateY(@translateY);
+    transform: rotate(@rotate) scale(@scale) skew(@skew) translateX(@translateX) translateY(@translateY);
 }
 .animation (@name, @duration: 300ms, @delay: 0, @ease: ease) {
     -webkit-animation: @name @duration @delay @ease;
