@@ -119,14 +119,15 @@ ol {
   width: 320px;
   position: relative;
   left: 50%;
-  -webkit-transform: translateX(-50%);
-      -ms-transform: translateX(-50%);
-          transform: translateX(-50%);
+  top: 50vh;
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
 }
 #player.no-translate {
-  -webkit-transform: none;
-      -ms-transform: none;
-          transform: none;
+  -webkit-transform: translate(0, -50%);
+      -ms-transform: translate(0, -50%);
+          transform: translate(0, -50%);
 }
 #player .trackContainer {
   background: url(../img/logo.jpg) no-repeat center;

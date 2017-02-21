@@ -135,6 +135,9 @@ ul, ol {
 	}
 }
 
+body {
+	// .flex-container;
+}
 
 #player {
 	background: #111;
@@ -147,9 +150,12 @@ ul, ol {
 	width: 320px;
 	position: relative;
 	left: 50%;
-	transform: translateX(-50%);
+	// top: 50%;
+	top: 50vh;
+	transform: translate(-50%, -50%);
+	// transform: translateY(-50%);
 	&.no-translate {
-		transform: none;
+		transform: translate(0, -50%);
 	}
 	.trackContainer {
 		background: url(../img/logo.jpg) no-repeat center;
