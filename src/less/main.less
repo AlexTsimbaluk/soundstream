@@ -1,37 +1,57 @@
-@import 'func.less';
+@import '_func.less';
+@import '_vars.less';
+@import '_default.less';
 
-html.js .loader
-{
-    position: fixed;
-    z-index: 9999;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+@import '_forms.less';
 
-    width: 100%;
-    height: 100%;
 
-    background: none repeat scroll 0 0 #fff;
-}
-html.js .loader_inner
-{
-    position: absolute;
-    top: 50%;
-    left: 50%;
+::-webkit-input-placeholder {color:#fff;}
+::-moz-placeholder          {color:#fff;}/* Firefox 19+ */
+:-moz-placeholder           {color:#fff;}/* Firefox 18- */
+:-ms-input-placeholder      {color:#fff;}
 
-    width: 60px;
-    height: 60px;
-    margin-top: -30px;
-    margin-left: -30px;
+input[placeholder]          {text-overflow:ellipsis;}
+input::-moz-placeholder     {text-overflow:ellipsis;} 
+input:-moz-placeholder      {text-overflow:ellipsis;} 
+input:-ms-input-placeholder {text-overflow:ellipsis;} 
 
-    background-color: #fff;
-    background-image: url('../img/preloader.gif');
-    background-repeat: no-repeat;
-    background-position: center center;
-    -webkit-background-size: cover;
-            background-size: cover;
-}
+:focus::-webkit-input-placeholder {color: transparent}
+:focus::-moz-placeholder          {color: transparent}
+:focus:-moz-placeholder           {color: transparent}
+:focus:-ms-input-placeholder      {color: transparent}
+
+
+/* плавное изменение прозрачности  placeholder-а при фокусе */
+.input1::-webkit-input-placeholder       {opacity: 1; transition: opacity 0.3s ease;}
+.input1::-moz-placeholder                {opacity: 1; transition: opacity 0.3s ease;}
+.input1:-moz-placeholder                 {opacity: 1; transition: opacity 0.3s ease;}
+.input1:-ms-input-placeholder            {opacity: 1; transition: opacity 0.3s ease;}
+.input1:focus::-webkit-input-placeholder {opacity: 0; transition: opacity 0.3s ease;}
+.input1:focus::-moz-placeholder          {opacity: 0; transition: opacity 0.3s ease;}
+.input1:focus:-moz-placeholder           {opacity: 0; transition: opacity 0.3s ease;}
+.input1:focus:-ms-input-placeholder      {opacity: 0; transition: opacity 0.3s ease;}
+
+/* сдвиг placeholder-а вправо при фокусе*/
+
+.input2::-webkit-input-placeholder       {text-indent: 0px;   transition: text-indent 0.3s ease;}
+.input2::-moz-placeholder                {text-indent: 0px;   transition: text-indent 0.3s ease;}
+.input2:-moz-placeholder                 {text-indent: 0px;   transition: text-indent 0.3s ease;}
+.input2:-ms-input-placeholder            {text-indent: 0px;   transition: text-indent 0.3s ease;}
+.input2:focus::-webkit-input-placeholder {text-indent: 500px; transition: text-indent 0.3s ease;}
+.input2:focus::-moz-placeholder          {text-indent: 500px; transition: text-indent 0.3s ease;}
+.input2:focus:-moz-placeholder           {text-indent: 500px; transition: text-indent 0.3s ease;}
+.input2:focus:-ms-input-placeholder      {text-indent: 500px; transition: text-indent 0.3s ease;}
+
+/* сдвиг placeholder-а вниз при фокусе*/
+
+.input3::-webkit-input-placeholder       {line-height: 20px;  transition: line-height 0.5s ease;}
+.input3::-moz-placeholder                {line-height: 20px;  transition: line-height 0.5s ease;}
+.input3:-moz-placeholder                 {line-height: 20px;  transition: line-height 0.5s ease;}
+.input3:-ms-input-placeholder            {line-height: 20px;  transition: line-height 0.5s ease;}
+.input3:focus::-webkit-input-placeholder {line-height: 100px; transition: line-height 0.5s ease;}
+.input3:focus::-moz-placeholder          {line-height: 100px; transition: line-height 0.5s ease;}
+.input3:focus:-moz-placeholder           {line-height: 100px; transition: line-height 0.5s ease;}
+.input3:focus:-ms-input-placeholder      {line-height: 100px; transition: line-height 0.5s ease;}
 
 *
 {
@@ -94,23 +114,6 @@ ul, ol {
     list-style-type: none;
 }
 
-
-// Display Flex
-// контейнер для выравниваемых элементов
-.flex-container {
-    justify-content: space-around;  // выравнивание по главной оси, блоки равномерно распределены вдоль главной оси
-    align-items: center;        // выравнивание по поперечной оси, блоки располагаются в центре поперечной оси
-    flex-direction: row;       // Направление главной оси flex-контейнера, row по умолчанию, слева направо (в rtl справа налево)
-    display: -webkit-flex;
-    display: -moz-flex;
-    display: -ms-flex;
-    display: -o-flex;
-    display: flex;
-}
-
-// colors
-@color1:#0ff;
-
 .wrapper {
 	display: inline-block;
 	height: 100%;
@@ -139,9 +142,33 @@ body {
 	// .flex-container;
 }
 
+@keyframes playerRight {
+	100% {
+		transform: translate(0, -50%);
+	}
+}
+@keyframes playerLeft {
+	0% {
+		transform: translate(-0, -50%);
+	}
+	100% {
+		transform: translate(-50%, -50%);
+	}
+}
 #player {
-	background: #111;
-	border: 4px solid @color1;
+	.overlayFull {
+		background: rgba(0, 0, 0, .7);
+		display: none;
+		height: 100%;
+		width: 100%;
+		position: absolute;
+		left: 0;
+		top: 0;
+		z-index: 9;
+	}
+	
+	background: rgba(17, 17, 17, .9);
+	border: 4px solid @cyan;
 	border-radius: 5px;
 	color: #eee;
 	// margin: 0 auto;
@@ -154,8 +181,16 @@ body {
 	top: 50vh;
 	transform: translate(-50%, -50%);
 	// transform: translateY(-50%);
-	&.no-translate {
+	/* &.no-translate {
 		transform: translate(0, -50%);
+	} */
+	&.playerRight {
+		animation: playerRight linear .4s;
+		animation-fill-mode: forwards;
+	}
+	&.playerLeft {
+		animation: playerLeft linear .4s;
+		animation-fill-mode: forwards;
 	}
 	.trackContainer {
 		background: url(../img/logo.jpg) no-repeat center;
@@ -182,15 +217,20 @@ body {
 		height: 40px;
 		text-align: right;
 		position: relative;
+		.wrap {
+			display: inline-block;
+		}
 		input {
 			background: rgba(51, 51, 51, .5);
-			border: 1px solid @color1;
+			border: 1px solid @cyan;
 			border-radius: 4px;
 			// display: none;
 			padding: 4px;
 			opacity: 0;
 			height: 100%;
 			width: 0;
+			position: relative;
+			top: -11px;
 			&.visible {
 				display: inline;
 			}
@@ -199,9 +239,23 @@ body {
 		.showFieldSearch {
 			cursor: pointer;
 			height: 100%;
+			&.active + span {
+				display: block;
+                box-shadow: 0 0 12px 12px rgba(0, 255, 255, .3);
+                position: absolute;
+                right: 56px;
+                top: 20px;
+            }
 		}
 		.showAll {
 			cursor: pointer;
+			&.active + span {
+				display: block;
+                box-shadow: 0 0 12px 12px rgba(0, 255, 255, .3);
+                position: absolute;
+                right: 20px;
+                top: 20px;
+            }
 		}
 	}
 	.view {
@@ -213,12 +267,15 @@ body {
 		top: 2px;
 	}
 	.controls {
-		
 		padding-bottom: 6px;
-		div {display: inline-block;}
+		position: relative;
+		z-index: 10;
+		div {
+			display: inline-block;
+		}
 		.button {
 			background: #333;
-			border: 2px solid @color1;
+			border: 2px solid @cyan;
 			border-radius: 100%;
 			cursor: pointer;
 			height: 30px;
@@ -231,12 +288,12 @@ body {
 				height: 100%;
 			}
 			i {
-				color: lighten(@color1, 25%);
+				color: lighten(@cyan, 25%);
 				font-size: 1.4em;
 			}
 			&:hover {
-				box-shadow: 0px 0px 5px 0.4px @color1;
-				i {color: @color1;}
+				box-shadow: 0px 0px 5px 0.4px @cyan;
+				i {color: @cyan;}
 			}
 
 			&.play.visualisation {
@@ -378,7 +435,7 @@ body {
 			bottom: 4px;
 		}
 		input[type=range]::-ms-thumb { /* должен следовать после -webkit- */
-			background-color: @color1;
+			background-color: @cyan;
 			border: 1px solid #bdc3c7;
 			border-radius: 10px;
 			cursor: pointer;
@@ -401,7 +458,7 @@ body {
 		
 
 		.volumeVisualisation {
-			box-shadow: 0 0 16px 14px @color1;
+			box-shadow: 0 0 16px 14px @cyan;
 			height: 0;
 			width: 0;
 			position: relative;
@@ -428,7 +485,7 @@ body {
 				color: #aaa;
 				cursor: pointer;
 				font-size: 2.2em;
-				&:hover {color: @color1;}
+				&:hover {color: @cyan;}
 			}
 			i + i {margin-left: 4px;}
 		}
@@ -526,21 +583,43 @@ body {
 /* IE hacks */
 [data-useragent*="Trident"] #player .controls .volume {bottom: 13px;}
 
-
+@keyframes searchContainerFadeIn {
+	100% {
+		opacity: 1;
+		transform: translateX(-105%);
+	}
+}
+@keyframes searchContainerFadeOut {
+	0% {
+		opacity: 1;
+		transform: translateX(-104%);
+	}
+	100% {
+		opacity: 0;
+		transform: translateX(0%);
+	}
+}
 .searchContainer {
-	background: #212121;
-	border: 4px solid @color1;
+	background: rgba(17, 17, 17, .9);
+	border: 4px solid @cyan;
 	border-radius: 5px;
 	color: #eee;
-	display: none;
-	// float: left;
 	font-size: 1.2em;
 	overflow: auto;
 	padding: 10px;
+	opacity: 0;
 	position: absolute;
+	top: -4px;
 	height: 420px;
 	width: 320px;
-	// left: -330px;
+	&.searchContainerFadeIn {
+		animation: searchContainerFadeIn linear .4s;
+		animation-fill-mode: forwards;
+	}
+	&.searchContainerFadeOut {
+		animation: searchContainerFadeOut linear .4s;
+		animation-fill-mode: forwards;
+	}
 	.close {
 		cursor: pointer;
 		position: absolute;
@@ -554,7 +633,7 @@ body {
 		}
 	}
 	.total {
-		border-bottom: 2px solid lighten(@color1, 30%);
+		border-bottom: 2px solid lighten(@cyan, 30%);
 		display: inline-block;
 		font-size: 1.4em;
 		margin-bottom: 8px;

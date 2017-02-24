@@ -1,27 +1,504 @@
-html.js .loader {
-  position: fixed;
-  z-index: 9999;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: none repeat scroll 0 0 #fff;
+.flex-container {
+  -webkit-justify-content: space-around;
+      -ms-flex-pack: distribute;
+          justify-content: space-around;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
-html.js .loader_inner {
+/* Layout browser style reset
+***********************************************/
+/* html and body
+***********************************************/
+/* Prevent text size adjustment */
+html {
+  height: auto !important;
+  height: 100%;
+  /* height hack */
+  min-height: 100%;
+  font-size: 10px;
+  font-family: "Open Sans", "Helvetica", "Verdana", "Arial", sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+/**
+ * - Reset 'body' margins
+ * - Set common 'line-height' for 'body'
+ * - Set better font rendering for webkit and firefox on Mac
+ */
+body {
+  margin: 0;
+  line-height: 1.4;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-size: 16px;
+  color: #0d0d0d;
+  background: #fff;
+  height: auto !important;
+  height: 100%;
+  /* height hack */
+  min-height: 100%;
+  /* сглаживание шрифтов в вебките */
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+*,
+*::before,
+*::after {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+/* Reset elements margins and padings */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+figure,
+ol,
+ul {
+  margin: 0;
+}
+img {
+  max-width: 100%;
+  height: auto;
+  border: 0;
+}
+a {
+  text-decoration: none;
+  background-color: transparent;
+}
+/* Transition for user action elements */
+a,
+input,
+button,
+select,
+textarea {
+  -webkit-transition: .3s;
+  transition: .3s;
+}
+a:hover,
+a:active,
+a:focus,
+input:hover,
+input:active,
+input:focus,
+button:hover,
+button:active,
+button:focus,
+select:hover,
+select:active,
+select:focus,
+textarea:hover,
+textarea:active,
+textarea:focus {
+  -webkit-transition: .1s;
+  transition: .1s;
+}
+/**
+ * - Prevent modern browsers from displaying 'audio' without controls
+ * - Remove excess height in iOS 5 devices
+ */
+audio:not([controls]) {
+  display: none;
+  height: 0;
+}
+/**
+ * - Address [hidden] styling not present in IE 8-10
+ * - Hide the 'template' element in IE 8-11, Safari and Firefox < 22
+ */
+[hidden],
+template {
+  display: none;
+}
+/* Remove pseudo element in buttons in Firefox */
+::-moz-focus-inner {
+  padding: 0;
+  border: 0;
+}
+/** 
+ * Remove ugly outline from focused elements, 
+ * don't remember to add your own focus styles 
+ */
+:active:focus,
+:hover:focus {
+  outline: 0;
+}
+button,
+input,
+optgroup,
+select,
+textarea {
+  color: inherit;
+  font: inherit;
+  margin: 0;
+}
+button {
+  overflow: visible;
+}
+button,
+select {
+  text-transform: none;
+}
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+  -webkit-appearance: button;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+[disabled] {
+  cursor: default;
+}
+input {
+  line-height: normal;
+}
+input[type="checkbox"],
+input[type="radio"] {
+  padding: 0;
+}
+input[type="search"] {
+  -webkit-appearance: textfield;
+}
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+textarea {
+  overflow: auto;
+}
+body input:required,
+body textarea:required {
+  outline: none;
+}
+body input:required:invalid,
+body textarea:required:invalid {
+  outline: none;
+}
+body input:focus:required:invalid,
+body textarea:focus:required:invalid {
+  outline: none;
+}
+body input:required:invalid,
+body textarea:required:invalid {
+  border: 0 transparent solid;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+td,
+th {
+  padding: 0;
+}
+.clearfix:after,
+.clearfix {
+  clear: both;
+}
+.text-left {
+  text-align: left;
+}
+.text-right {
+  text-align: right;
+}
+.text-center {
+  text-align: center;
+}
+.text-justify {
+  text-align: justify;
+}
+.text-nowrap {
+  white-space: nowrap;
+}
+.text-lowercase {
+  text-transform: lowercase;
+}
+.text-uppercase {
+  text-transform: uppercase;
+}
+.text-capitalize {
+  text-transform: capitalize;
+}
+form {
+  display: none;
   position: absolute;
-  top: 50%;
   left: 50%;
-  width: 60px;
-  height: 60px;
-  margin-top: -30px;
-  margin-left: -30px;
-  background-color: #fff;
-  background-image: url('../img/preloader.gif');
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
+  top: 40%;
+  -webkit-transform: translateX(-50%);
+      -ms-transform: translateX(-50%);
+          transform: translateX(-50%);
+  z-index: 10;
+}
+form textarea {
+  resize: none;
+}
+form input,
+form textarea,
+form button {
+  background: rgba(170, 170, 170, 0.5);
+  border: none;
+  -webkit-border-radius: 4px;
+          border-radius: 4px;
+  color: #000;
+  display: block;
+  font-size: 14px;
+  margin: 0 0 10px;
+  padding: 4px 8px;
+  width: 100%;
+}
+form input.error,
+form textarea.error,
+form button.error {
+  -webkit-box-shadow: inset 0 0 7px 0 #f00;
+          box-shadow: inset 0 0 7px 0 #f00;
+}
+form input:focus,
+form textarea:focus,
+form button:focus {
+  background: rgba(255, 255, 255, 0.8);
+}
+form input[placeholder],
+form textarea[placeholder],
+form button[placeholder] {
+  font-weight: 100;
+}
+form .regSubmit,
+form .authSubmit {
+  background: #00ffff;
+  background: -webkit-gradient(linear, left top, right top, color-stop(0%, #00ffff), color-stop(100%, #0f0));
+  background: -webkit-linear-gradient(left, #00ffff 0%, #0f0 100%);
+  background: -webkit-gradient(linear, left top, right top, from(#00ffff), to(#0f0));
+  background: linear-gradient(to right, #00ffff 0%, #0f0 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='@start', endColorstr='@stop', GradientType=1);
+  color: #000;
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+}
+form .regSubmit:hover,
+form .authSubmit:hover {
+  color: #ccc;
+  -webkit-transition: all .3s;
+  transition: all .3s;
+}
+.loginsUnique {
+  position: absolute;
+  left: -210px;
+  top: 0;
+  height: 150px;
+  width: 200px;
+}
+.userPanel {
+  padding-bottom: 7px;
+  position: relative;
+  z-index: 10;
+}
+.userActions li + li {
+  margin-left: 6px;
+}
+.userActions li {
+  display: inline-block;
+}
+.userActions li button {
+  background: rgba(0, 0, 0, 0.6);
+  border: none;
+  -webkit-border-radius: 2px;
+          border-radius: 2px;
+  color: #fff;
+  display: block;
+  font-size: 14px;
+  padding: 2px 0;
+  width: 55px;
+}
+.userActions li button:hover {
+  background: rgba(0, 0, 0, 0.4);
+  -webkit-box-shadow: 0 0 5px 3px rgba(255, 255, 255, 0.5);
+          box-shadow: 0 0 5px 3px rgba(255, 255, 255, 0.5);
+}
+.userActions li button.active {
+  -webkit-box-shadow: 0 0 8px 5px #00ffff;
+          box-shadow: 0 0 8px 5px #00ffff;
+}
+::-webkit-input-placeholder {
+  color: #fff;
+}
+::-moz-placeholder {
+  color: #fff;
+}
+/* Firefox 19+ */
+:-moz-placeholder {
+  color: #fff;
+}
+/* Firefox 18- */
+:-ms-input-placeholder {
+  color: #fff;
+}
+input[placeholder] {
+  text-overflow: ellipsis;
+}
+input::-moz-placeholder {
+  text-overflow: ellipsis;
+}
+input:-moz-placeholder {
+  text-overflow: ellipsis;
+}
+input:-ms-input-placeholder {
+  text-overflow: ellipsis;
+}
+:focus::-webkit-input-placeholder {
+  color: transparent;
+}
+:focus::-moz-placeholder {
+  color: transparent;
+}
+:focus:-moz-placeholder {
+  color: transparent;
+}
+:focus:-ms-input-placeholder {
+  color: transparent;
+}
+/* плавное изменение прозрачности  placeholder-а при фокусе */
+.input1::-webkit-input-placeholder {
+  opacity: 1;
+  -webkit-transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease;
+}
+.input1::-moz-placeholder {
+  opacity: 1;
+  -webkit-transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease;
+}
+.input1:-moz-placeholder {
+  opacity: 1;
+  -webkit-transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease;
+}
+.input1:-ms-input-placeholder {
+  opacity: 1;
+  -webkit-transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease;
+}
+.input1:focus::-webkit-input-placeholder {
+  opacity: 0;
+  -webkit-transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease;
+}
+.input1:focus::-moz-placeholder {
+  opacity: 0;
+  -webkit-transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease;
+}
+.input1:focus:-moz-placeholder {
+  opacity: 0;
+  -webkit-transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease;
+}
+.input1:focus:-ms-input-placeholder {
+  opacity: 0;
+  -webkit-transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease;
+}
+/* сдвиг placeholder-а вправо при фокусе*/
+.input2::-webkit-input-placeholder {
+  text-indent: 0px;
+  -webkit-transition: text-indent 0.3s ease;
+  transition: text-indent 0.3s ease;
+}
+.input2::-moz-placeholder {
+  text-indent: 0px;
+  -webkit-transition: text-indent 0.3s ease;
+  transition: text-indent 0.3s ease;
+}
+.input2:-moz-placeholder {
+  text-indent: 0px;
+  -webkit-transition: text-indent 0.3s ease;
+  transition: text-indent 0.3s ease;
+}
+.input2:-ms-input-placeholder {
+  text-indent: 0px;
+  -webkit-transition: text-indent 0.3s ease;
+  transition: text-indent 0.3s ease;
+}
+.input2:focus::-webkit-input-placeholder {
+  text-indent: 500px;
+  -webkit-transition: text-indent 0.3s ease;
+  transition: text-indent 0.3s ease;
+}
+.input2:focus::-moz-placeholder {
+  text-indent: 500px;
+  -webkit-transition: text-indent 0.3s ease;
+  transition: text-indent 0.3s ease;
+}
+.input2:focus:-moz-placeholder {
+  text-indent: 500px;
+  -webkit-transition: text-indent 0.3s ease;
+  transition: text-indent 0.3s ease;
+}
+.input2:focus:-ms-input-placeholder {
+  text-indent: 500px;
+  -webkit-transition: text-indent 0.3s ease;
+  transition: text-indent 0.3s ease;
+}
+/* сдвиг placeholder-а вниз при фокусе*/
+.input3::-webkit-input-placeholder {
+  line-height: 20px;
+  -webkit-transition: line-height 0.5s ease;
+  transition: line-height 0.5s ease;
+}
+.input3::-moz-placeholder {
+  line-height: 20px;
+  -webkit-transition: line-height 0.5s ease;
+  transition: line-height 0.5s ease;
+}
+.input3:-moz-placeholder {
+  line-height: 20px;
+  -webkit-transition: line-height 0.5s ease;
+  transition: line-height 0.5s ease;
+}
+.input3:-ms-input-placeholder {
+  line-height: 20px;
+  -webkit-transition: line-height 0.5s ease;
+  transition: line-height 0.5s ease;
+}
+.input3:focus::-webkit-input-placeholder {
+  line-height: 100px;
+  -webkit-transition: line-height 0.5s ease;
+  transition: line-height 0.5s ease;
+}
+.input3:focus::-moz-placeholder {
+  line-height: 100px;
+  -webkit-transition: line-height 0.5s ease;
+  transition: line-height 0.5s ease;
+}
+.input3:focus:-moz-placeholder {
+  line-height: 100px;
+  -webkit-transition: line-height 0.5s ease;
+  transition: line-height 0.5s ease;
+}
+.input3:focus:-ms-input-placeholder {
+  line-height: 100px;
+  -webkit-transition: line-height 0.5s ease;
+  transition: line-height 0.5s ease;
 }
 * {
   margin: 0;
@@ -65,27 +542,6 @@ ul,
 ol {
   list-style-type: none;
 }
-.flex-container {
-  -webkit-justify-content: space-around;
-      -ms-flex-pack: distribute;
-          justify-content: space-around;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: row;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  display: -webkit-flex;
-  display: -moz-flex;
-  display: -ms-flex;
-  display: -o-flex;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
 .wrapper {
   display: inline-block;
   height: 100%;
@@ -108,9 +564,41 @@ ol {
   display: block;
   height: 100%;
 }
+@-webkit-keyframes playerRight {
+  100% {
+    -webkit-transform: translate(0, -50%);
+            transform: translate(0, -50%);
+  }
+}
+@keyframes playerRight {
+  100% {
+    -webkit-transform: translate(0, -50%);
+            transform: translate(0, -50%);
+  }
+}
+@-webkit-keyframes playerLeft {
+  0% {
+    -webkit-transform: translate(0, -50%);
+            transform: translate(0, -50%);
+  }
+  100% {
+    -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+  }
+}
+@keyframes playerLeft {
+  0% {
+    -webkit-transform: translate(0, -50%);
+            transform: translate(0, -50%);
+  }
+  100% {
+    -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+  }
+}
 #player {
-  background: #111;
-  border: 4px solid #0ff;
+  background: rgba(17, 17, 17, 0.9);
+  border: 4px solid #00ffff;
   -webkit-border-radius: 5px;
           border-radius: 5px;
   color: #eee;
@@ -123,11 +611,31 @@ ol {
   -webkit-transform: translate(-50%, -50%);
       -ms-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
+  /* &.no-translate {
+		transform: translate(0, -50%);
+	} */
 }
-#player.no-translate {
-  -webkit-transform: translate(0, -50%);
-      -ms-transform: translate(0, -50%);
-          transform: translate(0, -50%);
+#player .overlayFull {
+  background: rgba(0, 0, 0, 0.7);
+  display: none;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 9;
+}
+#player.playerRight {
+  -webkit-animation: playerRight linear .4s;
+          animation: playerRight linear .4s;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+}
+#player.playerLeft {
+  -webkit-animation: playerLeft linear .4s;
+          animation: playerLeft linear .4s;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
 }
 #player .trackContainer {
   background: url(../img/logo.jpg) no-repeat center;
@@ -156,15 +664,20 @@ ol {
   text-align: right;
   position: relative;
 }
+#player .find .wrap {
+  display: inline-block;
+}
 #player .find input {
   background: rgba(51, 51, 51, 0.5);
-  border: 1px solid #0ff;
+  border: 1px solid #00ffff;
   -webkit-border-radius: 4px;
           border-radius: 4px;
   padding: 4px;
   opacity: 0;
   height: 100%;
   width: 0;
+  position: relative;
+  top: -11px;
 }
 #player .find input.visible {
   display: inline;
@@ -177,8 +690,24 @@ ol {
   cursor: pointer;
   height: 100%;
 }
+#player .find .showFieldSearch.active + span {
+  display: block;
+  -webkit-box-shadow: 0 0 12px 12px rgba(0, 255, 255, 0.3);
+          box-shadow: 0 0 12px 12px rgba(0, 255, 255, 0.3);
+  position: absolute;
+  right: 56px;
+  top: 20px;
+}
 #player .find .showAll {
   cursor: pointer;
+}
+#player .find .showAll.active + span {
+  display: block;
+  -webkit-box-shadow: 0 0 12px 12px rgba(0, 255, 255, 0.3);
+          box-shadow: 0 0 12px 12px rgba(0, 255, 255, 0.3);
+  position: absolute;
+  right: 20px;
+  top: 20px;
 }
 #player .view {
   height: 40px;
@@ -190,6 +719,8 @@ ol {
 }
 #player .controls {
   padding-bottom: 6px;
+  position: relative;
+  z-index: 10;
   /* Chrome, Opera, Safari */
   /* input[type="range"]::-webkit-fill-lower {
 			background: #f3ae36;
@@ -215,7 +746,7 @@ ol {
 }
 #player .controls .button {
   background: #333;
-  border: 2px solid #0ff;
+  border: 2px solid #00ffff;
   -webkit-border-radius: 100%;
           border-radius: 100%;
   cursor: pointer;
@@ -276,11 +807,11 @@ ol {
   font-size: 1.4em;
 }
 #player .controls .button:hover {
-  -webkit-box-shadow: 0px 0px 5px 0.4px #0ff;
-          box-shadow: 0px 0px 5px 0.4px #0ff;
+  -webkit-box-shadow: 0px 0px 5px 0.4px #00ffff;
+          box-shadow: 0px 0px 5px 0.4px #00ffff;
 }
 #player .controls .button:hover i {
-  color: #0ff;
+  color: #00ffff;
 }
 #player .controls .button.play.visualisation .inner {
   border: 2px solid transparent;
@@ -394,7 +925,7 @@ ol {
 }
 #player .controls input[type=range]::-ms-thumb {
   /* должен следовать после -webkit- */
-  background-color: #0ff;
+  background-color: #00ffff;
   border: 1px solid #bdc3c7;
   border-radius: 10px;
   cursor: pointer;
@@ -416,8 +947,8 @@ ol {
   outline: none;
 }
 #player .controls .volumeVisualisation {
-  -webkit-box-shadow: 0 0 16px 14px #0ff;
-          box-shadow: 0 0 16px 14px #0ff;
+  -webkit-box-shadow: 0 0 16px 14px #00ffff;
+          box-shadow: 0 0 16px 14px #00ffff;
   height: 0;
   width: 0;
   position: relative;
@@ -444,7 +975,7 @@ ol {
   font-size: 2.2em;
 }
 #player .playlistsPanel .nav i:hover {
-  color: #0ff;
+  color: #00ffff;
 }
 #player .playlistsPanel .nav i + i {
   margin-left: 4px;
@@ -603,19 +1134,70 @@ ol {
 [data-useragent*="Trident"] #player .controls .volume {
   bottom: 13px;
 }
+@-webkit-keyframes searchContainerFadeIn {
+  100% {
+    opacity: 1;
+    -webkit-transform: translateX(-105%);
+            transform: translateX(-105%);
+  }
+}
+@keyframes searchContainerFadeIn {
+  100% {
+    opacity: 1;
+    -webkit-transform: translateX(-105%);
+            transform: translateX(-105%);
+  }
+}
+@-webkit-keyframes searchContainerFadeOut {
+  0% {
+    opacity: 1;
+    -webkit-transform: translateX(-104%);
+            transform: translateX(-104%);
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform: translateX(0%);
+            transform: translateX(0%);
+  }
+}
+@keyframes searchContainerFadeOut {
+  0% {
+    opacity: 1;
+    -webkit-transform: translateX(-104%);
+            transform: translateX(-104%);
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform: translateX(0%);
+            transform: translateX(0%);
+  }
+}
 .searchContainer {
-  background: #212121;
-  border: 4px solid #0ff;
+  background: rgba(17, 17, 17, 0.9);
+  border: 4px solid #00ffff;
   -webkit-border-radius: 5px;
           border-radius: 5px;
   color: #eee;
-  display: none;
   font-size: 1.2em;
   overflow: auto;
   padding: 10px;
+  opacity: 0;
   position: absolute;
+  top: -4px;
   height: 420px;
   width: 320px;
+}
+.searchContainer.searchContainerFadeIn {
+  -webkit-animation: searchContainerFadeIn linear .4s;
+          animation: searchContainerFadeIn linear .4s;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+}
+.searchContainer.searchContainerFadeOut {
+  -webkit-animation: searchContainerFadeOut linear .4s;
+          animation: searchContainerFadeOut linear .4s;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
 }
 .searchContainer .close {
   cursor: pointer;

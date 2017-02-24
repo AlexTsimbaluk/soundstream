@@ -1,31 +1,26 @@
 <?php
 
-/*For home*/
-$host = "localhost";
-$user = "root";
-$password = "";
-$database = "stations_icecast";
-
-/*For server
 $host = "localhost";
 $user = "soundstream";
 $password = "123456Seven";
-$database = "stations_icecas";*/
+$database = "stations_icecas";
 
+/*$link = mysql_connect($host, $user, $password) or die("Ошибка " . mysql_error($link));
+mysql_select_db($database, $link) or die (mysql_error());*/
 
-$link = mysqli_connect($host, $user, $password, $database);
+$link = mysql_connect($host, $user, $password);
 if(!$link) {
 	echo 'Ошибка подключения к MySQL<br>';
-	echo mysqli_error($link);
+	echo mysql_error($link);
 	exit();
 } else {
 	// echo 'Connect to MySQL<br>';
 }
 
 
-mysqli_set_charset($link, 'utf8');
+mysql_set_charset('utf8');
 
-if(!mysqli_select_db($link, $database)) {
+if(!mysql_select_db($database, $link)) {
 	echo 'Ошибка доступа подключения к базе данных ' . $database . '<br>';
 	exit();
 } else {

@@ -5,21 +5,6 @@
 <!--[if (gte IE 9)|!(IE)]><!--><html lang="ru"> <!--<![endif]-->
 
 <head>
-	<!-- <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>Заголовок</title>
-	<meta name="description" content="">
-	<link rel="shortcut icon" href="img/favicon/favicon.ico" type="image/x-icon">
-	<link rel="apple-touch-icon" href="img/favicon/apple-touch-icon.png">
-	<link rel="apple-touch-icon" sizes="72x72" href="img/favicon/apple-touch-icon-72x72.png">
-	<link rel="apple-touch-icon" sizes="114x114" href="img/favicon/apple-touch-icon-114x114.png">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<link rel="stylesheet" href="libs/bootstrap/css/bootstrap-grid.min.css">
-	<link rel="stylesheet" href="libs/animate/animate.css">
-	<link rel="stylesheet" href="css/fonts.css">
-	<link rel="stylesheet" href="css/main.css">
-	<link rel="stylesheet" href="css/media.css">
-	<script src="libs/modernizr/modernizr.js"></script> -->
 
 	<!-- META -->
     <meta charset="utf-8">
@@ -41,34 +26,13 @@
     <!-- CSS -->
     <link rel="stylesheet" href="libs/font-awesome-4.3.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="libs/custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css" />
-    
-    <!-- bootstrap-grid-custom.min.css -->
-    <link rel="stylesheet" href="css/bootstrap-grid-custom.min.css">
-    <!-- <link rel="stylesheet" href="libs/bootstrap/css/bootstrap-grid.min.css"> -->
 
-    <!-- bootstrap-grid-custom.min.css inline -->
-    <!-- <style></style> -->
-    
-    <link rel="stylesheet" href="css/framework.min.css">
-
-    <!-- framework.min.css inline -->
-    <!-- <style></style> -->
-
-    <!-- <link rel="stylesheet" href="css/header.css"> -->
-	<!-- <link rel="stylesheet" href="css/header.min.css"> -->
-
-	<!-- header.min.css inline -->
-	<!-- <style></style> -->
+    <!-- <link rel="stylesheet" href="css/bootstrap-grid-custom.min.css"> -->
+    <!-- <link rel="stylesheet" href="css/framework.min.css"> -->
 
     <link rel="stylesheet" href="css/fonts.css">
-
-
-	<!-- <link rel="stylesheet" href="css/main.min.css"> -->
 	<link rel="stylesheet" href="css/main.css">
-
-	<!-- <link rel="stylesheet" href="css/media.min.css"> -->
 	<link rel="stylesheet" href="css/media.css">
-
 
 	<!-- Scripts -->
 	<script src="libs/modernizr/modernizr.js"></script>
@@ -85,84 +49,95 @@
 
 <body>
 
-	<!--[if lt IE 10]>
-      	<p class="browsehappy">Вы используете <strong>УСТАРЕВШИЙ Internet Explorer</strong> браузер. Пожалуйста, <a href="http://browsehappy.com/">обновите ваш Браузер</a> чтобы увидеть больше возможностей на сайтах!</p>
-    <![endif]-->
-	
-	<!-- Preloader  -->
-	<!-- <div class="loader">
-		<div class="loader_inner"></div>
-	</div> -->
-
-	
-
-	<!-- <audio src="http://pub2.radiotunes.com/radiotunes_clubbollywood_aacplus" preload="auto"></audio> -->
-
-
-		<div class="admin">
-			<ul>
-				<li class="adminItem"><a href="/">A</a></li>
-				<li class="adminItem"><a class="clearLocalStorage" href="#">Clear</a></li>
-				<li class="adminItem"><a class="runSql" href="/sql/db_queries.php">SQL</a></li>
-			</ul>
-		</div>
+	<div class="admin">
+		<ul>
+			<li class="adminItem"><a href="/">A</a></li>
+			<li class="adminItem"><a class="clearLocalStorage" href="#">Clear</a></li>
+			<li class="adminItem"><a class="runSql" href="/sql/db_queries.php">SQL</a></li>
+		</ul>
+	</div>
 		
-		<!-- <div class="wrap"> -->
-			<div id="player">
-			
-				<div class="searchContainer mCustomScrollbar">
-					<div class="close"><i class="fa fa-close"></i></div>
-					<div class="result"></div>
-				</div>
+	<div id="player">
 
-				<div class="trackContainer">
-					<div class="overlay"></div>
+		<div class="overlayFull"></div>
 
-					<div class="info"></div>
+		<form action="" method="post" class="form-reg" novalidate>
+			<input type="text" class="regLogin" name="regLogin" placeholder="Login">
+			<div class="loginsUnique"></div>
+			<input type="password" class="regPass" name="regPass" placeholder="Password">
+			<input type="password" class="regPassEx" name="regPassEx" placeholder="Repeat Password">
+			<button class="regSubmit">Register</button>
+		</form>
+		<div class="registration-bad"></div>
 
-					<div class="time">
-						<span class="hours">00</span>
-						<span class="minutes">00</span>
-						<span class="seconds">00</span>
-					</div>
 
-					<div class="find">
-						<input type="text" placeholder="Search" />
-						<img class="showFieldSearch" src="img/icon-eye.png" alt="" title="Search" />
-						<!-- <span class="showAll"><i class="fa fa-list"></i></span> -->
-						<img class="showAll" src="img/icon-list.png" alt="" title="Show all stations" />
-					</div>
+		<form action="" method="post" class="form-auth">
+			<input type="text" class="authLogin" name="authLogin" placeholder="Login">
+			<input type="password" class="authPass" name="authPass" placeholder="Password">
+			<button class="authSubmit">Sign In</button>
+		</form>
+	
+		<div class="searchContainer mCustomScrollbar">
+			<div class="close"><i class="fa fa-close"></i></div>
+			<div class="result"></div>
+		</div>
 
-					<div class="view"></div>
+		<div class="trackContainer">
+			<div class="overlay"></div>
 
-					<div class="controls">
-						<!-- <div class="play button"><span class="inner"></span><span class="outer"></span><div class="iconWrapper"><i class="fa fa-play"></i></div></div> -->
-						<div class="play button"><div class="iconWrapper"><i class="fa fa-play"></i></div></div>
-						<div class="stop button"><div class="iconWrapper"><i class="fa fa-stop"></i></div></div>
-						<div class="prev button"><div class="iconWrapper"><i class="fa fa-step-backward"></i></div></div>
-						<div class="next button"><div class="iconWrapper"><i class="fa fa-step-forward"></i></div></div>
+			<div class="info"></div>
 
-						<div class="volume">
-							<input type="range" min="0" max="100" step="1" value="100" />
-							<span class="val"></span>
-						</div>
-						<!-- <div class="volumeVisualisation"></div> -->
-					</div>
-					
-				</div>
-
-				<div class="playlistsPanel">
-					<div class="nav">
-						<i class="fa fa-angle-left"></i>
-						<i class="fa fa-angle-right"></i>
-					</div>
-				</div>
-
-				<div class="playlistContainer mCustomScrollbar">
-					<!-- <div class="playlist active sortable" data-name="Default"></div> -->
-				</div>
+			<div class="time">
+				<span class="hours">00</span>
+				<span class="minutes">00</span>
+				<span class="seconds">00</span>
 			</div>
-		<!-- </div> -->
+
+			<div class="find">
+				<input type="text" placeholder="Search" />
+				<img class="showFieldSearch" src="img/icon-eye.png" alt="" title="Search" />
+				<span></span>
+				<img class="showAll" src="img/icon-list.png" alt="" title="Show all stations" />
+				<span></span>
+			</div>
+
+			<!-- <div class="view"></div> -->
+
+			<div class="userPanel">
+				<ul class="userActions">
+					<li><button class="showFormReg">Reg</button></li>
+					<li><button class="showFormSign">Auth</button></li>
+					<!-- <li><button class="userAction">user</button></li> -->
+				</ul>
+			</div>
+
+			<div class="controls">
+				<!-- <div class="play button"><span class="inner"></span><span class="outer"></span><div class="iconWrapper"><i class="fa fa-play"></i></div></div> -->
+				<div class="play button"><div class="iconWrapper"><i class="fa fa-play"></i></div></div>
+				<div class="stop button"><div class="iconWrapper"><i class="fa fa-stop"></i></div></div>
+				<div class="prev button"><div class="iconWrapper"><i class="fa fa-step-backward"></i></div></div>
+				<div class="next button"><div class="iconWrapper"><i class="fa fa-step-forward"></i></div></div>
+
+				<div class="volume">
+					<input type="range" min="0" max="100" step="1" value="100" />
+					<span class="val"></span>
+				</div>
+				<!-- <div class="volumeVisualisation"></div> -->
+			</div>
+			
+		</div>
+
+		<div class="playlistsPanel">
+			<div class="nav">
+				<i class="fa fa-angle-left"></i>
+				<i class="fa fa-angle-right"></i>
+			</div>
+		</div>
+
+		<div class="playlistContainer mCustomScrollbar">
+			<!-- <div class="playlist active sortable" data-name="Default"></div> -->
+		</div>
+	</div>
 
 
 	
@@ -179,5 +154,7 @@
 	<script src="libs/jquery-ui-sortable/jquery-ui.min.js"></script>
 	
 	<script src="js/common.js"></script>
+	<script src="js/user.js"></script>
+
 </body>
 </html>

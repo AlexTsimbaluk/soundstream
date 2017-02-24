@@ -1,3 +1,16 @@
+// Display Flex
+// контейнер для выравниваемых элементов
+.flex-container {
+    justify-content: space-around;  // выравнивание по главной оси, блоки равномерно распределены вдоль главной оси
+    align-items: center;        // выравнивание по поперечной оси, блоки располагаются в центре поперечной оси
+    flex-direction: row;       // Направление главной оси flex-контейнера, row по умолчанию, слева направо (в rtl справа налево)
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+}
+
 .border-radius(@radius: 5px) {
     border-radius: @radius;
     -moz-border-radius: @radius;
