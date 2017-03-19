@@ -1,6 +1,6 @@
 <?php
 
-include_once 'db_connection.php';
+require_once 'db_connection.php';
 
 function d($value = null, $stop = true) {
 	echo "<br><br>Debug:<br><br><pre>";
@@ -13,51 +13,19 @@ function secureData($fieldData) {
 	return htmlspecialchars(stripslashes(trim($fieldData)));
 }
 
-function dbConnect() {
-	$host = "localhost";
-	$user = "root";
-	$password = "";
-	$database = "stations_icecast";
-
-	$link = mysqli_connect($host, $user, $password, $database);
-	if(!$link) {
-		echo 'Ошибка подключения к MySQL<br>';
-		echo mysqli_error($link);
-		exit();
-	} else {
-		// echo 'Connect to MySQL<br>';
+function getSalt() {
+	$salt = '';
+	$saltLength = 8; //длина соли
+	for($i=0; $i<$saltLength; $i++) {
+		$salt .= chr(mt_rand(33, 126)); //символ из ASCII-table
 	}
-
-	mysqli_set_charset($link, 'utf8');
-
-	if(!mysqli_select_db($link, $database)) {
-		echo 'Ошибка доступа подключения к базе данных ' . $database . '<br>';
-		exit();
-	} else {
-		// echo 'Connect to DB<br>';
-	}
+	return $salt;
 }
+
 
 // Получение всех станций текущего плейлиста и его формирование
 function getPlaylistStations($arrId) {
-	$host = "localhost";
-	$user = "root";
-	$password = "";
-	$database = "stations_icecast";
-	$link = mysqli_connect($host, $user, $password, $database);
-	if(!$link) {
-		echo 'Ошибка подключения к MySQL<br>';
-		echo mysqli_error($link);
-		exit();
-	} else {
-	// echo 'Connect to MySQL<br>';
-	}
-	mysqli_set_charset($link, 'utf8');
-
-	if(!mysqli_select_db($link, $database)) {
-		echo 'Ошибка доступа подключения к базе данных ' . $database . '<br>';
-		exit();
-	}
+	global $link;
 
 	$data = array();
 	for($i = 0; $i < count($arrId); $i++) {
@@ -93,25 +61,7 @@ function getPlaylistStations($arrId) {
 
 // Получение и добавление одной станции в текущий плейлист
 function getStation($id) {
-	// include_once 'db_connection.php';
-	$host = "localhost";
-	$user = "root";
-	$password = "";
-	$database = "stations_icecast";
-	$link = mysqli_connect($host, $user, $password, $database);
-	if(!$link) {
-		echo 'Ошибка подключения к MySQL<br>';
-		echo mysqli_error($link);
-		exit();
-	} else {
-	// echo 'Connect to MySQL<br>';
-	}
-	mysqli_set_charset($link, 'utf8');
-
-	if(!mysqli_select_db($link, $database)) {
-		echo 'Ошибка доступа подключения к базе данных ' . $database . '<br>';
-		exit();
-	}
+	global $link;
 
 	$query = "select * from stations where station_id = $id";
 	$result = mysqli_query($link, $query);
@@ -132,29 +82,9 @@ function getStation($id) {
 
 // Поиск станций и показ результатов
 function searchStation($target) {
-	// include_once 'db_connection.php';
-	$host = "localhost";
-	$user = "root";
-	$password = "";
-	$database = "stations_icecast";
-	$link = mysqli_connect($host, $user, $password, $database);
-	if(!$link) {
-		echo 'Ошибка подключения к MySQL<br>';
-		echo mysqli_error($link);
-		exit();
-	} else {
-	// echo 'Connect to MySQL<br>';
-	}
-	mysqli_set_charset($link, 'utf8');
-
-	if(!mysqli_select_db($link, $database)) {
-		echo 'Ошибка доступа подключения к базе данных ' . $database . '<br>';
-		exit();
-	}
+	global $link;
 
 	$target = secureData($target);
-	// $query = "select * from stations where station_title like '" . $target . "' '%';";
-	// $query = "select * from stations where station_title like '%'" . $target . "'%' or station_url like '%'" . $target . "'%'";
 	$query = "select * from stations where station_title like '%$target%' or station_url like '%$target%'";
 	$result = mysqli_query($link, $query);
 	$data = array();
@@ -174,26 +104,7 @@ function searchStation($target) {
 
 // Получение всех станций и показ результатов
 function getAllStations() {
-	// include_once 'db_connection.php';
-	
-	$host = "localhost";
-	$user = "root";
-	$password = "";
-	$database = "stations_icecast";
-	$link = mysqli_connect($host, $user, $password, $database);
-	if(!$link) {
-		echo 'Ошибка подключения к MySQL<br>';
-		echo mysqli_error($link);
-		exit();
-	} else {
-	// echo 'Connect to MySQL<br>';
-	}
-	mysqli_set_charset($link, 'utf8');
-
-	if(!mysqli_select_db($link, $database)) {
-		echo 'Ошибка доступа подключения к базе данных ' . $database . '<br>';
-		exit();
-	}
+	global $link;
 
 	$query = "select * from stations order by station_id limit 100";
 	$result = mysqli_query($link, $query);
@@ -213,3 +124,238 @@ function getAllStations() {
 
 	mysqli_close($link);
 }
+
+// Проверка на уникальность за сегодня 
+function checkUniqToday($uniqHash) {
+
+	global $link;
+
+	$today = date("d");
+
+	$query = "select * from visits where visit_date like '" . $today . "%' 
+									and visit_cookie like '%$uniqHash%'";
+
+	$result = mysqli_query($link, $query);
+
+	$data = array();
+	while ($row = mysqli_fetch_assoc($result)) {
+		$data[] = $row;
+	}
+	echo json_encode($data);
+
+	if (!$result) {
+		echo mysqli_error($link);
+	} else {
+		
+	}
+
+	mysqli_close($link);
+
+}
+
+// Уникальное посещение
+function addUniqVisit($visit) {
+
+	global $link;
+
+	$now = date("d.m.Y H:i:s");
+
+	$salt ='';
+
+	$query = "insert into `visits` (`visit_cookie`,
+									`visit_ip`,
+									`visit_ref`,
+									`visit_useragent`,
+									`visit_platform`,
+									`visit_screensize`,
+									`visit_browsersize`,
+									`visit_timeonsite`,
+									`visit_date`) 
+							VALUES ('".$visit['cookie']."','"
+									  .ip2long($_SERVER["REMOTE_ADDR"])."','"
+									  .$_SERVER["HTTP_REFERER"]."','"
+									  .$visit['useragent']."','"
+									  .$visit['platform']."','"
+									  .$visit['screensize']."','"
+									  .$visit['browsersize']."','"
+									  .$visit['timeonsite']."','"
+									  .$now."');";
+
+
+	$result = mysqli_query($link, $query);
+	if (!$result) {
+		echo mysqli_error($link);
+	} else {
+		echo 'GOOD QUERY!';
+	}
+
+	mysqli_close($link);
+
+}
+
+// Не уникальное посещение
+function addHit($hit) {
+
+	global $link;
+
+	$now = date("d.m.Y H:i:s");
+
+	$salt ='';
+
+	$query = "insert into `hits` (`hit_cookie`,
+									`hit_timeonsite`,
+									`hit_date`) 
+							VALUES ('".$hit['cookie']."','"
+									  .$hit['timeonsite']."','"
+									  .$now."');";
+
+
+	$result = mysqli_query($link, $query);
+	if (!$result) {
+		echo mysqli_error($link);
+	} else {
+		echo 'GOOD QUERY!';
+	}
+
+	mysqli_close($link);
+
+}
+
+
+
+/*
+* Registraiton & Authorization
+*/
+function loginUniq($field) {
+	global $link;
+
+	$field = secureData($field);
+	$query = "select `user_login` from `users` where `user_login` like '".$field."';";
+	$result = mysqli_query($link, $query);
+	$data = array();
+	while ($row = mysqli_fetch_assoc($result)) {
+		$data[] = $row;
+	}
+	if(count($data) > 0) {
+		echo json_encode($data);	
+	} else {
+		echo '';
+	}
+
+	if (!$result) {
+		echo mysqli_error($link);
+	} else {
+		// echo 'GOOD QUERY!';
+	}
+	mysqli_close($link);
+}
+
+function regUser($login, $password) {
+	global $link;
+
+	$login = secureData($login);
+	$salt = getSalt();
+	$password = md5(secureData($password) . $salt);
+	$now = date("d.m.Y H:i:s");
+
+	$query = "insert into `users` (`user_login`, `user_password`, `user_salt`, `user_reg_date`) 
+			VALUES ('".$login."','"
+					  .$password."','"
+					  .$salt."','"
+					  .$now."');";
+	$result = mysqli_query($link, $query);
+	if (!$result) {
+		echo mysqli_error($link);
+	} else {
+		// echo 'GOOD QUERY!';
+	}
+
+	mysqli_close($link);
+}
+
+function authUser($login, $password) {
+	global $link;
+
+	$login = secureData($login);
+	// $password = secureData($password);
+	// $salt = getSalt();
+	// $password = md5(secureData($password) . $salt);
+	$now = date("d.m.Y H:i:s");
+
+	$query = "select * from `users` where `user_login` like '".$login."';";
+	$result = mysqli_query($link, $query);
+
+	$user = mysqli_fetch_assoc($result);
+	// d($user);
+	if(!empty($user)) {
+		$salt = $user["user_salt"];
+		// echo $salt . '<br>';
+		$password = md5(secureData($password) . $salt);
+		// echo $password . '<br>' . $user['user_password'];
+		// echo $user['user_password'];
+		if($user['user_password'] == $password) {
+			session_start(); 
+			$_SESSION['auth'] = true;
+			$_SESSION['id'] = $user['user_id']; 
+			$_SESSION['login'] = $user['user_login'];
+			echo json_encode($user);
+			// d($user);
+		} else {
+			
+		}
+		
+	} else {
+
+	}
+	if (!$result) {
+		echo mysqli_error($link);
+	} else {
+		
+	}
+
+	mysqli_close($link);
+}
+
+
+
+/*function getUsersList() {
+
+	$data = array();
+	$query ="select * from users order by user_id desc";
+	$result = mysql_query($query);
+	if (!$result) {
+		echo mysqli_error($link) . '<br>';
+	} else {
+		// echo 'Good';
+	}
+	if(mysql_num_rows($result) > 0) {
+		while ($row = mysqli_fetch_assoc($result)) {
+			$data[] = $row;
+		}
+		$data = json_encode($data);
+		echo $data;
+	} else {
+		echo "No entries";
+	}
+
+	mysqli_close($link);
+}*/
+
+
+
+
+/*function loginIsFree($login) {
+	global $link;
+
+	$login = secureData($login);
+	$query = "select `user_login` from `users` where `user_login` like '".$login."' '%';";
+	$result = mysqli_query($link, $query);
+
+	if (empty(mysqli_fetch_assoc($result))) {
+		// echo mysqli_error($link);
+		echo 'true';
+	} else {
+		echo 'false';
+	}
+	mysqli_close($link);
+}*/

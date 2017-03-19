@@ -49,21 +49,30 @@
 
 <body>
 
+	<div class="debug"></div>
+
 	<div class="admin">
 		<ul>
 			<li class="adminItem"><a href="/">A</a></li>
-			<li class="adminItem"><a class="clearLocalStorage" href="#">Clear</a></li>
+			<li class="adminItem"><a class="clearLocalStorage" href="#">Reset</a></li>
+			<li class="adminItem"><a class="clearUniqHash" href="#">Clear U</a></li>
 			<li class="adminItem"><a class="runSql" href="/sql/db_queries.php">SQL</a></li>
 		</ul>
 	</div>
 		
 	<div id="player">
 
+		<div class="spinner">
+			<div class="bounce1"></div>
+			<div class="bounce2"></div>
+			<div class="bounce3"></div>
+		</div>
+
 		<div class="overlayFull"></div>
 
 		<form action="" method="post" class="form-reg" novalidate>
 			<input type="text" class="regLogin" name="regLogin" placeholder="Login">
-			<div class="loginsUnique"></div>
+			<div class="loginsUniq"></div>
 			<input type="password" class="regPass" name="regPass" placeholder="Password">
 			<input type="password" class="regPassEx" name="regPassEx" placeholder="Repeat Password">
 			<button class="regSubmit">Register</button>
@@ -72,10 +81,14 @@
 
 
 		<form action="" method="post" class="form-auth">
+			<div class="errors"></div>
 			<input type="text" class="authLogin" name="authLogin" placeholder="Login">
 			<input type="password" class="authPass" name="authPass" placeholder="Password">
 			<button class="authSubmit">Sign In</button>
 		</form>
+
+		<div class="successReg"></div>
+		<div class="successAuth"></div>
 	
 		<div class="searchContainer mCustomScrollbar">
 			<div class="close"><i class="fa fa-close"></i></div>
@@ -85,7 +98,9 @@
 		<div class="trackContainer">
 			<div class="overlay"></div>
 
-			<div class="info"></div>
+			<div class="info" title="track">
+				<div class="trackTitle"></div>
+			</div>
 
 			<div class="time">
 				<span class="hours">00</span>
@@ -153,8 +168,9 @@
 	<script src="libs/custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
 	<script src="libs/jquery-ui-sortable/jquery-ui.min.js"></script>
 	
-	<script src="js/common.js"></script>
+	<script src="js/player.js"></script>
 	<script src="js/user.js"></script>
+	<script src="js/visits.js"></script>
 
 </body>
 </html>

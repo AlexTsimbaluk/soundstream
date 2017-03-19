@@ -26,6 +26,19 @@ $(document).ready(function() {
 		return Math.floor(Math.random() * (max - min + 1)) + min;
 	}
 
+	function getHash(size) {
+		var hash = '';
+
+		for(var i = 0; i < size; i++) {
+			hash += String.fromCharCode(getRandomInt(33, 127));
+		}
+		
+		return hash;
+	}
+
+	console.log(getHash(9));
+
+
 	// Получение случайного цвета rgb
 	function getRandomRgbColor() {
 		var color = '';
@@ -55,7 +68,38 @@ $(document).ready(function() {
 
 	// Отобразить название станции при воспроизведении
 	function displayState() {
-		$('#player .info').html(playerState.playlists[playerState.currentPlaylist].currentTrack.title);
+		var title = playerState.playlists[playerState.currentPlaylist].currentTrack.title,
+			titleSize = title.length,
+			titleContainer = $('#player .info .trackTitle'),
+			maxWidth = 250,
+			maxSize,
+			titleContainerWidth,
+			ratio
+			;
+
+		titleContainer.html(title)
+						.removeClass('runningString')
+						.parent().css({'width':'auto'});
+
+		titleContainerWidth = titleContainer.width();
+		ratio = titleContainerWidth / titleSize;
+		maxSize = Math.floor(maxWidth / ratio) - 5;
+
+		if(titleContainerWidth > 240) {
+			console.log(titleContainerWidth, titleSize, ratio, maxSize);
+			// title.substr(0, maxSize);
+			console.log(title.length);
+			if(window.innerWidth > 700) {
+				titleContainer.addClass('runningString')
+								.parent().css({'width':'240px'});
+			} else {
+				titleContainer.html(title.substr(0, maxSize) + '...');
+			}
+			
+		} else {
+			titleContainer.removeClass('runningString')
+							.parent().css({'width':'auto'});
+		}
 	}
 
 	// Отобразить время восроизведения
@@ -118,8 +162,7 @@ $(document).ready(function() {
 		playerState.playlistsOrder.push(this.name);
 	}
 
-	var browser = $('body');
-	browser.attr('data-useragent', navigator.userAgent);
+	$('body').attr('data-useragent', navigator.userAgent);
 
 	var playlistContainer = $('#player .playlistContainer'),
 		playlistsPanel = $('#player .playlistsPanel'),
@@ -220,6 +263,7 @@ $(document).ready(function() {
 
 	// Визуализация выбранного играющего трека и кнопки play
 	var intervalVis = null;
+
 	function visualisation(el) {
 		clearInterval(intervalVis);
 
@@ -306,6 +350,7 @@ $(document).ready(function() {
 	});
 
 	$('.playlistContainer').on('dblclick', '.track', function(e) {
+		// debugger;
 		var url = $(this).data('stationUrl');
 
 		player.src = url;
@@ -341,7 +386,9 @@ $(document).ready(function() {
 
 		visualisationStop(currentTrackEl);
 		$('#player .play').removeClass('visualisation');
-		$('#player .info').html('');
+		$('#player .info .trackTitle').html('')
+										.removeClass('runningString')
+										.parent().css({'width':'auto'});
 
 		player.pause();
 		player.currentTime = 0;
@@ -389,12 +436,13 @@ $(document).ready(function() {
 
 		if(searchInput.hasClass('visible') == false) {
 			searchInput.addClass('visible')
-						.animate({opacity: 1, width: 212}, 100);
+						.animate({opacity: 1, width: 200}, 100);
 
 			setTimeout(function() {
 				searchInput.focus();
 			}, 300);
-		} else {
+		}
+		else {
 			searchInput.removeClass('visible')
 						.animate({opacity: 0, width: 0}, 100)
 						.blur();
@@ -405,7 +453,11 @@ $(document).ready(function() {
 	$('#player .find input').on('keyup', function(e) {
 		var target = $(this).val();
 
+		
+
 		if(target.length > 2) {
+			$(".spinner").show();
+
 			$.ajax({
 				data: {'action': 'search', 'target': target},
 				success: function(data) {
@@ -431,12 +483,18 @@ $(document).ready(function() {
 
 					result.html(markup);
 
+					$(".spinner").hide();
+
 					$('.searchContainer')
 							.removeClass('searchContainerFadeOut')
 							.addClass('searchContainerFadeIn visible')
 							.parent()
 							.removeClass('playerLeft')
 							.addClass('playerRight');
+
+					if(window.innerHeight <= 640 && window.innerWidth < 700) {
+						$('.playlistContainer').toggleClass('hidden');
+					}
 				}
 			});
 		}
@@ -445,6 +503,7 @@ $(document).ready(function() {
 	// Получить все станции
 	$('#player .find .showAll').on('click', function(e) {
 		$(this).toggleClass('active');
+		$(".spinner").show();
 		$.ajax({
 			data: {'action': 'getAllStations'},
 			success: function(data) {
@@ -470,6 +529,8 @@ $(document).ready(function() {
 
 				result.html(markup);
 
+				$(".spinner").hide();
+
 				if($('.searchContainer').hasClass('visible')) {
 					$('.searchContainer').removeClass('searchContainerFadeIn visible')
 										.addClass('searchContainerFadeOut')
@@ -482,6 +543,10 @@ $(document).ready(function() {
 										.removeClass('playerLeft')
 										.addClass('playerRight');
 				}
+
+				if(window.innerHeight <= 640 && window.innerWidth < 700) {
+					$('.playlistContainer').toggleClass('hidden');
+				}
 				
 			}
 		});
@@ -490,6 +555,11 @@ $(document).ready(function() {
 	// Закрытие блока с результатами поиска
 	$('.searchContainer .close').on('click', function(e) {
 		$('.showAll').removeClass('active');
+
+		if(window.innerHeight <= 640 && window.innerWidth < 700) {
+			$('.playlistContainer').toggleClass('hidden');
+		}
+
 		$('.searchContainer').removeClass('searchContainerFadeIn visible')
 							.addClass('searchContainerFadeOut')
 							.parent().removeClass('playerRight')
@@ -532,7 +602,7 @@ $(document).ready(function() {
 	}
 
 
-	// Превоначальное случайное фоновое изображение для body
+	// Первоначальное случайное фоновое изображение для body
 	$('body').css({'background':'url("../img/bg/bg' + getRandomInt(1, 10) + '.jpg") no-repeat center / cover'});
 	
 	/*Slider for background*/
@@ -574,18 +644,424 @@ $(document).ready(function() {
 	});
 
 
+	console.log(navigator);
+
+	/*
+	Чтобы на экранах в высоту меньше 640px у блока playlistContainer с треками 
+	выставить всю доступную высоту
+	*/
+	if(window.innerHeight <= 640 && window.innerWidth < 700) {
+		var _playlistContainerHeight = $('#player').height() - ($('#player .playlistsPanel').height() + $('#player .trackContainer').height());
+		console.log(_playlistContainerHeight);
+		$('.searchContainer, .playlistContainer', '#player').height(_playlistContainerHeight);
+	}
+	
+
 });
 
 $(window).load(function() {
 
-	var dateLoad = new Date().getTime();
+	// var dateLoad = new Date().getTime();
 	// console.log(dateLoad, dateStart);
 	// console.log((dateLoad - dateStart) + 'ms');
 
 	// Preloader
-	/*$(".loader_inner").fadeOut();
-	$(".loader").delay(400).fadeOut("slow");*/
+	// $(".spinner").fadeOut(300);
+	// $(".loader").delay(400).fadeOut("slow");
 
 		
 });
 
+
+var dateStart = new Date().getTime();
+
+$(document).ready(function() {
+
+	/*$('.userPanel button').click(function(e) {
+		console.log((this));
+		$('.userPanel button').removeClass('active');
+		$('.form-auth, .form-reg').fadeOut()
+	});*/
+
+	$('.showFormSign').click(function() {
+		$(this).toggleClass('active').siblings().toggleClass('active');
+		$('.form-auth').toggleClass('visible').fadeToggle(300);
+		$('.overlayFull').toggleClass('visible').fadeToggle(300);
+	});
+
+	$('.showFormReg').click(function() {
+		$(this).toggleClass('active').siblings().toggleClass('active');
+		$('.form-reg').toggleClass('visible').fadeToggle(300);
+		$('.overlayFull').toggleClass('visible').fadeToggle(300);
+	});
+
+	function popupClose(popup, delay) {
+		popup.fadeOut(delay);
+	}
+
+	//закрытие модального окна и формы, сброс полей формы
+	$(".popup-overlay, .close-popup").click(function (e){
+		popupClose($(".popup-container, .popup-overlay"), 500);
+		// $(".popup-container, .popup-overlay").fadeOut(500);
+		$(':input', ".popup-container").not(':button, :submit, :reset, :hidden').val('').removeAttr('checked').removeAttr('selected');
+	});
+
+
+	function validateField(element) {
+		// console.log('validateField');
+		var pattern, errorMessage, top;
+		if(element.attr('type') == 'text') {
+			pattern = /^[A-Za-zА-Яа-яЁё0-9\._-]{3,27}$/;
+			errorMessage = 'От 3 до 20 символов';
+			top = element.position().top;
+		} else if(element.attr('type') == 'password') {
+			pattern = /^[A-Za-zА-Яа-яЁё0-9\._-]{5,}$/;
+			errorMessage = 'От 5 символов';
+			top = element.position().top;
+		}
+		
+		var value = element.val();
+		var check = true;
+		if(value.search(pattern) != 0) {
+			element.addClass('error');
+			/*if(element.prev().hasClass('errorTitle') == false) {
+				element.before('<div class="errorTitle">' + errorMessage);
+				element.prev('.errorTitle').css({'display':'inline-block', 'top':top});
+			} else {
+				element.prev('.errorTitle').css({'display':'inline-block', 'top':top});
+			}*/
+			check = false;
+		} else {
+			element.removeClass('error');
+			// element.prev('.errorTitle').css({'display':'none'});
+		}
+		return check;
+	}
+
+	function equalPassword(pass1, pass2) {
+		// console.log('equalPassword');
+		if(pass1.val() != pass2.val()) {
+			pass2.addClass('error');
+			/*if(pass2.prev().hasClass('errorTitlePass') == false) {
+				pass2.before('<div class="errorTitlePass">Пароли не совпадают');
+				pass2.prev('.errorTitlePass').css({'display':'inline-block', 'top':top});
+			} else {
+				pass2.prev('.errorTitlePass').css({'display':'inline-block', 'top':top});
+			}*/
+			return false;
+		} else {
+			pass2.removeClass('error');
+			// pass2.prev('.errorTitlePass').css({'display':'none'});
+			return true;
+		}
+	}
+
+	function loginIsFree(login) {
+		console.log('loginIsFree');
+		// console.log($(login));
+		$.ajax({
+			type: "POST",
+			data: {'action': 'loginIsFree', 'value': login.val()},
+			url: 'actionsRegistration.php',
+			complete: function() {},
+			statusCode: {
+				200: function(message) {
+					// console.log(message);
+				},
+				403: function(jqXHR) {
+					var error = JSON.parse(jqXHR.responseText);
+					$("body").prepend(error.message);
+				}
+			},
+			error: function (error, xhr, status, errorThrown) {
+				console.log('error');
+				$('.registration-bad').html('NO AJAX');
+			},
+			success: function(data) {
+				// console.log("Good");
+				
+				if(data === 'true') {
+					// console.log($(login));
+					console.log('good');
+					login.removeClass('busy');
+					// return true;
+				} else {
+					// console.log($(login));
+					console.log('busy');
+					login.addClass('busy');
+					$('.loginsUnique').html('Login is busy');
+					setTimeout(function() {
+						$('.loginsUnique').html('');
+					}, 4000);
+					// return false;
+				}
+				/*var response = JSON.parse(data);
+				console.log(response);
+				$('.loginsUnique').html('');
+				var markup = '';
+				for(var i = 0; i < response.length; i++) {
+					var fieldBusy = response[i];
+					markup += '<div class=\"fieldUniques\"><div class=\"field\">' + fieldBusy.user_login
+					+ '</div></div>';
+				}
+				$('.loginsUnique').html(markup);
+				setTimeout(function() {
+					$('.loginsUnique').html('');
+				}, 4000);*/
+			}
+		});
+	}
+
+	/*****************************************
+	REGISTRATION
+	******************************************/
+
+	$('.form-reg .regLogin').keyup(function(e) {
+		
+		var login = $('.form-reg .regLogin');
+		if(login.val().length > 2) {
+			$.ajax({
+				type: "POST",
+				data: {'action': 'unique', 'regLogin': login.val()},
+				url: 'actionsRegistration.php',
+				complete: function() {},
+				statusCode: {
+					200: function(message) {
+						// console.log(message);
+					},
+					403: function(jqXHR) {
+						var error = JSON.parse(jqXHR.responseText);
+						$("body").prepend(error.message);
+					}
+				},
+				error: function (error, xhr, status, errorThrown) {
+					console.log('error');
+					$('.registration-bad').html('NO AJAX');
+				},
+				success: function(data) {
+					if(data) {
+						$('.form-reg .regLogin').addClass('busy');
+						// console.log("Good");
+						var response = JSON.parse(data);
+						// console.log(response);
+						$('.loginsUnique').html('');
+						var markup = '';
+						for(var i = 0; i < response.length; i++) {
+							var fieldBusy = response[i];
+							markup += '<div class=\"fieldUniques\"><div class=\"field\">' + fieldBusy.user_login
+							+ '</div></div>';
+						}
+						$('.loginsUnique').html('Used :(:<br>' + markup);
+						setTimeout(function() {
+							$('.loginsUnique').html('');
+						}, 4000);
+					} else if(!$('.form-reg .regLogin').hasClass('error')) {
+						$('.form-reg .regLogin').removeClass('busy');
+						$('.loginsUnique').html('Good choice!');
+						setTimeout(function() {
+							$('.loginsUnique').html('');
+						}, 4000);
+					}
+				}
+			});
+		}
+
+		validateField($(this));
+
+		// return false;
+		e.preventDefault();
+	});
+
+	
+	$('.form-reg .regPass').keyup(function() {
+		validateField($(this));
+		/*if($(this).val().length < 4) {
+			setTimeout(function() {
+				validateField($(this));
+			}, 2000);
+		} else {
+			validateField($(this));	
+		}*/
+	});
+
+	$('.form-reg .regPassEx').keyup(function() {
+		equalPassword($('.form-reg .regPass'), $(this));	
+	});
+
+
+	$('.form-reg .regSubmit').click(function(e) {
+		var login = $('.form-reg .regLogin');
+		var pass = $('.form-reg .regPass');
+		var pass2 = $('.form-reg .regPassEx');
+		// console.log(loginIsFree(login));
+		if(validateField(login)
+			&& validateField(pass)
+			&& equalPassword(pass, pass2)
+			&& !login.hasClass('busy')) {
+			$.ajax({
+				type: "POST",
+				data: {'regLogin': login.val(), 'regPass': pass.val()},
+				url: 'actionsRegistration.php',
+				complete: function() {},
+				statusCode: {
+					200: function(message) {
+						// console.log(message);
+					},
+					403: function(jqXHR) {
+						var error = JSON.parse(jqXHR.responseText);
+						$("body").prepend(error.message);
+					}
+				},
+				error: function (error, xhr, status, errorThrown) {
+					console.log(error);
+					$('.registration-bad').html('NO AJAX');
+				},
+				success: function(data) {
+					console.log("success");
+					$('.form-reg').fadeOut(300);
+					$('.showFormReg').toggleClass('active').fadeToggle(300);
+					$('.successReg').html('You have successfully signed up').fadeIn(300).addClass('popupHide');
+					setTimeout(function() {
+						// $('.overlayFull, .success').fadeOut(500);
+						$('.overlayFull').fadeOut(500);
+						// $('.success').removeClass('popupHide');
+					}, 4000);
+				}
+			});
+		}
+		return false;
+	});
+
+	$('.form-auth .authSubmit').click(function(e) {
+
+		var login = $('.form-auth .authLogin');
+		var pass = $('.form-auth .authPass');
+
+		if(validateField(login)
+			&& validateField(pass)) {
+			$.ajax({
+				type: "POST",
+				data: {'authLogin': login.val(), 'authPass': pass.val()},
+				url: 'actionsRegistration.php',
+				complete: function() {},
+				statusCode: {
+					200: function(message) {
+						// console.log(message);
+					},
+					403: function(jqXHR) {
+						var error = JSON.parse(jqXHR.responseText);
+						$("body").prepend(error.message);
+					}
+				},
+				error: function (error, xhr, status, errorThrown) {
+					console.log(error);
+					$('.registration-bad').html('NO AJAX');
+				},
+				success: function(data) {
+					if(data) {
+						// $('.success').removeClass('popupHide, transparentText');
+						console.log('data');
+						var response = JSON.parse(data);
+						console.log(response);
+						$('.form-auth').fadeOut(300);
+						$('.showFormSign').toggleClass('active').fadeToggle(300);
+						$('.successAuth').html('Hi, ' + response.user_login + '<br>Welcome to RA').fadeIn(300).addClass('popupHide');
+						setTimeout(function() {
+							// $('.overlayFull, .success').fadeOut(500);
+							$('.overlayFull').fadeOut(500);
+							// $('.success').removeClass('popupHide');
+						}, 4000);
+					} else {
+						console.log('no data');
+						$('.errors').html('Login or password is not correct :(');
+						setTimeout(function() {
+							$('.errors').html('');
+						}, 5000);
+					}
+					
+				}
+			});
+		}
+		return false;
+	});
+
+
+});
+
+
+$(document).ready(function() {
+
+
+	var visitedPage = false;
+
+	function addVisit(uniq) {
+		var useragent = navigator.userAgent,
+			os = navigator.platform,
+			screensize = screen.width + '*' + screen.height,
+			browsersize = window.innerWidth + '*' + window.innerHeight
+			;
+
+		console.log(useragent);
+		console.log(os);
+		console.log(screensize);
+		console.log(browsersize);
+
+		$.ajax({
+			// data: {'action': 'addVisit', 'visitData': visitData, 'uniq': uniq ? 1 : 0},
+			success: function(data) {
+				/*var response = JSON.parse(data),
+					playlist = playlistContainer.find('.playlist[data-name="'
+														+ playerState.currentPlaylist
+														+ '"]'),
+					markup = '';
+
+				for(var i = 0; i < response.length; i++) {
+					var track = response[i];
+					markup += '<div class="track" data-station-id="'
+								+ track.station_id
+								+ '" data-station-title="'
+								+ track.station_title
+								+ '" data-station-url="'
+								+ track.station_url
+								+ '"><div class="delete"><i class="fa fa-minus"></i></div><div class="title">'
+								+ track.station_title
+								+ '</div><div class="url">'
+								+ track.station_url
+								+ '</div></div>';
+				}
+
+				playlist.html(playlist.html() + markup);
+				playlist.find('.track[data-station-id='
+								+ playerState.playlists[playerState.currentPlaylist].currentTrack.id
+								+ ']')
+								.addClass('selected');
+
+				if(!playerState.paused) {
+					player.play();
+					displayState();
+					updateTime();
+
+					setInterval(function() {
+						updateTime();
+					}, 1000);
+
+					visualisation($('.playlistContainer .active [data-station-id='
+									+ playerState.playlists[playerState.currentPlaylist].currentTrack.id
+									+ ']'));
+				}*/
+			}
+		});
+	}
+
+	addVisit(visitedPage);
+
+	/*if(localStorage.getItem('visitedPage') == undefined) {
+		visitedPage = true;
+		localStorage.setItem('visitedPage', visitedPage);
+	} else {
+		visitedPage = JSON.parse(localStorage.visitedPage);
+		console.log(visitedPage);
+	}*/
+
+
+});

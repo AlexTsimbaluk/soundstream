@@ -1,6 +1,35 @@
-var dateStart = new Date().getTime();
-
 $(document).ready(function() {
+
+	function checkLoginUniq(login) {
+		$.ajax({
+			data: {'action': 'loginUniq', 'regLogin': login},
+			success: function(data) {
+				if(data) {
+					$('.form-reg .regLogin').addClass('busy');
+					// console.log("Good");
+					var response = JSON.parse(data);
+					// console.log(response);
+					$('.loginsUniq').html('');
+					var markup = '';
+					for(var i = 0; i < response.length; i++) {
+						var fieldBusy = response[i];
+						markup += '<div class=\"fieldUniq\"><div class=\"field\">' + fieldBusy.user_login
+						+ '</div></div>';
+					}
+					$('.loginsUniq').html('Used :(:<br>' + markup);
+					setTimeout(function() {
+						$('.loginsUniq').html('');
+					}, 4000);
+				} else if(!$('.form-reg .regLogin').hasClass('error')) {
+					$('.form-reg .regLogin').removeClass('busy');
+					$('.loginsUniq').html('Good choice!');
+					setTimeout(function() {
+						$('.loginsUniq').html('');
+					}, 4000);
+				}
+			}
+		});
+	}
 
 	/*$('.userPanel button').click(function(e) {
 		console.log((this));
@@ -18,6 +47,9 @@ $(document).ready(function() {
 		$(this).toggleClass('active').siblings().toggleClass('active');
 		$('.form-reg').toggleClass('visible').fadeToggle(300);
 		$('.overlayFull').toggleClass('visible').fadeToggle(300);
+		if($('.form-reg .regLogin').val().length > 0) {
+			checkLoginUniq($('.form-reg .regLogin').val());
+		}
 	});
 
 	function popupClose(popup, delay) {
@@ -33,14 +65,14 @@ $(document).ready(function() {
 
 
 	function validateField(element) {
-		console.log('validateField');
+		// console.log('validateField');
 		var pattern, errorMessage, top;
 		if(element.attr('type') == 'text') {
-			pattern = /^[A-Za-zА-Яа-яЁё][A-Za-zА-Яа-яЁё0-9\._-]{3,19}$/;
-			errorMessage = 'От 4 до 20 символов';
+			pattern = /^[A-Za-zА-Яа-яЁё0-9\._-]{3,27}$/;
+			errorMessage = 'От 3 до 20 символов';
 			top = element.position().top;
 		} else if(element.attr('type') == 'password') {
-			pattern = /^[a-z][a-z0-9_-]{4,}$/i;
+			pattern = /^[A-Za-zА-Яа-яЁё0-9\._-]{5,}$/;
 			errorMessage = 'От 5 символов';
 			top = element.position().top;
 		}
@@ -64,7 +96,7 @@ $(document).ready(function() {
 	}
 
 	function equalPassword(pass1, pass2) {
-		console.log('equalPassword');
+		// console.log('equalPassword');
 		if(pass1.val() != pass2.val()) {
 			pass2.addClass('error');
 			/*if(pass2.prev().hasClass('errorTitlePass') == false) {
@@ -81,6 +113,46 @@ $(document).ready(function() {
 		}
 	}
 
+	function loginIsFree(login) {
+		console.log('loginIsFree');
+		// console.log($(login));
+		$.ajax({
+			data: {'action': 'loginIsFree', 'value': login.val()},
+			success: function(data) {
+				// console.log("Good");
+				
+				if(data === 'true') {
+					// console.log($(login));
+					console.log('good');
+					login.removeClass('busy');
+					// return true;
+				} else {
+					// console.log($(login));
+					console.log('busy');
+					login.addClass('busy');
+					$('.loginsUnique').html('Login is busy');
+					setTimeout(function() {
+						$('.loginsUnique').html('');
+					}, 4000);
+					// return false;
+				}
+				/*var response = JSON.parse(data);
+				console.log(response);
+				$('.loginsUnique').html('');
+				var markup = '';
+				for(var i = 0; i < response.length; i++) {
+					var fieldBusy = response[i];
+					markup += '<div class=\"fieldUniques\"><div class=\"field\">' + fieldBusy.user_login
+					+ '</div></div>';
+				}
+				$('.loginsUnique').html(markup);
+				setTimeout(function() {
+					$('.loginsUnique').html('');
+				}, 4000);*/
+			}
+		});
+	}
+
 	/*****************************************
 	REGISTRATION
 	******************************************/
@@ -88,69 +160,30 @@ $(document).ready(function() {
 	$('.form-reg .regLogin').keyup(function(e) {
 		
 		var login = $('.form-reg .regLogin');
-		/*if(login.val().length > 0) {
-			$.ajax({
-				type: "POST",
-				data: {'action': 'unique', 'regLogin': login.val()},
-				url: 'actionsRegistration.php',
-				complete: function() {},
-				statusCode: {
-					200: function(message) {
-						// console.log(message);
-					},
-					403: function(jqXHR) {
-						var error = JSON.parse(jqXHR.responseText);
-						$("body").prepend(error.message);
-					}
-				},
-				error: function (error, xhr, status, errorThrown) {
-					console.log('error');
-					$('.registration-bad').html('NO AJAX');
-				},
-				success: function(data) {
-					console.log("Good");
-					var response = JSON.parse(data);
-					console.log(response);
-					$('.loginsUnique').html('');
-					var markup = '';
-					for(var i = 0; i < response.length; i++) {
-						var fieldBusy = response[i];
-						markup += '<div class=\"fieldUniques\"><div class=\"field\">' + fieldBusy.user_login
-						+ '</div></div>';
-					}
-					$('.loginsUnique').html(markup);
-					setTimeout(function() {
-						$('.loginsUnique').html('');
-					}, 4000);
-				}
-			});
-		}*/
-		
-
-		if($(this).val().length > 3) {
-			validateField($(this));	
-		} else if($(this).val().length == 3) {
-			validateField($(this));	
+		if(login.val().length > 2) {
+			checkLoginUniq(login.val());
 		}
+
+		validateField($(this));
+
 		// return false;
 		e.preventDefault();
 	});
 
 	
 	$('.form-reg .regPass').keyup(function() {
-		if($(this).val().length > 4) {
+		validateField($(this));
+		/*if($(this).val().length < 4) {
+			setTimeout(function() {
+				validateField($(this));
+			}, 2000);
+		} else {
 			validateField($(this));	
-		} else if($(this).val().length == 4) {
-			validateField($(this));	
-		}
+		}*/
 	});
 
 	$('.form-reg .regPassEx').keyup(function() {
-		if($(this).val().length > 4) {
-			equalPassword($('.form-reg .regPass'), $(this));	
-		} else if($(this).val().length == 4) {
-			equalPassword($('.form-reg .regPass'), $(this));	
-		}
+		equalPassword($('.form-reg .regPass'), $(this));	
 	});
 
 
@@ -158,48 +191,61 @@ $(document).ready(function() {
 		var login = $('.form-reg .regLogin');
 		var pass = $('.form-reg .regPass');
 		var pass2 = $('.form-reg .regPassEx');
-		if(validateField(login) & validateField(pass) & equalPassword(pass, pass2)) {
+		// console.log(loginIsFree(login));
+		if(validateField(login)
+			&& validateField(pass)
+			&& equalPassword(pass, pass2)
+			&& !login.hasClass('busy')) {
 			$.ajax({
-				type: "POST",
-				data: {'regLogin': login.val(), 'regPass': pass.val()},
-				url: 'actionsRegistration.php',
-				complete: function() {},
-				statusCode: {
-					200: function(message) {
-						// console.log(message);
-					},
-					403: function(jqXHR) {
-						var error = JSON.parse(jqXHR.responseText);
-						$("body").prepend(error.message);
-					}
-				},
-				error: function (error, xhr, status, errorThrown) {
-					console.log(error);
-					$('.registration-bad').html('NO AJAX');
-				},
+				data: {'action': 'regUser', 'regLogin': login.val(), 'regPass': pass.val()},
+				// url: 'actionsRegistration.php',
 				success: function(data) {
-					// popupClose($(".popup-overlay"), 500);
 					console.log("success");
-					// $(".popup-container, .popup-overlay").addClass('success');
-					// $('body').addClass('registered');
-					$('.form-reg').fadeOut(500);
-					// $('.registration-success').fadeIn(2000);
-					/*setTimeout(function() {
-						popupClose($(".registration-success, .popup-container"), 500);
-					}, 2000);*/
+					$('.form-reg').fadeOut(300);
+					$('.showFormReg').toggleClass('active').fadeToggle(300);
+					$('.successReg').html('You have successfully signed up!').fadeIn(300).addClass('popupHide');
+					setTimeout(function() {
+						// $('.overlayFull, .success').fadeOut(500);
+						$('.overlayFull').fadeOut(500);
+						// $('.success').removeClass('popupHide');
+					}, 4000);
 				}
 			});
-		} /*else {
-			$('.registration-bad').html('NO Validate');
-			setTimeout(function() {
-				$('.registration-bad').html('');
-			}, 2000);
-		}*/
-		// e.preventDefault();
+		}
 		return false;
 	});
 
 	$('.form-auth .authSubmit').click(function(e) {
+
+		var login = $('.form-auth .authLogin');
+		var pass = $('.form-auth .authPass');
+
+		if(validateField(login) && validateField(pass)) {
+			$.ajax({
+				data: {'action': 'authUser', 'authLogin': login.val(), 'authPass': pass.val()},
+				success: function(data) {
+					if(data) {
+						// $('.success').removeClass('popupHide, transparentText');
+						console.log('data');
+						var response = JSON.parse(data);
+						console.log(response);
+						$('.form-auth').fadeOut(300);
+						$('.showFormSign').toggleClass('active').fadeToggle(300);
+						$('.successAuth').html('Hi, ' + response.user_login + '<br>Welcome to RA').fadeIn(300).addClass('popupHide');
+						setTimeout(function() {
+							$('.overlayFull').fadeOut(500);
+						}, 4000);
+					} else {
+						console.log('no data');
+						$('.errors').html('Login or password is not correct :(');
+						setTimeout(function() {
+							$('.errors').html('');
+						}, 5000);
+					}
+					
+				}
+			});
+		}
 		return false;
 	});
 

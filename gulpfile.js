@@ -65,6 +65,7 @@ gulp.task('js-min', function() {
 	return gulp.src('src/js/*.js')
 			.pipe(uglify())
 			.pipe(concat('main.min.js'))
+			// .pipe(concat('main.js'))
 			.pipe(gulp.dest('src/js'));
 
 });

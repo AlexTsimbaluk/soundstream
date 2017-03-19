@@ -1,5 +1,29 @@
 <?php
 
+// include_once 'db_connection.php';
+$host = "localhost";
+$user = "root";
+$password = "";
+$database = "stations_icecast";
+
+$link = mysqli_connect($host, $user, $password, $database);
+if(!$link) {
+	echo 'Ошибка подключения к MySQL<br>';
+	echo mysqli_error($link);
+	exit();
+} else {
+	// echo 'Connect to MySQL<br>';
+}
+
+
+mysqli_set_charset($link, 'utf8');
+
+if(!mysqli_select_db($link, $database)) {
+	echo 'Ошибка доступа подключения к базе данных ' . $database . '<br>';
+	exit();
+} else {
+	// echo 'Connect to DB<br>';
+}
 
 function d($value = null, $stop = true) {
 	echo "<br><br>Debug:<br><br><pre>";
@@ -13,15 +37,50 @@ function secureData($fieldData) {
 	return htmlspecialchars(stripslashes(trim($fieldData)));
 }
 
+function getSalt() {
+	$salt = '';
+	$saltLength = 8; //длина соли
+	for($i=0; $i<$saltLength; $i++) {
+		$salt .= chr(mt_rand(33, 126)); //символ из ASCII-table
+	}
+	return $salt;
+}
+
 function addUser($login, $password) {
-	include_once 'db_connection.php';
+	// include_once 'db_connection.php';
+	$host = "localhost";
+	$user = "root";
+	$password_db = "";
+	$database = "stations_icecast";
+
+	$link = mysqli_connect($host, $user, $password_db, $database);
+	if(!$link) {
+		echo 'Ошибка подключения к MySQL<br>';
+		echo mysqli_error($link);
+		exit();
+	} else {
+		// echo 'Connect to MySQL<br>';
+	}
+
+
+	mysqli_set_charset($link, 'utf8');
+
+	if(!mysqli_select_db($link, $database)) {
+		echo 'Ошибка доступа подключения к базе данных ' . $database . '<br>';
+		exit();
+	} else {
+		// echo 'Connect to DB<br>';
+	}
 
 	$login = secureData($login);
-	$password = md5(secureData($password));
+	$salt = getSalt();
+	$password = md5(secureData($password) . $salt);
 	$now = date("d.m.Y H:i:s");
-	$query = "insert into `users` (`user_login`, `user_password`, `user_reg_date`) 
+
+	$query = "insert into `users` (`user_login`, `user_password`, `user_salt`, `user_reg_date`) 
 			VALUES ('".$login."','"
 					  .$password."','"
+					  .$salt."','"
 					  .$now."');";
 	$result = mysqli_query($link, $query);
 	if (!$result) {
@@ -33,18 +92,83 @@ function addUser($login, $password) {
 	mysqli_close($link);
 }
 
+	// include_once 'db_connection.php';
+function authUser($login, $password) {
+	$host = "localhost";
+	$user = "root";
+	$password_db = "";
+	$database = "stations_icecast";
+
+	$link = mysqli_connect($host, $user, $password_db, $database);
+	if(!$link) {
+		echo 'Ошибка подключения к MySQL<br>';
+		echo mysqli_error($link);
+		exit();
+	} else {
+		// echo 'Connect to MySQL<br>';
+	}
+
+	mysqli_set_charset($link, 'utf8');
+
+	if(!mysqli_select_db($link, $database)) {
+		echo 'Ошибка доступа подключения к базе данных ' . $database . '<br>';
+		exit();
+	} else {
+		// echo 'Connect to DB<br>';
+	}
+
+	$login = secureData($login);
+	// $password = secureData($password);
+	// $salt = getSalt();
+	// $password = md5(secureData($password) . $salt);
+	$now = date("d.m.Y H:i:s");
+
+	$query = "select * from `users` where `user_login` like '".$login."';";
+	$result = mysqli_query($link, $query);
+
+	$user = mysqli_fetch_assoc($result);
+	// d($user);
+	if(!empty($user)) {
+		$salt = $user["user_salt"];
+		// echo $salt . '<br>';
+		$password = md5(secureData($password) . $salt);
+		// echo $password . '<br>' . $user['user_password'];
+		// echo $user['user_password'];
+		if($user['user_password'] == $password) {
+			session_start(); 
+			$_SESSION['auth'] = true;
+			$_SESSION['id'] = $user['user_id']; 
+			$_SESSION['login'] = $user['user_login'];
+			echo json_encode($user);
+			// d($user);
+		} else {
+			
+		}
+		
+	} else {
+
+	}
+	if (!$result) {
+		echo mysqli_error($link);
+	} else {
+		
+	}
+
+	mysqli_close($link);
+}
+
 /*function getUsersList() {
 
 	$data = array();
 	$query ="select * from users order by user_id desc";
 	$result = mysql_query($query);
 	if (!$result) {
-		echo mysql_error() . '<br>';
+		echo mysqli_error($link) . '<br>';
 	} else {
 		// echo 'Good';
 	}
 	if(mysql_num_rows($result) > 0) {
-		while ($row = mysql_fetch_assoc($result)) {
+		while ($row = mysqli_fetch_assoc($result)) {
 			$data[] = $row;
 		}
 		$data = json_encode($data);
@@ -52,28 +176,95 @@ function addUser($login, $password) {
 	} else {
 		echo "No entries";
 	}
+
+	mysqli_close($link);
 }*/
 
 
-/*function fieldUnique($field) {
-	include_once 'db_connection.php';
+function fieldUnique($field) {
+	// include_once 'db_connection.php';
+	$host = "localhost";
+	$user = "root";
+	$password = "";
+	$database = "stations_icecast";
+
+	$link = mysqli_connect($host, $user, $password, $database);
+	if(!$link) {
+		echo 'Ошибка подключения к MySQL<br>';
+		echo mysqli_error($link);
+		exit();
+	} else {
+		// echo 'Connect to MySQL<br>';
+	}
+
+	mysqli_set_charset($link, 'utf8');
+
+	if(!mysqli_select_db($link, $database)) {
+		echo 'Ошибка доступа подключения к базе данных ' . $database . '<br>';
+		exit();
+	} else {
+		// echo 'Connect to DB<br>';
+	}
 
 	$field = secureData($field);
-	$query = "select `user_login` from `users` where `user_login` like '".$field."' '%';";
-	$result = mysql_query($query);
+	$query = "select `user_login` from `users` where `user_login` like '".$field."';";
+	$result = mysqli_query($link, $query);
 	$data = array();
-	while ($row = mysql_fetch_assoc($result)) {
+	while ($row = mysqli_fetch_assoc($result)) {
 		$data[] = $row;
 	}
-	echo json_encode($data);
+	if(count($data) > 0) {
+		echo json_encode($data);	
+	} else {
+		echo '';
+	}
+	
 
 	if (!$result) {
-		echo mysql_error();
+		echo mysqli_error($link);
 	} else {
 		// echo 'GOOD QUERY!';
 	}
-	mysql_close($link);
-}*/
+	mysqli_close($link);
+}
+
+function loginIsFree($login) {
+	// include_once 'db_connection.php';
+	$host = "localhost";
+	$user = "root";
+	$password = "";
+	$database = "stations_icecast";
+
+	$link = mysqli_connect($host, $user, $password, $database);
+	if(!$link) {
+		echo 'Ошибка подключения к MySQL<br>';
+		echo mysqli_error($link);
+		exit();
+	} else {
+		// echo 'Connect to MySQL<br>';
+	}
+
+	mysqli_set_charset($link, 'utf8');
+
+	if(!mysqli_select_db($link, $database)) {
+		echo 'Ошибка доступа подключения к базе данных ' . $database . '<br>';
+		exit();
+	} else {
+		// echo 'Connect to DB<br>';
+	}
+
+	$login = secureData($login);
+	$query = "select `user_login` from `users` where `user_login` like '".$login."' '%';";
+	$result = mysqli_query($link, $query);
+
+	if (empty(mysqli_fetch_assoc($result))) {
+		// echo mysqli_error($link);
+		echo 'true';
+	} else {
+		echo 'false';
+	}
+	mysqli_close($link);
+}
 
 
 /*function addComment($comment, $name) {
@@ -86,23 +277,23 @@ function addUser($login, $password) {
 			VALUES ('".$comment."','"
 					  .$name."','"
 					  .$now."');";
-	$result = mysql_query($query);
+	$result = mysqli_query($link, $query);
 
 	if (!$result) {
-		echo mysql_error();
+		echo mysqli_error($link);
 	} else {
 		echo 'GOOD QUERY!';
 	}
 
 	$data = array();
 	$query ="select * from comments order by comment_date DESC limit 1";
-	$result = mysql_query($query);
-	while ($row = mysql_fetch_assoc($result)) {
+	$result = mysqli_query($link, $query);
+	while ($row = mysqli_fetch_assoc($result)) {
 		$data[] = $row;
 	}
 	echo json_encode($data);
 
-	mysql_close($link);
+	mysqli_close($link);
 }*/
 
 
@@ -110,16 +301,16 @@ function addUser($login, $password) {
 	include_once 'db_connection.php';
 	
 	$query = "delete from $moduleName where comment_id = $entryId";
-	$result = mysql_query($query);
+	$result = mysqli_query($link, $query);
 
 	if (!$result) {
-		echo mysql_error();
+		echo mysqli_error($link);
 	}
 	else {
 		// echo 'GOOD QUERY!';
 	}
 
-	mysql_close($link);
+	mysqli_close($link);
 }*/
 
 
@@ -135,14 +326,14 @@ function addUser($login, $password) {
 
 	$data = array();
 	$query ="select * from comments order by comment_id desc";
-	$result = mysql_query($query);
+	$result = mysqli_query($link, $query);
 	if (!$result) {
-		echo mysql_error();
+		echo mysqli_error($link);
 	} else {
 		// echo 'Good';
 	}
 	if(mysql_num_rows($result) > 0) {
-		while ($row = mysql_fetch_assoc($result)) {
+		while ($row = mysqli_fetch_assoc($result)) {
 			$data[] = $row;
 		}
 		$data = json_encode($data);
@@ -157,17 +348,17 @@ function addUser($login, $password) {
 
 	$data = array();
 	$query ="select * from comments order by comment_id desc limit 1";
-	$result = mysql_query($query);
-	while ($row = mysql_fetch_assoc($result)) {
+	$result = mysqli_query($link, $query);
+	while ($row = mysqli_fetch_assoc($result)) {
 		$data[] = $row;
 	}
 	echo json_encode($data);
 	
 	if (!$result) {
-		echo mysql_error();
+		echo mysqli_error($link);
 	}
 
-	mysql_close($link);
+	mysqli_close($link);
 }*/
 
 
