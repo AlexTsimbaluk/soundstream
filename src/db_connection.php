@@ -3,7 +3,7 @@
 /*For home*/
 $host = "localhost";
 $user = "root";
-$password = "";
+$password = "9";
 $database = "stations_icecast";
 
 /*For server

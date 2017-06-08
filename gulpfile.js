@@ -57,6 +57,7 @@ gulp.task('browser-sync', function() {
 			baseDir: 'src'
 		},*/
 		proxy: 'soundstream',
+		port: 	9999,
 		notify: false
 	});
 });

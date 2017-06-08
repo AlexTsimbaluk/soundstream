@@ -10,6 +10,13 @@ include_once '../functions.php';
 	station_url VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, 
 	PRIMARY KEY (station_id)) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci";*/
 
+// Temporary table for stations
+/*$query = "CREATE TABLE stations_temp ( 
+	station_id INT(11) UNSIGNED NOT NULL AUTO_INCREMENT, 
+	station_title VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL UNIQUE, 
+	station_url VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, 
+	PRIMARY KEY (station_id)) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci";*/
+
 
 // Users table
 /*$query = "CREATE TABLE users ( 
@@ -21,7 +28,7 @@ include_once '../functions.php';
 	PRIMARY KEY (user_id)) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci";*/
 
 // Visits table
-$query = "CREATE TABLE visits ( 
+/*$query = "CREATE TABLE visits ( 
 	visit_id INT(12) UNSIGNED NOT NULL AUTO_INCREMENT,
 	visit_cookie VARCHAR(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, 
 	visit_ip VARCHAR(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, 
@@ -33,7 +40,7 @@ $query = "CREATE TABLE visits (
 	visit_timeonsite VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
 	visit_date VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
 	PRIMARY KEY (visit_id)) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci";
-
+*/
 // Hits table
 /*$query = "CREATE TABLE hits ( 
 	hit_id INT(12) UNSIGNED NOT NULL AUTO_INCREMENT, 
@@ -44,7 +51,8 @@ $query = "CREATE TABLE visits (
 
 /*ALTER TABLE users CHANGE user_reg_date user_reg_date VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;*/
 
-// $query = "DROP TABLE users";
+// $query = "drop table stations";
+// $query = "drop table stations_temp";
 
 /*$query = "delete from stations h where exists 
 		(select station_id from stations 

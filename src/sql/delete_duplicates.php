@@ -5,27 +5,30 @@ include_once '../functions.php';
 
 
 $query = "select distinct station_title from stations";
-echo $query . '<br>';
+/*$query = "delete from stations where station_title in (select distinct station_title from stations GROUP BY station_title)";*/
 
-$result = mysql_query($query);
+echo '<br>' . $query . '<br>';
+
+$result = mysqli_query($link, $query);
 
 if (!$result) {
-	echo '<br>' . mysql_error() . '<br>';
+	echo '<br>' . mysqli_error($link) . '<br>';
 } else {
 	echo '<br><br>Update SUCCES!<br><br>';
 }
 
 $data = array();
-if(mysql_num_rows($result) > 0) {
-	while ($row = mysql_fetch_assoc($result)) {
-		$data[] = $row;
+$total = 0;
+if(mysqli_num_rows($result) > 0) {
+	while ($row = mysqli_fetch_assoc($result)) {
+		// $data[] = $row;
+		$total++;
 	}
 } else {
-	echo "No entries";
+	echo "No entries<br>";
 }
-echo count($data);
-d($data);
+echo ('Total: ' . $total);
+// d($data);
 
-mysql_close($link);
+mysqli_close($link);
 
-?>
