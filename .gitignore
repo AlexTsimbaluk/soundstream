@@ -1,2 +1,4 @@
 node_modules
+'apache2 and nginx config'
+server*
 *.txt
