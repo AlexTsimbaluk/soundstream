@@ -2,7 +2,10 @@
 @import '_vars.less';
 @import '_default.less';
 
+@import '_bootstrap-custom.less';
+
 @import '_forms.less';
+@import '_admin.less';
 
 
 ::-webkit-input-placeholder {color:#fff;}
@@ -63,7 +66,7 @@ body
 {
 	// .flex-container;
 	// background: rgba(0, 0, 0, 0) url("../img/bg.jpg") no-repeat scroll 0 0 / cover;
-	font-size: 10px;
+	font-size: 12px;
     font-family: "RobotoRegular", sans-serif;
     
 }
@@ -127,13 +130,15 @@ ul, ol {
 		text-align: center;
 		width: 100%;
 		a {
-			background-color: #ccc;
+			background: rgba(0, 0, 0, .6);
+            border: none;
+            color: #fff;
 			display: block;
 			height: 100%;
 		}
 		&:hover {
 			a {
-				background: #555;
+				background: rgba(45, 45, 45, .8);
 			}
 		}
 	}

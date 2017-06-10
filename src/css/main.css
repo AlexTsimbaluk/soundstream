@@ -238,6 +238,12 @@ th {
 .text-capitalize {
   text-transform: capitalize;
 }
+.panel-heading {
+  font-size: 14px;
+}
+label {
+  font-size: 12px;
+}
 form {
   display: none;
   position: absolute;
@@ -461,6 +467,10 @@ form .authSubmit:hover {
   -webkit-box-shadow: 0 0 8px 5px #00ffff;
           box-shadow: 0 0 8px 5px #00ffff;
 }
+#admin {
+  position: relative;
+  z-index: 1;
+}
 ::-webkit-input-placeholder {
   color: #fff;
 }
@@ -627,7 +637,7 @@ input:-ms-input-placeholder {
   padding: 0;
 }
 body {
-  font-size: 10px;
+  font-size: 12px;
   font-family: "RobotoRegular", sans-serif;
 }
 /* выделение текста */
@@ -699,12 +709,14 @@ ol {
   width: 100%;
 }
 .nav-admin .adminItem a {
-  background-color: #ccc;
+  background: rgba(0, 0, 0, 0.6);
+  border: none;
+  color: #fff;
   display: block;
   height: 100%;
 }
 .nav-admin .adminItem:hover a {
-  background: #555;
+  background: rgba(45, 45, 45, 0.8);
 }
 .admin .nav-admin {
   margin: 0;

@@ -75,7 +75,7 @@ $.ajaxSetup({
 		}
 	},
 	error: function (error, xhr, status, errorThrown) {
-		console.log('error');
+		console.log('XHR error');
 	}
 });
 
