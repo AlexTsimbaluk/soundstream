@@ -6,6 +6,7 @@ var gulp = require('gulp'),
 	autoprefixer = require('gulp-autoprefixer'),
 	concat = require('gulp-concat'),
 	uglify = require('gulp-uglifyjs'),
+	rename = require('gulp-rename'),
 	cssnano = require('gulp-cssnano'),
 	browserSync = require('browser-sync')
 	;
@@ -62,21 +63,25 @@ gulp.task('browser-sync', function() {
 	});
 });
 
+
 gulp.task('js-min', function() {
-	return gulp.src('src/js/*.js')
+	return gulp.src(['src/js/player.js', 'src/js/user.js', 'src/js/visits.js', '!src/js/app.min.js'])
+			.pipe(concat('app.js'))
+			.pipe(gulp.dest('src/js'))
+			.pipe(rename('app.min.js'))
 			.pipe(uglify())
-			.pipe(concat('main.min.js'))
-			// .pipe(concat('main.js'))
+			.pipe(browserSync.reload({stream: true}))
 			.pipe(gulp.dest('src/js'));
 
 });
 
 
-gulp.task('watch', ['browser-sync', 'js-min'], function() {
+gulp.task('watch', ['browser-sync'], function() {
 	gulp.watch('src/less/**/*.less', ['less']);
 	gulp.watch('src/*.html', browserSync.reload);
 	gulp.watch('src/*.php', browserSync.reload);
-    gulp.watch('src/js/**/*.js', browserSync.reload);
+	gulp.watch('src/layouts/*.php', browserSync.reload);
+    gulp.watch(['src/js/player.js', 'src/js/user.js', 'src/js/visits.js'], ['js-min']);
 });
 
 gulp.task('default', ['watch']);
