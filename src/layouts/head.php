@@ -27,6 +27,7 @@
     <link rel="stylesheet" href="libs/font-awesome-4.3.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="libs/custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css" />
 
+    <link rel="stylesheet" href="libs/bootstrap/css/bootstrap.css">
     <!-- <link rel="stylesheet" href="css/bootstrap-grid-custom.min.css"> -->
     <!-- <link rel="stylesheet" href="css/framework.min.css"> -->
 
@@ -35,7 +36,7 @@
 	<link rel="stylesheet" href="css/media.css">
 
 	<!-- Scripts -->
-	<script src="libs/modernizr/modernizr.js"></script>
+    <script src="libs/modernizr/modernizr.js"></script>
 	
 
     <!-- we can live with IE -->
