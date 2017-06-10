@@ -22,6 +22,34 @@ function getSalt() {
 	return $salt;
 }
 
+// Выполнить sql-запрос
+function makeSQL($query) {
+	global $link;
+	$response = '';
+
+	// echo '<br>' . $query . '<br>';
+
+	$result = mysqli_query($link, $query);
+
+	if (!$result) {
+		// echo '<br>' . mysqli_error($link) . '<br>';
+		$response = mysqli_error($link);
+	} else {
+		// echo '<br><br>Update SUCCES!<br><br>';
+		$response = 'Update SUCCES!';
+	}
+
+	$data = [
+		'query'  => $query,
+		'result' => $response
+	];
+
+	$data = json_encode($data);
+	echo $data;
+
+	mysqli_close($link);
+}
+
 
 // Получение всех станций текущего плейлиста и его формирование
 function getPlaylistStations($arrId) {
