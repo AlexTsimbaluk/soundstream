@@ -10,6 +10,8 @@
 	<script src="libs/custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
 	<script src="libs/jquery-ui-sortable/jquery-ui.min.js"></script>
 	
+	<!-- <script src="js/app.js"></script> -->
+	
 	<script src="js/player.js"></script>
 	<script src="js/user.js"></script>
 	<script src="js/visits.js"></script>
