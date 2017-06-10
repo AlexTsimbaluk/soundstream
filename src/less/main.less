@@ -115,20 +115,33 @@ ul, ol {
 	position: relative;
 }
 
-.admin {
-	background-color: #ccc;
-	width: 30px;
-	position: absolute;
-	right: 0;
-	top: 0;
+.nav-admin {
+	margin: 17px -5px;
+	position: relative;
+	ul {
+		.flex-container;
+	}
 	.adminItem {
-		height: 30px;
+		font-size: 12px;
 		line-height: 30px;
 		text-align: center;
+		width: 100%;
 		a {
+			background-color: #ccc;
 			display: block;
 			height: 100%;
 		}
+		&:hover {
+			a {
+				background: #555;
+			}
+		}
+	}
+}
+
+.admin {
+	.nav-admin {
+		margin: 0;
 	}
 }
 

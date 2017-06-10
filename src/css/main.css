@@ -667,21 +667,47 @@ ol {
   width: 100%;
   position: relative;
 }
-.admin {
-  background-color: #ccc;
-  width: 30px;
-  position: absolute;
-  right: 0;
-  top: 0;
+.nav-admin {
+  margin: 17px -5px;
+  position: relative;
 }
-.admin .adminItem {
-  height: 30px;
+.nav-admin ul {
+  -webkit-justify-content: space-around;
+      -ms-flex-pack: distribute;
+          justify-content: space-around;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.nav-admin .adminItem {
+  font-size: 12px;
   line-height: 30px;
   text-align: center;
+  width: 100%;
 }
-.admin .adminItem a {
+.nav-admin .adminItem a {
+  background-color: #ccc;
   display: block;
   height: 100%;
+}
+.nav-admin .adminItem:hover a {
+  background: #555;
+}
+.admin .nav-admin {
+  margin: 0;
 }
 /* .loader {
 	background: none repeat scroll 0 0 #ffffff;
