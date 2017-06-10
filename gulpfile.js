@@ -65,7 +65,7 @@ gulp.task('browser-sync', function() {
 
 
 gulp.task('js-min', function() {
-	return gulp.src(['src/js/player.js', 'src/js/user.js', 'src/js/visits.js', '!src/js/app.min.js'])
+	return gulp.src(['src/js/player.js', 'src/js/user.js', 'src/js/visits.js', 'src/js/admin.js', '!src/js/app.min.js'])
 			.pipe(concat('app.js'))
 			.pipe(gulp.dest('src/js'))
 			.pipe(rename('app.min.js'))
@@ -81,7 +81,7 @@ gulp.task('watch', ['browser-sync'], function() {
 	gulp.watch('src/*.html', browserSync.reload);
 	gulp.watch('src/*.php', browserSync.reload);
 	gulp.watch('src/layouts/*.php', browserSync.reload);
-    gulp.watch(['src/js/player.js', 'src/js/user.js', 'src/js/visits.js'], ['js-min']);
+    gulp.watch(['src/js/player.js', 'src/js/user.js', 'src/js/visits.js', 'src/js/admin.js'], ['js-min']);
 });
 
 gulp.task('default', ['watch']);
