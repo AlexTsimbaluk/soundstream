@@ -961,7 +961,6 @@ ol {
   height: 100%;
   width: 0;
   position: relative;
-  top: -11px;
 }
 #player .find input.visible {
   display: inline;
@@ -999,6 +998,28 @@ ol {
   height: 40px;
 }
 #player .controls {
+  -webkit-justify-content: space-around;
+      -ms-flex-pack: distribute;
+          justify-content: space-around;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-flex-wrap: nowrap;
+      -ms-flex-wrap: nowrap;
+          flex-wrap: nowrap;
   padding-bottom: 6px;
   position: relative;
   z-index: 10;
@@ -1021,9 +1042,6 @@ ol {
 		input[type="range"]::-moz-fill-upper {
 			background: #f5f6f8;
 		} */
-}
-#player .controls div {
-  display: inline-block;
 }
 #player .controls .button {
   background: #333;
@@ -1147,21 +1165,19 @@ ol {
 #player .controls .button.stop i {
   font-size: 1.2em;
 }
-#player .controls .button + .button {
-  margin-left: 10px;
-}
 #player .controls .volume {
-  margin-left: 20px;
+  cursor: pointer;
   position: relative;
-  bottom: 9px;
 }
-#player .controls .volume:not(*:root) {
-  bottom: 4px;
+#player .controls .volume .val {
+  position: absolute;
+  left: 0;
+  top: 0;
 }
 #player .controls input[type=range] {
   -webkit-appearance: none;
   height: auto;
-  width: 80px;
+  width: 100px;
 }
 #player .controls input[type=range]:focus {
   outline: none;
@@ -1173,7 +1189,7 @@ ol {
   background-color: #bdc3c7;
   -webkit-border-radius: 8px;
           border-radius: 8px;
-  width: 80px;
+  width: 100px;
   height: 2px;
 }
 #player .controls input[type=range]::-ms-track {
@@ -1183,7 +1199,7 @@ ol {
   border-radius: 8px;
   border: none;
   color: transparent;
-  width: 80px;
+  width: 100px;
   height: 5px;
 }
 #player .controls input[type=range]::-moz-range-track {
@@ -1294,8 +1310,7 @@ ol {
   -webkit-border-radius: 2px;
           border-radius: 2px;
   cursor: default;
-  padding: 6px;
-  height: 42px;
+  padding: 4px 6px;
   tansition: all .3s;
   position: relative;
   -webkit-user-select: none;
@@ -1315,7 +1330,6 @@ ol {
 }
 #player .track .title {
   font-size: 1.2em;
-  height: 18px;
   overflow: hidden;
 }
 #player .track .url {
@@ -1323,7 +1337,6 @@ ol {
   font-size: 1.1em;
   font-style: italic;
   overflow: hidden;
-  height: 14px;
 }
 #player .track .delete {
   background-color: rgba(0, 255, 225, 0.6);
@@ -1369,14 +1382,6 @@ ol {
 }
 #player .track .delete:hover {
   background-color: rgba(0, 255, 225, 0.8);
-}
-#player .track:hover {
-  background: #777;
-  background: -webkit-gradient(linear, left top, right top, color-stop(0%, #777), color-stop(100%, #666));
-  background: -webkit-linear-gradient(left, #777 0%, #666 100%);
-  background: -webkit-gradient(linear, left top, right top, from(#777), to(#666));
-  background: linear-gradient(to right, #777 0%, #666 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='@start', endColorstr='@stop', GradientType=1);
 }
 #player .track:hover .delete {
   -webkit-justify-content: space-around;
@@ -1527,8 +1532,7 @@ ol {
           border-radius: 2px;
   cursor: default;
   margin-bottom: 10px;
-  padding: 6px;
-  height: 42px;
+  padding: 4px 6px;
   tansition: all .3s;
   position: relative;
   -webkit-user-select: none;
@@ -1537,7 +1541,6 @@ ol {
           user-select: none;
 }
 .searchContainer .station .title {
-  height: 18px;
   overflow: hidden;
   text-decoration: underline;
 }
@@ -1546,7 +1549,6 @@ ol {
   font-style: italic;
   margin-left: 10px;
   overflow: hidden;
-  height: 14px;
 }
 .searchContainer .station .add {
   background-color: rgba(0, 255, 225, 0.4);
@@ -1593,9 +1595,6 @@ ol {
 .searchContainer .station .add:hover {
   background-color: rgba(0, 255, 225, 0.8);
 }
-.searchContainer .station:hover {
-  background: #777;
-}
 .searchContainer .station:hover .add {
   -webkit-justify-content: space-around;
       -ms-flex-pack: distribute;
@@ -1631,4 +1630,8 @@ ol {
 }
 [type="range"]:focus {
   outline: 0 !important;
+}
+#canvas-volume {
+  bottom: 32px;
+  right: 10px;
 }

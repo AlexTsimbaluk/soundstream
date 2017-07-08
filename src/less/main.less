@@ -357,7 +357,7 @@ ul, ol {
 			height: 100%;
 			width: 0;
 			position: relative;
-			top: -11px;
+			// top: -11px;
 			&.visible {
 				display: inline;
 			}
@@ -392,11 +392,15 @@ ul, ol {
 	}
 
 	.controls {
+		.flex-container;
+		align-items: center;
+		flex-wrap: nowrap;
 		padding-bottom: 6px;
 		position: relative;
 		z-index: 10;
 		div {
-			display: inline-block;
+			// display: inline-block;
+			// margin: auto;
 		}
 		.button {
 			background: #333;
@@ -485,21 +489,31 @@ ul, ol {
 				}
 			}
 		}
-		.button + .button {margin-left: 10px;}
+		.button + .button {
+			// margin-left: 10px;
+		}
 
 		.volume {
-			margin-left: 20px;
+			cursor: pointer;
+			// margin-left: 20px;
 			position: relative;
-			bottom: 9px;
+			// bottom: 9px;
+			.val {
+				position: absolute;
+				left: 0;
+				top: 0;
+			}
 		}
 		/* Chrome, Opera, Safari */
-		.volume:not(*:root) {bottom: 4px;}
+		.volume:not(*:root) {
+			// top: 6px;
+		}
 		
 
 		input[type=range] {
 			-webkit-appearance: none;
 			height: auto;
-			width: 80px;
+			width: 100px;
 			&:focus {outline: none;}
 		}
 		input[type=range]::-moz-focus-outer {border: 0;} 
@@ -508,7 +522,7 @@ ul, ol {
 			background-color: #bdc3c7;
 			// border: 1px solid #bdc3c7;
 			border-radius: 8px;
-			width: 80px;
+			width: 100px;
 			height: 2px;
 		}
 		input[type=range]::-ms-track { /* должен следовать после -webkit- */
@@ -518,7 +532,7 @@ ul, ol {
 			border-radius: 8px;
 			border: none;
 			color: transparent;
-			width: 80px;
+			width: 100px;
 			height: 5px;
 		}
 		input[type=range]::-moz-range-track {
@@ -637,14 +651,12 @@ ul, ol {
 	.track {
 		border-radius: 2px;
 		cursor: default;
-		padding: 6px;
-		height: 42px;
+		padding: 4px 6px;
 		tansition: all .3s;
 		position: relative;
 		user-select: none;
 		.title {
 			font-size: 1.2em;
-			height: 18px;
 			overflow: hidden;
 		}
 		.url {
@@ -652,7 +664,6 @@ ul, ol {
 			font-size: 1.1em;
 			font-style: italic; 
 			overflow: hidden;
-			height: 14px;
 		}
 		.delete {
 			background-color: rgba(0, 255, 225, .6);
@@ -678,7 +689,6 @@ ul, ol {
 			}
 		}
 		&:hover {
-			.gradient-horizontal(#777, #666);
 			.delete {.flex-container;}
 		}
 		&.selected {
@@ -774,13 +784,11 @@ ul, ol {
 		border-radius: 2px;
 		cursor: default;
 		margin-bottom: 10px;
-		padding: 6px;
-		height: 42px;
+		padding: 4px 6px;
 		tansition: all .3s;
 		position: relative;
 		user-select: none;
 		.title {
-			height: 18px;
 			overflow: hidden;
 			text-decoration: underline;
 		}
@@ -789,7 +797,6 @@ ul, ol {
 			font-style: italic;
 			margin-left: 10px;
 			overflow: hidden;
-			height: 14px;
 		}
 		.add {
 			background-color: rgba(0, 255, 225, .4);
@@ -815,7 +822,6 @@ ul, ol {
 			}
 		}
 		&:hover {
-			background: #777;
 			.add {.flex-container;}
 		}
 	}
@@ -835,4 +841,11 @@ ul, ol {
 
 [type="range"]:focus {
 	outline: 0 !important;
+}
+
+
+#canvas-volume {
+	// position: absolute;
+	bottom: 32px;
+	right: 10px;
 }
