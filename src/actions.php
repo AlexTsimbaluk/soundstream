@@ -83,3 +83,6 @@ if ($_POST['action'] == 'checkUniqToday' && !empty($_POST['cookie'])) {
 }
 
 
+if ($_POST['admin'] == 1) {
+	include_once 'layouts/admin.php';
+}
