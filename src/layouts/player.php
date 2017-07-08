@@ -72,15 +72,16 @@
 			<div class="next button"><div class="iconWrapper"><i class="fa fa-step-forward"></i></div></div>
 
 			<div class="volume">
-				<input type="range" min="0" max="100" step="1" value="100" />
+				<canvas id="canvas-volume" width="100" height="30"></canvas>
+				<input class="hidden" type="range" min="0" max="100" step="1" />
 				<span class="val"></span>
 			</div>
 			<!-- <div class="volumeVisualisation"></div> -->
-
 		</div>
+
 		
 		<?php
-	        include_once 'layouts/nav-admin.php';
+	        include_once 'layouts/nav-player.php';
 	    ?>
 	</div>
 
@@ -92,6 +93,21 @@
 	</div>
 
 	<div class="playlistContainer mCustomScrollbar">
-		<!-- <div class="playlist active sortable" data-name="Default"></div> -->
+		
 	</div>
+
+	<template class="template-track">
+		<div class="track" data-station-id="@station_id" data-station-title="@station_title" data-station-url="@station_url">
+			<div class="delete">
+				<i class="fa fa-minus"></i>
+			</div>
+			<div class="title">
+				@station_title
+			</div>
+			<div class="url">
+				@station_url
+			</div>
+		</div>
+	</template>
 </div>
+
