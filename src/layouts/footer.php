@@ -17,6 +17,7 @@
 	<script src="js/user.js"></script>
 	<script src="js/visits.js"></script>
 	<script src="js/admin.js"></script>
+	<script src="js/canvas.js"></script>
 
 </body>
 </html>
