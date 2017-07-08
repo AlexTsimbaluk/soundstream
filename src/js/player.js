@@ -62,6 +62,38 @@ $('.clearUniqHash').on('click', function(e) {
 });
 
 
+$('.toAdmin').on('click', function(e) {
+	console.log('toAdmin');
+	$('body').addClass('admin');
+
+	$.ajax({
+		data: {'admin': 1},
+		success: function(data) {
+			// console.log(data);
+
+			$('#player').after(data);
+
+			$('#player').hide();
+
+
+			$('.toPlayer').on('click', function(e) {
+				console.log('toPlayer');
+
+				$('.admin-wrapper').remove();
+				$('body').removeClass('admin');
+
+				$('#player').fadeIn(300);
+
+				return false;
+			});
+		}
+	});
+	return false;
+});
+
+
+
+
 $.ajaxSetup({
 	type: 'POST',
 	url: 'actions.php',
@@ -259,6 +291,9 @@ $(document).ready(function() {
 														+ '"]'),
 					markup = '';
 
+				var trackMarkup = $('.template-track').html();
+				// console.log(trackMarkup);
+
 				for(var i = 0; i < response.length; i++) {
 					var track = response[i];
 					markup += '<div class="track" data-station-id="'
@@ -271,7 +306,8 @@ $(document).ready(function() {
 								+ track.station_title
 								+ '</div><div class="url">'
 								+ track.station_url
-								+ '</div></div>';
+								+ '</div></div>'
+					;
 				}
 
 				playlist.html(playlist.html() + markup);
@@ -451,17 +487,107 @@ $(document).ready(function() {
 		$(this).addClass('selected');
 	});
 
+
+	var canvasVolume    	= document.getElementById('canvas-volume');
+	var	ctxVolume			= canvasVolume.getContext('2d');
+
+	canvasVolume.width 	= 100;
+	canvasVolume.height = 30;
+
+	var canvasVolumeWidth = canvasVolume.width;
+	var canvasVolumeHeight = canvasVolume.height;
+
+	// console.log(canvasVolumeHeight);
+
+	function drawWolumeBar(q) {
+		ctxVolume.clearRect(0, 0, canvasVolumeWidth, canvasVolumeHeight);
+		var maxHue 			= 360 / 10 * q,
+			barWidth 		= 3,
+			gutterWidth		= 1,
+			maxBar			= Math.floor(canvasVolumeWidth / (gutterWidth + barWidth)),
+			targetCountBar	= Math.floor(maxBar / 10 * q),
+			barMaxHeight	= canvasVolumeHeight,
+			barStepHeight	= (barMaxHeight / maxBar)
+		;
+		// console.log(maxBar);
+
+		for (var i = 0; i < targetCountBar; i++) {
+			ctxVolume.fillStyle = 'hsl(' + i * maxHue / targetCountBar + ', 100%, 50%)';
+			ctxVolume.fillRect(i * (gutterWidth + barWidth), canvasVolumeHeight - i * barStepHeight - barStepHeight, barWidth, i * barStepHeight + barStepHeight);
+			
+			ctxVolume.fill();
+		}
 	
+		/*ctxVolume.moveTo(0, canvasVolumeHeight);
+		ctxVolume.lineTo(canvasVolumeWidth, 0);
+		ctxVolume.lineTo(canvasVolumeWidth, canvasVolumeHeight);
+		ctxVolume.strokeStyle = '#000000';
+		ctxVolume.lineWidth = 2;
+		ctxVolume.stroke();*/
+
+	}
+
+
 	$('#player .volume input').val(player.volume * 100);
 	$('#player .volume .val').html(Math.floor(player.volume * 100));
 
+	drawWolumeBar(Math.ceil($('#player .volume input').val() / 10));
+
 	$('#player .volume input').on('input', function(e) {
+		var $inputVolume = $(this);
+
 		player.volume = parseFloat($(this).val() / 100);
 		playerState.volume = player.volume;
 
 		$('#player .volume .val').html($(this).val());
 
+		if(+$inputVolume.val() != 0) {
+			drawWolumeBar(Math.ceil(+$inputVolume.val() / 10));
+		} else {
+			ctxVolume.clearRect(0, 0, canvasVolumeWidth, canvasVolumeHeight);
+		}
+
 		localStorage.setItem('playerState', JSON.stringify(playerState));
+	});
+
+
+	$('#player .volume').on('wheel', function(e) {
+		e = e || window.event;
+		var $inputVolume = $(this).find('input');
+
+		var delta = e.originalEvent.deltaY
+				 || e.originalEvent.detail
+				 || e.originalEvent.wheelDelta
+		;
+
+		if(delta > 0 && +$inputVolume.val() > 0) {
+			$inputVolume.val(+$inputVolume.val() - 2).trigger('input');
+		} else if(delta < 0 && +$inputVolume.val() < 100) {
+			$inputVolume.val(+$inputVolume.val() + 2).trigger('input');
+		}
+
+		return false;
+	});
+
+	$('#player .volume').on('click', function(e) {
+		e = e || window.event;
+		var $inputVolume = $(this).find('input');
+
+		console.log(e.offsetX);
+		$inputVolume.val(e.offsetX).trigger('input');
+
+		/*var delta = e.originalEvent.deltaY
+				 || e.originalEvent.detail
+				 || e.originalEvent.wheelDelta
+		;
+
+		if(delta > 0 && +$inputVolume.val() > 0) {
+			$inputVolume.val(+$inputVolume.val() - 2).trigger('input');
+		} else if(delta < 0 && +$inputVolume.val() < 100) {
+			$inputVolume.val(+$inputVolume.val() + 2).trigger('input');
+		}*/
+
+		return false;
 	});
 
 
@@ -473,7 +599,7 @@ $(document).ready(function() {
 
 		if(searchInput.hasClass('visible') == false) {
 			searchInput.addClass('visible')
-						.animate({opacity: 1, width: 200}, 100);
+						.animate({opacity: 1, width: 190}, 100);
 
 			setTimeout(function() {
 				searchInput.focus();
@@ -604,17 +730,13 @@ $(document).ready(function() {
 	});
 
 
-
-	
-	
-
 	// Добавление станций в плейлист
 	// Доделать, чтобы станции добавлялись в активный плэйлист
 	$('.searchContainer').on('click', '.add', function(e) {
 		addToPlaylist($(this).parent().data('stationId'));
 	});
 
-	$('.searchContainer').on('dblclick', '.station', function(e) {
+	$('.searchContainer').on('click', '.station', function(e) {
 		addToPlaylist($(this).data('stationId'));
 	});
 
@@ -675,7 +797,6 @@ $(document).ready(function() {
         });
 	});
 
-	
 
 	/*
 	Чтобы на экранах в высоту меньше 640px у блока playlistContainer с треками 
@@ -686,9 +807,15 @@ $(document).ready(function() {
 		console.log(_playlistContainerHeight);
 		$('.searchContainer, .playlistContainer', '#player').height(_playlistContainerHeight);
 	}
+
+});
+
+$(document).ready(function() {
+
 	
 
 });
+
 
 $(window).load(function() {
 
