@@ -116,10 +116,6 @@ $.ajaxSetup({
 
 $(document).ready(function() {
 
-	
-
-	
-
 	// Установить свойство состояния объекта и записать в куки
 	function setPlayerState(prop, val) {
 		playerState[prop] = val;
@@ -144,11 +140,12 @@ $(document).ready(function() {
 			maxSize,
 			titleContainerWidth,
 			ratio
-			;
+		;
 
 		titleContainer.html(title)
 						.removeClass('runningString')
-						.parent().css({'width':'auto'});
+						.parent().css({'width':'auto'})
+		;
 
 		titleContainerWidth = titleContainer.width();
 		ratio = titleContainerWidth / titleSize;
@@ -219,6 +216,10 @@ $(document).ready(function() {
 		});
 	}
 
+	function setAudioSrc() {
+		 
+	}
+
 
 	// Конструктор объекта Playlist
 	function Playlist(name) {
@@ -237,6 +238,7 @@ $(document).ready(function() {
 		playlistsPanel = $('#player .playlistsPanel'),
 		
 		player = new Audio(),
+		$player = $('#analyser-source'),
 
 		// Состояние пользователя - зарегистрирован или нет, авторизован или нет
 		userStatus = {
@@ -251,7 +253,12 @@ $(document).ready(function() {
 			currentPlaylist: '',
 			volume : player.volume,
 			paused: player.paused
-		};
+		}
+	;
+
+	// https://stackoverflow.com/questions/31308679/mediaelementaudiosource-outputs-zeros-due-to-cors-access-restrictions-local-mp3
+	player.crossOrigin = 'anonymous';
+	$player.crossOrigin = 'anonymous';
 
 	if(localStorage.getItem('userStatus') == undefined) {
 		localStorage.setItem('userStatus', JSON.stringify(userStatus));
@@ -276,8 +283,11 @@ $(document).ready(function() {
 		}
 		// Задаем свойства объекта Audio свойствами объекта playerState
 		player.volume = playerState.volume;
+		$player.volume = playerState.volume;
 		player.src = playerState.playlists[playerState.currentPlaylist].currentTrack.url;
+		$player.src = playerState.playlists[playerState.currentPlaylist].currentTrack.url;
 		player.paused = playerState.paused;
+		$player.paused = playerState.paused;
 		// Создаем контейнер для треков текущего (активного) плейлиста
 		playlistContainer.append(playerState.playlists[playerState.currentPlaylist].htmlEl);
 		// Получить плейлист и сформировать его
@@ -317,6 +327,7 @@ $(document).ready(function() {
 								.addClass('selected');
 
 				if(!playerState.paused) {
+					player.crossOrigin = 'anonymous';
 					player.play();
 					displayState();
 					updateTime();
@@ -395,6 +406,7 @@ $(document).ready(function() {
 
 
 	$('#player .play').click(function(e) {
+		player.crossOrigin = 'anonymous';
 		if($('.playlist').children('.selected').length > 0) {
 			playerState.playlists[playerState.currentPlaylist].currentTrack = {
 				id: $('.playlistContainer .selected').data('stationId'),
@@ -423,7 +435,7 @@ $(document).ready(function() {
 	});
 
 	$('.playlistContainer').on('dblclick', '.track', function(e) {
-		// debugger;
+		player.crossOrigin = 'anonymous';
 		var url = $(this).data('stationUrl');
 
 		player.src = url;
@@ -487,6 +499,10 @@ $(document).ready(function() {
 		$(this).addClass('selected');
 	});
 
+	
+
+    
+
 
 	var canvasVolume    	= document.getElementById('canvas-volume');
 	var	ctxVolume			= canvasVolume.getContext('2d');
@@ -499,9 +515,13 @@ $(document).ready(function() {
 
 	// console.log(canvasVolumeHeight);
 
-	function drawWolumeBar(q) {
+	function drawWolumeBar() {
+		// var volumeAnimation 	= requestAnimationFrame(drawWolumeBar());
+		var q = Math.ceil(+($('#player .volume input').val()) / 10);
+
 		ctxVolume.clearRect(0, 0, canvasVolumeWidth, canvasVolumeHeight);
 		var maxHue 			= 360 / 10 * q,
+			startHue		= 0,
 			barWidth 		= 3,
 			gutterWidth		= 1,
 			maxBar			= Math.floor(canvasVolumeWidth / (gutterWidth + barWidth)),
@@ -517,21 +537,20 @@ $(document).ready(function() {
 			
 			ctxVolume.fill();
 		}
-	
-		/*ctxVolume.moveTo(0, canvasVolumeHeight);
-		ctxVolume.lineTo(canvasVolumeWidth, 0);
-		ctxVolume.lineTo(canvasVolumeWidth, canvasVolumeHeight);
-		ctxVolume.strokeStyle = '#000000';
-		ctxVolume.lineWidth = 2;
-		ctxVolume.stroke();*/
+		/*ctxVolume.fillRect(10 * (gutterWidth + barWidth), canvasVolumeHeight - 10 * barStepHeight - barStepHeight, barWidth, 10 * barStepHeight + barStepHeight);
+		ctxVolume.fill();*/
 
+		startHue += 15 % 360;
+		console.log(startHue);
 	}
 
 
 	$('#player .volume input').val(player.volume * 100);
 	$('#player .volume .val').html(Math.floor(player.volume * 100));
 
-	drawWolumeBar(Math.ceil($('#player .volume input').val() / 10));
+	// drawWolumeBar(Math.ceil($('#player .volume input').val() / 10));
+	drawWolumeBar();
+	// requestAnimationFrame(drawWolumeBar(Math.ceil($('#player .volume input').val() / 10)));
 
 	$('#player .volume input').on('input', function(e) {
 		var $inputVolume = $(this);
@@ -810,14 +829,11 @@ $(document).ready(function() {
 
 });
 
-$(document).ready(function() {
-
-	
-
-});
 
 
 $(window).load(function() {
+	var playerState = {};
+	playerState = JSON.parse(localStorage.getItem('playerState'));
 
 	// var dateLoad = new Date().getTime();
 	// console.log(dateLoad, dateStart);
@@ -826,6 +842,76 @@ $(window).load(function() {
 	// Preloader
 	// $(".spinner").fadeOut(300);
 	// $(".loader").delay(400).fadeOut("slow");
+
+    var canvasAnalyser 	= document.getElementById("canvas-eq");
+    var ctxAnalyser 	= canvasAnalyser.getContext("2d");
+    var analyserSource	= document.getElementById('analyser-source');
+
+    analyserSource.src 	= playerState.playlists[playerState.currentPlaylist].currentTrack.url;
+    analyserSource.crossOrigin = 'anonymous';
+
+    var audioCtx 		= new(window.AudioContext || window.webkitAudioContext)(),
+        analyser 		= audioCtx.createAnalyser(),
+    	// source 			= audioCtx.createMediaStreamSource(playerState.playlists[playerState.currentPlaylist].currentTrack.url)
+    	source 			= audioCtx.createMediaElementSource(analyserSource)
+    ;
+    analyser.fftSize 	= 2048;
+
+	source.connect(analyser);
+	analyser.connect(audioCtx.destination);
+
+    // Создаем массивы для хранения данных
+    var bufferLength 	= analyser.frequencyBinCount,
+    	fFrequencyData  = new Float32Array(bufferLength),
+        bFrequencyData  = new Uint8Array(bufferLength),
+        bTimeData       = new Uint8Array(bufferLength)
+    ;
+
+
+    // Получаем данные
+    analyser.getFloatFrequencyData(fFrequencyData); 
+    analyser.getByteFrequencyData(bFrequencyData); 
+    analyser.getByteTimeDomainData(bTimeData);
+
+    /*console.log(fFrequencyData);
+    console.log(bFrequencyData);
+    console.log(bTimeData);*/
+
+    function draw() {
+
+        drawVisual = requestAnimationFrame(draw);
+
+        analyser.getByteTimeDomainData(bTimeData);
+
+        ctxAnalyser.fillStyle = 'rgb(200, 200, 200)';
+        ctxAnalyser.fillRect(0, 0, canvasAnalyser.width, canvasAnalyser.height);
+
+        ctxAnalyser.lineWidth = 2;
+        ctxAnalyser.strokeStyle = 'rgb(0, 0, 0)';
+
+        ctxAnalyser.beginPath();
+
+        var sliceWidth = canvasAnalyser.width * 1.0 / bufferLength;
+        var x = 0;
+
+        for (var i = 0; i < bufferLength; i++) {
+
+            var v = bTimeData[i] / 128.0;
+            var y = v * canvasAnalyser.height / 2;
+
+            if (i === 0) {
+                ctxAnalyser.moveTo(x, y);
+            } else {
+                ctxAnalyser.lineTo(x, y);
+            }
+
+            x += sliceWidth;
+        }
+
+        ctxAnalyser.lineTo(canvasAnalyser.width, canvasAnalyser.height / 2);
+        ctxAnalyser.stroke();
+    };
+    draw();
 
 		
 });

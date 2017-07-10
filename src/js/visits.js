@@ -11,10 +11,8 @@ $(document).ready(function() {
 				data = JSON.parse(data)
 				if(data.length > 0) {
 					addHit(uniqHash);
-					console.log('hit');
 				} else {
 					addVisit(uniqHash);
-					console.log('uniq visit today');
 				}
 			}
 		});
