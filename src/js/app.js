@@ -140,11 +140,12 @@ $(document).ready(function() {
 			maxSize,
 			titleContainerWidth,
 			ratio
-			;
+		;
 
 		titleContainer.html(title)
 						.removeClass('runningString')
-						.parent().css({'width':'auto'});
+						.parent().css({'width':'auto'})
+		;
 
 		titleContainerWidth = titleContainer.width();
 		ratio = titleContainerWidth / titleSize;
@@ -259,6 +260,10 @@ $(document).ready(function() {
 	player.crossOrigin = 'anonymous';
 	$player.crossOrigin = 'anonymous';
 
+	setTimeout(function(){
+		player.crossOrigin = 'anonymous';
+    }, 3000);
+
 	if(localStorage.getItem('userStatus') == undefined) {
 		localStorage.setItem('userStatus', JSON.stringify(userStatus));
 	} else {
@@ -327,6 +332,9 @@ $(document).ready(function() {
 
 				if(!playerState.paused) {
 					player.crossOrigin = 'anonymous';
+					setTimeout(function(){
+						player.crossOrigin = 'anonymous';
+				    }, 3000);
 					player.play();
 					displayState();
 					updateTime();
@@ -406,6 +414,9 @@ $(document).ready(function() {
 
 	$('#player .play').click(function(e) {
 		player.crossOrigin = 'anonymous';
+		setTimeout(function(){
+			player.crossOrigin = 'anonymous';
+	    }, 3000);
 		if($('.playlist').children('.selected').length > 0) {
 			playerState.playlists[playerState.currentPlaylist].currentTrack = {
 				id: $('.playlistContainer .selected').data('stationId'),
@@ -435,6 +446,9 @@ $(document).ready(function() {
 
 	$('.playlistContainer').on('dblclick', '.track', function(e) {
 		player.crossOrigin = 'anonymous';
+		setTimeout(function(){
+			player.crossOrigin = 'anonymous';
+	    }, 3000);
 		var url = $(this).data('stationUrl');
 
 		player.src = url;
@@ -826,11 +840,14 @@ $(document).ready(function() {
 		$('.searchContainer, .playlistContainer', '#player').height(_playlistContainerHeight);
 	}
 
+
+	
+
 });
 
 
 
-$(window).load(function() {
+/*$(window).load(function() {
 	var playerState = {};
 	playerState = JSON.parse(localStorage.getItem('playerState'));
 
@@ -851,7 +868,8 @@ $(window).load(function() {
 
     var audioCtx 		= new(window.AudioContext || window.webkitAudioContext)(),
         analyser 		= audioCtx.createAnalyser(),
-    	// source 			= audioCtx.createMediaStreamSource(playerState.playlists[playerState.currentPlaylist].currentTrack.url)
+    	// source 			= audioCtx.createMediaElementSource(playerState.playlists[playerState.currentPlaylist].currentTrack.url),
+    	// source 			= audioCtx.createMediaElementSource(player),
     	source 			= audioCtx.createMediaElementSource(analyserSource)
     ;
     analyser.fftSize 	= 2048;
@@ -872,9 +890,9 @@ $(window).load(function() {
     analyser.getByteFrequencyData(bFrequencyData); 
     analyser.getByteTimeDomainData(bTimeData);
 
-    /*console.log(fFrequencyData);
-    console.log(bFrequencyData);
-    console.log(bTimeData);*/
+    // console.log(fFrequencyData);
+    // console.log(bFrequencyData);
+    // console.log(bTimeData);
 
     function draw() {
 
@@ -913,9 +931,69 @@ $(window).load(function() {
     draw();
 
 		
+});*/
+
+$(window).load(function() {
+	var playerState = {};
+	playerState = JSON.parse(localStorage.getItem('playerState'));
+
+	var SoundCloudAudioSource = function(audioElement) {
+	    var playerTag = document.getElementById(audioElement);
+	    console.log(playerTag);
+	    var self = this;
+	    var analyser;
+	    var audioCtx = new (window.AudioContext || window.webkitAudioContext); // this is because it's not been standardised accross browsers yet.
+	    analyser = audioCtx.createAnalyser();
+	    analyser.fftSize = 256; // see - there is that 'fft' thing. 
+	    var source = audioCtx.createMediaElementSource(playerTag); // this is where we hook up the <audio> element
+	    source.connect(analyser);
+	    analyser.connect(audioCtx.destination);
+	    var sampleAudioStream = function() {
+	        analyser.getByteFrequencyData(self.streamData);
+	        // calculate an overall volume value
+	        var total = 0;
+	        for (var i = 0; i < 80; i++) { // get the volume from the first 80 bins, else it gets too loud with treble
+	            total += self.streamData[i];
+	        }
+	        self.volume = total;
+	    };
+	    setInterval(sampleAudioStream, 20); // 
+	    // public properties and methods
+	    this.volume = 0;
+	    this.streamData = new Uint8Array(128); // This just means we will have 128 "bins" (always half the analyzer.fftsize value), each containing a number between 0 and 255. 
+	    this.playStream = function(streamUrl) {
+	        // get the input stream from the audio element
+	        // playerTag.setAttribute('src', streamUrl);
+	        playerTag.src = streamUrl;
+	        playerTag.crossOrigin = 'anonymous';
+        	setTimeout(function(){
+        		playerTag.crossOrigin = 'anonymous';
+            }, 3000);
+	        playerTag.play();
+	    }
+	}
+
+	var audioSource = new SoundCloudAudioSource('playerTag');
+	var canvasElement = document.getElementById('canvas');
+	var context = canvasElement.getContext("2d");
+
+	var draw = function() {
+	    for(bin = 0; bin < audioSource.streamData.length; bin ++) {
+	        var val = audioSource.streamData[bin];
+	        var red = val;
+	        var green = 255 - val;
+	        var blue = val / 2; 
+	        context.fillStyle = 'rgb(' + red + ', ' + green + ', ' + blue + ')';
+	        context.fillRect(bin * 2, 0, 2, 200);
+	    }
+	    requestAnimationFrame(draw);
+	};
+
+	audioSource.playStream(playerState.playlists[playerState.currentPlaylist].currentTrack.url);
+	draw();
+
+
 });
-
-
 $(document).ready(function() {
 
 	function checkLoginUniq(login) {

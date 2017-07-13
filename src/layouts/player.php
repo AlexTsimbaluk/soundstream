@@ -111,6 +111,9 @@
 	</template>
 </div>
 
-<canvas id="canvas-eq"></canvas>
-<!-- <audio id="analyser-source" controls src="../sound/Mc Nandinho E Nego Bam – Malandramente.mp3"></audio> -->
-<audio id="analyser-source" controls></audio>
+<!-- <canvas id="canvas-eq"></canvas>
+<audio id="analyser-source" controls></audio> -->
+
+
+<canvas id="canvas" width="300" height="200"></canvas>
+<audio id="playerTag"></audio>
