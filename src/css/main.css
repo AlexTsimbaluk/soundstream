@@ -1631,6 +1631,9 @@ ol {
 [type="range"]:focus {
   outline: 0 !important;
 }
+canvas {
+  z-index: 1;
+}
 #canvas-volume {
   bottom: 32px;
   right: 10px;
