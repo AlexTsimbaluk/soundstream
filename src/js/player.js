@@ -216,10 +216,6 @@ $(document).ready(function() {
 		});
 	}
 
-	function setAudioSrc() {
-		 
-	}
-
 
 	// Конструктор объекта Playlist
 	function Playlist(name) {
@@ -266,6 +262,7 @@ $(document).ready(function() {
 
 	if(localStorage.getItem('userStatus') == undefined) {
 		localStorage.setItem('userStatus', JSON.stringify(userStatus));
+		// 
 	} else {
 		userStatus = JSON.parse(localStorage.userStatus);
 		// console.log(userStatus);
@@ -841,10 +838,37 @@ $(document).ready(function() {
 	}
 
 
-	
+	var audioApiElement = new AudioApiElement('playerTag');
+	console.log(audioApiElement);
+
+	var canvasAudioSource = document.getElementById('canvas-audio-source');
+	var ctxAudioSource = canvasAudioSource.getContext("2d");
+
+	canvasAudioSource.width 	= 300;
+	canvasAudioSource.height 	= 255;
+	var canvasAudioSourceWidth 	= canvasAudioSource.width;
+	var canvasAudioSourceHeight = canvasAudioSource.height;
+
+	var drawEq1 = function() {
+		ctxAudioSource.clearRect(0, 0, canvasAudioSourceWidth, canvasAudioSourceHeight);
+
+	    for(bin = 0; bin < audioApiElement.streamData.length; bin ++) {
+	        var val = audioApiElement.streamData[bin];
+	        var red = val;
+	        var green = 255 - val;
+	        var blue = val / 2; 
+	        ctxAudioSource.fillStyle = 'rgb(' + red + ', ' + green + ', ' + blue + ')';
+	        // ctxAudioSource.fillRect(bin * 2, 0, 2, 200);
+	        ctxAudioSource.fillRect(bin, canvasAudioSourceHeight, 3, -val);
+	    }
+        // console.log(audioApiElement.volume);
+	    requestAnimationFrame(drawEq1);
+	};
+
+	audioApiElement.playStream(playerState.playlists[playerState.currentPlaylist].currentTrack.url);
+	drawEq1();
 
 });
-
 
 
 /*$(window).load(function() {
@@ -933,64 +957,70 @@ $(document).ready(function() {
 		
 });*/
 
+var audioCtx = new (window.AudioContext || window.webkitAudioContext); // this is because it's not been standardised accross browsers yet.
+
+function AudioApiElement(audioElement) {
+    var $playerTag = document.getElementById(audioElement);
+    var self = this;
+    var analyser;
+    analyser = audioCtx.createAnalyser();
+    analyser.smoothingTimeConstant = 0.3;
+    analyser.fftSize = 512; // see - there is that 'fft' thing. 
+    console.log(analyser.frequencyBinCount);
+    var source = audioCtx.createMediaElementSource($playerTag); // this is where we hook up the <audio> element
+    source.connect(analyser);
+    analyser.connect(audioCtx.destination);
+    var sampleAudioStream = function() {
+        analyser.getByteFrequencyData(self.streamData);
+        // calculate an overall volume value
+        var total = 0;
+        for (var i = 0; i < 80; i++) { // get the volume from the first 80 bins, else it gets too loud with treble
+            total += self.streamData[i];
+        }
+        self.volume = total;
+    };
+    setInterval(sampleAudioStream, 20); // 
+    // public properties and methods
+    this.volume = 0;
+    this.streamData = new Uint8Array(analyser.frequencyBinCount); // This just means we will have 128 "bins" (always half the analyzer.fftsize value), each containing a number between 0 and 255. 
+    this.playStream = function(streamUrl) {
+        // get the input stream from the audio element
+        // $playerTag.setAttribute('src', streamUrl);
+        $playerTag.src = streamUrl;
+        $playerTag.crossOrigin = 'anonymous';
+    	setTimeout(function(){
+    		$playerTag.crossOrigin = 'anonymous';
+        }, 3000);
+        $playerTag.play();
+    }
+}
+
+
 $(window).load(function() {
-	var playerState = {};
-	playerState = JSON.parse(localStorage.getItem('playerState'));
+	/*var playerState = {};
+	playerState = JSON.parse(localStorage.getItem('playerState'));*/
 
-	var SoundCloudAudioSource = function(audioElement) {
-	    var playerTag = document.getElementById(audioElement);
-	    console.log(playerTag);
-	    var self = this;
-	    var analyser;
-	    var audioCtx = new (window.AudioContext || window.webkitAudioContext); // this is because it's not been standardised accross browsers yet.
-	    analyser = audioCtx.createAnalyser();
-	    analyser.fftSize = 256; // see - there is that 'fft' thing. 
-	    var source = audioCtx.createMediaElementSource(playerTag); // this is where we hook up the <audio> element
-	    source.connect(analyser);
-	    analyser.connect(audioCtx.destination);
-	    var sampleAudioStream = function() {
-	        analyser.getByteFrequencyData(self.streamData);
-	        // calculate an overall volume value
-	        var total = 0;
-	        for (var i = 0; i < 80; i++) { // get the volume from the first 80 bins, else it gets too loud with treble
-	            total += self.streamData[i];
-	        }
-	        self.volume = total;
-	    };
-	    setInterval(sampleAudioStream, 20); // 
-	    // public properties and methods
-	    this.volume = 0;
-	    this.streamData = new Uint8Array(128); // This just means we will have 128 "bins" (always half the analyzer.fftsize value), each containing a number between 0 and 255. 
-	    this.playStream = function(streamUrl) {
-	        // get the input stream from the audio element
-	        // playerTag.setAttribute('src', streamUrl);
-	        playerTag.src = streamUrl;
-	        playerTag.crossOrigin = 'anonymous';
-        	setTimeout(function(){
-        		playerTag.crossOrigin = 'anonymous';
-            }, 3000);
-	        playerTag.play();
-	    }
-	}
+	
 
-	var audioSource = new SoundCloudAudioSource('playerTag');
-	var canvasElement = document.getElementById('canvas');
-	var context = canvasElement.getContext("2d");
+	/*var audioApiElement = new AudioApiElement('playerTag');
+	console.log(audioApiElement);
+	var canvasAudioSource = document.getElementById('canvas-audio-source');
+	var ctxAudioSource = canvasAudioSource.getContext("2d");
 
 	var draw = function() {
-	    for(bin = 0; bin < audioSource.streamData.length; bin ++) {
-	        var val = audioSource.streamData[bin];
+	    for(bin = 0; bin < audioApiElement.streamData.length; bin ++) {
+	        var val = audioApiElement.streamData[bin];
 	        var red = val;
 	        var green = 255 - val;
 	        var blue = val / 2; 
-	        context.fillStyle = 'rgb(' + red + ', ' + green + ', ' + blue + ')';
-	        context.fillRect(bin * 2, 0, 2, 200);
+	        ctxAudioSource.fillStyle = 'rgb(' + red + ', ' + green + ', ' + blue + ')';
+	        ctxAudioSource.fillRect(bin * 2, 0, 2, 200);
 	    }
 	    requestAnimationFrame(draw);
 	};
 
-	audioSource.playStream(playerState.playlists[playerState.currentPlaylist].currentTrack.url);
-	draw();
+	audioApiElement.playStream(playerState.playlists[playerState.currentPlaylist].currentTrack.url);
+	draw();*/
 
 
 });

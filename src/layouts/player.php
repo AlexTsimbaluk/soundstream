@@ -115,5 +115,5 @@
 <audio id="analyser-source" controls></audio> -->
 
 
-<canvas id="canvas" width="300" height="200"></canvas>
+<canvas id="canvas-audio-source"></canvas>
 <audio id="playerTag"></audio>
