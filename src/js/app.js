@@ -1,5 +1,9 @@
 var dateStart = new Date().getTime();
 
+var audioCtx = new (window.AudioContext || window.webkitAudioContext); // this is because it's not been standardised accross browsers yet.
+
+
+
 function getParams() { 
 	var $_GET = {}; 
 	var __GET = window.location.search.substring(1).split("&"); 
@@ -12,10 +16,10 @@ function getParams() {
 }
 
 if(getParams().admin !== undefined) {
-	console.log('admin');
+	// console.log('admin');
 	$('body').addClass('admin');
 } else {
-	console.log('index');
+	// console.log('index');
 	$('body').removeClass('admin');
 }
 
@@ -230,11 +234,119 @@ $(document).ready(function() {
 
 	$('body').attr('data-useragent', navigator.userAgent);
 
+	function AudioApiElement(audioElement) {
+	    var $playerTag = document.getElementById(audioElement);
+	    var self = this;
+	    var analyser;
+	    analyser = audioCtx.createAnalyser();
+	    analyser.smoothingTimeConstant = 0.3;
+	    analyser.fftSize = 2048; // see - there is that 'fft' thing. 
+	    // console.log(analyser.frequencyBinCount);
+	    var source = audioCtx.createMediaElementSource($playerTag); // this is where we hook up the <audio> element
+	    source.connect(analyser);
+	    analyser.connect(audioCtx.destination);
+	    var sampleAudioStream = function() {
+	        analyser.getByteFrequencyData(self.streamData);
+	        // calculate an overall volume value
+	        var total = 0;
+	        for (var i = 0; i < 80; i++) { // get the volume from the first 80 bins, else it gets too loud with treble
+	            total += self.streamData[i];
+	        }
+	        // self.volume = total;
+	        // console.log($playerTag.volume);
+	    };
+	    setInterval(sampleAudioStream, 20); // 
+	    // public properties and methods
+	    // this.volume = 0;
+	    // $playerTag.volume = playerState.volume;
+
+	    this.streamData = new Uint8Array(analyser.frequencyBinCount); // This just means we will have 128 "bins" (always half the analyzer.fftsize value), each containing a number between 0 and 255. 
+	    
+	    this.playStream = function(streamUrl) {
+        	playerState.playlists[playerState.currentPlaylist].currentTrack = {
+        		id: $('.playlistContainer .selected').data('stationId'),
+        		url: player.src,
+        		title: $('.playlistContainer .selected').data('stationTitle')
+        	};
+
+        	var currentTrackEl = $('.playlistContainer .active [data-station-id='
+        							+ playerState.playlists[playerState.currentPlaylist].currentTrack.id
+        							+ ']');
+	        $playerTag.src = streamUrl;
+	        $playerTag.crossOrigin = 'anonymous';
+	    	setTimeout(function(){
+	    		$playerTag.crossOrigin = 'anonymous';
+	        }, 3000);
+	        $playerTag.play();
+	        playerState.paused = $playerTag.paused;
+	        visualisation(currentTrackEl);
+	        displayState();
+	        updateTime();
+	        localStorage.setItem('playerState', JSON.stringify(playerState));
+	        setInterval(function() {
+	        	updateTime();
+	        }, 1000);
+	        console.log('audioApiElement::playStream');
+	        // drawEq1();
+	    }
+	    this.stopStream = function() {
+	    	var currentTrackEl = $('.playlistContainer .active [data-station-id='
+									+ playerState.playlists[playerState.currentPlaylist].currentTrack.id
+									+ ']');
+
+			visualisationStop(currentTrackEl);
+			$('#player .play').removeClass('visualisation');
+			$('#player .info .trackTitle').html('')
+											.removeClass('runningString')
+											.parent().css({'width':'auto'});
+
+			$playerTag.pause();
+			$playerTag.currentTime = 0;
+			playerState.paused = $playerTag.paused;
+			console.log($playerTag.paused);
+			console.log('audioApiElement::stopStream');
+			localStorage.setItem('playerState', JSON.stringify(playerState));
+	    }
+	    this.setVolume = function(vol) {
+	    	$playerTag.volume = vol;
+	    }
+	    this.getVolume = function() {
+	    	return $playerTag.volume;
+	    }
+
+	    // this.setVolume(playerState.volume);
+	    $playerTag.volume = playerState.volume;
+	}
+
+	var canvasAudioSource = document.getElementById('canvas-audio-source');
+	var ctxAudioSource = canvasAudioSource.getContext("2d");
+
+	canvasAudioSource.width 	= 300;
+	canvasAudioSource.height 	= 200;
+	var canvasAudioSourceWidth 	= canvasAudioSource.width;
+	var canvasAudioSourceHeight = canvasAudioSource.height;
+
+	function drawEq1() {
+		ctxAudioSource.clearRect(0, 0, canvasAudioSourceWidth, canvasAudioSourceHeight);
+
+	    for(bin = 0; bin < audioApiElement.streamData.length; bin ++) {
+	        var val = audioApiElement.streamData[bin];
+	        var red = val;
+	        var green = 255 - val;
+	        var blue = val / 2; 
+	        // ctxAudioSource.fillStyle = 'rgb(' + red + ', ' + green + ', ' + blue + ')';
+	        ctxAudioSource.fillStyle = 'hsl(' + (val % 360) + ', 100%, 50%)';
+	        // ctxAudioSource.fillRect(bin * 2, 0, 2, 200);
+	        ctxAudioSource.fillRect(bin, canvasAudioSourceHeight, 1, -val / 1.5);
+	    }
+        // console.log(audioApiElement.volume);
+	    requestAnimationFrame(drawEq1);
+	};
+
 	var playlistContainer = $('#player .playlistContainer'),
 		playlistsPanel = $('#player .playlistsPanel'),
 		
 		player = new Audio(),
-		$player = $('#analyser-source'),
 
 		// Состояние пользователя - зарегистрирован или нет, авторизован или нет
 		userStatus = {
@@ -253,12 +365,11 @@ $(document).ready(function() {
 	;
 
 	// https://stackoverflow.com/questions/31308679/mediaelementaudiosource-outputs-zeros-due-to-cors-access-restrictions-local-mp3
-	player.crossOrigin = 'anonymous';
-	$player.crossOrigin = 'anonymous';
+	/*player.crossOrigin = 'anonymous';
 
 	setTimeout(function(){
 		player.crossOrigin = 'anonymous';
-    }, 3000);
+    }, 3000);*/
 
 	if(localStorage.getItem('userStatus') == undefined) {
 		localStorage.setItem('userStatus', JSON.stringify(userStatus));
@@ -268,6 +379,8 @@ $(document).ready(function() {
 		// console.log(userStatus);
 	}
 
+	
+
 	if(localStorage.getItem('playerState') == undefined) {
 		// Объект плейлиста
 		var defaultPlaylist = new Playlist('Default');
@@ -276,19 +389,21 @@ $(document).ready(function() {
 		playlistContainer.append(playerState.playlists[playerState.currentPlaylist].htmlEl);
 		localStorage.setItem('playerState', JSON.stringify(playerState));
 	} else {
+		var audioApiElement = new AudioApiElement('playerTag');
 		// Поучаем актуальное состояние плеера из local storage
 		playerState = JSON.parse(localStorage.getItem('playerState'));
+		// console.log(playerState.volume);
 		// Наполняем playlistsPanel заголовками плейлистов
 		for (var i = 0; i < playerState.playlistsOrder.length; i++) {
 			playlistsPanel.append('<div class="plName" data-name="' + playerState.playlistsOrder[i] + '">' + playerState.playlistsOrder[i] + '</div>');
 		}
 		// Задаем свойства объекта Audio свойствами объекта playerState
-		player.volume = playerState.volume;
-		$player.volume = playerState.volume;
+		// player.volume = playerState.volume;
 		player.src = playerState.playlists[playerState.currentPlaylist].currentTrack.url;
-		$player.src = playerState.playlists[playerState.currentPlaylist].currentTrack.url;
 		player.paused = playerState.paused;
-		$player.paused = playerState.paused;
+		// audioApiElement.setVolume(playerState.volume);
+		audioApiElement.setVolume(playerState.volume);
+		// console.log(audioApiElement.getVolume());
 		// Создаем контейнер для треков текущего (активного) плейлиста
 		playlistContainer.append(playerState.playlists[playerState.currentPlaylist].htmlEl);
 		// Получить плейлист и сформировать его
@@ -328,11 +443,13 @@ $(document).ready(function() {
 								.addClass('selected');
 
 				if(!playerState.paused) {
-					player.crossOrigin = 'anonymous';
+					/*player.crossOrigin = 'anonymous';
 					setTimeout(function(){
 						player.crossOrigin = 'anonymous';
 				    }, 3000);
-					player.play();
+					player.play();*/
+					audioApiElement.playStream(playerState.playlists[playerState.currentPlaylist].currentTrack.url);
+					drawEq1();
 					displayState();
 					updateTime();
 
@@ -349,6 +466,8 @@ $(document).ready(function() {
 	}
 	
 
+	/*audioApiElement.playStream(playerState.playlists[playerState.currentPlaylist].currentTrack.url);
+	drawEq1();*/
 	// Визуализация выбранного играющего трека и кнопки play
 	var intervalVis = null;
 
@@ -410,22 +529,29 @@ $(document).ready(function() {
 
 
 	$('#player .play').click(function(e) {
-		player.crossOrigin = 'anonymous';
+		audioApiElement.playStream(playerState.playlists[playerState.currentPlaylist].currentTrack.url);
+		drawEq1();
+		/*player.crossOrigin = 'anonymous';
 		setTimeout(function(){
 			player.crossOrigin = 'anonymous';
 	    }, 3000);
 		if($('.playlist').children('.selected').length > 0) {
+
 			playerState.playlists[playerState.currentPlaylist].currentTrack = {
 				id: $('.playlistContainer .selected').data('stationId'),
 				url: player.src,
 				title: $('.playlistContainer .selected').data('stationTitle')
 			};
 
+			console.log(playerState.playlists[playerState.currentPlaylist].currentTrack);
+
 			var currentTrackEl = $('.playlistContainer .active [data-station-id='
 									+ playerState.playlists[playerState.currentPlaylist].currentTrack.id
 									+ ']');
 
+			console.log(currentTrackEl);
 			player.src = $('.playlistContainer .selected').data('stationUrl');
+			console.log()
 			player.play();
 			playerState.paused = player.paused;
 
@@ -438,7 +564,7 @@ $(document).ready(function() {
 			setInterval(function() {
 				updateTime();
 			}, 1000);
-		}
+		}*/
 	});
 
 	$('.playlistContainer').on('dblclick', '.track', function(e) {
@@ -475,7 +601,7 @@ $(document).ready(function() {
 	});
 
 	$('#player .stop').click(function(e) {
-		var currentTrackEl = $('.playlistContainer .active [data-station-id='
+		/*var currentTrackEl = $('.playlistContainer .active [data-station-id='
 								+ playerState.playlists[playerState.currentPlaylist].currentTrack.id
 								+ ']');
 
@@ -489,7 +615,9 @@ $(document).ready(function() {
 		player.currentTime = 0;
 		playerState.paused = player.paused;
 		
-		localStorage.setItem('playerState', JSON.stringify(playerState));
+		localStorage.setItem('playerState', JSON.stringify(playerState));*/
+
+		audioApiElement.stopStream();
 	});
 
 	$('.playlistContainer').on('click', '.delete', function(e) {
@@ -551,13 +679,14 @@ $(document).ready(function() {
 		ctxVolume.fill();*/
 
 		startHue += 15 % 360;
-		console.log(startHue);
+		// console.log(startHue);
 	}
 
-
-	$('#player .volume input').val(player.volume * 100);
-	$('#player .volume .val').html(Math.floor(player.volume * 100));
-
+	/*$('#player .volume input').val(player.volume * 100);
+	$('#player .volume .val').html(Math.floor(player.volume * 100));*/
+	// audioApiElement.setVolume(playerState.volume);
+	$('#player .volume input').val(audioApiElement.getVolume() * 100);
+	$('#player .volume .val').html(Math.floor(audioApiElement.getVolume() * 100));
 	// drawWolumeBar(Math.ceil($('#player .volume input').val() / 10));
 	drawWolumeBar();
 	// requestAnimationFrame(drawWolumeBar(Math.ceil($('#player .volume input').val() / 10)));
@@ -565,8 +694,10 @@ $(document).ready(function() {
 	$('#player .volume input').on('input', function(e) {
 		var $inputVolume = $(this);
 
-		player.volume = parseFloat($(this).val() / 100);
-		playerState.volume = player.volume;
+		/*player.volume = parseFloat($(this).val() / 100);
+		playerState.volume = player.volume;*/
+		audioApiElement.setVolume(parseFloat($(this).val() / 100));
+		playerState.volume = audioApiElement.getVolume();
 
 		$('#player .volume .val').html($(this).val());
 
@@ -838,40 +969,12 @@ $(document).ready(function() {
 	}
 
 
-	var audioApiElement = new AudioApiElement('playerTag');
-	console.log(audioApiElement);
-
-	var canvasAudioSource = document.getElementById('canvas-audio-source');
-	var ctxAudioSource = canvasAudioSource.getContext("2d");
-
-	canvasAudioSource.width 	= 300;
-	canvasAudioSource.height 	= 255;
-	var canvasAudioSourceWidth 	= canvasAudioSource.width;
-	var canvasAudioSourceHeight = canvasAudioSource.height;
-
-	var drawEq1 = function() {
-		ctxAudioSource.clearRect(0, 0, canvasAudioSourceWidth, canvasAudioSourceHeight);
-
-	    for(bin = 0; bin < audioApiElement.streamData.length; bin ++) {
-	        var val = audioApiElement.streamData[bin];
-	        var red = val;
-	        var green = 255 - val;
-	        var blue = val / 2; 
-	        ctxAudioSource.fillStyle = 'rgb(' + red + ', ' + green + ', ' + blue + ')';
-	        // ctxAudioSource.fillRect(bin * 2, 0, 2, 200);
-	        ctxAudioSource.fillRect(bin, canvasAudioSourceHeight, 3, -val);
-	    }
-        // console.log(audioApiElement.volume);
-	    requestAnimationFrame(drawEq1);
-	};
-
-	audioApiElement.playStream(playerState.playlists[playerState.currentPlaylist].currentTrack.url);
-	drawEq1();
+	
 
 });
 
 
-/*$(window).load(function() {
+$(window).load(function() {
 	var playerState = {};
 	playerState = JSON.parse(localStorage.getItem('playerState'));
 
@@ -955,73 +1058,12 @@ $(document).ready(function() {
     draw();
 
 		
-});*/
+});
 
-var audioCtx = new (window.AudioContext || window.webkitAudioContext); // this is because it's not been standardised accross browsers yet.
 
-function AudioApiElement(audioElement) {
-    var $playerTag = document.getElementById(audioElement);
-    var self = this;
-    var analyser;
-    analyser = audioCtx.createAnalyser();
-    analyser.smoothingTimeConstant = 0.3;
-    analyser.fftSize = 512; // see - there is that 'fft' thing. 
-    console.log(analyser.frequencyBinCount);
-    var source = audioCtx.createMediaElementSource($playerTag); // this is where we hook up the <audio> element
-    source.connect(analyser);
-    analyser.connect(audioCtx.destination);
-    var sampleAudioStream = function() {
-        analyser.getByteFrequencyData(self.streamData);
-        // calculate an overall volume value
-        var total = 0;
-        for (var i = 0; i < 80; i++) { // get the volume from the first 80 bins, else it gets too loud with treble
-            total += self.streamData[i];
-        }
-        self.volume = total;
-    };
-    setInterval(sampleAudioStream, 20); // 
-    // public properties and methods
-    this.volume = 0;
-    this.streamData = new Uint8Array(analyser.frequencyBinCount); // This just means we will have 128 "bins" (always half the analyzer.fftsize value), each containing a number between 0 and 255. 
-    this.playStream = function(streamUrl) {
-        // get the input stream from the audio element
-        // $playerTag.setAttribute('src', streamUrl);
-        $playerTag.src = streamUrl;
-        $playerTag.crossOrigin = 'anonymous';
-    	setTimeout(function(){
-    		$playerTag.crossOrigin = 'anonymous';
-        }, 3000);
-        $playerTag.play();
-    }
-}
 
 
 $(window).load(function() {
-	/*var playerState = {};
-	playerState = JSON.parse(localStorage.getItem('playerState'));*/
-
-	
-
-	/*var audioApiElement = new AudioApiElement('playerTag');
-	console.log(audioApiElement);
-	var canvasAudioSource = document.getElementById('canvas-audio-source');
-	var ctxAudioSource = canvasAudioSource.getContext("2d");
-
-	var draw = function() {
-	    for(bin = 0; bin < audioApiElement.streamData.length; bin ++) {
-	        var val = audioApiElement.streamData[bin];
-	        var red = val;
-	        var green = 255 - val;
-	        var blue = val / 2; 
-	        ctxAudioSource.fillStyle = 'rgb(' + red + ', ' + green + ', ' + blue + ')';
-	        ctxAudioSource.fillRect(bin * 2, 0, 2, 200);
-	    }
-	    requestAnimationFrame(draw);
-	};
-
-	audioApiElement.playStream(playerState.playlists[playerState.currentPlaylist].currentTrack.url);
-	draw();*/
-
 
 });
 $(document).ready(function() {
