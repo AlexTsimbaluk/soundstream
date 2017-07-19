@@ -240,14 +240,12 @@ $(document).ready(function() {
 	    var analyser;
 	    analyser = audioCtx.createAnalyser();
 	    analyser.smoothingTimeConstant = 0.3;
-	    analyser.fftSize = 2048; // see - there is that 'fft' thing. 
-	    // console.log(analyser.frequencyBinCount);
-	    var source = audioCtx.createMediaElementSource($playerTag); // this is where we hook up the <audio> element
+	    analyser.fftSize = 2048;
+	    var source = audioCtx.createMediaElementSource($playerTag);
 	    source.connect(analyser);
 	    analyser.connect(audioCtx.destination);
 	    var sampleAudioStream = function() {
 	        analyser.getByteFrequencyData(self.streamData);
-	        // calculate an overall volume value
 	        var total = 0;
 	        for (var i = 0; i < 80; i++) { // get the volume from the first 80 bins, else it gets too loud with treble
 	            total += self.streamData[i];
@@ -263,17 +261,20 @@ $(document).ready(function() {
 	    this.streamData = new Uint8Array(analyser.frequencyBinCount); // This just means we will have 128 "bins" (always half the analyzer.fftsize value), each containing a number between 0 and 255. 
 	    
 	    this.playStream = function(streamUrl) {
+	    	// TODO: .selected переделать на data-current и везде проверять его
         	playerState.playlists[playerState.currentPlaylist].currentTrack = {
         		id: $('.playlistContainer .selected').data('stationId'),
-        		url: player.src,
+        		url: $playerTag.src,
         		title: $('.playlistContainer .selected').data('stationTitle')
         	};
 
         	var currentTrackEl = $('.playlistContainer .active [data-station-id='
         							+ playerState.playlists[playerState.currentPlaylist].currentTrack.id
         							+ ']');
+
 	        $playerTag.src = streamUrl;
 	        $playerTag.crossOrigin = 'anonymous';
+	        $playerTag.setAttribute('crossorigin', 'anonymous');
 	    	setTimeout(function(){
 	    		$playerTag.crossOrigin = 'anonymous';
 	        }, 3000);
@@ -287,7 +288,8 @@ $(document).ready(function() {
 	        	updateTime();
 	        }, 1000);
 	        console.log('audioApiElement::playStream');
-	        // drawEq1();
+	        drawEq1();
+	        drawEq2();
 	    }
 	    this.stopStream = function() {
 	    	var currentTrackEl = $('.playlistContainer .active [data-station-id='
@@ -303,7 +305,6 @@ $(document).ready(function() {
 			$playerTag.pause();
 			$playerTag.currentTime = 0;
 			playerState.paused = $playerTag.paused;
-			console.log($playerTag.paused);
 			console.log('audioApiElement::stopStream');
 			localStorage.setItem('playerState', JSON.stringify(playerState));
 	    }
@@ -318,29 +319,46 @@ $(document).ready(function() {
 	    $playerTag.volume = playerState.volume;
 	}
 
-	var canvasAudioSource = document.getElementById('canvas-audio-source');
-	var ctxAudioSource = canvasAudioSource.getContext("2d");
+	var canvasAudioSource 			= document.getElementById('canvas-audio-source');
+	var ctxAudioSource 				= canvasAudioSource.getContext("2d");
 
-	canvasAudioSource.width 	= 300;
-	canvasAudioSource.height 	= 200;
-	var canvasAudioSourceWidth 	= canvasAudioSource.width;
-	var canvasAudioSourceHeight = canvasAudioSource.height;
+	canvasAudioSource.width 		= 300;
+	canvasAudioSource.height 		= 255;
+	var canvasAudioSourceWidth 		= canvasAudioSource.width;
+	var canvasAudioSourceHeight 	= canvasAudioSource.height;
+
+	var canvasAudioSourceEq2 		= document.getElementById('canvas-audio-source-eq2');
+	var ctxAudioSourceEq2			= canvasAudioSourceEq2.getContext("2d");
+
+	canvasAudioSourceEq2.width 		= 300;
+	canvasAudioSourceEq2.height 	= 255;
+	var canvasAudioSourceEq2Width 	= canvasAudioSourceEq2.width;
+	var canvasAudioSourceEq2Height 	= canvasAudioSourceEq2.height;
+
 
 	function drawEq1() {
 		ctxAudioSource.clearRect(0, 0, canvasAudioSourceWidth, canvasAudioSourceHeight);
 
 	    for(bin = 0; bin < audioApiElement.streamData.length; bin ++) {
 	        var val = audioApiElement.streamData[bin];
-	        var red = val;
-	        var green = 255 - val;
-	        var blue = val / 2; 
-	        // ctxAudioSource.fillStyle = 'rgb(' + red + ', ' + green + ', ' + blue + ')';
-	        ctxAudioSource.fillStyle = 'hsl(' + (val % 360) + ', 100%, 50%)';
-	        // ctxAudioSource.fillRect(bin * 2, 0, 2, 200);
-	        ctxAudioSource.fillRect(bin, canvasAudioSourceHeight, 1, -val / 1.5);
+	        ctxAudioSource.fillStyle = 'rgb(' + (255 - val) + ',' + (255 - val) + ',' + (255 - val) + ')';
+	        // ctxAudioSource.fillStyle = 'rgb(' + (val) + ',' + (val) + ',' + (val) + ')';
+	        ctxAudioSource.fillRect(bin, canvasAudioSourceHeight, 1, -val / 1);
 	    }
         // console.log(audioApiElement.volume);
 	    requestAnimationFrame(drawEq1);
+	};
+
+	function drawEq2() {
+		ctxAudioSourceEq2.clearRect(0, 0, canvasAudioSourceEq2Width, canvasAudioSourceEq2Height);
+
+	    for(bin = 0; bin < audioApiElement.streamData.length; bin ++) {
+	        var val = audioApiElement.streamData[bin];
+	        ctxAudioSourceEq2.fillStyle = 'rgb(' + (255 - val) + ',' + (val) + ',' + (255 - val) + ')';
+	        ctxAudioSourceEq2.fillRect(bin, canvasAudioSourceEq2Height, 1, -val / 1);
+	    }
+        // console.log(audioApiElement.streamData.length);
+	    requestAnimationFrame(drawEq2);
 	};
 
 	var playlistContainer = $('#player .playlistContainer'),
@@ -401,9 +419,7 @@ $(document).ready(function() {
 		// player.volume = playerState.volume;
 		player.src = playerState.playlists[playerState.currentPlaylist].currentTrack.url;
 		player.paused = playerState.paused;
-		// audioApiElement.setVolume(playerState.volume);
 		audioApiElement.setVolume(playerState.volume);
-		// console.log(audioApiElement.getVolume());
 		// Создаем контейнер для треков текущего (активного) плейлиста
 		playlistContainer.append(playerState.playlists[playerState.currentPlaylist].htmlEl);
 		// Получить плейлист и сформировать его
@@ -449,7 +465,7 @@ $(document).ready(function() {
 				    }, 3000);
 					player.play();*/
 					audioApiElement.playStream(playerState.playlists[playerState.currentPlaylist].currentTrack.url);
-					drawEq1();
+					// drawEq1();
 					displayState();
 					updateTime();
 
@@ -528,95 +544,32 @@ $(document).ready(function() {
 	}
 
 
+	
 	$('#player .play').click(function(e) {
-		audioApiElement.playStream(playerState.playlists[playerState.currentPlaylist].currentTrack.url);
-		drawEq1();
-		/*player.crossOrigin = 'anonymous';
-		setTimeout(function(){
-			player.crossOrigin = 'anonymous';
-	    }, 3000);
-		if($('.playlist').children('.selected').length > 0) {
-
-			playerState.playlists[playerState.currentPlaylist].currentTrack = {
-				id: $('.playlistContainer .selected').data('stationId'),
-				url: player.src,
-				title: $('.playlistContainer .selected').data('stationTitle')
-			};
-
-			console.log(playerState.playlists[playerState.currentPlaylist].currentTrack);
-
-			var currentTrackEl = $('.playlistContainer .active [data-station-id='
-									+ playerState.playlists[playerState.currentPlaylist].currentTrack.id
-									+ ']');
-
-			console.log(currentTrackEl);
-			player.src = $('.playlistContainer .selected').data('stationUrl');
-			console.log()
-			player.play();
-			playerState.paused = player.paused;
-
-			visualisation(currentTrackEl);
-			displayState();
-			updateTime();
-
-			localStorage.setItem('playerState', JSON.stringify(playerState));
-
-			setInterval(function() {
-				updateTime();
-			}, 1000);
-		}*/
+		if(player.paused) {
+			audioApiElement.playStream(playerState.playlists[playerState.currentPlaylist].currentTrack.url);
+			// drawEq1();
+		}
 	});
 
-	$('.playlistContainer').on('dblclick', '.track', function(e) {
-		player.crossOrigin = 'anonymous';
-		setTimeout(function(){
-			player.crossOrigin = 'anonymous';
-	    }, 3000);
-		var url = $(this).data('stationUrl');
-
-		player.src = url;
-		player.play();
-
-		playerState.playlists[playerState.currentPlaylist].currentTrack = {
-			id: $('.playlistContainer .selected').data('stationId'),
-			url: player.src,
-			title: $('.playlistContainer .selected').data('stationTitle')
-		};
-
-		var currentTrackEl = $('.playlistContainer .active [data-station-id='
-								+ playerState.playlists[playerState.currentPlaylist].currentTrack.id
-								+ ']');
-
-		visualisation(currentTrackEl);
-
-		playerState.paused = player.paused;
-		localStorage.setItem('playerState', JSON.stringify(playerState));
-		
-		displayState();
-		updateTime();
-
-		setInterval(function() {
-			updateTime();
-		}, 1000);
+	$('.playlistContainer').on('click', '.track', function(e) {
+		// TODO: удалить data-current-track у всех треков
+		if($(this).attr('data-current-track')) {
+			$(this).removeAttr('data-current-track');
+			console.log('stop');
+			audioApiElement.stopStream();
+		} else {
+			$(this).attr('data-current-track', 1);
+			console.log('play');
+			var url = $(this).data('stationUrl');
+			audioApiElement.playStream(url);
+			// drawEq1();
+		}
+		// console.log($(this));
 	});
 
+	// TODO: в кликах на кнопку stop проверять player.paused
 	$('#player .stop').click(function(e) {
-		/*var currentTrackEl = $('.playlistContainer .active [data-station-id='
-								+ playerState.playlists[playerState.currentPlaylist].currentTrack.id
-								+ ']');
-
-		visualisationStop(currentTrackEl);
-		$('#player .play').removeClass('visualisation');
-		$('#player .info .trackTitle').html('')
-										.removeClass('runningString')
-										.parent().css({'width':'auto'});
-
-		player.pause();
-		player.currentTime = 0;
-		playerState.paused = player.paused;
-		
-		localStorage.setItem('playerState', JSON.stringify(playerState));*/
-
 		audioApiElement.stopStream();
 	});
 
@@ -655,6 +608,7 @@ $(document).ready(function() {
 
 	function drawWolumeBar() {
 		// var volumeAnimation 	= requestAnimationFrame(drawWolumeBar());
+		// q - какую часть volume-bar от 100% отрисовать, от 1 до 10, шаг - 10%
 		var q = Math.ceil(+($('#player .volume input').val()) / 10);
 
 		ctxVolume.clearRect(0, 0, canvasVolumeWidth, canvasVolumeHeight);
@@ -974,7 +928,7 @@ $(document).ready(function() {
 });
 
 
-$(window).load(function() {
+/*$(window).load(function() {
 	var playerState = {};
 	playerState = JSON.parse(localStorage.getItem('playerState'));
 
@@ -1058,7 +1012,7 @@ $(window).load(function() {
     draw();
 
 		
-});
+});*/
 
 
 

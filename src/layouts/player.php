@@ -111,9 +111,11 @@
 	</template>
 </div>
 
-<canvas id="canvas-eq"></canvas>
-<audio id="analyser-source" controls></audio>
+<!-- <canvas id="canvas-eq"></canvas>
+<audio id="analyser-source" controls></audio> -->
 
+
+<audio id="playerTag" ></audio>
 
 <canvas id="canvas-audio-source"></canvas>
-<audio id="playerTag" ></audio>
+<canvas id="canvas-audio-source-eq2"></canvas>
