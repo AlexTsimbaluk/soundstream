@@ -341,8 +341,8 @@ $(document).ready(function() {
 
 	    for(bin = 0; bin < audioApiElement.streamData.length; bin ++) {
 	        var val = audioApiElement.streamData[bin];
-	        ctxAudioSource.fillStyle = 'rgb(' + (255 - val) + ',' + (255 - val) + ',' + (255 - val) + ')';
-	        // ctxAudioSource.fillStyle = 'rgb(' + (val) + ',' + (val) + ',' + (val) + ')';
+	        ctxAudioSource.fillStyle = 'rgb(' + (val) + ',' + (val) + ',' + (val) + ')';
+	        // ctxAudioSource.fillStyle = 'rgb(' + (255 - val) + ',' + (255 - val) + ',' + (255 - val) + ')';
 	        ctxAudioSource.fillRect(bin, canvasAudioSourceHeight, 1, -val / 1);
 	    }
         // console.log(audioApiElement.volume);

@@ -78,7 +78,9 @@
 			</div>
 			<!-- <div class="volumeVisualisation"></div> -->
 		</div>
-
+		
+		<canvas id="canvas-audio-source"></canvas>
+		<canvas id="canvas-audio-source-eq2"></canvas>
 		
 		<?php
 	        include_once 'layouts/nav-player.php';
@@ -117,5 +119,4 @@
 
 <audio id="playerTag" ></audio>
 
-<canvas id="canvas-audio-source"></canvas>
-<canvas id="canvas-audio-source-eq2"></canvas>
+

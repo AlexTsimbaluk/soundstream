@@ -1645,8 +1645,8 @@ canvas {
   top: 0;
 }
 #canvas-audio-source {
-  right: 0;
+  left: 304px;
 }
 #canvas-audio-source-eq2 {
-  left: 0;
+  right: 304px;
 }
