@@ -173,6 +173,7 @@ $(document).ready(function() {
 	}
 
 	// Отобразить время восроизведения
+	// TODO: починить
 	function updateTime() {
 		var s = ('0' + parseInt(player.currentTime % 60)).slice(-2);
 		var m = ('0' + parseInt((player.currentTime / 60) % 60)).slice(-2);
@@ -240,7 +241,7 @@ $(document).ready(function() {
 	    var analyser;
 	    analyser = audioCtx.createAnalyser();
 	    analyser.smoothingTimeConstant = 0.3;
-	    analyser.fftSize = 2048;
+	    analyser.fftSize = 1024;
 	    var source = audioCtx.createMediaElementSource($playerTag);
 	    source.connect(analyser);
 	    analyser.connect(audioCtx.destination);
@@ -290,6 +291,7 @@ $(document).ready(function() {
 	        console.log('audioApiElement::playStream');
 	        drawEq1();
 	        drawEq2();
+	        drawEq3();
 	    }
 	    this.stopStream = function() {
 	    	var currentTrackEl = $('.playlistContainer .active [data-station-id='
@@ -322,7 +324,7 @@ $(document).ready(function() {
 	var canvasAudioSource 			= document.getElementById('canvas-audio-source');
 	var ctxAudioSource 				= canvasAudioSource.getContext("2d");
 
-	canvasAudioSource.width 		= 300;
+	canvasAudioSource.width 		= 500;
 	canvasAudioSource.height 		= 255;
 	var canvasAudioSourceWidth 		= canvasAudioSource.width;
 	var canvasAudioSourceHeight 	= canvasAudioSource.height;
@@ -330,10 +332,18 @@ $(document).ready(function() {
 	var canvasAudioSourceEq2 		= document.getElementById('canvas-audio-source-eq2');
 	var ctxAudioSourceEq2			= canvasAudioSourceEq2.getContext("2d");
 
-	canvasAudioSourceEq2.width 		= 300;
+	canvasAudioSourceEq2.width 		= 500;
 	canvasAudioSourceEq2.height 	= 255;
 	var canvasAudioSourceEq2Width 	= canvasAudioSourceEq2.width;
 	var canvasAudioSourceEq2Height 	= canvasAudioSourceEq2.height;
+
+	var canvasAudioSourceEq3 		= document.getElementById('canvas-audio-source-eq3');
+	var ctxAudioSourceEq3			= canvasAudioSourceEq3.getContext("2d");
+
+	canvasAudioSourceEq3.width 		= 500;
+	canvasAudioSourceEq3.height 	= 150;
+	var canvasAudioSourceEq3Width 	= canvasAudioSourceEq3.width;
+	var canvasAudioSourceEq3Height 	= canvasAudioSourceEq3.height;
 
 
 	function drawEq1() {
@@ -359,6 +369,42 @@ $(document).ready(function() {
 	    }
         // console.log(audioApiElement.streamData.length);
 	    requestAnimationFrame(drawEq2);
+	};
+
+	function drawEq3() {
+		ctxAudioSourceEq3.clearRect(0, 0, canvasAudioSourceEq3Width, canvasAudioSourceEq3Height);
+		// получаем число плиток в вертикальном ряду при максимальном значении частоты 255
+		// в одной плитке - 10 едениц частоты
+		var maxBar 			= Math.floor(255 / 10),
+			// ширина плитки
+			// barWidth 	= Math.floor(canvasAudioSourceEq3Width / 80),
+			barWidth 		= 10,
+			// высота плитки
+			barHeight 		= Math.floor(canvasAudioSourceEq3Height / maxBar),
+			// зазор между плитками
+			gutter 	= 2,
+			// полная ширина плитки  сзазором
+			fullBarWidth 	= barWidth + gutter,
+			// полная высота плитки  сзазором
+			fullBarHeight 	= barHeight + gutter
+		;
+	    for(var i = 0; i < audioApiElement.streamData.length; i ++) {
+	        var val = audioApiElement.streamData[i],
+				totalBar = Math.floor(val / 10)
+			;
+			/*ctxAudioSourceEq3.fillStyle = 'rgb(' + (255 - val) + ',' + (val) + ',' + (255 - val) + ')';
+	        ctxAudioSourceEq3.fillRect(i, canvasAudioSourceEq3Height, 1, -val / 1);*/
+	        for(var j = 0; j < totalBar; j++) {
+	        	ctxAudioSourceEq3.strokeStyle = 'rgb(' + (255 - val) + ',' + (255 - val) + ',' + (255 - val) + ')';
+	        	ctxAudioSourceEq3.strokeRect(
+		        							i * fullBarWidth,
+	        								canvasAudioSourceEq3Height - (j * fullBarHeight),
+	        								barWidth,
+	        								barHeight
+        								);
+	        }
+	    }
+	    requestAnimationFrame(drawEq3);
 	};
 
 	var playlistContainer = $('#player .playlistContainer'),

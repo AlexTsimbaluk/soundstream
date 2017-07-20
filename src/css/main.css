@@ -1640,13 +1640,19 @@ canvas {
 }
 #canvas-eq,
 #canvas-audio-source,
-#canvas-audio-source-eq2 {
+#canvas-audio-source-eq2,
+#canvas-audio-source-eq3 {
   position: absolute;
-  top: 0;
 }
 #canvas-audio-source {
   left: 304px;
+  top: 0;
 }
 #canvas-audio-source-eq2 {
   right: 304px;
+  top: 0;
+}
+#canvas-audio-source-eq3 {
+  bottom: -230px;
+  left: 305px;
 }
