@@ -117,7 +117,6 @@ $.ajaxSetup({
 
 
 
-
 $(document).ready(function() {
 
 	var audioCtx = new (window.AudioContext || window.webkitAudioContext);
