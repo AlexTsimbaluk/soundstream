@@ -1,6 +1,6 @@
 var dateStart = new Date().getTime();
 
-var audioCtx = new (window.AudioContext || window.webkitAudioContext); // this is because it's not been standardised accross browsers yet.
+// var audioCtx = new (window.AudioContext || window.webkitAudioContext); // this is because it's not been standardised accross browsers yet.
 
 
 
@@ -120,20 +120,7 @@ $.ajaxSetup({
 
 $(document).ready(function() {
 
-	// Установить свойство состояния объекта и записать в куки
-	function setPlayerState(prop, val) {
-		playerState[prop] = val;
-		Cookies.set('playerState', JSON.stringify(playerState), {expires: 180, path: "/"});
-	}
-
-	// Получить свойство состояния объекта из в куки
-	function getPlayerState(prop) {
-		if(!prop) {
-			return JSON.parse(Cookies.get('playerState'));	
-		} else {
-			return JSON.parse(Cookies.get('playerState'))[prop];
-		}
-	}
+	var audioCtx = new (window.AudioContext || window.webkitAudioContext);
 
 	// Отобразить название станции при воспроизведении
 	function displayState() {
@@ -480,7 +467,6 @@ $(document).ready(function() {
 					markup = '';
 
 				var trackMarkup = $('.template-track').html();
-				// console.log(trackMarkup);
 
 				for(var i = 0; i < response.length; i++) {
 					var track = response[i];
@@ -505,13 +491,7 @@ $(document).ready(function() {
 								.addClass('selected');
 
 				if(!playerState.paused) {
-					/*player.crossOrigin = 'anonymous';
-					setTimeout(function(){
-						player.crossOrigin = 'anonymous';
-				    }, 3000);
-					player.play();*/
 					audioApiElement.playStream(playerState.playlists[playerState.currentPlaylist].currentTrack.url);
-					// drawEq1();
 					displayState();
 					updateTime();
 
