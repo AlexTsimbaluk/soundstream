@@ -1,6 +1,7 @@
 'use strict';
 
 var gulp = require('gulp'),
+	babel = require("gulp-babel"),
 	del = require('del'),
 	less = require('gulp-less'),
 	autoprefixer = require('gulp-autoprefixer'),
@@ -67,6 +68,7 @@ gulp.task('browser-sync', function() {
 
 gulp.task('js-min', function() {
 	return gulp.src(['src/js/player.js', 'src/js/user.js', 'src/js/visits.js', 'src/js/admin.js', 'src/js/canvas.js', '!src/js/app.min.js'])
+			.pipe(babel())
 			.pipe(concat('app.js'))
 			.pipe(gulp.dest('src/js'))
 			.pipe(rename('app.min.js'))
