@@ -1,9 +1,5 @@
 var dateStart = new Date().getTime();
 
-// var audioCtx = new (window.AudioContext || window.webkitAudioContext); // this is because it's not been standardised accross browsers yet.
-
-
-
 function getParams() { 
 	var $_GET = {}; 
 	var __GET = window.location.search.substring(1).split("&"); 
@@ -246,7 +242,9 @@ $(document).ready(function() {
 	    // $playerTag.volume = playerState.volume;
 
 	    this.streamData = new Uint8Array(analyser.frequencyBinCount); // This just means we will have 128 "bins" (always half the analyzer.fftsize value), each containing a number between 0 and 255. 
-	    
+	    this.playPromise = function() {
+	    	return $playerTag.play();
+	    }
 	    this.playStream = function(streamUrl) {
 	    	// TODO: .selected переделать на data-current и везде проверять его
         	playerState.playlists[playerState.currentPlaylist].currentTrack = {
@@ -265,7 +263,24 @@ $(document).ready(function() {
 	    	setTimeout(function(){
 	    		$playerTag.crossOrigin = 'anonymous';
 	        }, 3000);
-	        $playerTag.play();
+
+	        function playPromise(argument) {
+	        	// body...
+	        }
+
+	        var playPromise = $playerTag.play();
+	        if (playPromise !== undefined) {
+				playPromise.then(function() {
+				console.log('Automatic playback started!');
+				}).catch(function(error) {
+				console.log('Automatic playback failed...');
+				console.log(error);
+				setTimeout(() => $('#player .play').trigger('click'), 3000);
+				// setTimeout(() => $playerTag.play(), 3000);
+				// setTimeout(() => playStream(streamUrl), 3000);
+				});
+	        }
+	        // $playerTag.play();
 	        playerState.paused = $playerTag.paused;
 	        visualisation(currentTrackEl);
 	        displayState();
