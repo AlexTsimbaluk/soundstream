@@ -223,7 +223,7 @@ $(document).ready(function() {
 	    var analyser;
 	    analyser = audioCtx.createAnalyser();
 	    analyser.smoothingTimeConstant = 0.3;
-	    analyser.fftSize = 1024;
+	    analyser.fftSize = 512;
 	    var source = audioCtx.createMediaElementSource($playerTag);
 	    source.connect(analyser);
 	    analyser.connect(audioCtx.destination);
@@ -242,9 +242,9 @@ $(document).ready(function() {
 	    // $playerTag.volume = playerState.volume;
 
 	    this.streamData = new Uint8Array(analyser.frequencyBinCount); // This just means we will have 128 "bins" (always half the analyzer.fftsize value), each containing a number between 0 and 255. 
-	    this.playPromise = function() {
+	    /*this.playPromise = function() {
 	    	return $playerTag.play();
-	    }
+	    }*/
 	    this.playStream = function(streamUrl) {
 	    	// TODO: .selected переделать на data-current и везде проверять его
         	playerState.playlists[playerState.currentPlaylist].currentTrack = {
@@ -259,25 +259,25 @@ $(document).ready(function() {
 
 	        $playerTag.src = streamUrl;
 	        $playerTag.crossOrigin = 'anonymous';
-	        $playerTag.setAttribute('crossorigin', 'anonymous');
 	    	setTimeout(function(){
 	    		$playerTag.crossOrigin = 'anonymous';
 	        }, 3000);
 
-	        function playPromise(argument) {
-	        	// body...
+	        function playPromise() {
+	        	return $playerTag.play();
 	        }
 
 	        var playPromise = $playerTag.play();
+
 	        if (playPromise !== undefined) {
 				playPromise.then(function() {
-				console.log('Automatic playback started!');
+					console.log('Automatic playback started!');
 				}).catch(function(error) {
-				console.log('Automatic playback failed...');
-				console.log(error);
-				setTimeout(() => $('#player .play').trigger('click'), 3000);
-				// setTimeout(() => $playerTag.play(), 3000);
-				// setTimeout(() => playStream(streamUrl), 3000);
+					console.log('Automatic playback failed...');
+					console.log(error);
+					// setTimeout(() => $('#player .play').trigger('click'), 3000);
+					// setTimeout(() => $playerTag.play(), 3000);
+					// setTimeout(() => playStream(streamUrl), 3000);
 				});
 	        }
 	        // $playerTag.play();
@@ -354,7 +354,7 @@ $(document).ready(function() {
 	        var val = audioApiElement.streamData[bin];
 	        ctxAudioSource.fillStyle = 'rgb(' + (val) + ',' + (val) + ',' + (val) + ')';
 	        // ctxAudioSource.fillStyle = 'rgb(' + (255 - val) + ',' + (255 - val) + ',' + (255 - val) + ')';
-	        ctxAudioSource.fillRect(bin, canvasAudioSourceHeight, 1, -val / 1);
+	        ctxAudioSource.fillRect(bin, canvasAudioSourceHeight, 1, Math.floor(-val / 4));
 	    }
         // console.log(audioApiElement.volume);
 	    requestAnimationFrame(drawEq1);
@@ -588,7 +588,6 @@ $(document).ready(function() {
 	$('#player .play').click(function(e) {
 		if(player.paused) {
 			audioApiElement.playStream(playerState.playlists[playerState.currentPlaylist].currentTrack.url);
-			// drawEq1();
 		}
 	});
 
@@ -596,16 +595,12 @@ $(document).ready(function() {
 		// TODO: удалить data-current-track у всех треков
 		if($(this).attr('data-current-track')) {
 			$(this).removeAttr('data-current-track');
-			console.log('stop');
 			audioApiElement.stopStream();
 		} else {
 			$(this).attr('data-current-track', 1);
-			console.log('play');
 			var url = $(this).data('stationUrl');
 			audioApiElement.playStream(url);
-			// drawEq1();
 		}
-		// console.log($(this));
 	});
 
 	// TODO: в кликах на кнопку stop проверять player.paused
@@ -727,19 +722,7 @@ $(document).ready(function() {
 		e = e || window.event;
 		var $inputVolume = $(this).find('input');
 
-		console.log(e.offsetX);
 		$inputVolume.val(e.offsetX).trigger('input');
-
-		/*var delta = e.originalEvent.deltaY
-				 || e.originalEvent.detail
-				 || e.originalEvent.wheelDelta
-		;
-
-		if(delta > 0 && +$inputVolume.val() > 0) {
-			$inputVolume.val(+$inputVolume.val() - 2).trigger('input');
-		} else if(delta < 0 && +$inputVolume.val() < 100) {
-			$inputVolume.val(+$inputVolume.val() + 2).trigger('input');
-		}*/
 
 		return false;
 	});
