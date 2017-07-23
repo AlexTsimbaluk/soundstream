@@ -253,8 +253,8 @@ $(document).ready(function() {
 	    	// TODO: .selected переделать на data-current и везде проверять его
         	playerState.playlists[playerState.currentPlaylist].currentTrack = {
         		id: $('.playlistContainer .selected').data('stationId'),
-        		url: $playerTag.src,
-        		// url: streamUrl,
+        		// url: $playerTag.src,
+        		url: streamUrl,
         		title: $('.playlistContainer .selected').data('stationTitle')
         	};
 
@@ -267,8 +267,6 @@ $(document).ready(function() {
 	    	setTimeout(function(){
 	    		$playerTag.crossOrigin = 'anonymous';
 	        }, 3000);
-	    	console.log(streamUrl);
-	    	console.log($playerTag.src);
 	        function playPromise() {
 	        	return $playerTag.play();
 	        }
@@ -279,14 +277,17 @@ $(document).ready(function() {
 
 	        var playPromise = $playerTag.play();
 	        $playerTag.addEventListener('error', (err)=> {
-	         		console.log(err);
+	         		// console.log(err);
 	        });
+
+	        $(".spinner").show();
 
 	        if (playPromise !== undefined) {
 				playPromise.then(function() {
 					console.log('Promise::Automatic playback started!');
+					$(".spinner").hide();
 				}).catch(function(error) {
-					// $(".spinner").show();
+					self.stopStream();
 					console.log('Promise::Automatic playback failed...');
 					console.log(error);
 					// defferedPlayStream();
@@ -508,7 +509,7 @@ $(document).ready(function() {
 
 				if(!playerState.paused) {
 					audioApiElement.playStream(playerState.playlists[playerState.currentPlaylist].currentTrack.url);
-					console.log(playerState.playlists[playerState.currentPlaylist].currentTrack.url);
+					// console.log(playerState.playlists[playerState.currentPlaylist].currentTrack.url);
 					displayState();
 					updateTime();
 
