@@ -10,9 +10,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Access-Control-Allow-Origin" content="*">
-
-    <!-- FAVICON -->
-    <link rel="shortcut icon" href="img/favicon/favicon.ico" type="image/x-icon">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    
+    <!-- CONFIG -->
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <!-- SEO -->
     <meta name="Description" content="">
@@ -20,9 +22,8 @@
     <meta name="Author" content="">
     <meta name="Robots" content="index,follow">
     
-    <!-- CONFIG -->
-    <meta name="format-detection" content="telephone=no">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- FAVICON -->
+    <link rel="shortcut icon" href="img/favicon/favicon.ico" type="image/x-icon">
 
     <!-- CSS -->
     <link rel="stylesheet" href="libs/font-awesome-4.3.0/css/font-awesome.min.css">

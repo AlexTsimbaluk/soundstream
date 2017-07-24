@@ -335,7 +335,7 @@ $(document).ready(function () {
 			var val = audioApiElement.streamData[bin];
 			ctxAudioSource.fillStyle = 'rgb(' + val + ',' + val + ',' + val + ')';
 			// ctxAudioSource.fillStyle = 'rgb(' + (255 - val) + ',' + (255 - val) + ',' + (255 - val) + ')';
-			ctxAudioSource.fillRect(bin, canvasAudioSourceHeight, 1, Math.floor(-val / 4));
+			ctxAudioSource.fillRect(bin, canvasAudioSourceHeight, 1, Math.floor(-val / 1.5));
 		}
 		requestAnimationFrame(drawEq1);
 	};
