@@ -9,15 +9,12 @@ function getParams() {
 		var getVar = __GET[i].split("=");
 		$_GET[getVar[0]] = typeof getVar[1] == "undefined" ? "" : getVar[1];
 	}
-
 	return $_GET;
 }
 
 if (getParams().admin !== undefined) {
-	// console.log('admin');
 	$('body').addClass('admin');
 } else {
-	// console.log('index');
 	$('body').removeClass('admin');
 }
 
@@ -61,20 +58,14 @@ $('.toAdmin').on('click', function (e) {
 	$.ajax({
 		data: { 'admin': 1 },
 		success: function success(data) {
-			// console.log(data);
-
 			$('#player').after(data);
-
 			$('#player').hide();
 
 			$('.toPlayer').on('click', function (e) {
 				console.log('toPlayer');
-
 				$('.admin-wrapper').remove();
 				$('body').removeClass('admin');
-
 				$('#player').fadeIn(300);
-
 				return false;
 			});
 		}
@@ -99,7 +90,6 @@ $.ajaxSetup({
 });
 
 $(document).ready(function () {
-
 	var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
 	// Отобразить название станции при воспроизведении
@@ -120,7 +110,6 @@ $(document).ready(function () {
 
 		if (titleContainerWidth > 240) {
 			console.log(titleContainerWidth, titleSize, ratio, maxSize);
-			// title.substr(0, maxSize);
 			console.log(title.length);
 			if (window.innerWidth > 700) {
 				titleContainer.addClass('runningString').parent().css({ 'width': '240px' });
@@ -149,8 +138,8 @@ $(document).ready(function () {
 		$.ajax({
 			data: { 'action': 'getStation', 'id': id },
 			success: function success(data) {
-				var response = JSON.parse(data);
-				var playlist = playlistContainer.find('.playlist[data-name="' + playerState.currentPlaylist + '"]');
+				var response = JSON.parse(data),
+				    playlist = playlistContainer.find('.playlist[data-name="' + playerState.currentPlaylist + '"]');
 				var markup = '';
 				for (var i = 0; i < response.length; i++) {
 					var track = response[i];
@@ -192,6 +181,13 @@ $(document).ready(function () {
 	$('body').attr('data-useragent', navigator.userAgent);
 
 	// TODO: analyser сделать отдельным объектом, с которым будет работать AudioApiElement
+	function Analyser(opts) {
+		var a = audioCtx.createAnalyser();
+		a.smoothingTimeConstant = opts.smoothingTimeConstant || .7;
+		a.fftSize = opts.fftSize || 512;
+		return a;
+	}
+
 	function AudioApiElement(audioElement) {
 		var $playerTag = document.getElementById(audioElement);
 		var self = this;
@@ -244,11 +240,11 @@ $(document).ready(function () {
 				// console.log(e);
 			});
 
-			var playPromise = $playerTag.play();
 			$playerTag.addEventListener('error', function (err) {
 				// console.log(err);
 			});
 
+			var playPromise = $playerTag.play();
 			$(".spinner").show();
 
 			if (playPromise !== undefined) {
@@ -256,10 +252,10 @@ $(document).ready(function () {
 					console.log('Promise::Automatic playback started!');
 					$(".spinner").hide();
 				}).catch(function (error) {
+					$(".spinner").hide();
 					self.stopStream();
 					console.log('Promise::Automatic playback failed...');
 					console.log(error);
-					// defferedPlayStream();
 				});
 			}
 
@@ -277,6 +273,7 @@ $(document).ready(function () {
 			drawEq3();
 			// TODO: добавить на играющий трек эквалайзер
 		};
+		// TODO: добавить сюда остановку анимации
 		this.stopStream = function () {
 			var currentTrackEl = $('.playlistContainer .active [data-station-id=' + playerState.playlists[playerState.currentPlaylist].currentTrack.id + ']');
 
@@ -780,7 +777,8 @@ $(document).ready(function () {
 	}
 
 	// Первоначальное случайное фоновое изображение для body
-	$('body').css({ 'background': 'url("../img/bg/bg' + getRandomInt(1, 10) + '.jpg") no-repeat center / cover' });
+	$('body').css({ 'background': 'url("../img/bg/bg' + getRandomInt(1, 10) + '.jpg") no-repeat center / cover'
+	});
 
 	/*Slider for background*/
 	$(function () {
