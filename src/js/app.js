@@ -185,6 +185,7 @@ $(document).ready(function () {
 		var a = audioCtx.createAnalyser();
 		a.smoothingTimeConstant = opts.smoothingTimeConstant || .7;
 		a.fftSize = opts.fftSize || 512;
+
 		return a;
 	}
 
@@ -197,24 +198,33 @@ $(document).ready(function () {
 			a.fftSize = opts.fftSize || 512;
 			return a;
 		}
-		var analyser_1 = createAnalyser({ smoothingTimeConstant: .7, fftSize: 512 });
+		var analyser_1 = createAnalyser({ smoothingTimeConstant: .7, fftSize: 256 });
 		var analyser_2 = createAnalyser({ smoothingTimeConstant: .7, fftSize: 1024 });
+		var analyser_3 = createAnalyser({ smoothingTimeConstant: .7, fftSize: 64 });
 		/*analyser.smoothingTimeConstant = 0.3;
   analyser.fftSize = 512;*/
 		var source = audioCtx.createMediaElementSource($playerTag);
 		source.connect(analyser_1);
+		source.connect(analyser_2);
+		source.connect(analyser_3);
 		analyser_1.connect(audioCtx.destination);
+		analyser_2.connect(audioCtx.destination);
+		analyser_3.connect(audioCtx.destination);
 		var sampleAudioStream = function sampleAudioStream() {
-			analyser_1.getByteFrequencyData(self.streamData);
+			analyser_1.getByteFrequencyData(self.streamData_1);
+			analyser_2.getByteFrequencyData(self.streamData_2);
+			analyser_3.getByteFrequencyData(self.streamData_3);
 			var total = 0;
 			for (var i = 0; i < 80; i++) {
-				total += self.streamData[i];
+				total += self.streamData_3[i];
 			}
 			// self.volume = total;
 		};
 		setInterval(sampleAudioStream, 20); // 
 		// public properties and methods
-		this.streamData = new Uint8Array(analyser_1.frequencyBinCount);
+		this.streamData_1 = new Uint8Array(analyser_1.frequencyBinCount);
+		this.streamData_2 = new Uint8Array(analyser_2.frequencyBinCount);
+		this.streamData_3 = new Uint8Array(analyser_3.frequencyBinCount);
 		this.playStream = function (streamUrl) {
 			/*if(el) {
    	}*/
@@ -232,9 +242,6 @@ $(document).ready(function () {
 			setTimeout(function () {
 				$playerTag.crossOrigin = 'anonymous';
 			}, 3000);
-			function playPromise() {
-				return $playerTag.play();
-			}
 
 			$playerTag.addEventListener('canplay', function (e) {
 				// console.log(e);
@@ -331,8 +338,8 @@ $(document).ready(function () {
 	function drawEq1() {
 		ctxAudioSource.clearRect(0, 0, canvasAudioSourceWidth, canvasAudioSourceHeight);
 
-		for (bin = 0; bin < audioApiElement.streamData.length; bin++) {
-			var val = audioApiElement.streamData[bin];
+		for (bin = 0; bin < audioApiElement.streamData_1.length; bin++) {
+			var val = audioApiElement.streamData_1[bin];
 			ctxAudioSource.fillStyle = 'rgb(' + val + ',' + val + ',' + val + ')';
 			// ctxAudioSource.fillStyle = 'rgb(' + (255 - val) + ',' + (255 - val) + ',' + (255 - val) + ')';
 			ctxAudioSource.fillRect(bin, canvasAudioSourceHeight, 1, Math.floor(-val / 1.5));
@@ -343,12 +350,11 @@ $(document).ready(function () {
 	function drawEq2() {
 		ctxAudioSourceEq2.clearRect(0, 0, canvasAudioSourceEq2Width, canvasAudioSourceEq2Height);
 
-		for (bin = 0; bin < audioApiElement.streamData.length; bin++) {
-			var val = audioApiElement.streamData[bin];
+		for (bin = 0; bin < audioApiElement.streamData_2.length; bin++) {
+			var val = audioApiElement.streamData_2[bin];
 			ctxAudioSourceEq2.fillStyle = 'rgb(' + (255 - val) + ',' + val + ',' + (255 - val) + ')';
 			ctxAudioSourceEq2.fillRect(bin, canvasAudioSourceEq2Height, 1, -val / 1);
 		}
-		// console.log(audioApiElement.streamData.length);
 		requestAnimationFrame(drawEq2);
 	};
 
@@ -373,13 +379,14 @@ $(document).ready(function () {
 
 		// полная высота плитки  сзазором
 		fullBarHeight = barHeight + gutter;
-		for (var i = 0; i < audioApiElement.streamData.length; i++) {
-			var val = audioApiElement.streamData[i],
+		for (var i = 0; i < audioApiElement.streamData_3.length; i++) {
+			var val = audioApiElement.streamData_3[i],
 			    totalBar = Math.floor(val / 10);
 			/*ctxAudioSourceEq3.fillStyle = 'rgb(' + (255 - val) + ',' + (val) + ',' + (255 - val) + ')';
          ctxAudioSourceEq3.fillRect(i, canvasAudioSourceEq3Height, 1, -val / 1);*/
 			for (var j = 0; j < totalBar; j++) {
-				ctxAudioSourceEq3.strokeStyle = 'rgb(' + (255 - val) + ',' + (255 - val) + ',' + (255 - val) + ')';
+				// ctxAudioSourceEq3.strokeStyle = 'rgb(' + (255 - val) + ',' + (255 - val) + ',' + (255 - val) + ')';
+				ctxAudioSourceEq3.strokeStyle = 'hsl(' + (180 - j * 7) + ', 100%, 50%)';
 				ctxAudioSourceEq3.strokeRect(i * fullBarWidth, canvasAudioSourceEq3Height - j * fullBarHeight, barWidth, barHeight);
 			}
 		}
