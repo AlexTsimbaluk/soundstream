@@ -134,6 +134,8 @@ $(document).ready(function () {
 
 	// Отобразить время восроизведения
 	// TODO: починить
+	// для этого надо player заменить на audioApiElement,
+	// у которого должно быть это свойство (проверить)
 	function updateTime() {
 		var s = ('0' + parseInt(player.currentTime % 60)).slice(-2);
 		var m = ('0' + parseInt(player.currentTime / 60 % 60)).slice(-2);
@@ -189,37 +191,40 @@ $(document).ready(function () {
 
 	$('body').attr('data-useragent', navigator.userAgent);
 
+	// TODO: analyser сделать отдельным объектом, с которым будет работать AudioApiElement
 	function AudioApiElement(audioElement) {
 		var $playerTag = document.getElementById(audioElement);
 		var self = this;
-		var analyser;
-		analyser = audioCtx.createAnalyser();
-		analyser.smoothingTimeConstant = 0.3;
-		analyser.fftSize = 512;
+		function createAnalyser(opts) {
+			var a = audioCtx.createAnalyser();
+			a.smoothingTimeConstant = opts.smoothingTimeConstant || .7;
+			a.fftSize = opts.fftSize || 512;
+			return a;
+		}
+		var analyser_1 = createAnalyser({ smoothingTimeConstant: .7, fftSize: 512 });
+		var analyser_2 = createAnalyser({ smoothingTimeConstant: .7, fftSize: 1024 });
+		/*analyser.smoothingTimeConstant = 0.3;
+  analyser.fftSize = 512;*/
 		var source = audioCtx.createMediaElementSource($playerTag);
-		source.connect(analyser);
-		analyser.connect(audioCtx.destination);
+		source.connect(analyser_1);
+		analyser_1.connect(audioCtx.destination);
 		var sampleAudioStream = function sampleAudioStream() {
-			analyser.getByteFrequencyData(self.streamData);
+			analyser_1.getByteFrequencyData(self.streamData);
 			var total = 0;
 			for (var i = 0; i < 80; i++) {
-				// get the volume from the first 80 bins, else it gets too loud with treble
 				total += self.streamData[i];
 			}
 			// self.volume = total;
-			// console.log($playerTag.volume);
 		};
 		setInterval(sampleAudioStream, 20); // 
 		// public properties and methods
-		// this.volume = 0;
-		// $playerTag.volume = playerState.volume;
-
-		this.streamData = new Uint8Array(analyser.frequencyBinCount); // This just means we will have 128 "bins" (always half the analyzer.fftsize value), each containing a number between 0 and 255. 
+		this.streamData = new Uint8Array(analyser_1.frequencyBinCount);
 		this.playStream = function (streamUrl) {
+			/*if(el) {
+   	}*/
 			// TODO: .selected переделать на data-current и везде проверять его
 			playerState.playlists[playerState.currentPlaylist].currentTrack = {
 				id: $('.playlistContainer .selected').data('stationId'),
-				// url: $playerTag.src,
 				url: streamUrl,
 				title: $('.playlistContainer .selected').data('stationTitle')
 			};
@@ -261,10 +266,10 @@ $(document).ready(function () {
 			playerState.paused = $playerTag.paused;
 			visualisation(currentTrackEl);
 			displayState();
-			updateTime();
+			self.updateTime();
 			localStorage.setItem('playerState', JSON.stringify(playerState));
 			setInterval(function () {
-				updateTime();
+				self.updateTime();
 			}, 1000);
 			console.log('AudioApiElement::playStream');
 			drawEq1();
@@ -291,6 +296,14 @@ $(document).ready(function () {
 		this.getVolume = function () {
 			return $playerTag.volume;
 		};
+		this.updateTime = function () {
+			console.log('updateTime');
+			var s = ('0' + parseInt($playerTag.currentTime % 60)).slice(-2);
+			var m = ('0' + parseInt($playerTag.currentTime / 60 % 60)).slice(-2);
+			$('#player .time .hours').html();
+			$('#player .time .minutes').html(m);
+			$('#player .time .seconds').html(s);
+		};
 		$playerTag.volume = playerState.volume;
 	}
 
@@ -315,6 +328,9 @@ $(document).ready(function () {
 	var canvasAudioSourceEq3Width = canvasAudioSourceEq3.width;
 	var canvasAudioSourceEq3Height = canvasAudioSourceEq3.height;
 
+	// TODO: Сделать функцию, которая принимает объект с настройками (анализатора например (fft)),
+	// и колбэк - функцию рисования
+
 	function drawEq1() {
 		ctxAudioSource.clearRect(0, 0, canvasAudioSourceWidth, canvasAudioSourceHeight);
 
@@ -324,7 +340,6 @@ $(document).ready(function () {
 			// ctxAudioSource.fillStyle = 'rgb(' + (255 - val) + ',' + (255 - val) + ',' + (255 - val) + ')';
 			ctxAudioSource.fillRect(bin, canvasAudioSourceHeight, 1, Math.floor(-val / 4));
 		}
-		// console.log(audioApiElement.volume);
 		requestAnimationFrame(drawEq1);
 	};
 
@@ -448,6 +463,7 @@ $(document).ready(function () {
 				if (!playerState.paused) {
 					audioApiElement.playStream(playerState.playlists[playerState.currentPlaylist].currentTrack.url);
 					// console.log(playerState.playlists[playerState.currentPlaylist].currentTrack.url);
+					// TODO: эти 2 ф-и должны быть методами объекта audioApiElement
 					displayState();
 					updateTime();
 
