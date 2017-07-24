@@ -2,20 +2,22 @@ var dateStart = new Date().getTime();
 
 function getParams() { 
 	var $_GET = {}; 
-	var __GET = window.location.search.substring(1).split("&"); 
+	var __GET = window
+				.location
+				.search
+				.substring(1)
+				.split("&")
+	; 
 	for(var i=0; i<__GET.length; i++) { 
 		var getVar = __GET[i].split("="); 
 		$_GET[getVar[0]] = typeof(getVar[1])=="undefined" ? "" : getVar[1]; 
 	}
-
 	return $_GET; 
 }
 
 if(getParams().admin !== undefined) {
-	// console.log('admin');
 	$('body').addClass('admin');
 } else {
-	// console.log('index');
 	$('body').removeClass('admin');
 }
 
@@ -69,21 +71,14 @@ $('.toAdmin').on('click', function(e) {
 	$.ajax({
 		data: {'admin': 1},
 		success: function(data) {
-			// console.log(data);
-
 			$('#player').after(data);
-
 			$('#player').hide();
-
 
 			$('.toPlayer').on('click', function(e) {
 				console.log('toPlayer');
-
 				$('.admin-wrapper').remove();
 				$('body').removeClass('admin');
-
 				$('#player').fadeIn(300);
-
 				return false;
 			});
 		}
@@ -114,7 +109,6 @@ $.ajaxSetup({
 
 
 $(document).ready(function() {
-
 	var audioCtx = new (window.AudioContext || window.webkitAudioContext);
 
 	// Отобразить название станции при воспроизведении
@@ -139,18 +133,19 @@ $(document).ready(function() {
 
 		if(titleContainerWidth > 240) {
 			console.log(titleContainerWidth, titleSize, ratio, maxSize);
-			// title.substr(0, maxSize);
 			console.log(title.length);
 			if(window.innerWidth > 700) {
 				titleContainer.addClass('runningString')
-								.parent().css({'width':'240px'});
+								.parent()
+								.css({'width':'240px'});
 			} else {
 				titleContainer.html(title.substr(0, maxSize) + '...');
 			}
 			
 		} else {
 			titleContainer.removeClass('runningString')
-							.parent().css({'width':'auto'});
+							.parent()
+							.css({'width':'auto'});
 		}
 	}
 
@@ -171,10 +166,11 @@ $(document).ready(function() {
 		$.ajax({
 			data: {'action': 'getStation', 'id': id},
 			success: function(data) {
-				var response = JSON.parse(data);
-				var playlist = playlistContainer.find('.playlist[data-name="'
+				var response = JSON.parse(data),
+					playlist = playlistContainer.find('.playlist[data-name="'
 														+ playerState.currentPlaylist
-														+ '"]');
+														+ '"]')
+				;
 				var markup = '';
 				for(var i = 0; i < response.length; i++) {
 					var track = response[i];
@@ -190,17 +186,29 @@ $(document).ready(function() {
 								+ track.station_url
 								+ '</div></div>';
 
-					playerState.playlists[playerState.currentPlaylist].tracks.push(+track.station_id);
-					playerState.playlists[playerState.currentPlaylist].currentTrack = {
-						id: track.station_id,
-						url: track.station_url,
-						title: track.station_title
+					playerState
+						.playlists[playerState.currentPlaylist]
+						.tracks
+						.push(+track.station_id)
+					;
+					playerState
+						.playlists[playerState.currentPlaylist]
+						.currentTrack = {
+							id: track.station_id,
+							url: track.station_url,
+							title: track.station_title
 					};
 				}
 				localStorage.setItem('playerState', JSON.stringify(playerState));
 				playlist.html(playlist.html() + markup);
-				playlist.find('.track').removeClass('selected');
-				playlist.find('.track:last').addClass('selected');
+				playlist
+					.find('.track')
+					.removeClass('selected')
+				;
+				playlist
+					.find('.track:last')
+					.addClass('selected')
+				;
 			}
 		});
 	}
@@ -227,6 +235,13 @@ $(document).ready(function() {
 	$('body').attr('data-useragent', navigator.userAgent);
 
 	// TODO: analyser сделать отдельным объектом, с которым будет работать AudioApiElement
+	function Analyser(opts) {
+	    var a = audioCtx.createAnalyser();
+    	a.smoothingTimeConstant = opts.smoothingTimeConstant || .7;
+    	a.fftSize = opts.fftSize || 512;
+    	return a;
+	}
+
 	function AudioApiElement(audioElement) {
 	    var $playerTag = document.getElementById(audioElement);
 	    var self = this;
@@ -259,14 +274,19 @@ $(document).ready(function() {
 
 	    	}*/
 	    	// TODO: .selected переделать на data-current и везде проверять его
-        	playerState.playlists[playerState.currentPlaylist].currentTrack = {
-        		id: $('.playlistContainer .selected').data('stationId'),
-        		url: streamUrl,
-        		title: $('.playlistContainer .selected').data('stationTitle')
+        	playerState
+        		.playlists[playerState.currentPlaylist]
+        		.currentTrack = {
+	        		id: $('.playlistContainer .selected').data('stationId'),
+	        		url: streamUrl,
+	        		title: $('.playlistContainer .selected').data('stationTitle')
         	};
 
         	var currentTrackEl = $('.playlistContainer .active [data-station-id='
-        							+ playerState.playlists[playerState.currentPlaylist].currentTrack.id
+        							+ playerState
+        								.playlists[playerState.currentPlaylist]
+        								.currentTrack
+        								.id
         							+ ']');
 
 	        $playerTag.src = streamUrl;
@@ -282,11 +302,11 @@ $(document).ready(function() {
 	         		// console.log(e);
 	        });
 
-	        var playPromise = $playerTag.play();
 	        $playerTag.addEventListener('error', (err)=> {
 	         		// console.log(err);
 	        });
 
+	        var playPromise = $playerTag.play();
 	        $(".spinner").show();
 
 	        if (playPromise !== undefined) {
@@ -294,10 +314,10 @@ $(document).ready(function() {
 					console.log('Promise::Automatic playback started!');
 					$(".spinner").hide();
 				}).catch(function(error) {
+					$(".spinner").hide();
 					self.stopStream();
 					console.log('Promise::Automatic playback failed...');
 					console.log(error);
-					// defferedPlayStream();
 				});
 	        }
 
@@ -317,10 +337,15 @@ $(document).ready(function() {
 	        drawEq3();
 	        // TODO: добавить на играющий трек эквалайзер
 	    }
+	     // TODO: добавить сюда остановку анимации
 	    this.stopStream = function() {
 	    	var currentTrackEl = $('.playlistContainer .active [data-station-id='
-									+ playerState.playlists[playerState.currentPlaylist].currentTrack.id
-									+ ']');
+									+ playerState
+										.playlists[playerState.currentPlaylist]
+										.currentTrack
+										.id
+									+ ']')
+	    	;
 
 			visualisationStop(currentTrackEl);
 			$('#player .play').removeClass('visualisation');
@@ -480,17 +505,32 @@ $(document).ready(function() {
 		// console.log(playerState.volume);
 		// Наполняем playlistsPanel заголовками плейлистов
 		for (var i = 0; i < playerState.playlistsOrder.length; i++) {
-			playlistsPanel.append('<div class="plName" data-name="' + playerState.playlistsOrder[i] + '">' + playerState.playlistsOrder[i] + '</div>');
+			playlistsPanel.append('<div class="plName" data-name="'
+									+ playerState.playlistsOrder[i]
+									+ '">'
+									+ playerState.playlistsOrder[i]
+									+ '</div>'
+								);
 		}
 		// Задаем свойства объекта Audio свойствами объекта playerState
 		// player.volume = playerState.volume;
-		player.src = playerState.playlists[playerState.currentPlaylist].currentTrack.url;
+		player.src = playerState.
+			playlists[playerState.currentPlaylist].
+			currentTrack.
+			url
+		;
 		player.paused = playerState.paused;
 		audioApiElement.setVolume(playerState.volume);
 		// Создаем контейнер для треков текущего (активного) плейлиста
-		playlistContainer.append(playerState.playlists[playerState.currentPlaylist].htmlEl);
+		playlistContainer.append(playerState.
+									playlists[playerState.currentPlaylist].
+									htmlEl
+								);
 		// Получить плейлист и сформировать его
-		var playlistTracks = playerState.playlists[playerState.currentPlaylist].tracks;
+		var playlistTracks = playerState
+								.playlists[playerState.currentPlaylist]
+								.tracks
+		;
 		$.ajax({
 			data: {'action': 'getPlaylistStations', 'id': playlistTracks},
 			success: function(data) {
@@ -520,12 +560,21 @@ $(document).ready(function() {
 
 				playlist.html(playlist.html() + markup);
 				playlist.find('.track[data-station-id='
-								+ playerState.playlists[playerState.currentPlaylist].currentTrack.id
-								+ ']')
-								.addClass('selected');
+								+ playerState
+									.playlists[playerState.currentPlaylist]
+									.currentTrack
+									.id
+								+ ']'
+							)
+							.addClass('selected');
 
 				if(!playerState.paused) {
-					audioApiElement.playStream(playerState.playlists[playerState.currentPlaylist].currentTrack.url);
+					audioApiElement.playStream(playerState
+												.playlists[playerState.currentPlaylist]
+												.currentTrack
+												.url
+												)
+					;
 					// console.log(playerState.playlists[playerState.currentPlaylist].currentTrack.url);
 					// TODO: эти 2 ф-и должны быть методами объекта audioApiElement
 					displayState();
@@ -536,7 +585,10 @@ $(document).ready(function() {
 					}, 1000);
 
 					visualisation($('.playlistContainer .active [data-station-id='
-									+ playerState.playlists[playerState.currentPlaylist].currentTrack.id
+									+ playerState
+										.playlists[playerState.currentPlaylist]
+										.currentTrack
+										.id
 									+ ']'));
 				}
 			}
@@ -597,10 +649,12 @@ $(document).ready(function() {
 		clearInterval(intervalVis);
 		el.removeClass('visualisation')
 			.css({'backgroundImage': 'none'})
-			.removeAttr('style');
+			.removeAttr('style')
+		;
 		$('#player .play').removeClass('visualisation')
 							.css({'boxShadow': 'none', 'borderColor': '#0ff'})
-							.removeAttr('style');
+							.removeAttr('style')
+		;
 		$('#player .play span').remove();
 	}
 
@@ -608,7 +662,12 @@ $(document).ready(function() {
 	
 	$('#player .play').click(function(e) {
 		if(player.paused) {
-			audioApiElement.playStream(playerState.playlists[playerState.currentPlaylist].currentTrack.url);
+			audioApiElement.playStream(playerState
+										.playlists[playerState.currentPlaylist]
+										.currentTrack
+										.url
+										)
+			;
 		}
 	});
 
@@ -634,18 +693,25 @@ $(document).ready(function() {
 	});
 
 	$('.playlistContainer').on('click', '.delete', function(e) {
-		var id = $(this).parent().data('stationId'),
-			pl = playerState.playlists[playerState.currentPlaylist];
+		var id = $(this)
+					.parent()
+					.data('stationId'),
+			pl = playerState.playlists[playerState.currentPlaylist]
+		;
 
 		pl.tracks.splice(pl.tracks.indexOf(id), 1);
-		$(this).parent().remove();
+		$(this)
+			.parent()
+			.remove()
+		;
 		localStorage.setItem('playerState', JSON.stringify(playerState));
 	});
 
 	$('.playlistContainer').on('mousedown', '.track', function(e) {
 		$(this).parent()
 				.find('.selected')
-				.removeClass('selected');
+				.removeClass('selected')
+		;
 
 		$(this).addClass('selected');
 	});
@@ -735,9 +801,15 @@ $(document).ready(function() {
 		;
 
 		if(delta > 0 && +$inputVolume.val() > 0) {
-			$inputVolume.val(+$inputVolume.val() - 2).trigger('input');
+			$inputVolume
+				.val(+$inputVolume.val() - 2)
+				.trigger('input')
+			;
 		} else if(delta < 0 && +$inputVolume.val() < 100) {
-			$inputVolume.val(+$inputVolume.val() + 2).trigger('input');
+			$inputVolume
+				.val(+$inputVolume.val() + 2)
+				.trigger('input')
+			;
 		}
 
 		return false;
@@ -747,7 +819,10 @@ $(document).ready(function() {
 		e = e || window.event;
 		var $inputVolume = $(this).find('input');
 
-		$inputVolume.val(e.offsetX).trigger('input');
+		$inputVolume
+			.val(e.offsetX)
+			.trigger('input')
+		;
 
 		return false;
 	});
@@ -757,11 +832,15 @@ $(document).ready(function() {
 	$('#player .find .showFieldSearch').click(function(e) {
 		$(this).toggleClass('active');
 
-		var searchInput = $(this).parent().find('input');
+		var searchInput = $(this)
+							.parent()
+							.find('input')
+		;
 
 		if(searchInput.hasClass('visible') == false) {
 			searchInput.addClass('visible')
-						.animate({opacity: 1, width: 190}, 100);
+						.animate({opacity: 1, width: 190}, 100)
+			;
 
 			setTimeout(function() {
 				searchInput.focus();
@@ -770,7 +849,8 @@ $(document).ready(function() {
 		else {
 			searchInput.removeClass('visible')
 						.animate({opacity: 0, width: 0}, 100)
-						.blur();
+						.blur()
+			;
 		}
 	});
 
@@ -815,7 +895,8 @@ $(document).ready(function() {
 							.addClass('searchContainerFadeIn visible')
 							.parent()
 							.removeClass('playerLeft')
-							.addClass('playerRight');
+							.addClass('playerRight')
+					;
 
 					if(window.innerHeight <= 640 && window.innerWidth < 700) {
 						$('.playlistContainer').toggleClass('hidden');
@@ -836,7 +917,8 @@ $(document).ready(function() {
 					result = $('.searchContainer .result');
 					markup = '<div class="total"><span>'
 								+ response.length
-								+ '</span> stations is found</div>';
+								+ '</span> stations is found</div>'
+				;
 				
 				result.html('');
 
@@ -860,13 +942,15 @@ $(document).ready(function() {
 					$('.searchContainer').removeClass('searchContainerFadeIn visible')
 										.addClass('searchContainerFadeOut')
 										.parent().removeClass('playerRight')
-										.addClass('playerLeft');
+										.addClass('playerLeft')
+					;
 				} else {
 					$('.searchContainer').removeClass('searchContainerFadeOut')
 										.addClass('searchContainerFadeIn visible')
 										.parent()
 										.removeClass('playerLeft')
-										.addClass('playerRight');
+										.addClass('playerRight')
+					;
 				}
 
 				if(window.innerHeight <= 640 && window.innerWidth < 700) {
@@ -888,14 +972,19 @@ $(document).ready(function() {
 		$('.searchContainer').removeClass('searchContainerFadeIn visible')
 							.addClass('searchContainerFadeOut')
 							.parent().removeClass('playerRight')
-							.addClass('playerLeft');
+							.addClass('playerLeft')
+		;
 	});
 
 
 	// Добавление станций в плейлист
 	// Доделать, чтобы станции добавлялись в активный плэйлист
 	$('.searchContainer').on('click', '.add', function(e) {
-		addToPlaylist($(this).parent().data('stationId'));
+		addToPlaylist($(this)
+						.parent()
+						.data('stationId')
+					)
+		;
 	});
 
 	$('.searchContainer').on('click', '.station', function(e) {
@@ -924,7 +1013,11 @@ $(document).ready(function() {
 
 
 	// Первоначальное случайное фоновое изображение для body
-	$('body').css({'background':'url("../img/bg/bg' + getRandomInt(1, 10) + '.jpg") no-repeat center / cover'});
+	$('body').css({'background':'url("../img/bg/bg'
+					+ getRandomInt(1, 10)
+					+ '.jpg") no-repeat center / cover'
+					})
+	;
 	
 	/*Slider for background*/
 	$(function() {
@@ -965,7 +1058,10 @@ $(document).ready(function() {
 	выставить всю доступную высоту
 	*/
 	if(window.innerHeight <= 640 && window.innerWidth < 700) {
-		var _playlistContainerHeight = $('#player').height() - ($('#player .playlistsPanel').height() + $('#player .trackContainer').height());
+		var _playlistContainerHeight = $('#player').height() 
+										- ($('#player .playlistsPanel').height()
+										+ $('#player .trackContainer').height())
+		;
 		console.log(_playlistContainerHeight);
 		$('.searchContainer, .playlistContainer', '#player').height(_playlistContainerHeight);
 	}
