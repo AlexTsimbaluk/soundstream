@@ -311,12 +311,22 @@ $(document).ready(function () {
 		$playerTag.volume = playerState.volume;
 	}
 
-	var canvasAudioSource = document.getElementById('canvas-audio-source');
-	var ctxAudioSource = canvasAudioSource.getContext("2d");
-	canvasAudioSource.width = 500;
-	canvasAudioSource.height = 255;
-	var canvasAudioSourceWidth = canvasAudioSource.width;
-	var canvasAudioSourceHeight = canvasAudioSource.height;
+	// TODO: перенести это в ф-и рисования
+	function AudioCanvas(id, width, height) {
+		var canvas = document.getElementById(id);
+		canvas.width = width;
+		canvas.height = height;
+		this.ctx = canvas.getContext("2d");
+		this.canvasWidth = canvas.width;
+		this.canvasHeight = canvas.height;
+	}
+
+	/*var canvasAudioSource 			= document.getElementById('canvas-audio-source');
+ var ctxAudioSource 				= canvasAudioSource.getContext("2d");
+ canvasAudioSource.width 		= 500;
+ canvasAudioSource.height 		= 255;
+ var canvasAudioSourceWidth 		= canvasAudioSource.width;
+ var canvasAudioSourceHeight 	= canvasAudioSource.height;*/
 
 	var canvasAudioSourceEq2 = document.getElementById('canvas-audio-source-eq2');
 	var ctxAudioSourceEq2 = canvasAudioSourceEq2.getContext("2d");
@@ -335,25 +345,42 @@ $(document).ready(function () {
 	// TODO: Сделать функцию, которая принимает объект с настройками (анализатора например (fft)),
 	// и колбэк - функцию рисования
 
+	/*function drawEq1() {
+ 	ctxAudioSource.clearRect(0, 0, canvasAudioSourceWidth, canvasAudioSourceHeight);
+ 	    for(bin = 0; bin < audioApiElement.streamData_1.length; bin ++) {
+         var val = audioApiElement.streamData_1[bin];
+         ctxAudioSource.fillStyle = 'rgb(' + (val) + ',' + (val) + ',' + (val) + ')';
+         // ctxAudioSource.fillStyle = 'rgb(' + (255 - val) + ',' + (255 - val) + ',' + (255 - val) + ')';
+         ctxAudioSource.fillRect(bin, canvasAudioSourceHeight, 1, Math.floor(-val / 1.5));
+     }
+     requestAnimationFrame(drawEq1);
+ };*/
+
 	function drawEq1() {
-		ctxAudioSource.clearRect(0, 0, canvasAudioSourceWidth, canvasAudioSourceHeight);
+		// получаем canvas
+		var canvas = new AudioCanvas('canvas-audio-source', 500, 255);
+
+		canvas.ctx.clearRect(0, 0, canvas.canvasWidth, canvas.canvasHeight);
 
 		for (bin = 0; bin < audioApiElement.streamData_1.length; bin++) {
 			var val = audioApiElement.streamData_1[bin];
-			ctxAudioSource.fillStyle = 'rgb(' + val + ',' + val + ',' + val + ')';
-			// ctxAudioSource.fillStyle = 'rgb(' + (255 - val) + ',' + (255 - val) + ',' + (255 - val) + ')';
-			ctxAudioSource.fillRect(bin, canvasAudioSourceHeight, 1, Math.floor(-val / 1.5));
+			canvas.ctx.fillStyle = 'rgb(' + val + ',' + val + ',' + val + ')';
+			// canvas.ctx.fillStyle = 'rgb(' + (255 - val) + ',' + (255 - val) + ',' + (255 - val) + ')';
+			canvas.ctx.fillRect(bin, canvas.canvasHeight / 2 + 1, 1, Math.floor(-val / 1.5));
+			canvas.ctx.fillRect(bin, canvas.canvasHeight / 2 - 1, 1, Math.floor(val / 1.5));
 		}
 		requestAnimationFrame(drawEq1);
 	};
 
+	// Отразить по горизонтали
 	function drawEq2() {
 		ctxAudioSourceEq2.clearRect(0, 0, canvasAudioSourceEq2Width, canvasAudioSourceEq2Height);
 
 		for (bin = 0; bin < audioApiElement.streamData_2.length; bin++) {
 			var val = audioApiElement.streamData_2[bin];
 			ctxAudioSourceEq2.fillStyle = 'rgb(' + (255 - val) + ',' + val + ',' + (255 - val) + ')';
-			ctxAudioSourceEq2.fillRect(bin, canvasAudioSourceEq2Height, 1, -val / 1);
+			ctxAudioSourceEq2.fillRect(bin, canvasAudioSourceEq2Height / 2 + 1, 1, -val / 1);
+			ctxAudioSourceEq2.fillRect(bin, canvasAudioSourceEq2Height / 2 - 1, 1, val / 1);
 		}
 		requestAnimationFrame(drawEq2);
 	};
