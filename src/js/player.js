@@ -371,12 +371,13 @@ $(document).ready(function() {
 	    	return $playerTag.volume;
 	    }
 	    this.updateTime = function() {
-	    	console.log('updateTime');
-	    	var s = ('0' + parseInt($playerTag.currentTime % 60)).slice(-2);
-	    	var m = ('0' + parseInt(($playerTag.currentTime / 60) % 60)).slice(-2);
+	    	var time = Math.ceil($playerTag.currentTime);
+	    	
+	    	var sec = ('0' + parseInt(Math.floor(time % 60))).slice(-2);
+	    	var min = ('0' + parseInt((Math.floor(time / 60)) % 60)).slice(-2);
 	    	$('#player .time .hours').html();
-	    	$('#player .time .minutes').html(m);
-	    	$('#player .time .seconds').html(s);
+	    	$('#player .time .minutes').html(min);
+	    	$('#player .time .seconds').html(sec);
 	    }
 	    $playerTag.volume = playerState.volume;
 	}
@@ -391,47 +392,12 @@ $(document).ready(function() {
 		this.canvasHeight 	= canvas.height;
 	}
 
-
-	/*var canvasAudioSource 			= document.getElementById('canvas-audio-source');
-	var ctxAudioSource 				= canvasAudioSource.getContext("2d");
-	canvasAudioSource.width 		= 500;
-	canvasAudioSource.height 		= 255;
-	var canvasAudioSourceWidth 		= canvasAudioSource.width;
-	var canvasAudioSourceHeight 	= canvasAudioSource.height;*/
-
-	var canvasAudioSourceEq2 		= document.getElementById('canvas-audio-source-eq2');
-	var ctxAudioSourceEq2			= canvasAudioSourceEq2.getContext("2d");
-	canvasAudioSourceEq2.width 		= 500;
-	canvasAudioSourceEq2.height 	= 255;
-	var canvasAudioSourceEq2Width 	= canvasAudioSourceEq2.width;
-	var canvasAudioSourceEq2Height 	= canvasAudioSourceEq2.height;
-
-	var canvasAudioSourceEq3 		= document.getElementById('canvas-audio-source-eq3');
-	var ctxAudioSourceEq3			= canvasAudioSourceEq3.getContext("2d");
-	canvasAudioSourceEq3.width 		= 500;
-	canvasAudioSourceEq3.height 	= 150;
-	var canvasAudioSourceEq3Width 	= canvasAudioSourceEq3.width;
-	var canvasAudioSourceEq3Height 	= canvasAudioSourceEq3.height;
-
 	// TODO: Сделать функцию, которая принимает объект с настройками (анализатора например (fft)),
 	// и колбэк - функцию рисования
-
-	/*function drawEq1() {
-		ctxAudioSource.clearRect(0, 0, canvasAudioSourceWidth, canvasAudioSourceHeight);
-
-	    for(bin = 0; bin < audioApiElement.streamData_1.length; bin ++) {
-	        var val = audioApiElement.streamData_1[bin];
-	        ctxAudioSource.fillStyle = 'rgb(' + (val) + ',' + (val) + ',' + (val) + ')';
-	        // ctxAudioSource.fillStyle = 'rgb(' + (255 - val) + ',' + (255 - val) + ',' + (255 - val) + ')';
-	        ctxAudioSource.fillRect(bin, canvasAudioSourceHeight, 1, Math.floor(-val / 1.5));
-	    }
-	    requestAnimationFrame(drawEq1);
-	};*/
 
 	function drawEq1() {
 		// получаем canvas
 		var canvas = new AudioCanvas('canvas-audio-source', 500, 255);
-
 		canvas.ctx.clearRect(0, 0, canvas.canvasWidth, canvas.canvasHeight);
 
 	    for(bin = 0; bin < audioApiElement.streamData_1.length; bin ++) {
@@ -444,21 +410,25 @@ $(document).ready(function() {
 	    requestAnimationFrame(drawEq1);
 	};
 
-	// Отразить по горизонтали
 	function drawEq2() {
-		ctxAudioSourceEq2.clearRect(0, 0, canvasAudioSourceEq2Width, canvasAudioSourceEq2Height);
+		// получаем canvas
+		var canvas = new AudioCanvas('canvas-audio-source-eq2', 500, 255);
+		canvas.ctx.clearRect(0, 0, canvas.canvasWidth, canvas.canvasHeight);
 
 	    for(bin = 0; bin < audioApiElement.streamData_2.length; bin ++) {
 	        var val = audioApiElement.streamData_2[bin];
-	        ctxAudioSourceEq2.fillStyle = 'rgb(' + (255 - val) + ',' + (val) + ',' + (255 - val) + ')';
-	        ctxAudioSourceEq2.fillRect(bin, canvasAudioSourceEq2Height / 2 + 1, 1, -val / 1);
-	        ctxAudioSourceEq2.fillRect(bin, canvasAudioSourceEq2Height / 2 - 1, 1, val / 1);
+	        // canvas.ctx.fillStyle = 'rgb(' + (val) + ',' + (val) + ',' + (val) + ')';
+	        // canvas.ctx.fillStyle = 'rgb(' + (255 - val) + ',' + (255 - val) + ',' + (255 - val) + ')';
+	        canvas.ctx.fillStyle = 'rgb(' + (255 - val) + ',' + (val) + ',' + (255 - val) + ')';
+	        canvas.ctx.fillRect(bin, canvas.canvasHeight / 2 + 1, 1, -val / 1);
+	        canvas.ctx.fillRect(bin, canvas.canvasHeight / 2 - 1, 1, val / 1);
 	    }
 	    requestAnimationFrame(drawEq2);
 	};
 
 	function drawEq3() {
-		ctxAudioSourceEq3.clearRect(0, 0, canvasAudioSourceEq3Width, canvasAudioSourceEq3Height);
+		var canvas = new AudioCanvas('canvas-audio-source-eq3', 500, 150);
+		canvas.ctx.clearRect(0, 0, canvas.canvasWidth, canvas.canvasHeight);
 		// получаем число плиток в вертикальном ряду при максимальном значении частоты 255
 		// в одной плитке - 10 едениц частоты
 		var maxBar 			= Math.floor(255 / 10),
@@ -466,7 +436,7 @@ $(document).ready(function() {
 			// barWidth 	= Math.floor(canvasAudioSourceEq3Width / 80),
 			barWidth 		= 10,
 			// высота плитки
-			barHeight 		= Math.floor(canvasAudioSourceEq3Height / maxBar),
+			barHeight 		= Math.floor(canvas.canvasHeight / maxBar),
 			// зазор между плитками
 			gutter 	= 2,
 			// полная ширина плитки  сзазором
@@ -478,14 +448,14 @@ $(document).ready(function() {
 	        var val = audioApiElement.streamData_3[i],
 				totalBar = Math.floor(val / 10)
 			;
-			/*ctxAudioSourceEq3.fillStyle = 'rgb(' + (255 - val) + ',' + (val) + ',' + (255 - val) + ')';
-	        ctxAudioSourceEq3.fillRect(i, canvasAudioSourceEq3Height, 1, -val / 1);*/
+			// canvas.ctx.fillStyle = 'rgb(' + (255 - val) + ',' + (val) + ',' + (255 - val) + ')';
+	        // canvas.ctx.fillRect(i, canvas.canvasHeight, 1, -val / 1);
 	        for(var j = 0; j < totalBar; j++) {
-	        	// ctxAudioSourceEq3.strokeStyle = 'rgb(' + (255 - val) + ',' + (255 - val) + ',' + (255 - val) + ')';
-	        	ctxAudioSourceEq3.strokeStyle = 'hsl(' + (180 - j * 7) + ', 100%, 50%)';
-	        	ctxAudioSourceEq3.strokeRect(
+	        	// canvas.ctx.strokeStyle = 'rgb(' + (255 - val) + ',' + (255 - val) + ',' + (255 - val) + ')';
+	        	canvas.ctx.strokeStyle = 'hsl(' + (180 - j * 7) + ', 100%, 50%)';
+	        	canvas.ctx.strokeRect(
 		        							i * fullBarWidth,
-	        								canvasAudioSourceEq3Height - (j * fullBarHeight),
+	        								canvas.canvasHeight - (j * fullBarHeight),
 	        								barWidth,
 	        								barHeight
         								);
@@ -609,21 +579,6 @@ $(document).ready(function() {
 												.url
 												)
 					;
-					// console.log(playerState.playlists[playerState.currentPlaylist].currentTrack.url);
-					// TODO: эти 2 ф-и должны быть методами объекта audioApiElement
-					displayState();
-					updateTime();
-
-					setInterval(function() {
-						updateTime();
-					}, 1000);
-
-					visualisation($('.playlistContainer .active [data-station-id='
-									+ playerState
-										.playlists[playerState.currentPlaylist]
-										.currentTrack
-										.id
-									+ ']'));
 				}
 			}
 		});
