@@ -181,12 +181,25 @@ $(document).ready(function () {
 	$('body').attr('data-useragent', navigator.userAgent);
 
 	// TODO: analyser сделать отдельным объектом, с которым будет работать AudioApiElement
-	function Analyser(opts) {
-		var a = audioCtx.createAnalyser();
-		a.smoothingTimeConstant = opts.smoothingTimeConstant || .7;
-		a.fftSize = opts.fftSize || 512;
+	function Analyser(ctx, src, analyserOpts) {
+		var self = this;
+		var analyser = ctx.createAnalyser();
+		analyser.smoothingTimeConstant = analyserOpts.smoothingTimeConstant || .7;
+		analyser.fftSize = analyserOpts.fftSize || 512;
 
-		return a;
+		src.connect(analyser);
+		analyser.connect(audioCtx.destination);
+
+		var sampleAudioStream = function sampleAudioStream() {
+			analyser.getByteFrequencyData(self.streamData);
+			var total = 0;
+			for (var i = 0; i < 80; i++) {
+				total += self.streamData[i];
+			}
+		};
+		setInterval(sampleAudioStream, 20);
+
+		self.streamData = new Uint8Array(analyser.frequencyBinCount);
 	}
 
 	function AudioApiElement(audioElement) {
@@ -198,33 +211,17 @@ $(document).ready(function () {
 			a.fftSize = opts.fftSize || 512;
 			return a;
 		}
-		var analyser_1 = createAnalyser({ smoothingTimeConstant: .7, fftSize: 256 });
-		var analyser_2 = createAnalyser({ smoothingTimeConstant: .7, fftSize: 1024 });
-		var analyser_3 = createAnalyser({ smoothingTimeConstant: .7, fftSize: 64 });
-		/*analyser.smoothingTimeConstant = 0.3;
-  analyser.fftSize = 512;*/
+
 		var source = audioCtx.createMediaElementSource($playerTag);
-		source.connect(analyser_1);
-		source.connect(analyser_2);
-		source.connect(analyser_3);
-		analyser_1.connect(audioCtx.destination);
-		analyser_2.connect(audioCtx.destination);
-		analyser_3.connect(audioCtx.destination);
-		var sampleAudioStream = function sampleAudioStream() {
-			analyser_1.getByteFrequencyData(self.streamData_1);
-			analyser_2.getByteFrequencyData(self.streamData_2);
-			analyser_3.getByteFrequencyData(self.streamData_3);
-			var total = 0;
-			for (var i = 0; i < 80; i++) {
-				total += self.streamData_3[i];
-			}
-			// self.volume = total;
-		};
-		setInterval(sampleAudioStream, 20); // 
-		// public properties and methods
-		this.streamData_1 = new Uint8Array(analyser_1.frequencyBinCount);
-		this.streamData_2 = new Uint8Array(analyser_2.frequencyBinCount);
-		this.streamData_3 = new Uint8Array(analyser_3.frequencyBinCount);
+
+		var analyser_1 = new Analyser(audioCtx, source, { smoothingTimeConstant: .7, fftSize: 256 });
+		var analyser_2 = new Analyser(audioCtx, source, { smoothingTimeConstant: .7, fftSize: 1024 });
+		var analyser_3 = new Analyser(audioCtx, source, { smoothingTimeConstant: .7, fftSize: 64 });
+
+		this.streamData_1 = analyser_1.streamData;
+		this.streamData_2 = analyser_2.streamData;
+		this.streamData_3 = analyser_3.streamData;
+
 		this.playStream = function (streamUrl) {
 			/*if(el) {
    	}*/
@@ -236,6 +233,9 @@ $(document).ready(function () {
 			};
 
 			var currentTrackEl = $('.playlistContainer .active [data-station-id=' + playerState.playlists[playerState.currentPlaylist].currentTrack.id + ']');
+			console.log(currentTrackEl);
+
+			// addEqToTrack(currentTrackEl, 'canvas-audio-source');
 
 			$playerTag.src = streamUrl;
 			$playerTag.crossOrigin = 'anonymous';
@@ -312,7 +312,8 @@ $(document).ready(function () {
 		$playerTag.volume = playerState.volume;
 	}
 
-	// TODO: перенести это в ф-и рисования
+	// Возвращает объект контекста для canvas и его размеры
+	// Принимает DOM-элемент и размеры
 	function AudioCanvas(id, width, height) {
 		var canvas = document.getElementById(id);
 		canvas.width = width;
@@ -357,26 +358,26 @@ $(document).ready(function () {
 	};
 
 	function drawEq3() {
-		var canvas = new AudioCanvas('canvas-audio-source-eq3', 500, 150);
+		var canvas = new AudioCanvas('canvas-audio-source-eq3', 288, 20);
 		canvas.ctx.clearRect(0, 0, canvas.canvasWidth, canvas.canvasHeight);
 		// получаем число плиток в вертикальном ряду при максимальном значении частоты 255
 		// в одной плитке - 10 едениц частоты
 		var maxBar = Math.floor(255 / 10),
 
 		// ширина плитки
-		// barWidth 	= Math.floor(canvasAudioSourceEq3Width / 80),
-		barWidth = 10,
+		barWidth = Math.floor(canvas.canvasWidth / 32),
 
+		// barWidth 		= 10,
 		// высота плитки
 		barHeight = Math.floor(canvas.canvasHeight / maxBar),
 
 		// зазор между плитками
-		gutter = 2,
+		gutter = 3,
 
-		// полная ширина плитки  сзазором
+		// полная ширина плитки  с зазором
 		fullBarWidth = barWidth + gutter,
 
-		// полная высота плитки  сзазором
+		// полная высота плитки  с зазором
 		fullBarHeight = barHeight + gutter;
 		for (var i = 0; i < audioApiElement.streamData_3.length; i++) {
 			var val = audioApiElement.streamData_3[i],
@@ -391,6 +392,13 @@ $(document).ready(function () {
 		}
 		requestAnimationFrame(drawEq3);
 	};
+
+	function addEqToTrack(track, canvasId) {
+		$('.track').each(function (i) {
+			$(this).find('canvas').remove();
+		});
+		track.append('<canvas id="' + canvasId + '"></canvas>');
+	}
 
 	var playlistContainer = $('#player .playlistContainer'),
 	    playlistsPanel = $('#player .playlistsPanel'),
