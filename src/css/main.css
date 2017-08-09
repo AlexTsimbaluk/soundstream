@@ -857,6 +857,7 @@ ol {
   }
 }
 #player {
+  z-index: 2;
   background: rgba(17, 17, 17, 0.7);
   border: 4px solid #00ffff;
   -webkit-border-radius: 5px;
@@ -1330,6 +1331,7 @@ ol {
 }
 #player .track .title {
   font-size: 1.2em;
+  max-height: 20px;
   overflow: hidden;
 }
 #player .track .url {
@@ -1645,12 +1647,18 @@ canvas {
   position: absolute;
 }
 #canvas-audio-source {
-  left: 304px;
-  top: 0;
+  left: 0;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+          transform: translateY(-50%);
 }
 #canvas-audio-source-eq2 {
-  right: 304px;
-  top: 0;
+  right: 0;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+          transform: translateY(-50%);
 }
 #canvas-audio-source-eq3 {
   bottom: 30px;

@@ -16,7 +16,7 @@
 
 						<div class="panel-body">
 							<div class="form-group">
-							<label for="exampleInputEmail1">Change tables's name</label>
+							<label for="exampleInputEmail1">Change table's name</label>
 								<select class="form-control" name="create-table">
 									<option value="stations">Stations</option>
 									<option value="users">Users</option>
@@ -41,7 +41,7 @@
 
 						<div class="panel-body">
 							<div class="form-group">
-							<label for="exampleInputEmail1">Change tables's name</label>
+							<label for="exampleInputEmail1">Change table's name</label>
 								<select class="form-control" name="drop-table">
 									<option value="users">Users</option>
 									<option value="visits">Visits</option>

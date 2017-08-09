@@ -79,8 +79,8 @@
 			<!-- <div class="volumeVisualisation"></div> -->
 		</div>
 		
-		<canvas id="canvas-audio-source"></canvas>
-		<canvas id="canvas-audio-source-eq2"></canvas>
+		<!-- <canvas id="canvas-audio-source"></canvas>
+		<canvas id="canvas-audio-source-eq2"></canvas> -->
 		<canvas id="canvas-audio-source-eq3"></canvas>
 		
 		<?php
@@ -114,8 +114,8 @@
 	</template>
 </div>
 
-<!-- <canvas id="canvas-eq"></canvas>
-<audio id="analyser-source" controls></audio> -->
+<canvas id="canvas-audio-source"></canvas>
+<canvas id="canvas-audio-source-eq2"></canvas>
 
 
 <audio id="playerTag" ></audio>

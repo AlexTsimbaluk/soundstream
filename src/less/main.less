@@ -262,6 +262,7 @@ ul, ol {
 }
 
 #player {
+	z-index: 2;
 	.overlayFull {
 		background: rgba(0, 0, 0, .7);
 		display: none;
@@ -657,6 +658,7 @@ ul, ol {
 		user-select: none;
 		.title {
 			font-size: 1.2em;
+			max-height: 20px;
 			overflow: hidden;
 		}
 		.url {
@@ -860,12 +862,14 @@ canvas {
 	
 }
 #canvas-audio-source {
-	left: 304px;
-	top: 0;
+	left: 0;
+	top: 50%;
+	transform: translateY(-50%);
 }
 #canvas-audio-source-eq2 {
-	right: 304px;
-	top: 0;
+	right: 0;
+	top: 50%;
+	transform: translateY(-50%);
 }
 #canvas-audio-source-eq3 {
 	bottom: 30px;

@@ -132,8 +132,6 @@ $(document).ready(function() {
 		maxSize = Math.floor(maxWidth / ratio) - 5;
 
 		if(titleContainerWidth > 240) {
-			console.log(titleContainerWidth, titleSize, ratio, maxSize);
-			console.log(title.length);
 			if(window.innerWidth > 700) {
 				titleContainer.addClass('runningString')
 								.parent()
@@ -268,13 +266,15 @@ $(document).ready(function() {
 
 	    var source = audioCtx.createMediaElementSource($playerTag);
 
-	    var analyser_1 = new Analyser(audioCtx, source, {smoothingTimeConstant: .7, fftSize: 256});
-	    var analyser_2 = new Analyser(audioCtx, source, {smoothingTimeConstant: .7, fftSize: 1024});
-	    var analyser_3 = new Analyser(audioCtx, source, {smoothingTimeConstant: .7, fftSize: 64});
+	    var analyser_1 = new Analyser(audioCtx, source, {smoothingTimeConstant: .5, fftSize: 1024});
+	    var analyser_2 = new Analyser(audioCtx, source, {smoothingTimeConstant: .5, fftSize: 1024});
+	    var analyser_3 = new Analyser(audioCtx, source, {smoothingTimeConstant: .5, fftSize: 64});
+	    var analyser_4 = new Analyser(audioCtx, source, {smoothingTimeConstant: .5, fftSize: 512});
 
 	    this.streamData_1 = analyser_1.streamData;
 	    this.streamData_2 = analyser_2.streamData;
 	    this.streamData_3 = analyser_3.streamData;
+	    this.streamData_4 = analyser_4.streamData;
 
 	    this.playStream = function(streamUrl) {
 	    	/*if(el) {
@@ -313,19 +313,67 @@ $(document).ready(function() {
 	         		// console.log(err);
 	        });
 
+	        function getPromise() {
+	        	var promise = $playerTag.play();
+	        	if (playPromise !== undefined) {
+	        		playPromise.then(function() {
+						console.log('Promise::Automatic playback started!');
+						$(".spinner").hide();
+					}).catch(function(error) {
+						$(".spinner").hide();
+						console.log('Promise::Automatic playback failed...');
+						console.log(error);
+						console.log($('playlistContainer .track[data-current-track]'));
+						self.stopStream();
+						$('.playlistContainer .track[data-current-track]').removeAttr('data-current-track');
+					});
+	        	}
+	        }
 	        var playPromise = $playerTag.play();
+	        console.log(playPromise);
 	        $(".spinner").show();
+	        // getPromise();
 
+	        // В конце if проверить PromiseStatus, если он куоысеув
 	        if (playPromise !== undefined) {
-				playPromise.then(function() {
+				/*playPromise.then(function() {
 					console.log('Promise::Automatic playback started!');
 					$(".spinner").hide();
 				}).catch(function(error) {
 					$(".spinner").hide();
-					self.stopStream();
 					console.log('Promise::Automatic playback failed...');
 					console.log(error);
+					console.log($('playlistContainer .track[data-current-track]'));
+					self.stopStream();
+					$('.playlistContainer .track[data-current-track]').removeAttr('data-current-track');
+				});*/
+
+				playPromise.then(function() {
+					console.log('Promise::Automatic playback started!');
+					$(".spinner").hide();
+					console.log(playPromise);
+				}).catch(function(error) {
+					console.log(playPromise);
+					setTimeout(function(){
+						console.log('Start 3s');
+						playPromise.then(function() {
+							self.stopStream();
+							$('.playlistContainer [data-current-track]').removeAttr('data-current-track');
+							console.log('Promise::Automatic playback started! 3s');
+							$(".spinner").hide();
+						}).catch(function(error) {
+							$(".spinner").hide();
+							console.log('Promise::Automatic playback failed...');
+							console.log(error);
+							self.stopStream();
+							$('.playlistContainer .track[data-current-track]').removeAttr('data-current-track');
+						});
+				    }, 3000);
 				});
+
+				/*if (playPromise.prototype.PromiseStatus == resolved) {
+					console.log('resolved');
+				}*/
 	        }
 
 	        playerState.paused = $playerTag.paused;
@@ -398,7 +446,7 @@ $(document).ready(function() {
 
 	function drawEq1() {
 		// получаем canvas
-		var canvas = new AudioCanvas('canvas-audio-source', 500, 255);
+		var canvas = new AudioCanvas('canvas-audio-source', 500, 255 * 2);
 		canvas.ctx.clearRect(0, 0, canvas.canvasWidth, canvas.canvasHeight);
 
 	    for(bin = 0; bin < audioApiElement.streamData_1.length; bin ++) {
@@ -413,16 +461,16 @@ $(document).ready(function() {
 
 	function drawEq2() {
 		// получаем canvas
-		var canvas = new AudioCanvas('canvas-audio-source-eq2', 500, 255);
+		var canvas = new AudioCanvas('canvas-audio-source-eq2', 500, 255 * 2);
 		canvas.ctx.clearRect(0, 0, canvas.canvasWidth, canvas.canvasHeight);
 
-	    for(bin = 0; bin < audioApiElement.streamData_2.length; bin ++) {
+	    for(bin = 0, size = audioApiElement.streamData_2.length; bin < size; bin ++) {
 	        var val = audioApiElement.streamData_2[bin];
 	        // canvas.ctx.fillStyle = 'rgb(' + (val) + ',' + (val) + ',' + (val) + ')';
 	        // canvas.ctx.fillStyle = 'rgb(' + (255 - val) + ',' + (255 - val) + ',' + (255 - val) + ')';
 	        canvas.ctx.fillStyle = 'rgb(' + (255 - val) + ',' + (val) + ',' + (255 - val) + ')';
-	        canvas.ctx.fillRect(bin, canvas.canvasHeight / 2 + 1, 1, -val / 1);
-	        canvas.ctx.fillRect(bin, canvas.canvasHeight / 2 - 1, 1, val / 1);
+	        canvas.ctx.fillRect(size - bin, canvas.canvasHeight / 2 + 1, 1, -val / 1.5);
+	        canvas.ctx.fillRect(size - bin, canvas.canvasHeight / 2 - 1, 1, val / 1.5);
 	    }
 	    requestAnimationFrame(drawEq2);
 	};
@@ -463,6 +511,21 @@ $(document).ready(function() {
 	        }
 	    }
 	    requestAnimationFrame(drawEq3);
+	};
+
+	function drawEq4() {
+		// получаем canvas
+		var canvas = new AudioCanvas('canvas-fractal', 500, 255 * 2);
+		canvas.ctx.clearRect(0, 0, canvas.canvasWidth, canvas.canvasHeight);
+
+	    for(bin = 0; bin < audioApiElement.streamData_4.length; bin ++) {
+	        var val = audioApiElement.streamData_4[bin];
+	        canvas.ctx.fillStyle = 'rgb(' + (val) + ',' + (val) + ',' + (val) + ')';
+	        // canvas.ctx.fillStyle = 'rgb(' + (255 - val) + ',' + (255 - val) + ',' + (255 - val) + ')';
+	        canvas.ctx.fillRect(bin, canvas.canvasHeight / 2 + 1, 1, Math.floor(-val / 1.5));
+	        canvas.ctx.fillRect(bin, canvas.canvasHeight / 2 - 1, 1, Math.floor(val / 1.5));
+	    }
+	    requestAnimationFrame(drawEq4);
 	};
 
 	function addEqToTrack(track, canvasId) {
