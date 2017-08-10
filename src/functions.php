@@ -134,7 +134,8 @@ function searchStation($target) {
 function getAllStations() {
 	global $link;
 
-	$query = "select * from stations order by station_id limit 100";
+	// $query = "select * from stations order by station_id limit 100";
+	$query = "select * from stations order by station_id";
 	$result = mysqli_query($link, $query);
 	$data = array();
 

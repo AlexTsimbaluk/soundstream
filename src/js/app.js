@@ -47,7 +47,8 @@ $('.clearLocalStorage').on('click', function (e) {
 });
 
 $('.clearUniqHash').on('click', function (e) {
-	localStorage.removeItem('uniqHash');
+	// localStorage.removeItem('uniqHash');
+	localStorage.removeItem('stations');
 	return false;
 });
 
@@ -482,7 +483,11 @@ $(document).ready(function () {
 		currentPlaylist: '',
 		volume: player.volume,
 		paused: player.paused
-	};
+	},
+
+
+	// Массив со всеми станциями
+	stationsArray = [];
 
 	if (localStorage.getItem('userStatus') == undefined) {
 		localStorage.setItem('userStatus', JSON.stringify(userStatus));
@@ -490,6 +495,20 @@ $(document).ready(function () {
 	} else {
 		userStatus = JSON.parse(localStorage.userStatus);
 		// console.log(userStatus);
+	}
+
+	if (localStorage.getItem('stations') == undefined) {
+		$.ajax({
+			data: { 'action': 'getAllStations' },
+			success: function success(data) {
+				stationsArray = JSON.parse(data);
+				localStorage.setItem('stations', JSON.stringify(stationsArray));
+			}
+		});
+	} else {
+		stationsArray = JSON.parse(localStorage.getItem('stations'));
+		// console.log(stationsArray);
+		console.log(stationsArray.length);
 	}
 
 	if (localStorage.getItem('playerState') == undefined) {
@@ -768,39 +787,101 @@ $(document).ready(function () {
 	});
 
 	// Получить все станции
+	// TODO: выолнять когда еще не получены станции (1-й if())
+	// Не строить DOM-дерево станций, если оно уже было построено, 
+	// а просто открывать окно со сиском станций
+
+	// Предотвратить повторное построение при повторном клике DOM-дерева станций,
+	// если окно со станциями нужно свернуть, то return false;
+
+	// TODO: перестал работать $(".spinner")
 	$('#player .find .showAll').on('click', function (e) {
 		$(this).toggleClass('active');
-		$(".spinner").show();
-		$.ajax({
-			data: { 'action': 'getAllStations' },
-			success: function success(data) {
-				var response = JSON.parse(data);
-				result = $('.searchContainer .result');
-				markup = '<div class="total"><span>' + response.length + '</span> stations is found</div>';
 
-				result.html('');
+		if (!$('.searchContainer .result .station').length) {
+			$(".spinner").show();
+			/*$.ajax({
+   	data: {'action': 'getAllStations'},
+   	beforeSend: function(){
+           dateStart = new Date().getTime();
+       },
+   	success: function(data) {
+   		var response = JSON.parse(data);
+   			result = $('.searchContainer .result'),
+   			markup = '<div class="total"><span>'
+   						+ response.length
+   						+ '</span> stations is found</div>'
+   		;
+   			result.html('');
+   			for(var i = 0; i < response.length; i++) {
+   			var station = response[i];
+   				markup += '<div class="station" data-station-id="'
+   						+ station.station_id
+   						+ '"><div class="add"><i class="fa fa-plus"></i></div><div class="title">'
+   						+ station.station_title 
+   						+ '</div><div class="url">'
+   						+ station.station_url
+   						+ '</div></div>';
+   		}
+   			result.html(markup);
+   			$(".spinner").hide();
+   			if($('.searchContainer').hasClass('visible')) {
+   			$('.searchContainer').removeClass('searchContainerFadeIn visible')
+   								.addClass('searchContainerFadeOut')
+   								.parent().removeClass('playerRight')
+   								.addClass('playerLeft')
+   			;
+   		} else {
+   			$('.searchContainer').removeClass('searchContainerFadeOut')
+   								.addClass('searchContainerFadeIn visible')
+   								.parent()
+   								.removeClass('playerLeft')
+   								.addClass('playerRight')
+   			;
+   		}
+   			if(window.innerHeight <= 640 && window.innerWidth < 700) {
+   			$('.playlistContainer').toggleClass('hidden');
+   		}
+   			var dateLoad = new Date().getTime();
+   		console.log((dateLoad - dateStart) + 'ms');
+   	}
+   });*/
 
-				for (var i = 0; i < response.length; i++) {
-					var station = response[i];
+			dateStart = new Date().getTime();
 
-					markup += '<div class="station" data-station-id="' + station.station_id + '"><div class="add"><i class="fa fa-plus"></i></div><div class="title">' + station.station_title + '</div><div class="url">' + station.station_url + '</div></div>';
-				}
+			var response = stationsArray,
+			    result = $('.searchContainer .result'),
+			    markup = '<div class="total"><span>' + response.length + '</span> stations is found</div>';
 
-				result.html(markup);
+			result.html('');
 
-				$(".spinner").hide();
+			for (var i = 0; i < response.length; i++) {
+				var station = response[i];
 
-				if ($('.searchContainer').hasClass('visible')) {
-					$('.searchContainer').removeClass('searchContainerFadeIn visible').addClass('searchContainerFadeOut').parent().removeClass('playerRight').addClass('playerLeft');
-				} else {
-					$('.searchContainer').removeClass('searchContainerFadeOut').addClass('searchContainerFadeIn visible').parent().removeClass('playerLeft').addClass('playerRight');
-				}
-
-				if (window.innerHeight <= 640 && window.innerWidth < 700) {
-					$('.playlistContainer').toggleClass('hidden');
-				}
+				markup += '<div class="station" data-station-id="' + station.station_id + '"><div class="add"><i class="fa fa-plus"></i></div><div class="title">' + station.station_title + '</div><div class="url">' + station.station_url + '</div></div>';
 			}
-		});
+
+			result.html(markup);
+
+			$(".spinner").hide();
+
+			var dateLoad = new Date().getTime();
+			console.log(dateLoad - dateStart + 'ms');
+		}
+
+		$(".spinner").show();
+
+		if ($('.searchContainer').hasClass('visible')) {
+			$('.searchContainer').removeClass('searchContainerFadeIn visible').addClass('searchContainerFadeOut').parent().removeClass('playerRight').addClass('playerLeft');
+		} else {
+			$('.searchContainer').removeClass('searchContainerFadeOut').addClass('searchContainerFadeIn visible').parent().removeClass('playerLeft').addClass('playerRight');
+		}
+
+		if (window.innerHeight <= 640 && window.innerWidth < 700) {
+			$('.playlistContainer').toggleClass('hidden');
+		}
+
+		$(".spinner").hide();
 	});
 
 	// Закрытие блока с результатами поиска
