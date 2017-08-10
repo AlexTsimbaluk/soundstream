@@ -1338,6 +1338,7 @@ ol {
   color: #bbb;
   font-size: 1.1em;
   font-style: italic;
+  max-height: 20px;
   overflow: hidden;
 }
 #player .track .delete {
