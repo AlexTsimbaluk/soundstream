@@ -1,0 +1,125 @@
+
+### /etc/nginx/sites-available/soundstream.conf
+server {
+
+#	upstream soundstream {
+#	    server 127.0.0.1:81;
+#	}
+
+	listen 					80;
+	server_name soundstream www.soundstream;
+
+	root                	/home/soundstream/src/;
+
+	# Логи
+    access_log              /var/log/nginx/soundstream.access.log;
+    error_log               /var/log/nginx/soundstream.error.log;
+
+
+
+    location ~ ^/(html|css|js|img|audio|bin|t|xml|fonts|bootstrap|favicon\.ico|robots\.txt)/ {
+#   location ~* \.(html|jpeg|jpg|gif|png|css|js|pdf|txt|tar|ico)$ {
+		root /home/soundstream/src/;
+		charset             UTF-8;
+        access_log          off;
+		expires 			60d;
+	}
+
+    # Закроем доступ к системным файлам
+    location ~ /\.(ht|git) {
+        deny                all;
+    }
+
+
+	location / {
+		proxy_pass 			http://127.0.0.1:81;
+        proxy_set_header    Host                    $host;
+        proxy_set_header    X-Real-IP               $remote_addr;
+        proxy_set_header    X-Forwarded-For         $proxy_add_x_forwarded_for;
+	}
+}
+
+
+
+### /etc/apache2/sites-available/soundstream.conf
+<VirtualHost *:81>
+	ServerName soundstream
+	ServerAlias soundstream www.soundstream
+	DocumentRoot /home/sanek/soundstream/src
+
+	<Directory home/sanek/soundstream/src>
+		AllowOverride All
+        Require all granted
+	</Directory>
+
+# Отладка апача не нужна
+    LogLevel        notice
+    # Лог по имени хоста
+    ErrorLog        ${APACHE_LOG_DIR}/soundstream.error.log
+    CustomLog       ${APACHE_LOG_DIR}/soundstream.access.log combined
+
+    # Лимит на выполнение, сек.
+    RLimitCPU       120         120
+    # Лимит памяти 1Gb
+    RLimitMEM       1073741824  1073741824
+</VirtualHost>
+
+
+
+### Логи апача
+
+[Mon Jun 05 22:30:27.584370 2017] [mpm_prefork:notice] [pid 4987] AH00169: caught SIGTERM, shutting down
+[Mon Jun 05 22:30:27.827504 2017] [mpm_prefork:notice] [pid 5204] AH00163: Apache/2.4.25 (Debian) mod_perl/2.0.9dev Perl/v5.20.2 configured -- resum$
+[Mon Jun 05 22:30:27.827628 2017] [core:notice] [pid 5204] AH00094: Command line: '/usr/sbin/apache2'
+[Mon Jun  5 22:30:36 2017] [debug] GET "/"
+[Mon Jun  5 22:30:36 2017] [debug] Routing to controller "CD::Controller::Default" and action "switch"
+[Mon Jun  5 22:30:36 2017] [debug] Rendering template "default/switch.html.ep"
+[Mon Jun  5 22:30:36 2017] [debug] Rendering template "layouts/default.html.ep"
+[Mon Jun  5 22:30:36 2017] [debug] Rendering template "layouts/default/header.html.ep"
+[Mon Jun  5 22:30:36 2017] [debug] Rendering template "menu/main.html.ep"
+[Mon Jun  5 22:30:36 2017] [debug] Rendering template "block/messages.html.ep"
+[Mon Jun  5 22:30:36 2017] [debug] Rendering template "layouts/default/footer.html.ep"
+[Mon Jun  5 22:30:36 2017] [debug] Rendering template "/block/geo/init.html.ep"
+[Mon Jun  5 22:30:36 2017] [error] Can't call method "lon" on an undefined value at template /block/geo/init.html.ep line 8.
+3:     %= javascript begin
+4:         $(window).on('load', function () {
+5:             var GEO_options = {
+6:                 minLength: 2,
+7:                 lang: 'ru',
+8:                 lon: <%= cur_user->service->lon %>,
+9:                 lat: <%= cur_user->service->lat %>,
+10:                 url: {
+11:                     geoStreet: '//<%= cfg('geo.completer.host') %>/seek/geostreet',
+12:                     geoHouses: '//<%= cfg('geo.completer.host') %>/seek/houses',
+13:                     geoBack: '//<%= cfg('geo.completer.host') %>/seek/back',
+
+[Mon Jun  5 22:30:36 2017] [debug] Template "exception.development.html.ep" not found
+[Mon Jun  5 22:30:36 2017] [debug] Template "exception.html.ep" not found
+[Mon Jun  5 22:30:36 2017] [debug] Rendering template "mojo/debug.html.ep"
+[Mon Jun  5 22:30:36 2017] [debug] Rendering template "mojo/menubar.html.ep"
+[Mon Jun  5 22:30:36 2017] [debug] 500 Internal Server Error (0.380298s, 2.630/s)
+
+
+
+### Логи nginx
+### error.log
+2017/06/05 22:30:36 [error] 5242#5242: *1 open() "/home/soundstream/src/mojo/jquery/jquery.js" failed (2: No such file or directory), client: 127.0.$
+2017/06/05 22:30:36 [error] 5242#5242: *3 open() "/home/soundstream/src/mojo/prettify/run_prettify.js" failed (2: No such file or directory), client$
+2017/06/05 22:30:36 [error] 5242#5242: *4 open() "/home/soundstream/src/mojo/prettify/prettify-mojo-dark.css" failed (2: No such file or directory),$
+2017/06/05 22:30:36 [error] 5242#5242: *4 open() "/home/soundstream/src/mojo/jquery/jquery.js" failed (2: No such file or directory), client: 127.0.$
+2017/06/05 22:30:36 [error] 5242#5242: *3 open() "/home/soundstream/src/mojo/logo-white.png" failed (2: No such file or directory), client: 127.0.0.$
+2017/06/05 22:30:36 [error] 5242#5242: *3 open() "/home/soundstream/src/mojo/logo-black.png" failed (2: No such file or directory), client: 127.0.0.$
+2017/06/05 22:30:36 [error] 5242#5242: *3 open() "/home/soundstream/src/mojo/pinstripe-light.png" failed (2: No such file or directory), client: 127$
+2017/06/05 22:30:36 [error] 5242#5242: *3 open() "/home/soundstream/src/mojo/pinstripe-dark.png" failed (2: No such file or directory), client: 127.$
+2017/06/05 22:30:36 [error] 5242#5242: *3 open() "/home/soundstream/src/mojo/logo-black.png" failed (2: No such file or directory), client: 127.0.0.$
+
+
+### access.log
+127.0.0.1 - - [05/Jun/2017:22:30:36 +0300] "GET / HTTP/1.1" 500 42717 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ch$
+
+
+### /etc/nginx/conf.d/proxy.conf
+proxy_redirect              off;
+proxy_set_header            Host $host;
+proxy_set_header            X-Real-IP $remote_addr;
+proxy_set_header            X-Forwarded-For $proxy_add_x_forwarded_for;

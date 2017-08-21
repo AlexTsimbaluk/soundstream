@@ -2,4 +2,3 @@ node_modules
 users
 'apache2 and nginx config'
 server*
-*.txt
