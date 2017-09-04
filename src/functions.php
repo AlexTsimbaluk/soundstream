@@ -70,6 +70,7 @@ function getPlaylistStations($arrId) {
 			}
 		} else {
 			// echo "No entries";
+			// $data[] = "No entries";
 		}
 	}
 	$data = json_encode($data);

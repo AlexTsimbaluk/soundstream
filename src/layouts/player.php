@@ -81,7 +81,7 @@
 		
 		<!-- <canvas id="canvas-audio-source"></canvas>
 		<canvas id="canvas-audio-source-eq2"></canvas> -->
-		<canvas id="canvas-audio-source-eq3"></canvas>
+		<canvas id="canvas-audio-source-eq3" width="288" height="20"></canvas>
 		
 		<?php
 	        include_once 'layouts/nav-player.php';

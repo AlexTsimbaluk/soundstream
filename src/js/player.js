@@ -333,7 +333,6 @@ $(document).ready(function() {
 	        var playPromise = $playerTag.play();
 	        console.log(playPromise);
 	        $(".spinner").show();
-	        // getPromise();
 
 	        // В конце if проверить PromiseStatus, если он куоысеув
 	        if (playPromise !== undefined) {
@@ -563,10 +562,8 @@ $(document).ready(function() {
 
 	if(localStorage.getItem('userStatus') == undefined) {
 		localStorage.setItem('userStatus', JSON.stringify(userStatus));
-		// 
 	} else {
 		userStatus = JSON.parse(localStorage.userStatus);
-		// console.log(userStatus);
 	}
 
 	if(localStorage.getItem('stations') == undefined) {
@@ -579,8 +576,6 @@ $(document).ready(function() {
 		});
 	} else {
 		stationsArray = JSON.parse(localStorage.getItem('stations'));
-		// console.log(stationsArray);
-		console.log(stationsArray.length);
 	}
 
 
@@ -595,9 +590,10 @@ $(document).ready(function() {
 		localStorage.setItem('playerState', JSON.stringify(playerState));
 	} else {
 		var audioApiElement = new AudioApiElement('playerTag');
-		// Поучаем актуальное состояние плеера из local storage
+		// Получаем актуальное состояние плеера из local storage
 		playerState = JSON.parse(localStorage.getItem('playerState'));
-		// console.log(playerState.volume);
+		console.log(playerState);
+		console.log(playerState.playlists[playerState.currentPlaylist].currentTrack.scrollPosition);
 		// Наполняем playlistsPanel заголовками плейлистов
 		for (var i = 0; i < playerState.playlistsOrder.length; i++) {
 			playlistsPanel.append('<div class="plName" data-name="'
@@ -621,58 +617,70 @@ $(document).ready(function() {
 									playlists[playerState.currentPlaylist].
 									htmlEl
 								);
-		// Получить плейлист и сформировать его
+		// Получить массив с id треков плейлиста и сформировать его
 		var playlistTracks = playerState
 								.playlists[playerState.currentPlaylist]
 								.tracks
 		;
-		$.ajax({
-			data: {'action': 'getPlaylistStations', 'id': playlistTracks},
-			success: function(data) {
-				var response = JSON.parse(data),
-					playlist = playlistContainer.find('.playlist[data-name="'
-														+ playerState.currentPlaylist
-														+ '"]'),
-					markup = '';
 
-				var trackMarkup = $('.template-track').html();
+		/*var playlistTracks = [2599,1193,1330,55,760,884,894,900,7068,9096,4046,3187,4055,6369,6377,6716,7942,2400]
+		;
+		localStorage.setItem('playerState', JSON.stringify(playerState));*/
 
-				for(var i = 0; i < response.length; i++) {
-					var track = response[i];
-					markup += '<div class="track" data-station-id="'
-								+ track.station_id
-								+ '" data-station-title="'
-								+ track.station_title
-								+ '" data-station-url="'
-								+ track.station_url
-								+ '"><div class="delete"><i class="fa fa-minus"></i></div><div class="title">'
-								+ track.station_title
-								+ '</div><div class="url">'
-								+ track.station_url
-								+ '</div></div>'
+		if(playlistTracks.length > 0) {
+			$.ajax({
+				data: {'action': 'getPlaylistStations', 'id': playlistTracks},
+				success: function(data) {
+					var response = JSON.parse(data),
+						playlist = playlistContainer.find('.playlist[data-name="'
+															+ playerState.currentPlaylist
+															+ '"]'),
+						markup = ''
 					;
-				}
+					
 
-				playlist.html(playlist.html() + markup);
-				playlist.find('.track[data-station-id='
-								+ playerState
-									.playlists[playerState.currentPlaylist]
-									.currentTrack
-									.id
-								+ ']'
-							)
-							.addClass('selected');
+					var trackMarkup = $('.template-track').html();
 
-				if(!playerState.paused) {
-					audioApiElement.playStream(playerState
-												.playlists[playerState.currentPlaylist]
-												.currentTrack
-												.url
-												)
-					;
+					for(var i = 0; i < response.length; i++) {
+						var track = response[i];
+						markup += '<div class="track" data-station-id="'
+									+ track.station_id
+									+ '" data-station-title="'
+									+ track.station_title
+									+ '" data-station-url="'
+									+ track.station_url
+									+ '"><div class="delete"><i class="fa fa-minus"></i></div><div class="title">'
+									+ track.station_title
+									+ '</div><div class="url">'
+									+ track.station_url
+									+ '</div></div>'
+						;
+					}
+
+					playlist.html(playlist.html() + markup);
+					playlist.find('.track[data-station-id='
+									+ playerState
+										.playlists[playerState.currentPlaylist]
+										.currentTrack
+										.id
+									+ ']'
+								)
+								.addClass('selected');
+
+					if(!playerState.paused) {
+						audioApiElement.playStream(playerState
+													.playlists[playerState.currentPlaylist]
+													.currentTrack
+													.url
+													)
+						;
+					}
 				}
-			}
-		});
+			});
+		} else {
+			console.log(0);
+		}
+
 	}
 
 	// TODO: 2 ф-и ниже должны определять свой target-element внутри себя
@@ -766,6 +774,15 @@ $(document).ready(function() {
 		}
 	});
 
+	$('.playlistContainer').on('mousedown', '.track', function(e) {
+		$(this).parent()
+				.find('.selected')
+				.removeClass('selected')
+		;
+
+		$(this).addClass('selected');
+	});
+
 	// TODO: в кликах на кнопку stop проверять player.paused
 	$('#player .stop').click(function(e) {
 		audioApiElement.stopStream();
@@ -786,14 +803,6 @@ $(document).ready(function() {
 		localStorage.setItem('playerState', JSON.stringify(playerState));
 	});
 
-	$('.playlistContainer').on('mousedown', '.track', function(e) {
-		$(this).parent()
-				.find('.selected')
-				.removeClass('selected')
-		;
-
-		$(this).addClass('selected');
-	});
 
 	
 
@@ -988,7 +997,7 @@ $(document).ready(function() {
 	// Получить все станции
 	// TODO: выолнять когда еще не получены станции (1-й if())
 	// Не строить DOM-дерево станций, если оно уже было построено, 
-	// а просто открывать окно со сиском станций
+	// а просто открывать окно со списком станций
 
 	// Предотвратить повторное построение при повторном клике DOM-дерева станций,
 	// если окно со станциями нужно свернуть, то return false;
@@ -1143,12 +1152,32 @@ $(document).ready(function() {
 	/*Sortable plugin JQueryUI*/
 	$('.sortable').sortable({scroll: true});
 
+	/*$(window).on('scroll', function(e) {
+		console.log(e.originalEvent);
+		console.log(document.querySelector('.playlistContainer').scrollHeight);
+		console.log(document.querySelector('.playlistContainer').scrollTop);
+		console.log((this).scrollHeight);
+		console.log((this).scrollTop);
+	});*/
+
 	// mCustomScrollbar
 	// Анимация кнопки "закрыть" при скроле блока с результатами поиска
 	$('.searchContainer').mCustomScrollbar({
 		callbacks: {
 			onScroll: function() {
 				animateCloseButton(this);
+			}
+		}
+	});
+
+	$('.playlistContainer').mCustomScrollbar({
+		callbacks: {
+			onScroll: function() {
+				console.log(this.mcs.top);
+
+				console.log(playerState.playlists[playerState.currentPlaylist].currentTrack);
+				playerState.playlists[playerState.currentPlaylist].currentTrack.scrollPosition = this.mcs.top;
+				localStorage.setItem('playerState', JSON.stringify(playerState));
 			}
 		}
 	});
@@ -1218,95 +1247,6 @@ $(document).ready(function() {
 	
 
 });
-
-
-/*$(window).load(function() {
-	var playerState = {};
-	playerState = JSON.parse(localStorage.getItem('playerState'));
-
-	// var dateLoad = new Date().getTime();
-	// console.log(dateLoad, dateStart);
-	// console.log((dateLoad - dateStart) + 'ms');
-
-	// Preloader
-	// $(".spinner").fadeOut(300);
-	// $(".loader").delay(400).fadeOut("slow");
-
-    var canvasAnalyser 	= document.getElementById("canvas-eq");
-    var ctxAnalyser 	= canvasAnalyser.getContext("2d");
-    var analyserSource	= document.getElementById('analyser-source');
-
-    analyserSource.src 	= playerState.playlists[playerState.currentPlaylist].currentTrack.url;
-    analyserSource.crossOrigin = 'anonymous';
-
-    var audioCtx 		= new(window.AudioContext || window.webkitAudioContext)(),
-        analyser 		= audioCtx.createAnalyser(),
-    	// source 			= audioCtx.createMediaElementSource(playerState.playlists[playerState.currentPlaylist].currentTrack.url),
-    	// source 			= audioCtx.createMediaElementSource(player),
-    	source 			= audioCtx.createMediaElementSource(analyserSource)
-    ;
-    analyser.fftSize 	= 2048;
-
-	source.connect(analyser);
-	analyser.connect(audioCtx.destination);
-
-    // Создаем массивы для хранения данных
-    var bufferLength 	= analyser.frequencyBinCount,
-    	fFrequencyData  = new Float32Array(bufferLength),
-        bFrequencyData  = new Uint8Array(bufferLength),
-        bTimeData       = new Uint8Array(bufferLength)
-    ;
-
-
-    // Получаем данные
-    analyser.getFloatFrequencyData(fFrequencyData); 
-    analyser.getByteFrequencyData(bFrequencyData); 
-    analyser.getByteTimeDomainData(bTimeData);
-
-    // console.log(fFrequencyData);
-    // console.log(bFrequencyData);
-    // console.log(bTimeData);
-
-    function draw() {
-
-        drawVisual = requestAnimationFrame(draw);
-
-        analyser.getByteTimeDomainData(bTimeData);
-
-        ctxAnalyser.fillStyle = 'rgb(200, 200, 200)';
-        ctxAnalyser.fillRect(0, 0, canvasAnalyser.width, canvasAnalyser.height);
-
-        ctxAnalyser.lineWidth = 2;
-        ctxAnalyser.strokeStyle = 'rgb(0, 0, 0)';
-
-        ctxAnalyser.beginPath();
-
-        var sliceWidth = canvasAnalyser.width * 1.0 / bufferLength;
-        var x = 0;
-
-        for (var i = 0; i < bufferLength; i++) {
-
-            var v = bTimeData[i] / 128.0;
-            var y = v * canvasAnalyser.height / 2;
-
-            if (i === 0) {
-                ctxAnalyser.moveTo(x, y);
-            } else {
-                ctxAnalyser.lineTo(x, y);
-            }
-
-            x += sliceWidth;
-        }
-
-        ctxAnalyser.lineTo(canvasAnalyser.width, canvasAnalyser.height / 2);
-        ctxAnalyser.stroke();
-    };
-    draw();
-
-		
-});*/
-
-
 
 
 $(window).load(function() {
