@@ -152,13 +152,13 @@ $(document).ready(function() {
 	// TODO: починить
 	// для этого надо player заменить на audioApiElement,
 	// у которого должно быть это свойство (проверить)
-	function updateTime() {
+	/*function updateTime() {
 		var s = ('0' + parseInt(player.currentTime % 60)).slice(-2);
 		var m = ('0' + parseInt((player.currentTime / 60) % 60)).slice(-2);
 		$('#player .time .hours').html();
 		$('#player .time .minutes').html(m);
 		$('#player .time .seconds').html(s);
-	}
+	}*/
 	
 	// Добавить станцию в плейлист
 	function addToPlaylist(id) {
@@ -256,6 +256,182 @@ $(document).ready(function() {
 	}
 
 	function AudioApiElement(audioElement) {
+	    var $playerTag = document.getElementById(audioElement);
+	    var self = this;
+	    function createAnalyser(opts) {
+		    var a = audioCtx.createAnalyser();
+	    	a.smoothingTimeConstant = opts.smoothingTimeConstant || .7;
+	    	a.fftSize = opts.fftSize || 512;
+	    	return a;
+	    }
+
+	    var source = audioCtx.createMediaElementSource($playerTag);
+
+	    var analyser_1 = new Analyser(audioCtx, source, {smoothingTimeConstant: .5, fftSize: 1024});
+	    var analyser_2 = new Analyser(audioCtx, source, {smoothingTimeConstant: .5, fftSize: 1024});
+	    var analyser_3 = new Analyser(audioCtx, source, {smoothingTimeConstant: .5, fftSize: 64});
+	    var analyser_4 = new Analyser(audioCtx, source, {smoothingTimeConstant: .5, fftSize: 512});
+
+	    this.streamData_1 = analyser_1.streamData;
+	    this.streamData_2 = analyser_2.streamData;
+	    this.streamData_3 = analyser_3.streamData;
+	    this.streamData_4 = analyser_4.streamData;
+
+	    this.playStream = function(streamUrl) {
+	    	/*if(el) {
+
+	    	}*/
+	    	// TODO: .selected переделать на data-current и везде проверять его
+        	playerState
+        		.playlists[playerState.currentPlaylist]
+        		.currentTrack = {
+	        		id: $('.playlistContainer .selected').data('stationId'),
+	        		url: streamUrl,
+	        		title: $('.playlistContainer .selected').data('stationTitle')
+        	};
+
+        	var currentTrackEl = $('.playlistContainer .active [data-station-id='
+        							+ playerState
+        								.playlists[playerState.currentPlaylist]
+        								.currentTrack
+        								.id
+        							+ ']');
+        	console.log(currentTrackEl);
+
+        	// addEqToTrack(currentTrackEl, 'canvas-audio-source');
+
+	        $playerTag.src = streamUrl;
+	        $playerTag.crossOrigin = 'anonymous';
+	    	setTimeout(function(){
+	    		$playerTag.crossOrigin = 'anonymous';
+	        }, 3000);
+
+	        $playerTag.addEventListener('canplay', (e)=> {
+	         		// console.log(e);
+	        });
+
+	        $playerTag.addEventListener('error', (err)=> {
+	         		// console.log(err);
+	        });
+
+	        function getPromise() {
+	        	var promise = $playerTag.play();
+	        	if (playPromise !== undefined) {
+	        		playPromise.then(function() {
+						console.log('Promise::Automatic playback started!');
+						$(".spinner").hide();
+					}).catch(function(error) {
+						$(".spinner").hide();
+						console.log('Promise::Automatic playback failed...');
+						console.log(error);
+						console.log($('playlistContainer .track[data-current-track]'));
+						self.stopStream();
+						$('.playlistContainer .track[data-current-track]').removeAttr('data-current-track');
+					});
+	        	}
+	        }
+	        var playPromise = $playerTag.play();
+	        console.log(playPromise);
+	        $(".spinner").show();
+
+	        // В конце if проверить PromiseStatus, если он куоысеув
+	        if (playPromise !== undefined) {
+				/*playPromise.then(function() {
+					console.log('Promise::Automatic playback started!');
+					$(".spinner").hide();
+				}).catch(function(error) {
+					$(".spinner").hide();
+					console.log('Promise::Automatic playback failed...');
+					console.log(error);
+					console.log($('playlistContainer .track[data-current-track]'));
+					self.stopStream();
+					$('.playlistContainer .track[data-current-track]').removeAttr('data-current-track');
+				});*/
+
+				playPromise.then(function() {
+					console.log('Promise::Automatic playback started!');
+					$(".spinner").hide();
+					console.log(playPromise);
+				}).catch(function(error) {
+					console.log(playPromise);
+					setTimeout(function(){
+						console.log('Start 3s');
+						playPromise.then(function() {
+							self.stopStream();
+							$('.playlistContainer [data-current-track]').removeAttr('data-current-track');
+							console.log('Promise::Automatic playback started! 3s');
+							$(".spinner").hide();
+						}).catch(function(error) {
+							$(".spinner").hide();
+							console.log('Promise::Automatic playback failed...');
+							console.log(error);
+							self.stopStream();
+							$('.playlistContainer .track[data-current-track]').removeAttr('data-current-track');
+						});
+				    }, 3000);
+				});
+
+				/*if (playPromise.prototype.PromiseStatus == resolved) {
+					console.log('resolved');
+				}*/
+	        }
+
+	        playerState.paused = $playerTag.paused;
+	        visualisation(currentTrackEl);
+	        displayState();
+	        self.updateTime();
+	        localStorage.setItem('playerState', JSON.stringify(playerState));
+	        setInterval(function() {
+	        	self.updateTime();
+	        }, 1000);
+	        console.log('AudioApiElement::playStream');
+	        drawEq1();
+	        drawEq2();
+	        drawEq3();
+	        // TODO: добавить на играющий трек эквалайзер
+	    }
+	     // TODO: добавить сюда остановку анимации
+	    this.stopStream = function() {
+	    	var currentTrackEl = $('.playlistContainer .active [data-station-id='
+									+ playerState
+										.playlists[playerState.currentPlaylist]
+										.currentTrack
+										.id
+									+ ']')
+	    	;
+
+			visualisationStop(currentTrackEl);
+			$('#player .play').removeClass('visualisation');
+			$('#player .info .trackTitle').html('')
+											.removeClass('runningString')
+											.parent().css({'width':'auto'});
+
+			$playerTag.pause();
+			$playerTag.currentTime = 0;
+			playerState.paused = $playerTag.paused;
+			console.log('AudioApiElement::stopStream');
+			localStorage.setItem('playerState', JSON.stringify(playerState));
+	    }
+	    this.setVolume = function(vol) {
+	    	$playerTag.volume = vol;
+	    }
+	    this.getVolume = function() {
+	    	return $playerTag.volume;
+	    }
+	    this.updateTime = function() {
+	    	var time = Math.ceil($playerTag.currentTime);
+	    	
+	    	var sec = ('0' + parseInt(Math.floor(time % 60))).slice(-2);
+	    	var min = ('0' + parseInt((Math.floor(time / 60)) % 60)).slice(-2);
+	    	$('#player .time .hours').html();
+	    	$('#player .time .minutes').html(min);
+	    	$('#player .time .seconds').html(sec);
+	    }
+	    $playerTag.volume = playerState.volume;
+	}
+
+	// Колбэк если не срабатывает Audio API
+	function AudioCbElement(audioElement) {
 	    var $playerTag = document.getElementById(audioElement);
 	    var self = this;
 	    function createAnalyser(opts) {
@@ -540,6 +716,7 @@ $(document).ready(function() {
 		
 		player = new Audio(),
 
+
 		// Состояние пользователя - зарегистрирован или нет, авторизован или нет
 		userStatus = {
 			reg: false,
@@ -551,7 +728,8 @@ $(document).ready(function() {
 			playlists: {},
 			playlistsOrder: [],
 			currentPlaylist: '',
-			volume : player.volume,
+			// volume : player.volume,
+			volume: audioApiElement ? audioApiElement.getVolume() : 0,
 			paused: player.paused
 		},
 
@@ -559,6 +737,7 @@ $(document).ready(function() {
 		stationsArray = []
 	;
 
+	console.log(player.paused);
 
 	if(localStorage.getItem('userStatus') == undefined) {
 		localStorage.setItem('userStatus', JSON.stringify(userStatus));
@@ -580,6 +759,7 @@ $(document).ready(function() {
 
 
 	
+	var audioApiElement = new AudioApiElement('playerTag');
 
 	if(localStorage.getItem('playerState') == undefined) {
 		// Объект плейлиста
@@ -587,13 +767,44 @@ $(document).ready(function() {
 		playerState.currentPlaylist = 'Default';
 		playlistsPanel.append('<div class="plName" data-name="Default">Default</div>');
 		playlistContainer.append(playerState.playlists[playerState.currentPlaylist].htmlEl);
+		
+		playerState.playlists[playerState.currentPlaylist].currentTrack.scrollPosition = 0;
+
+		playerState
+			.playlists[playerState.currentPlaylist]
+			.tracks = [2599,
+						1193,
+						1330,
+						55,
+						760,
+						884,
+						894,
+						900,
+						7068,
+						9096,
+						4046,
+						3187,
+						4055,
+						6369,
+						6377,
+						6716,
+						7942,
+						2400
+		];
+
+		playerState
+			.playlists[playerState.currentPlaylist]
+			.currentTrack = {
+				id:1330,
+				url:'http://graalradio.com:8123/future',
+				title:'Graal Radio Future'
+		};
+			
 		localStorage.setItem('playerState', JSON.stringify(playerState));
 	} else {
-		var audioApiElement = new AudioApiElement('playerTag');
 		// Получаем актуальное состояние плеера из local storage
 		playerState = JSON.parse(localStorage.getItem('playerState'));
-		console.log(playerState);
-		console.log(playerState.playlists[playerState.currentPlaylist].currentTrack.scrollPosition);
+		
 		// Наполняем playlistsPanel заголовками плейлистов
 		for (var i = 0; i < playerState.playlistsOrder.length; i++) {
 			playlistsPanel.append('<div class="plName" data-name="'
@@ -603,6 +814,7 @@ $(document).ready(function() {
 									+ '</div>'
 								);
 		}
+
 		// Задаем свойства объекта Audio свойствами объекта playerState
 		// player.volume = playerState.volume;
 		player.src = playerState.
@@ -611,6 +823,7 @@ $(document).ready(function() {
 			url
 		;
 		player.paused = playerState.paused;
+		
 		audioApiElement.setVolume(playerState.volume);
 		// Создаем контейнер для треков текущего (активного) плейлиста
 		playlistContainer.append(playerState.
@@ -623,9 +836,7 @@ $(document).ready(function() {
 								.tracks
 		;
 
-		/*var playlistTracks = [2599,1193,1330,55,760,884,894,900,7068,9096,4046,3187,4055,6369,6377,6716,7942,2400]
-		;
-		localStorage.setItem('playerState', JSON.stringify(playerState));*/
+		
 
 		if(playlistTracks.length > 0) {
 			$.ajax({
