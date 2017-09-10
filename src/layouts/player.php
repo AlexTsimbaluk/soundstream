@@ -121,3 +121,4 @@
 <audio id="playerTag" ></audio>
 
 
+<audio class="walmer hidden" src="http://sc3.dubplate.fm:8200/lofi_autodj" controls></audio>

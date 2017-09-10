@@ -30,12 +30,8 @@
     <link rel="stylesheet" href="libs/custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css" />
 
     <link rel="stylesheet" href="libs/bootstrap/css/bootstrap.css">
-    <!-- <link rel="stylesheet" href="css/bootstrap-grid-custom.min.css"> -->
-    <!-- <link rel="stylesheet" href="css/framework.min.css"> -->
 
-    <link rel="stylesheet" href="css/fonts.css">
 	<link rel="stylesheet" href="css/main.css">
-	<link rel="stylesheet" href="css/media.css">
 
 	<!-- Scripts -->
     <script src="libs/modernizr/modernizr.js"></script>
