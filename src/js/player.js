@@ -301,7 +301,7 @@ $(document).ready(function() {
         								.currentTrack
         								.id
         							+ ']');
-        	console.log(currentTrackEl.position().top);
+        	// console.log(currentTrackEl.position().top);
 
         	playerState.playlists[playerState.currentPlaylist].currentTrack.scrollPosition = currentTrackEl.position().top;
 
@@ -338,7 +338,7 @@ $(document).ready(function() {
 	        	}
 	        }
 	        var playPromise = $playerTag.play();
-	        console.log(playPromise);
+	        // console.log(playPromise);
 	        $(".spinner").show();
 
 	        // В конце if проверить PromiseStatus, если он куоысеув
@@ -356,9 +356,9 @@ $(document).ready(function() {
 				});*/
 
 				playPromise.then(function() {
-					console.log('Promise::Automatic playback started!');
+					console.log('Promise::AudioApiElement::playStream!');
 					$(".spinner").hide();
-					console.log(playPromise);
+					// console.log(playPromise);
 			        
 			        self.updateTime();
 			        setInterval(function() {
@@ -692,8 +692,8 @@ $(document).ready(function() {
 		audioCbElement 	= new AudioCbElement()
 	;
 
-	console.log(audioApiElement);
-	console.log(audioCbElement);
+	/*console.log(audioApiElement);
+	console.log(audioCbElement);*/
 
 	if(localStorage.getItem('playerState') == undefined) {
 		// Объект плейлиста
