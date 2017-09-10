@@ -1,11 +1,17 @@
 @import '_func.less';
 @import '_vars.less';
+
 @import '_default.less';
 
-@import '_bootstrap-custom.less';
+@import '_fonts.less';
+
 
 @import '_forms.less';
 @import '_admin.less';
+
+@import '_bootstrap-custom.less';
+
+@import '_media.less';
 
 
 ::-webkit-input-placeholder {color:#fff;}
@@ -388,6 +394,7 @@ ul, ol {
             }
 		}
 	}
+
 	.view {
 		height: 40px;
 	}
@@ -606,11 +613,16 @@ ul, ol {
 			top: -15px;
 		}
 	}
+
 	.playlistContainer {
 		// height: 49%;
 		height: 200px;
 		// overflow-y: scroll;
+		.playlist {
+			position: relative;
+		}
 	}
+
 	.playlistsPanel {
 		height: 20px;
 		margin: 4px 0;
@@ -649,6 +661,7 @@ ul, ol {
 		}
 		.plName + .plName {margin-left: 4px;}
 	}
+
 	.track {
 		border-radius: 2px;
 		cursor: default;

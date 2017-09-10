@@ -238,11 +238,20 @@ th {
 .text-capitalize {
   text-transform: capitalize;
 }
-.panel-heading {
-  font-size: 14px;
+@font-face {
+  font-family: "RobotoRegular";
+  src: url("../fonts/RobotoRegular/RobotoRegular.eot");
+  src: url("../fonts/RobotoRegular/RobotoRegular.eot?#iefix") format("embedded-opentype"), url("../fonts/RobotoRegular/RobotoRegular.woff") format("woff"), url("../fonts/RobotoRegular/RobotoRegular.ttf") format("truetype");
+  font-style: normal;
+  font-weight: normal;
 }
-label {
-  font-size: 12px;
+@font-face {
+  font-family: 'SFUIDisplay-Light';
+  src: url('../fonts/SFUIDisplay-Light.otf');
+  src: url('../fonts/SFUIDisplay-Light.otf') format('embedded-opentype'), url('../fonts/SFUIDisplay-Light.otf') format('woff'), url('../fonts/SFUIDisplay-Light.otf') format('truetype'), url('../fonts/SFUIDisplay-Light.otf') format('svg');
+  src: local('SFUIDisplay-Light'), url('../fonts/SFUIDisplay-Light.otf');
+  font-weight: normal;
+  font-style: normal;
 }
 form {
   display: none;
@@ -470,6 +479,72 @@ form .authSubmit:hover {
 #admin {
   position: relative;
   z-index: 1;
+}
+.panel-heading {
+  font-size: 14px;
+}
+label {
+  font-size: 12px;
+}
+@media only screen and (max-width: 700px) {
+  .visualisation:before {
+    -webkit-animation: none !important;
+            animation: none !important;
+  }
+}
+@media only screen and (max-height: 640px) and (orientation: portrait) {
+  #player {
+    height: 100vh;
+  }
+  #player.playerRight,
+  #player.playerLeft {
+    -webkit-animation: none;
+            animation: none;
+  }
+  @-webkit-keyframes searchContainerFadeIn {
+    100% {
+      opacity: 1;
+      -webkit-transform: translateY(220px);
+              transform: translateY(220px);
+    }
+  }
+  @keyframes searchContainerFadeIn {
+    100% {
+      opacity: 1;
+      -webkit-transform: translateY(220px);
+              transform: translateY(220px);
+    }
+  }
+  @-webkit-keyframes searchContainerFadeOut {
+    0% {
+      opacity: 1;
+      -webkit-transform: translateY(220px);
+              transform: translateY(220px);
+    }
+    100% {
+      opacity: 0;
+      -webkit-transform: translateY(0%);
+              transform: translateY(0%);
+    }
+  }
+  @keyframes searchContainerFadeOut {
+    0% {
+      opacity: 1;
+      -webkit-transform: translateY(220px);
+              transform: translateY(220px);
+    }
+    100% {
+      opacity: 0;
+      -webkit-transform: translateY(0%);
+              transform: translateY(0%);
+    }
+  }
+  .searchContainer {
+    background-color: transparent;
+    border: 0;
+    padding: 0;
+    width: 292px;
+  }
 }
 ::-webkit-input-placeholder {
   color: #fff;
@@ -1255,6 +1330,9 @@ ol {
 }
 #player .playlistContainer {
   height: 200px;
+}
+#player .playlistContainer .playlist {
+  position: relative;
 }
 #player .playlistsPanel {
   height: 20px;
