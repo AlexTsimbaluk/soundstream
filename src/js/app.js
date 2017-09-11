@@ -229,7 +229,10 @@ $(document).ready(function () {
 			}, 3000);
 		};
 
+		audioEventListener($playerTag);
+
 		this.playStream = function (streamUrl) {
+			console.log('AudioApiElement::playStream::Begin');
 			// TODO: .selected переделать на data-current и везде проверять его
 			playerState.playlists[playerState.currentPlaylist].currentTrack = {
 				id: $('.playlistContainer .selected').data('stationId'),
@@ -260,22 +263,22 @@ $(document).ready(function () {
 				// console.log(err);
 			});
 
-			function getPromise() {
-				var promise = $playerTag.play();
-				if (playPromise !== undefined) {
-					playPromise.then(function () {
-						console.log('Promise::Automatic playback started!');
-						$(".spinner").hide();
-					}).catch(function (error) {
-						$(".spinner").hide();
-						console.log('Promise::Automatic playback failed...');
-						console.log(error);
-						console.log($('playlistContainer .track[data-current-track]'));
-						self.stopStream();
-						$('.playlistContainer .track[data-current-track]').removeAttr('data-current-track');
-					});
-				}
-			}
+			/*function getPromise() {
+   	var promise = $playerTag.play();
+   	if (playPromise !== undefined) {
+   		playPromise.then(function() {
+   console.log('Promise::Automatic playback started!');
+   $(".spinner").hide();
+   }).catch(function(error) {
+   $(".spinner").hide();
+   console.log('Promise::Automatic playback failed...');
+   console.log(error);
+   console.log($('playlistContainer .track[data-current-track]'));
+   self.stopStream();
+   $('.playlistContainer .track[data-current-track]').removeAttr('data-current-track');
+   });
+   	}
+   }*/
 			var playPromise = $playerTag.play();
 			// console.log(playPromise);
 			$(".spinner").show();
@@ -295,20 +298,23 @@ $(document).ready(function () {
     });*/
 
 				playPromise.then(function () {
-					console.log('Promise::Automatic playback started!');
+					console.log('AudioApiElement::playPromise::Success::Begin');
 					$(".spinner").hide();
-					// console.log(playPromise);
 
 					self.updateTime();
+					console.log('updateTime');
 					setInterval(function () {
 						self.updateTime();
 					}, 1000);
+					console.log($playerTag.paused);
+					console.log('AudioApiElement::playPromise::Success::End');
 				}).catch(function (error) {
-					// console.log(playPromise);
-					// self.delayedLaunch();
+					console.log('AudioApiElement::playPromise::Failed::Begin');
+					console.log($playerTag.paused);
 					audioCbElement.playStream(streamUrl);
 					console.log('Start audioCbElement');
 					$(".spinner").hide();
+					console.log('AudioApiElement::playPromise::Failed::End');
 				});
 
 				/*if (playPromise.prototype.PromiseStatus == resolved) {
@@ -316,14 +322,16 @@ $(document).ready(function () {
     }*/
 			}
 
+			console.log($playerTag.paused);
 			playerState.paused = $playerTag.paused;
 			visualisation(currentTrackEl);
 			displayState();
 			localStorage.setItem('playerState', JSON.stringify(playerState));
-			console.log('AudioApiElement::playStream');
 			drawEq1();
 			drawEq2();
 			drawEq3();
+
+			console.log('AudioApiElement::playStream::End');
 			// TODO: добавить на играющий трек эквалайзер
 		};
 		// TODO: добавить сюда остановку анимации
@@ -348,6 +356,7 @@ $(document).ready(function () {
 			return $playerTag.volume;
 		};
 		this.updateTime = function () {
+			// console.log('AudioApiElement::updateTime');
 			var time = Math.ceil($playerTag.currentTime);
 
 			var sec = ('0' + parseInt(Math.floor(time % 60))).slice(-2);
@@ -364,10 +373,10 @@ $(document).ready(function () {
 		var player = new Audio();
 		var self = this;
 
-		this.getAudio = function () {
-			return player;
-		};
+		audioEventListener(player);
+
 		this.playStream = function (streamUrl) {
+			console.log('AudioCbElement::playStream::Begin');
 			// TODO: .selected переделать на data-current и везде проверять его
 			playerState.playlists[playerState.currentPlaylist].currentTrack = {
 				id: $('.playlistContainer .selected').data('stationId'),
@@ -378,42 +387,21 @@ $(document).ready(function () {
 			var currentTrackEl = $('.playlistContainer .active [data-station-id=' + playerState.playlists[playerState.currentPlaylist].currentTrack.id + ']');
 
 			player.src = streamUrl;
+
 			player.play();
-
-			// addEqToTrack(currentTrackEl, 'canvas-audio-source');
-
-			/*player.src = streamUrl;
-   player.crossOrigin = 'anonymous';
-   setTimeout(function(){
-   player.crossOrigin = 'anonymous';
-   }, 3000);
-    
-   var playPromise = player.play();
-   $(".spinner").show();
-    // В конце if проверить PromiseStatus, если он rejected
-   if (playPromise !== undefined) {
-   playPromise.then(function() {
-   console.log('Promise::Automatic playback started!');
-   $(".spinner").hide();
-   }).catch(function(error) {
-   $(".spinner").hide();
-   console.log('Promise::Automatic playback failed...');
-   console.log(error);
-   console.log($('playlistContainer .track[data-current-track]'));
-   self.stopStream();
-   $('.playlistContainer .track[data-current-track]').removeAttr('data-current-track');
-   });
-   }*/
-
+			console.log(player.paused);
 			playerState.paused = player.paused;
+
 			visualisation(currentTrackEl);
 			displayState();
+
 			self.updateTime();
-			localStorage.setItem('playerState', JSON.stringify(playerState));
 			setInterval(function () {
 				self.updateTime();
 			}, 1000);
-			console.log('AudioCb::playStream');
+
+			localStorage.setItem('playerState', JSON.stringify(playerState));
+			console.log('AudioCbElement::playStream::End');
 		};
 
 		// TODO: добавить сюда остановку анимации
@@ -438,6 +426,7 @@ $(document).ready(function () {
 		};
 
 		this.updateTime = function () {
+			// console.log('AudioCbElement::updateTime');
 			var time = Math.ceil(player.currentTime);
 
 			var sec = ('0' + parseInt(Math.floor(time % 60))).slice(-2);
@@ -448,6 +437,164 @@ $(document).ready(function () {
 		};
 		player.volume = playerState.volume;
 	}
+
+	// https://developer.mozilla.org/ru/docs/Web/Guide/Events/Media_events
+	function audioEventListenerProgress(player) {
+		player.addEventListener('progress', function (e) {
+			console.log(e);
+		});
+		player.addEventListener('timeupdate', function (e) {
+			console.log(e);
+		});
+	}
+
+	function audioEventListenerVolume(player) {
+		player.addEventListener('volumechange', function (e) {
+			console.log(e);
+		});
+	}
+
+	function audioEventListener(player) {
+		player.addEventListener('abort', function (e) {
+			console.log(e);
+		});
+		player.addEventListener('canplay', function (e) {
+			console.log(e);
+		});
+		player.addEventListener('canplaythrough', function (e) {
+			console.log(e);
+		});
+		player.addEventListener('durationchange', function (e) {
+			console.log(e);
+		});
+		player.addEventListener('emptied', function (e) {
+			console.log(e);
+		});
+		player.addEventListener('encrypted', function (e) {
+			console.log(e);
+		});
+		player.addEventListener('ended', function (e) {
+			console.log(e);
+		});
+		player.addEventListener('error', function (e) {
+			console.log(e);
+		});
+		player.addEventListener('interruptbegin', function (e) {
+			console.log(e);
+		});
+		player.addEventListener('interruptend', function (e) {
+			console.log(e);
+		});
+		player.addEventListener('loadeddata', function (e) {
+			console.log(e);
+		});
+		player.addEventListener('loadedmetadata', function (e) {
+			console.log(e);
+		});
+		player.addEventListener('loadstart', function (e) {
+			console.log(e);
+		});
+		player.addEventListener('mozaudioavailable', function (e) {
+			console.log(e);
+		});
+		player.addEventListener('pause', function (e) {
+			console.log(e);
+		});
+		player.addEventListener('play', function (e) {
+			console.log(e);
+		});
+		player.addEventListener('playing', function (e) {
+			console.log(e);
+		});
+		player.addEventListener('ratechange', function (e) {
+			console.log(e);
+		});
+		player.addEventListener('seeked', function (e) {
+			console.log(e);
+		});
+		player.addEventListener('seeking', function (e) {
+			console.log(e);
+		});
+		player.addEventListener('stalled', function (e) {
+			console.log(e);
+		});
+		player.addEventListener('suspend', function (e) {
+			console.log(e);
+		});
+		player.addEventListener('waiting', function (e) {
+			console.log(e);
+		});
+	}
+
+	/*
+ AudioApiElement
+ воспроизведение (player.play()) началось успешно после остановки (player.stop())
+ abort
+ emptied
+ play
+ waiting
+ loadstart
+ durationchange
+ loadedmetadata
+ loadeddata
+ canplay
+ playing
+ canplaythrough
+ 
+ воспроизведение (player.play()) началось успешно после перезагрузки страницы (onready)
+ [pause 							- если playerState.paused был true (остановлен)]
+ [emptied 						- если playerState.paused был true (остановлен)]
+ play
+ waiting
+ loadstart
+ durationchange
+ loadedmetadata
+ loadeddata
+ canplay
+ playing
+ canplaythrough
+ AudioApiElement::playPromise::Success::Begin
+ updateTime
+ false
+ AudioApiElement::playPromise::Success::End
+ Остановить
+ AudioCbElement::stopStream
+ AudioApiElement::stopStream
+ pause
+ seeking
+ seeking
+ seeked
+ canplay
+ canplaythrough
+ seeked
+ canplay
+ canplaythrough
+ stalled
+ если не получается использовать AudioApiElement, но получается использовать AudioCbElement
+ AudioApiElement::playStream::Begin
+ AudioApiElement::playStream::End
+ [abort						- stop()]
+ [emptied					- stop()]
+ play
+ waiting
+ loadstart
+ error
+ AudioApiElement::playPromise::Failed::Begin
+ AudioCbElement::playStream::Begin
+ AudioCbElement::playStream::End
+ Start AudioCbElement 			- AudioApiElement says
+ AudioApiElement::playPromise::Failed::End
+ pause
+ play
+ waiting
+ loadstart
+ durationchange
+ loadedmetadata
+ loadeddata
+ canplay
+ playing
+ canplaythrough
+    */
 
 	// Возвращает объект контекста для canvas и его размеры
 	// Принимает DOM-элемент и размеры
@@ -654,11 +801,16 @@ $(document).ready(function () {
 
 					for (var i = 0; i < response.length; i++) {
 						var track = response[i];
-						markup += '<div class="track" data-station-id="' + track.station_id + '" data-station-title="' + track.station_title + '" data-station-url="' + track.station_url + '"><div class="delete"><i class="fa fa-minus"></i></div><div class="title">' + track.station_title + '</div><div class="url">' + track.station_url + '</div></div>';
+						markup += '<div class="track" data-station-id="' + track.station_id + '" data-station-title="' + track.station_title + '" data-station-url="' + track.station_url + '"><div class="delete"><i class="fa fa-minus"></i></div> \
+										<div class="canplaytest"><i class="fa fa-music"></i></div>\
+										<div class="title">' + track.station_title + '</div><div class="url">' + track.station_url + '</div></div>';
 					}
 
 					playlist.html(playlist.html() + markup);
 					playlist.find('.track[data-station-id=' + playerState.playlists[playerState.currentPlaylist].currentTrack.id + ']').addClass('selected');
+
+					var scrollPosition = playerState.playlists[playerState.currentPlaylist].currentTrack.scrollPosition;
+					$('.playlistContainer').mCustomScrollbar('scrollTo', scrollPosition);
 
 					if (!playerState.paused) {
 						audioApiElement.playStream(playerState.playlists[playerState.currentPlaylist].currentTrack.url);
@@ -756,6 +908,12 @@ $(document).ready(function () {
 		pl.tracks.splice(pl.tracks.indexOf(id), 1);
 		$(this).parent().remove();
 		localStorage.setItem('playerState', JSON.stringify(playerState));
+	});
+
+	$('.playlistContainer').on('click', '.canplaytest', function (e) {
+		var url = $(e.target).closest('.track').data('stationUrl');
+		console.log(url);
+		e.stopPropagation();
 	});
 
 	var canvasVolume = document.getElementById('canvas-volume');

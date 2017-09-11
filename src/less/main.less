@@ -681,7 +681,7 @@ ul, ol {
 			max-height: 20px;
 			overflow: hidden;
 		}
-		.delete {
+		.track-icon {
 			background-color: rgba(0, 255, 225, .6);
 			border-radius: 100%;
 			cursor: pointer;
@@ -704,8 +704,23 @@ ul, ol {
 				background-color: rgba(0, 255, 225, .8);
 			}
 		}
+
+		// иконки на треке
+		.delete,
+		.canplaytest {
+			.track-icon;
+		}
+		.delete {
+			right: 2px;
+		}
+		.canplaytest {
+			right: 30px;
+		}
 		&:hover {
-			.delete {.flex-container;}
+			.delete,
+			.canplaytest {
+				.flex-container;
+			}
 		}
 		&.selected {
 			.gradient-horizontal(#555, #777);

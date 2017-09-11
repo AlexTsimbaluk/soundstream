@@ -1419,7 +1419,7 @@ ol {
   max-height: 20px;
   overflow: hidden;
 }
-#player .track .delete {
+#player .track .track-icon {
   background-color: rgba(0, 255, 225, 0.6);
   -webkit-border-radius: 100%;
           border-radius: 100%;
@@ -1434,7 +1434,7 @@ ol {
   transition: all .3s;
 }
 @media only screen and (max-width: 700px) {
-  #player .track .delete {
+  #player .track .track-icon {
     -webkit-justify-content: space-around;
         -ms-flex-pack: distribute;
             justify-content: space-around;
@@ -1456,15 +1456,71 @@ ol {
     display: flex;
   }
 }
-#player .track .delete i {
+#player .track .track-icon i {
   font-size: 1.7em;
   font-weight: 100;
   margin-top: 2px;
 }
-#player .track .delete:hover {
+#player .track .track-icon:hover {
   background-color: rgba(0, 255, 225, 0.8);
 }
-#player .track:hover .delete {
+#player .track .delete,
+#player .track .canplaytest {
+  background-color: rgba(0, 255, 225, 0.6);
+  -webkit-border-radius: 100%;
+          border-radius: 100%;
+  cursor: pointer;
+  display: none;
+  height: 26px;
+  width: 26px;
+  position: absolute;
+  right: 2px;
+  top: 10px;
+  -webkit-transition: all .3s;
+  transition: all .3s;
+}
+@media only screen and (max-width: 700px) {
+  #player .track .delete,
+  #player .track .canplaytest {
+    -webkit-justify-content: space-around;
+        -ms-flex-pack: distribute;
+            justify-content: space-around;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+}
+#player .track .delete i,
+#player .track .canplaytest i {
+  font-size: 1.7em;
+  font-weight: 100;
+  margin-top: 2px;
+}
+#player .track .delete:hover,
+#player .track .canplaytest:hover {
+  background-color: rgba(0, 255, 225, 0.8);
+}
+#player .track .delete {
+  right: 2px;
+}
+#player .track .canplaytest {
+  right: 30px;
+}
+#player .track:hover .delete,
+#player .track:hover .canplaytest {
   -webkit-justify-content: space-around;
       -ms-flex-pack: distribute;
           justify-content: space-around;
