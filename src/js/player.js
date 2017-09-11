@@ -289,7 +289,7 @@ $(document).ready(function() {
 	    	// TODO: .selected переделать на data-current и везде проверять его
 	    	console.log('AudioApiElement::playStream::Begin');
 
-	    	var playPromise = $playerTag.play();
+	    	
         	playerState
         		.playlists[playerState.currentPlaylist]
         		.currentTrack = {
@@ -323,7 +323,7 @@ $(document).ready(function() {
 	    		$playerTag.crossOrigin = 'anonymous';
 	        }, 3000);
 
-	        
+	        var playPromise = $playerTag.play();
 	        $(".spinner").show();
 
 	        // В конце if проверить PromiseStatus, если он rejected

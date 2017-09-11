@@ -1799,3 +1799,8 @@ canvas {
   bottom: 30px;
   left: 0;
 }
+.walmer {
+  position: relative;
+  z-index: 10;
+  left: 50%;
+}
