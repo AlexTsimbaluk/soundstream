@@ -229,11 +229,13 @@ $(document).ready(function () {
 			}, 3000);
 		};
 
-		audioEventListener($playerTag);
+		audioBindAll($playerTag);
 
 		this.playStream = function (streamUrl) {
-			console.log('AudioApiElement::playStream::Begin');
 			// TODO: .selected переделать на data-current и везде проверять его
+			console.log('AudioApiElement::playStream::Begin');
+
+			var playPromise = $playerTag.play();
 			playerState.playlists[playerState.currentPlaylist].currentTrack = {
 				id: $('.playlistContainer .selected').data('stationId'),
 				url: streamUrl,
@@ -243,9 +245,14 @@ $(document).ready(function () {
 			};
 
 			var currentTrackEl = $('.playlistContainer .active [data-station-id=' + playerState.playlists[playerState.currentPlaylist].currentTrack.id + ']');
-			// console.log(currentTrackEl.position().top);
 
 			playerState.playlists[playerState.currentPlaylist].currentTrack.scrollPosition = currentTrackEl.position().top;
+
+			console.log(currentTrackEl.position().top);
+			console.log(playerState.playlists[playerState.currentPlaylist].currentTrack.scrollPosition);
+
+			/*var scrollPosition = playerState.playlists[playerState.currentPlaylist].currentTrack.scrollPosition;
+   $('.playlistContainer').mCustomScrollbar('scrollTo' , scrollPosition);*/
 
 			// addEqToTrack(currentTrackEl, 'canvas-audio-source');
 
@@ -255,35 +262,9 @@ $(document).ready(function () {
 				$playerTag.crossOrigin = 'anonymous';
 			}, 3000);
 
-			$playerTag.addEventListener('canplay', function (e) {
-				// console.log(e);
-			});
-
-			$playerTag.addEventListener('error', function (err) {
-				// console.log(err);
-			});
-
-			/*function getPromise() {
-   	var promise = $playerTag.play();
-   	if (playPromise !== undefined) {
-   		playPromise.then(function() {
-   console.log('Promise::Automatic playback started!');
-   $(".spinner").hide();
-   }).catch(function(error) {
-   $(".spinner").hide();
-   console.log('Promise::Automatic playback failed...');
-   console.log(error);
-   console.log($('playlistContainer .track[data-current-track]'));
-   self.stopStream();
-   $('.playlistContainer .track[data-current-track]').removeAttr('data-current-track');
-   });
-   	}
-   }*/
-			var playPromise = $playerTag.play();
-			// console.log(playPromise);
 			$(".spinner").show();
 
-			// В конце if проверить PromiseStatus, если он куоысеув
+			// В конце if проверить PromiseStatus, если он rejected
 			if (playPromise !== undefined) {
 				/*playPromise.then(function() {
     	console.log('Promise::Automatic playback started!');
@@ -373,7 +354,7 @@ $(document).ready(function () {
 		var player = new Audio();
 		var self = this;
 
-		audioEventListener(player);
+		audioBindAll(player);
 
 		this.playStream = function (streamUrl) {
 			console.log('AudioCbElement::playStream::Begin');
@@ -439,90 +420,90 @@ $(document).ready(function () {
 	}
 
 	// https://developer.mozilla.org/ru/docs/Web/Guide/Events/Media_events
-	function audioEventListenerProgress(player) {
+	function audioBindProgress(player) {
 		player.addEventListener('progress', function (e) {
-			console.log(e);
+			console.log('Event.type::' + e.type);
 		});
 		player.addEventListener('timeupdate', function (e) {
-			console.log(e);
+			console.log('Event.type::' + e.type);
 		});
 	}
 
-	function audioEventListenerVolume(player) {
+	function audioBindVolume(player) {
 		player.addEventListener('volumechange', function (e) {
-			console.log(e);
+			console.log('Event.type::' + e.type);
 		});
 	}
 
-	function audioEventListener(player) {
+	function audioBindAll(player) {
 		player.addEventListener('abort', function (e) {
-			console.log(e);
+			console.log('Event.type::' + e.type);
 		});
 		player.addEventListener('canplay', function (e) {
-			console.log(e);
+			console.log('Event.type::' + e.type);
 		});
 		player.addEventListener('canplaythrough', function (e) {
-			console.log(e);
+			console.log('Event.type::' + e.type);
 		});
 		player.addEventListener('durationchange', function (e) {
-			console.log(e);
+			console.log('Event.type::' + e.type);
 		});
 		player.addEventListener('emptied', function (e) {
-			console.log(e);
+			console.log('Event.type::' + e.type);
 		});
 		player.addEventListener('encrypted', function (e) {
-			console.log(e);
+			console.log('Event.type::' + e.type);
 		});
 		player.addEventListener('ended', function (e) {
-			console.log(e);
+			console.log('Event.type::' + e.type);
 		});
 		player.addEventListener('error', function (e) {
-			console.log(e);
+			console.log('Event.type::' + e.type);
 		});
 		player.addEventListener('interruptbegin', function (e) {
-			console.log(e);
+			console.log('Event.type::' + e.type);
 		});
 		player.addEventListener('interruptend', function (e) {
-			console.log(e);
+			console.log('Event.type::' + e.type);
 		});
 		player.addEventListener('loadeddata', function (e) {
-			console.log(e);
+			console.log('Event.type::' + e.type);
 		});
 		player.addEventListener('loadedmetadata', function (e) {
-			console.log(e);
+			console.log('Event.type::' + e.type);
 		});
 		player.addEventListener('loadstart', function (e) {
-			console.log(e);
+			console.log('Event.type::' + e.type);
 		});
 		player.addEventListener('mozaudioavailable', function (e) {
-			console.log(e);
+			console.log('Event.type::' + e.type);
 		});
 		player.addEventListener('pause', function (e) {
-			console.log(e);
+			console.log('Event.type::' + e.type);
 		});
 		player.addEventListener('play', function (e) {
-			console.log(e);
+			console.log('Event.type::' + e.type);
 		});
 		player.addEventListener('playing', function (e) {
-			console.log(e);
+			console.log('Event.type::' + e.type);
 		});
 		player.addEventListener('ratechange', function (e) {
-			console.log(e);
+			console.log('Event.type::' + e.type);
 		});
 		player.addEventListener('seeked', function (e) {
-			console.log(e);
+			console.log('Event.type::' + e.type);
 		});
 		player.addEventListener('seeking', function (e) {
-			console.log(e);
+			console.log('Event.type::' + e.type);
 		});
 		player.addEventListener('stalled', function (e) {
-			console.log(e);
+			console.log('Event.type::' + e.type);
 		});
 		player.addEventListener('suspend', function (e) {
-			console.log(e);
+			console.log('Event.type::' + e.type);
 		});
 		player.addEventListener('waiting', function (e) {
-			console.log(e);
+			console.log('Event.type::' + e.type);
 		});
 	}
 
@@ -772,7 +753,7 @@ $(document).ready(function () {
 	} else {
 		// Получаем актуальное состояние плеера из local storage
 		playerState = JSON.parse(localStorage.getItem('playerState'));
-		// console.log(playerState.playlists[playerState.currentPlaylist].currentTrack.scrollPosition);
+		console.log(playerState.playlists[playerState.currentPlaylist].currentTrack.scrollPosition);
 
 		// Наполняем playlistsPanel заголовками плейлистов
 		for (var i = 0; i < playerState.playlistsOrder.length; i++) {
@@ -790,6 +771,8 @@ $(document).ready(function () {
 		var playlistTracks = playerState.playlists[playerState.currentPlaylist].tracks;
 
 		if (playlistTracks.length > 0) {
+			$('.playlistContainer').mCustomScrollbar();
+
 			$.ajax({
 				data: { 'action': 'getPlaylistStations', 'id': playlistTracks },
 				success: function success(data) {
@@ -809,12 +792,11 @@ $(document).ready(function () {
 					playlist.html(playlist.html() + markup);
 					playlist.find('.track[data-station-id=' + playerState.playlists[playerState.currentPlaylist].currentTrack.id + ']').addClass('selected');
 
-					var scrollPosition = playerState.playlists[playerState.currentPlaylist].currentTrack.scrollPosition;
-					$('.playlistContainer').mCustomScrollbar('scrollTo', scrollPosition);
-
 					if (!playerState.paused) {
 						audioApiElement.playStream(playerState.playlists[playerState.currentPlaylist].currentTrack.url);
 					}
+					var scrollPosition = playerState.playlists[playerState.currentPlaylist].currentTrack.scrollPosition;
+					$('.playlistContainer').mCustomScrollbar('scrollTo', scrollPosition);
 				}
 			});
 		} else {

@@ -283,17 +283,19 @@ $(document).ready(function() {
 	        }, 3000);
 	    }
 
-    	audioEventListener($playerTag);
+    	audioBindAll($playerTag);
 
 	    this.playStream = function(streamUrl) {
-	    	console.log('AudioApiElement::playStream::Begin');
 	    	// TODO: .selected переделать на data-current и везде проверять его
+	    	console.log('AudioApiElement::playStream::Begin');
+
+	    	var playPromise = $playerTag.play();
         	playerState
         		.playlists[playerState.currentPlaylist]
         		.currentTrack = {
 	        		id				: $('.playlistContainer .selected').data('stationId'),
 	        		url				: streamUrl,
-	        		title			: $('.playlistContainer .selected').data('stationTitle'),
+	        		title			: $('.playlistContainer .selected').data('stationTitle')
 	        		// scrollPosition	: $('.playlistContainer .selected').position().top
 
         	};
@@ -304,10 +306,15 @@ $(document).ready(function() {
         								.currentTrack
         								.id
         							+ ']');
-        	// console.log(currentTrackEl.position().top);
 
         	playerState.playlists[playerState.currentPlaylist].currentTrack.scrollPosition = currentTrackEl.position().top;
 
+        	console.log(currentTrackEl.position().top);
+        	console.log(playerState.playlists[playerState.currentPlaylist].currentTrack.scrollPosition);
+
+        	/*var scrollPosition = playerState.playlists[playerState.currentPlaylist].currentTrack.scrollPosition;
+        	$('.playlistContainer').mCustomScrollbar('scrollTo' , scrollPosition);*/
+        	
         	// addEqToTrack(currentTrackEl, 'canvas-audio-source');
 
 	        $playerTag.src = streamUrl;
@@ -316,35 +323,10 @@ $(document).ready(function() {
 	    		$playerTag.crossOrigin = 'anonymous';
 	        }, 3000);
 
-	        $playerTag.addEventListener('canplay', (e)=> {
-	         		// console.log(e);
-	        });
-
-	        $playerTag.addEventListener('error', (err)=> {
-	         		// console.log(err);
-	        });
-
-	        /*function getPromise() {
-	        	var promise = $playerTag.play();
-	        	if (playPromise !== undefined) {
-	        		playPromise.then(function() {
-						console.log('Promise::Automatic playback started!');
-						$(".spinner").hide();
-					}).catch(function(error) {
-						$(".spinner").hide();
-						console.log('Promise::Automatic playback failed...');
-						console.log(error);
-						console.log($('playlistContainer .track[data-current-track]'));
-						self.stopStream();
-						$('.playlistContainer .track[data-current-track]').removeAttr('data-current-track');
-					});
-	        	}
-	        }*/
-	        var playPromise = $playerTag.play();
-	        // console.log(playPromise);
+	        
 	        $(".spinner").show();
 
-	        // В конце if проверить PromiseStatus, если он куоысеув
+	        // В конце if проверить PromiseStatus, если он rejected
 	        if (playPromise !== undefined) {
 				/*playPromise.then(function() {
 					console.log('Promise::Automatic playback started!');
@@ -442,7 +424,7 @@ $(document).ready(function() {
 	    var player = new Audio();
 	    var self = this;
 
-    	audioEventListener(player);
+    	audioBindAll(player);
 
 	    this.playStream = function(streamUrl) {
 	    	console.log('AudioCbElement::playStream::Begin');
@@ -523,90 +505,90 @@ $(document).ready(function() {
 	}
 
 	// https://developer.mozilla.org/ru/docs/Web/Guide/Events/Media_events
-	function audioEventListenerProgress(player) {
+	function audioBindProgress(player) {
 		player.addEventListener('progress', (e)=> {
-         		console.log(e);
+         		console.log('Event.type::' + e.type);
         });
         player.addEventListener('timeupdate', (e)=> {
-         		console.log(e);
+         		console.log('Event.type::' + e.type);
         });
 	}
 
-	function audioEventListenerVolume(player) {
+	function audioBindVolume(player) {
 		player.addEventListener('volumechange', (e)=> {
-         		console.log(e);
+         		console.log('Event.type::' + e.type);
         });
 	}
 
-    function audioEventListener(player) {
+    function audioBindAll(player) {
     	player.addEventListener('abort', (e)=> {
-         		console.log(e);
+         		console.log('Event.type::' + e.type);
         });
         player.addEventListener('canplay', (e)=> {
-         		console.log(e);
+         		console.log('Event.type::' + e.type);
         });
         player.addEventListener('canplaythrough', (e)=> {
-         		console.log(e);
+         		console.log('Event.type::' + e.type);
         });
         player.addEventListener('durationchange', (e)=> {
-         		console.log(e);
+         		console.log('Event.type::' + e.type);
         });
         player.addEventListener('emptied', (e)=> {
-         		console.log(e);
+         		console.log('Event.type::' + e.type);
         });
         player.addEventListener('encrypted', (e)=> {
-         		console.log(e);
+         		console.log('Event.type::' + e.type);
         });
         player.addEventListener('ended', (e)=> {
-         		console.log(e);
+         		console.log('Event.type::' + e.type);
         });
         player.addEventListener('error', (e)=> {
-         		console.log(e);
+         		console.log('Event.type::' + e.type);
         });
         player.addEventListener('interruptbegin', (e)=> {
-         		console.log(e);
+         		console.log('Event.type::' + e.type);
         });
         player.addEventListener('interruptend', (e)=> {
-         		console.log(e);
+         		console.log('Event.type::' + e.type);
         });
         player.addEventListener('loadeddata', (e)=> {
-         		console.log(e);
+         		console.log('Event.type::' + e.type);
         });
         player.addEventListener('loadedmetadata', (e)=> {
-         		console.log(e);
+         		console.log('Event.type::' + e.type);
         });
         player.addEventListener('loadstart', (e)=> {
-         		console.log(e);
+         		console.log('Event.type::' + e.type);
         });
         player.addEventListener('mozaudioavailable', (e)=> {
-         		console.log(e);
+         		console.log('Event.type::' + e.type);
         });
         player.addEventListener('pause', (e)=> {
-         		console.log(e);
+         		console.log('Event.type::' + e.type);
         });
         player.addEventListener('play', (e)=> {
-         		console.log(e);
+         		console.log('Event.type::' + e.type);
         });
         player.addEventListener('playing', (e)=> {
-         		console.log(e);
+         		console.log('Event.type::' + e.type);
         });
         player.addEventListener('ratechange', (e)=> {
-         		console.log(e);
+         		console.log('Event.type::' + e.type);
         });
         player.addEventListener('seeked', (e)=> {
-         		console.log(e);
+         		console.log('Event.type::' + e.type);
         });
         player.addEventListener('seeking', (e)=> {
-         		console.log(e);
+         		console.log('Event.type::' + e.type);
         });
         player.addEventListener('stalled', (e)=> {
-         		console.log(e);
+         		console.log('Event.type::' + e.type);
         });
         player.addEventListener('suspend', (e)=> {
-         		console.log(e);
+         		console.log('Event.type::' + e.type);
         });
         player.addEventListener('waiting', (e)=> {
-         		console.log(e);
+         		console.log('Event.type::' + e.type);
         });
     }
 
@@ -890,7 +872,7 @@ $(document).ready(function() {
 	} else {
 		// Получаем актуальное состояние плеера из local storage
 		playerState = JSON.parse(localStorage.getItem('playerState'));
-		// console.log(playerState.playlists[playerState.currentPlaylist].currentTrack.scrollPosition);
+		console.log(playerState.playlists[playerState.currentPlaylist].currentTrack.scrollPosition);
 		
 		// Наполняем playlistsPanel заголовками плейлистов
 		for (var i = 0; i < playerState.playlistsOrder.length; i++) {
@@ -919,6 +901,8 @@ $(document).ready(function() {
 		;
 
 		if(playlistTracks.length > 0) {
+			$('.playlistContainer').mCustomScrollbar();
+
 			$.ajax({
 				data: {'action': 'getPlaylistStations', 'id': playlistTracks},
 				success: function(data) {
@@ -960,8 +944,6 @@ $(document).ready(function() {
 								)
 								.addClass('selected');
 
-					var scrollPosition = playerState.playlists[playerState.currentPlaylist].currentTrack.scrollPosition;
-					$('.playlistContainer').mCustomScrollbar('scrollTo' , scrollPosition);								
 
 					if(!playerState.paused) {
 						audioApiElement.playStream(playerState
@@ -971,6 +953,8 @@ $(document).ready(function() {
 													)
 						;
 					}
+					var scrollPosition = playerState.playlists[playerState.currentPlaylist].currentTrack.scrollPosition;
+					$('.playlistContainer').mCustomScrollbar('scrollTo' , scrollPosition);
 				}
 			});
 		} else {

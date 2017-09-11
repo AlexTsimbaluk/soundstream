@@ -95,9 +95,7 @@
 		</div>
 	</div>
 
-	<div class="playlistContainer mCustomScrollbar">
-		
-	</div>
+	<div class="playlistContainer"></div>
 
 	<template class="template-track">
 		<div class="track" data-station-id="@station_id" data-station-title="@station_title" data-station-url="@station_url">
