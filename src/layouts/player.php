@@ -116,7 +116,8 @@
 <canvas id="canvas-audio-source-eq2"></canvas>
 
 
-<audio id="playerTag" ></audio>
+<audio id="playerTag" data-audio-api></audio>
 
 
 <!-- <audio class="walmer hidden" src="http://ml1.t4e.dj:80/dublovers_high.aac" controls></audio> -->
+<!-- <audio class="walmer hidden" src="http://stream1.ml0.t4e.dj:80/dublovers_high.mp3|DubLovers.FM|Dubstep+Drumstep|DE|128" controls></audio> -->

@@ -1518,6 +1518,8 @@ ol {
 }
 #player .track .canplaytest {
   right: 30px;
+  display: none;
+  opacity: 0;
 }
 #player .track:hover .delete,
 #player .track:hover .canplaytest {
