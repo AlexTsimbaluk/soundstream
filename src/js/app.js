@@ -211,35 +211,29 @@ $(document).ready(function () {
 		this.streamData_3 = analyser_3.streamData;
 		this.streamData_4 = analyser_4.streamData;
 
-		this.delayedLaunch = function () {
-			setTimeout(function () {
-				$playerTag.play();
-			}, 3000);
-		};
-
 		audioBindAll($playerTag, 'AudioApiElement');
-		console.log(this);
 
 		this.playStream = function (streamUrl) {
 			// TODO: .selected переделать на data-current и везде проверять его
 			console.log('AudioApiElement::playStream::Begin');
+			console.log(streamUrl);
 
-			playerState.playlists[playerState.currentPlaylist].currentTrack = {
-				id: $('.playlistContainer .selected').data('stationId'),
-				url: streamUrl,
-				title: $('.playlistContainer .selected').data('stationTitle')
-				// scrollPosition	: $('.playlistContainer .selected').position().top
+			// объект трека, который надо играть
+			var currentTrackEl = $('.playlistContainer .active [data-station-url="' + streamUrl + '"]');
 
+			// Соберем временный объект для удобства
+			var _currentTrack = {
+				url: currentTrackEl.attr('data-station-url'),
+				title: currentTrackEl.attr('data-station-title'),
+				id: currentTrackEl.attr('data-station-id')
 			};
 
-			var currentTrackEl = $('.playlistContainer .active [data-station-id=' + playerState.playlists[playerState.currentPlaylist].currentTrack.id + ']');
+			// Изменим объект состояния
+			playerState.playlists[playerState.currentPlaylist].currentTrack = _currentTrack;
 
+			// Запишем в объект состояния свойтво с позицией по высоте текущего трека
+			// для скрола к нему при загрузке страницы
 			playerState.playlists[playerState.currentPlaylist].currentTrack.scrollPosition = currentTrackEl.position().top;
-
-			/*console.log(currentTrackEl.position().top);
-   console.log(playerState.playlists[playerState.currentPlaylist].currentTrack.scrollPosition);*/
-			/*var scrollPosition = playerState.playlists[playerState.currentPlaylist].currentTrack.scrollPosition;
-   $('.playlistContainer').mCustomScrollbar('scrollTo' , scrollPosition);*/
 
 			// addEqToTrack(currentTrackEl, 'canvas-audio-source');
 
@@ -281,6 +275,7 @@ $(document).ready(function () {
 				}).catch(function (error) {
 					console.log('AudioApiElement::playPromise::Failed::Begin');
 					console.log($playerTag.paused);
+					self.stopStream();
 					audioCbElement.playStream(streamUrl);
 					console.log('Start audioCbElement');
 					// $(".spinner").hide();
@@ -433,7 +428,7 @@ $(document).ready(function () {
 		});
 		player.addEventListener('canplaythrough', function (e) {
 			console.log(name + '::Event.type::' + e.type);
-			$(".spinner").hide();
+			// $(".spinner").hide();
 		});
 		player.addEventListener('durationchange', function (e) {
 			console.log(name + '::Event.type::' + e.type);
@@ -479,6 +474,7 @@ $(document).ready(function () {
 		});
 		player.addEventListener('playing', function (e) {
 			console.log(name + '::Event.type::' + e.type);
+			$(".spinner").hide();
 			visualisation();
 		});
 		player.addEventListener('ratechange', function (e) {
