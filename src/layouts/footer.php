@@ -9,7 +9,7 @@
 	<script src="libs/bootstrap/js/bootstrap.min.js"></script>
 	<script src="libs/jquery.mb.bgndGallery-1.9.5/jquery.mb.bgndGallery.min.js"></script>
 	<script src="libs/custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
-	<script src="libs/jquery-ui-sortable/jquery-ui.min.js"></script>
+	<!-- <script src="libs/jquery-ui-sortable/jquery-ui.min.js"></script> -->
 	
 	<!-- <script src="js/app.js"></script> -->
 	
@@ -17,7 +17,6 @@
 	<script src="js/user.js"></script>
 	<script src="js/visits.js"></script>
 	<script src="js/admin.js"></script>
-	<script src="js/canvas.js"></script>
 
 </body>
 </html>
