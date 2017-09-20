@@ -1413,11 +1413,11 @@ ol {
   overflow: hidden;
 }
 #player .track .url {
-  color: #bbb;
   font-size: 1.1em;
   font-style: italic;
   max-height: 20px;
   overflow: hidden;
+  word-break: break-all;
 }
 #player .track .track-icon {
   background-color: rgba(0, 255, 225, 0.6);
