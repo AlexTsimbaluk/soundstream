@@ -673,6 +673,7 @@ ul, ol {
 			font-size: 1.2em;
 			max-height: 20px;
 			overflow: hidden;
+			word-break: break-all;
 		}
 		.url {
 			// color: #bbb;
@@ -813,7 +814,8 @@ ul, ol {
 		// padding-bottom: 5px;
 		// text-align: center;
 	}
-	.station {
+	.station,
+	.stationsData {
 		border-radius: 2px;
 		cursor: default;
 		margin-bottom: 10px;
@@ -831,7 +833,8 @@ ul, ol {
 			margin-left: 10px;
 			overflow: hidden;
 		}
-		.add {
+		.add,
+		.showFoundStations {
 			background-color: rgba(0, 255, 225, .4);
 			border-radius: 100%;
 			cursor: pointer;
@@ -855,7 +858,10 @@ ul, ol {
 			}
 		}
 		&:hover {
-			.add {.flex-container;}
+			.add,
+			.showFoundStations {
+				.flex-container;
+			}
 		}
 	}
 }

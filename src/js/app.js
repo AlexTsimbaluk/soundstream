@@ -874,6 +874,7 @@ $(document).ready(function () {
 	$('#player .play').on('click', function (e) {
 		if (playerState.paused) {
 			audioApiElement.playStream(getCurrentTrack().url);
+			$('.playlistContainer').mCustomScrollbar('scrollTo', getCurrentTrack().scrollPosition);
 		}
 	});
 
@@ -1123,18 +1124,30 @@ $(document).ready(function () {
    	}
    });*/
 
-			dateStart = new Date().getTime();
-
 			var response = stationsArray,
+			    size = response.length,
 			    result = $('.searchContainer .result'),
-			    markup = '<div class="total"><span>' + response.length + '</span> stations is found</div>';
+
+			// станций в блоке и всего блоков
+			IN_BLOCK = 100,
+			    totalBlocks = Math.ceil(size / IN_BLOCK),
+
+			// начальная разметка - общее количество станций
+			markup = '<div class="total"><span>' + size + '</span> stations is found</div>';
+			console.log(size);
+			console.log(totalBlocks);
 
 			result.html('');
 
-			for (var i = 0; i < response.length; i++) {
+			// for(var i = 0; i < size; i++) {
+			for (var i = 0; i < 100; i++) {
 				var station = response[i];
 
 				markup += '<div class="station" data-station-id="' + station.station_id + '"><div class="add"><i class="fa fa-plus"></i></div><div class="title">' + station.station_title + '</div><div class="url">' + station.station_url + '</div></div>';
+			}
+
+			for (var i = 0; i < totalBlocks; i++) {
+				markup += '<div class="stationsData" data-block-number="' + i + '"><div class="showFoundStations"><i class="fa fa-minus"></i></div><div class="title">' + i * 100 + '..' + (i + 1) * 100 + '</div></div>';
 			}
 
 			result.html(markup);

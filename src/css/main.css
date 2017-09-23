@@ -1411,6 +1411,7 @@ ol {
   font-size: 1.2em;
   max-height: 20px;
   overflow: hidden;
+  word-break: break-all;
 }
 #player .track .url {
   font-size: 1.1em;
@@ -1666,7 +1667,8 @@ ol {
   font-size: 1.4em;
   margin-bottom: 8px;
 }
-.searchContainer .station {
+.searchContainer .station,
+.searchContainer .stationsData {
   -webkit-border-radius: 2px;
           border-radius: 2px;
   cursor: default;
@@ -1679,17 +1681,22 @@ ol {
       -ms-user-select: none;
           user-select: none;
 }
-.searchContainer .station .title {
+.searchContainer .station .title,
+.searchContainer .stationsData .title {
   overflow: hidden;
   text-decoration: underline;
 }
-.searchContainer .station .url {
+.searchContainer .station .url,
+.searchContainer .stationsData .url {
   font-size: .8em;
   font-style: italic;
   margin-left: 10px;
   overflow: hidden;
 }
-.searchContainer .station .add {
+.searchContainer .station .add,
+.searchContainer .stationsData .add,
+.searchContainer .station .showFoundStations,
+.searchContainer .stationsData .showFoundStations {
   background-color: rgba(0, 255, 225, 0.4);
   -webkit-border-radius: 100%;
           border-radius: 100%;
@@ -1704,7 +1711,10 @@ ol {
   transition: all .3s;
 }
 @media only screen and (max-width: 700px) {
-  .searchContainer .station .add {
+  .searchContainer .station .add,
+  .searchContainer .stationsData .add,
+  .searchContainer .station .showFoundStations,
+  .searchContainer .stationsData .showFoundStations {
     -webkit-justify-content: space-around;
         -ms-flex-pack: distribute;
             justify-content: space-around;
@@ -1726,15 +1736,24 @@ ol {
     display: flex;
   }
 }
-.searchContainer .station .add i {
+.searchContainer .station .add i,
+.searchContainer .stationsData .add i,
+.searchContainer .station .showFoundStations i,
+.searchContainer .stationsData .showFoundStations i {
   font-size: 1.7em;
   font-weight: 100;
   margin-top: 2px;
 }
-.searchContainer .station .add:hover {
+.searchContainer .station .add:hover,
+.searchContainer .stationsData .add:hover,
+.searchContainer .station .showFoundStations:hover,
+.searchContainer .stationsData .showFoundStations:hover {
   background-color: rgba(0, 255, 225, 0.8);
 }
-.searchContainer .station:hover .add {
+.searchContainer .station:hover .add,
+.searchContainer .stationsData:hover .add,
+.searchContainer .station:hover .showFoundStations,
+.searchContainer .stationsData:hover .showFoundStations {
   -webkit-justify-content: space-around;
       -ms-flex-pack: distribute;
           justify-content: space-around;
