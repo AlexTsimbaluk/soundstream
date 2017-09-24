@@ -1,5 +1,28 @@
 var dateStart = new Date().getTime();
 
+$.ajaxSetup({
+	type: 'POST',
+	url: 'actions.php',
+	complete: function() {},
+	statusCode: {
+		200: function(message) {
+		},
+		403: function(jqXHR) {
+			var error = JSON.parse(jqXHR.responseText);
+			$("body").prepend(error.message);
+		}
+	},
+	error: function (error, xhr, status, errorThrown) {
+		console.log('XHR error');
+	}
+});
+
+if(getParams().admin !== undefined) {
+	$('body').addClass('admin');
+} else {
+	$('body').removeClass('admin');
+}
+
 function getParams() { 
 	var $_GET = {}; 
 	var __GET = window
@@ -14,13 +37,6 @@ function getParams() {
 	}
 	return $_GET; 
 }
-
-if(getParams().admin !== undefined) {
-	$('body').addClass('admin');
-} else {
-	$('body').removeClass('admin');
-}
-
 
 function d(str) {
 	$('.debug').html(str);
@@ -50,62 +66,6 @@ function getHash(size) {
 	}
 	return hash;
 }
-
-
-
-$('.clearLocalStorage').on('click', function(e) {
-	localStorage.clear();
-	return false;
-});
-
-$('.clearUniqHash').on('click', function(e) {
-	// localStorage.removeItem('uniqHash');
-	localStorage.removeItem('stations');
-	return false;
-});
-
-
-$('.toAdmin').on('click', function(e) {
-	console.log('toAdmin');
-	$('body').addClass('admin');
-
-	$.ajax({
-		data: {'admin': 1},
-		success: function(data) {
-			$('#player').after(data);
-			$('#player').hide();
-
-			$('.toPlayer').on('click', function(e) {
-				console.log('toPlayer');
-				$('.admin-wrapper').remove();
-				$('body').removeClass('admin');
-				$('#player').fadeIn(300);
-				return false;
-			});
-		}
-	});
-	return false;
-});
-
-
-
-
-$.ajaxSetup({
-	type: 'POST',
-	url: 'actions.php',
-	complete: function() {},
-	statusCode: {
-		200: function(message) {
-		},
-		403: function(jqXHR) {
-			var error = JSON.parse(jqXHR.responseText);
-			$("body").prepend(error.message);
-		}
-	},
-	error: function (error, xhr, status, errorThrown) {
-		console.log('XHR error');
-	}
-});
 
 
 
@@ -155,7 +115,17 @@ $(document).ready(function() {
         });
 	});
 
-	var audioCtx = new (window.AudioContext || window.webkitAudioContext);
+	// mCustomScrollbar
+	// Анимация кнопки "закрыть" при скроле блока с результатами поиска
+	$('.searchContainer').mCustomScrollbar({
+		callbacks: {
+			onScroll: function() {
+				animateCloseButton(this);
+			}
+		}
+	});
+
+
 
 	// Отобразить название станции при воспроизведении
 	function displayState() {
@@ -713,187 +683,8 @@ $(document).ready(function() {
 		track.append('<canvas id="' + canvasId + '"></canvas>');
 	}
 
-	var playlistContainer = $('#player .playlistContainer'),
-		playlistsPanel = $('#player .playlistsPanel'),
-		
-		player = new Audio(),
-
-
-		// Состояние пользователя - зарегистрирован или нет, авторизован или нет
-		userStatus = {
-			reg: false,
-			auth: false
-		},
-
-		// Объект состояния плеера
-		playerState = {
-			playlists: {},
-			playlistsOrder: [],
-			currentPlaylist: '',
-			// volume : player.volume,
-			volume: audioApiElement ? audioApiElement.getVolume() : 0,
-			paused: player.paused
-		},
-
-		// Массив со всеми станциями
-		stationsArray = []
-	;
-
-	// console.log(player.paused);
-
-	if(localStorage.getItem('userStatus') == undefined) {
-		localStorage.setItem('userStatus', JSON.stringify(userStatus));
-	} else {
-		userStatus = JSON.parse(localStorage.userStatus);
-	}
-
-	if(localStorage.getItem('stations') == undefined) {
-		$.ajax({
-			data: {'action': 'getAllStations'},
-			success: function(data) {
-				stationsArray = JSON.parse(data);
-				localStorage.setItem('stations', JSON.stringify(stationsArray));
-			}
-		});
-	} else {
-		stationsArray = JSON.parse(localStorage.getItem('stations'));
-	}
-
-
-	
-	var audioApiElement = new AudioApiElement('playerTag'),
-		audioCbElement 	= new AudioCbElement()
-	;
-
-	/*console.log(audioApiElement);
-	console.log(audioCbElement);*/
-
-	if(localStorage.getItem('playerState') == undefined) {
-		// Объект плейлиста
-		var defaultPlaylist = new Playlist('Default');
-		playerState.currentPlaylist = 'Default';
-		playlistsPanel.append('<div class="plName" data-name="Default">Default</div>');
-		playlistContainer.append(playerState.playlists[playerState.currentPlaylist].htmlEl);
-		
-		// playerState.playlists[playerState.currentPlaylist].currentTrack.scrollPosition = 0;
-
-		playerState
-			.playlists[playerState.currentPlaylist]
-			.tracks = [2599,
-						1193,
-						1330,
-						55,
-						760,
-						884,
-						894,
-						900,
-						7068,
-						9096,
-						4046,
-						3187,
-						4055,
-						6369,
-						6377,
-						6716,
-						7942,
-						2400
-		];
-
-		playerState
-			.playlists[playerState.currentPlaylist]
-			.currentTrack = {
-				id:1330,
-				url:'http://graalradio.com:8123/future',
-				title:'Graal Radio Future'
-		};
-
-		localStorage.setItem('playerState', JSON.stringify(playerState));
-	} else {
-		// Получаем актуальное состояние плеера из local storage
-		playerState = JSON.parse(localStorage.getItem('playerState'));
-		
-		// Наполняем playlistsPanel заголовками плейлистов
-		for (var i = 0; i < playerState.playlistsOrder.length; i++) {
-			playlistsPanel.append('<div class="plName" data-name="'
-									+ playerState.playlistsOrder[i]
-									+ '">'
-									+ playerState.playlistsOrder[i]
-									+ '</div>'
-								);
-		}
-
-		// Задаем свойства объекта Audio свойствами объекта playerState
-		audioApiElement.setVolume(playerState.volume);
-		audioCbElement.setVolume(playerState.volume);		// ? - проверить, нужен ли
-
-		// Создаем контейнер для треков текущего (активного) плейлиста
-		playlistContainer.append(playerState.
-									playlists[playerState.currentPlaylist].
-									htmlEl
-								);
-
-		// Получить массив с id треков плейлиста и сформировать его
-		var playlistTracks = playerState
-								.playlists[playerState.currentPlaylist]
-								.tracks
-		;
-
-		if(playlistTracks.length > 0) {
-			$('.playlistContainer').mCustomScrollbar();
-
-			$.ajax({
-				data: {'action': 'getPlaylistStations', 'id': playlistTracks},
-				success: function(data) {
-					var response = JSON.parse(data),
-						playlist = playlistContainer.find('.playlist[data-name="'
-															+ playerState.currentPlaylist
-															+ '"]'),
-						markup = ''
-					;
-					
-
-					var trackMarkup = $('.template-track').html();
-
-					for(var i = 0; i < response.length; i++) {
-						var track = response[i];
-						markup += '<div class="track" data-station-id="'
-									+ track.station_id
-									+ '" data-station-title="'
-									+ track.station_title
-									+ '" data-station-url="'
-									+ track.station_url
-									+ '"><div class="delete"><i class="fa fa-minus"></i></div> \
-										<div class="canplaytest"><i class="fa fa-music"></i></div>\
-										<div class="title">'
-									+ track.station_title
-									+ '</div><div class="url">'
-									+ track.station_url
-									+ '</div></div>'
-						;
-					}
-
-					playlist.html(playlist.html() + markup);
-
-					if(!playerState.paused) {
-						console.log(getCurrentTrack());
-						var streamUrl = getCurrentTrack().url;
-						audioApiElement.playStream(streamUrl);
-
-						$('.playlistContainer .active [data-station-url="' + streamUrl + '"]')
-							.attr('data-current-track', 1);
-					}
-					$('.playlistContainer').mCustomScrollbar('scrollTo', getCurrentTrack().scrollPosition);
-				}
-			});
-		} else {
-			console.log(0);
-		}
-
-	}
-
 	// Визуализация выбранного играющего трека и кнопки play
-	var intervalVis = null;
-
+	// TODO: переделать на requestAnimationFrame
 	function visualisation() {
 		console.log('visualisation::Begin');
 		visualisationStop();
@@ -950,6 +741,42 @@ $(document).ready(function() {
 		;
 		$('#player .play span').remove();
 		console.log('visualisationStop::End');
+	}
+
+	function drawWolumeBar() {
+		// var volumeAnimation 	= requestAnimationFrame(drawWolumeBar());
+		// q - какую часть volume-bar от 100% отрисовать, от 1 до 10, шаг - 10%
+		var q = Math.ceil(+($('#player .volume input').val()) / 10);
+
+		ctxVolume.clearRect(0, 0, canvasVolumeWidth, canvasVolumeHeight);
+		var maxHue 			= 360 / 10 * q,
+			startHue		= 0,
+			barWidth 		= 3,
+			gutterWidth		= 1,
+			maxBar			= Math.floor(canvasVolumeWidth / (gutterWidth + barWidth)),
+			targetCountBar	= Math.floor(maxBar / 10 * q),
+			barMaxHeight	= canvasVolumeHeight,
+			barStepHeight	= (barMaxHeight / maxBar)
+		;
+		// console.log(maxBar);
+
+		for (var i = 0; i < targetCountBar; i++) {
+			ctxVolume.fillStyle = 'hsl(' + i * maxHue / targetCountBar + ', 100%, 50%)';
+			ctxVolume.fillRect(i * (gutterWidth + barWidth), canvasVolumeHeight - i * barStepHeight - barStepHeight, barWidth, i * barStepHeight + barStepHeight);
+			
+			ctxVolume.fill();
+		}
+		/*ctxVolume.fillRect(10 * (gutterWidth + barWidth), canvasVolumeHeight - 10 * barStepHeight - barStepHeight, barWidth, 10 * barStepHeight + barStepHeight);
+		ctxVolume.fill();*/
+
+		startHue += 15 % 360;
+		// console.log(startHue);
+	}
+
+	function animateCloseButton(el) {
+		setTimeout(function() {
+			$('.searchContainer .close').animate({top: -(el.mcs.top - 10) + 'px'}, 150);
+		}, 50);
 	}
 
 	function getCurrentTrack() {
@@ -1056,57 +883,38 @@ $(document).ready(function() {
 		e.stopPropagation();
 	});
 
-  
+	$('.clearLocalStorage').on('click', function(e) {
+		localStorage.clear();
+		return false;
+	});
 
-	var canvasVolume    	= document.getElementById('canvas-volume');
-	var	ctxVolume			= canvasVolume.getContext('2d');
+	$('.clearUniqHash').on('click', function(e) {
+		// localStorage.removeItem('uniqHash');
+		localStorage.removeItem('stations');
+		return false;
+	});
 
-	canvasVolume.width 	= 100;
-	canvasVolume.height = 30;
+	$('.toAdmin').on('click', function(e) {
+		console.log('toAdmin');
+		$('body').addClass('admin');
 
-	var canvasVolumeWidth = canvasVolume.width;
-	var canvasVolumeHeight = canvasVolume.height;
+		$.ajax({
+			data: {'admin': 1},
+			success: function(data) {
+				$('#player').after(data);
+				$('#player').hide();
 
-	// console.log(canvasVolumeHeight);
-
-	function drawWolumeBar() {
-		// var volumeAnimation 	= requestAnimationFrame(drawWolumeBar());
-		// q - какую часть volume-bar от 100% отрисовать, от 1 до 10, шаг - 10%
-		var q = Math.ceil(+($('#player .volume input').val()) / 10);
-
-		ctxVolume.clearRect(0, 0, canvasVolumeWidth, canvasVolumeHeight);
-		var maxHue 			= 360 / 10 * q,
-			startHue		= 0,
-			barWidth 		= 3,
-			gutterWidth		= 1,
-			maxBar			= Math.floor(canvasVolumeWidth / (gutterWidth + barWidth)),
-			targetCountBar	= Math.floor(maxBar / 10 * q),
-			barMaxHeight	= canvasVolumeHeight,
-			barStepHeight	= (barMaxHeight / maxBar)
-		;
-		// console.log(maxBar);
-
-		for (var i = 0; i < targetCountBar; i++) {
-			ctxVolume.fillStyle = 'hsl(' + i * maxHue / targetCountBar + ', 100%, 50%)';
-			ctxVolume.fillRect(i * (gutterWidth + barWidth), canvasVolumeHeight - i * barStepHeight - barStepHeight, barWidth, i * barStepHeight + barStepHeight);
-			
-			ctxVolume.fill();
-		}
-		/*ctxVolume.fillRect(10 * (gutterWidth + barWidth), canvasVolumeHeight - 10 * barStepHeight - barStepHeight, barWidth, 10 * barStepHeight + barStepHeight);
-		ctxVolume.fill();*/
-
-		startHue += 15 % 360;
-		// console.log(startHue);
-	}
-
-	/*$('#player .volume input').val(player.volume * 100);
-	$('#player .volume .val').html(Math.floor(player.volume * 100));*/
-	// audioApiElement.setVolume(playerState.volume);
-	$('#player .volume input').val(audioApiElement.getVolume() * 100);
-	$('#player .volume input').val(audioCbElement.getVolume() * 100);
-	$('#player .volume .val').html(Math.floor(audioApiElement.getVolume() * 100));
-	$('#player .volume .val').html(Math.floor(audioCbElement.getVolume() * 100));
-	drawWolumeBar();
+				$('.toPlayer').on('click', function(e) {
+					console.log('toPlayer');
+					$('.admin-wrapper').remove();
+					$('body').removeClass('admin');
+					$('#player').fadeIn(300);
+					return false;
+				});
+			}
+		});
+		return false;
+	});
 
 	$('#player .volume input').on('input', function(e) {
 		var $inputVolume = $(this);
@@ -1196,8 +1004,6 @@ $(document).ready(function() {
 	// Поиск и показ найденных станций
 	$('#player .find input').on('keyup', function(e) {
 		var target = $(this).val();
-
-		
 
 		if(target.length > 2) {
 			$(".spinner").show();
@@ -1331,7 +1137,7 @@ $(document).ready(function() {
 			result.html('');
 
 			// for(var i = 0; i < size; i++) {
-			for(var i = 0; i < 100; i++) {
+			/*for(var i = 0; i < 100; i++) {
 				var station = response[i];
 
 				markup += '<div class="station" data-station-id="'
@@ -1341,17 +1147,72 @@ $(document).ready(function() {
 							+ '</div><div class="url">'
 							+ station.station_url
 							+ '</div></div>';
-			}
+			}*/
 
 			for (var i = 0; i < totalBlocks; i++) {
-				markup += '<div class="stationsData" data-block-number="'
+				var from 	= i * 100,
+					to 		= ((i + 1) * 100);
+
+				if(i == totalBlocks - 1) {
+					to = (totalBlocks - 1).toString() + (size % 100);
+				}
+
+				markup += '<div class="stationsBlockToggle" data-show="closed" data-block-number="'
 							+ i
-							+ '"><div class="showFoundStations"><i class="fa fa-minus"></i></div><div class="title">'
-							+ (i * 100) + '..' + ((i + 1) * 100)
+							// + '"><div class="showFoundStations"><i class="fa fa-minus"></i></div><div class="title">'
+							+ '"><div class="title">'
+							+ from + '..' + to
 							+ '</div></div>';
 			}
 
 			result.html(markup);
+
+			$('.stationsBlockToggle').on('click', function(e) {
+				var markup 	= '',
+					index 	= $(this).attr('data-block-number')
+				;
+				if($(this).attr('data-show') == 'closed') {
+					
+					var stations = stationsArrayOn100[index];
+					// console.log(stations);
+					markup += '<div class="stationsBlockList" data-stations-number=' + index + '>';
+					for(var i = 0; i < stations.length; i++) {
+						var station = stations[i];
+						markup += '<div class="station" data-station-id="'
+									+ station.station_id
+									+ '"><div class="add"><i class="fa fa-plus"></i></div><div class="title">'
+									+ station.station_title 
+									+ '</div><div class="url">'
+									+ station.station_url
+									+ '</div></div>';
+					}
+					markup += '</div>';
+					$(this).after(markup);
+					$(this).attr('data-show', 'open');
+
+					// console.log(playerState);
+
+					playerState.search.stationsOpened.push(index);
+
+					if(playerState.search.stationsOpened.length > 3) {
+						playerState.search.stationsOpened.shift();
+					}
+					// TODO: при скрытии списка станций удалять его номер из этого массива
+					// https://learn.javascript.ru/array-iteration#filter
+
+					console.log(playerState.search.stationsOpened);
+					console.log('stationsBlockToggle №' + index + ' opened');
+
+					return false;
+				} else {
+					$(this).next('[data-stations-number]').remove();
+					$(this).attr('data-show', 'closed');
+
+					console.log('stationsBlockToggle №' + index + ' removed');
+
+					return false;
+				}
+			});
 
 			$(".spinner").hide();
 
@@ -1413,44 +1274,8 @@ $(document).ready(function() {
 		addToPlaylist($(this).data('stationId'));
 	});
 
-
-
-
-	/*$(window).on('scroll', function(e) {
-		console.log(e.originalEvent);
-		console.log(document.querySelector('.playlistContainer').scrollHeight);
-		console.log(document.querySelector('.playlistContainer').scrollTop);
-		console.log((this).scrollHeight);
-		console.log((this).scrollTop);
-	});*/
-
-	// mCustomScrollbar
-	// Анимация кнопки "закрыть" при скроле блока с результатами поиска
-	$('.searchContainer').mCustomScrollbar({
-		callbacks: {
-			onScroll: function() {
-				animateCloseButton(this);
-			}
-		}
-	});
-
-	/*$('.playlistContainer').mCustomScrollbar({
-		callbacks: {
-			onScroll: function() {
-				console.log(this.mcs.top);
-
-				console.log(playerState.playlists[playerState.currentPlaylist].currentTrack);
-				playerState.playlists[playerState.currentPlaylist].currentTrack.scrollPosition = this.mcs.top;
-				localStorage.setItem('playerState', JSON.stringify(playerState));
-			}
-		}
-	});*/
-
-	function animateCloseButton(el) {
-		setTimeout(function() {
-			$('.searchContainer .close').animate({top: -(el.mcs.top - 10) + 'px'}, 150);
-		}, 50);
-	}
+	
+	
 
 
 	/*
@@ -1467,8 +1292,232 @@ $(document).ready(function() {
 	}
 
 
-	
 
+
+
+	var playlistContainer 	= $('#player .playlistContainer'),
+		playlistsPanel 		= $('#player .playlistsPanel'),
+		
+		player 				= new Audio(),
+
+
+		// Состояние пользователя - зарегистрирован или нет, авторизован или нет
+		userStatus = {
+			reg: false,
+			auth: false
+		},
+
+		// Объект состояния плеера
+		playerState = {
+			playlists: {},
+			playlistsOrder: [],
+			currentPlaylist: '',
+			// volume : player.volume,
+			volume: audioApiElement ? audioApiElement.getVolume() : .5,
+			paused: player.paused,
+			search: {
+				stationsOpened: []
+			}
+		},
+
+		// Массив со всеми станциями
+		stationsArray 		= [],
+
+		// Массив со всеми станциями, только станции сгруппированы в массивы по 100шт
+		stationsArrayOn100	= [],
+
+		// Аудио-контекст
+		audioCtx 			= new (window.AudioContext || window.webkitAudioContext),
+		
+		// Основной и запасной аудио источники
+		audioApiElement 	= new AudioApiElement('playerTag'),
+		audioCbElement 		= new AudioCbElement(),
+
+		// Таймер для визуализации трека
+		// TODO: переделать на requestAnimationFrame
+		intervalVis = null,
+
+		// 
+		canvasVolume    	= document.getElementById('canvas-volume'),
+		ctxVolume			= canvasVolume.getContext('2d'),
+		canvasVolumeWidth 	= canvasVolume.width,
+		canvasVolumeHeight 	= canvasVolume.height
+	;
+
+
+	canvasVolume.width 	= 100;
+	canvasVolume.height = 30;
+
+
+
+
+	// Погнали!!!;)
+
+	if(localStorage.getItem('userStatus') == undefined) {
+		localStorage.setItem('userStatus', JSON.stringify(userStatus));
+	} else {
+		userStatus = JSON.parse(localStorage.userStatus);
+	}
+
+	if(localStorage.getItem('stations') == undefined) {
+		$.ajax({
+			data: {'action': 'getAllStations'},
+			success: function(data) {
+				stationsArray 	= JSON.parse(data);
+				var size 		= stationsArray.length,
+					totalArrays = Math.ceil(size / 100)
+				;
+
+				for (var i = 0; i < totalArrays; i++) {
+					stationsArrayOn100[i] = [];
+					for (var j = 0; j < 100; j++) {
+						var stationsIndex = i * 100 + j
+						if(i == totalArrays - 1 && j == size % 100) {
+							break;
+						}
+						stationsArrayOn100[i][j] = stationsArray[stationsIndex];
+					}
+					// console.log(stationsArrayOn100[i]);
+				}
+
+				localStorage.setItem('stations', JSON.stringify(stationsArray));
+				localStorage.setItem('stationsOn100', JSON.stringify(stationsArrayOn100));
+			}
+		});
+	} else {
+		stationsArray 		= JSON.parse(localStorage.getItem('stations'));
+		stationsArrayOn100 	= JSON.parse(localStorage.getItem('stationsOn100'));
+	}
+
+	if(localStorage.getItem('playerState') == undefined) {
+		// Объект плейлиста
+		var defaultPlaylist = new Playlist('Default');
+		playerState.currentPlaylist = 'Default';
+		playlistsPanel.append('<div class="plName" data-name="Default">Default</div>');
+		playlistContainer.append(playerState.playlists[playerState.currentPlaylist].htmlEl);
+		
+		// playerState.playlists[playerState.currentPlaylist].currentTrack.scrollPosition = 0;
+
+		playerState
+			.playlists[playerState.currentPlaylist]
+			.tracks = [
+						2599,
+						1193,
+						1330,
+						55,
+						760,
+						884,
+						894,
+						900,
+						7068,
+						9096,
+						4046,
+						3187,
+						4055,
+						2400
+		];
+
+		playerState
+			.playlists[playerState.currentPlaylist]
+			.currentTrack = {
+				id:1330,
+				url:'http://graalradio.com:8123/future',
+				title:'Graal Radio Future'
+		};
+
+		localStorage.setItem('playerState', JSON.stringify(playerState));
+
+		location.reload();
+	} else {
+		// Получаем актуальное состояние плеера из local storage
+		playerState = JSON.parse(localStorage.getItem('playerState'));
+		
+		// Наполняем playlistsPanel заголовками плейлистов
+		for (var i = 0; i < playerState.playlistsOrder.length; i++) {
+			playlistsPanel.append('<div class="plName" data-name="'
+									+ playerState.playlistsOrder[i]
+									+ '">'
+									+ playerState.playlistsOrder[i]
+									+ '</div>'
+								);
+		}
+
+		// Задаем свойства объекта Audio свойствами объекта playerState
+		audioApiElement.setVolume(playerState.volume);
+		audioCbElement.setVolume(playerState.volume);		// ? - проверить, нужен ли
+
+		// Выставляем громкость
+		$('#player .volume input').val(audioApiElement.getVolume() * 100);
+		$('#player .volume input').val(audioCbElement.getVolume() * 100);
+		$('#player .volume .val').html(Math.floor(audioApiElement.getVolume() * 100));
+		$('#player .volume .val').html(Math.floor(audioCbElement.getVolume() * 100));
+
+		// Рисуем соответствующий регулятор
+		drawWolumeBar();
+
+		// Создаем контейнер для треков текущего (активного) плейлиста
+		playlistContainer.append(playerState.
+									playlists[playerState.currentPlaylist].
+									htmlEl
+								);
+
+		// Получить массив с id треков плейлиста и сформировать его
+		var playlistTracks = playerState
+								.playlists[playerState.currentPlaylist]
+								.tracks
+		;
+
+		if(playlistTracks.length > 0) {
+			$('.playlistContainer').mCustomScrollbar();
+
+			$.ajax({
+				data: {'action': 'getPlaylistStations', 'id': playlistTracks},
+				success: function(data) {
+					var response = JSON.parse(data),
+						playlist = playlistContainer.find('.playlist[data-name="'
+															+ playerState.currentPlaylist
+															+ '"]'),
+						markup = ''
+					;
+					
+
+					var trackMarkup = $('.template-track').html();
+
+					for(var i = 0; i < response.length; i++) {
+						var track = response[i];
+						markup += '<div class="track" data-station-id="'
+									+ track.station_id
+									+ '" data-station-title="'
+									+ track.station_title
+									+ '" data-station-url="'
+									+ track.station_url
+									+ '"><div class="delete"><i class="fa fa-minus"></i></div> \
+										<div class="canplaytest"><i class="fa fa-music"></i></div>\
+										<div class="title">'
+									+ track.station_title
+									+ '</div><div class="url">'
+									+ track.station_url
+									+ '</div></div>'
+						;
+					}
+
+					playlist.html(playlist.html() + markup);
+
+					if(!playerState.paused) {
+						console.log(getCurrentTrack());
+						var streamUrl = getCurrentTrack().url;
+						audioApiElement.playStream(streamUrl);
+
+						$('.playlistContainer .active [data-station-url="' + streamUrl + '"]')
+							.attr('data-current-track', 1);
+					}
+					$('.playlistContainer').mCustomScrollbar('scrollTo', getCurrentTrack().scrollPosition);
+				}
+			});
+		} else {
+			console.log(0);
+		}
+	}
 });
 
 
