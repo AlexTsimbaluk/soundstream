@@ -1668,12 +1668,11 @@ ol {
   margin-bottom: 8px;
 }
 .searchContainer .station,
-.searchContainer .stationsData {
+.searchContainer .stationsBlockToggle {
   -webkit-border-radius: 2px;
           border-radius: 2px;
   cursor: default;
-  margin-bottom: 10px;
-  padding: 4px 6px;
+  padding: 4px 6px 14px;
   tansition: all .3s;
   position: relative;
   -webkit-user-select: none;
@@ -1682,21 +1681,21 @@ ol {
           user-select: none;
 }
 .searchContainer .station .title,
-.searchContainer .stationsData .title {
+.searchContainer .stationsBlockToggle .title {
   overflow: hidden;
   text-decoration: underline;
 }
 .searchContainer .station .url,
-.searchContainer .stationsData .url {
+.searchContainer .stationsBlockToggle .url {
   font-size: .8em;
   font-style: italic;
   margin-left: 10px;
   overflow: hidden;
 }
 .searchContainer .station .add,
-.searchContainer .stationsData .add,
+.searchContainer .stationsBlockToggle .add,
 .searchContainer .station .showFoundStations,
-.searchContainer .stationsData .showFoundStations {
+.searchContainer .stationsBlockToggle .showFoundStations {
   background-color: rgba(0, 255, 225, 0.4);
   -webkit-border-radius: 100%;
           border-radius: 100%;
@@ -1712,9 +1711,9 @@ ol {
 }
 @media only screen and (max-width: 700px) {
   .searchContainer .station .add,
-  .searchContainer .stationsData .add,
+  .searchContainer .stationsBlockToggle .add,
   .searchContainer .station .showFoundStations,
-  .searchContainer .stationsData .showFoundStations {
+  .searchContainer .stationsBlockToggle .showFoundStations {
     -webkit-justify-content: space-around;
         -ms-flex-pack: distribute;
             justify-content: space-around;
@@ -1737,23 +1736,23 @@ ol {
   }
 }
 .searchContainer .station .add i,
-.searchContainer .stationsData .add i,
+.searchContainer .stationsBlockToggle .add i,
 .searchContainer .station .showFoundStations i,
-.searchContainer .stationsData .showFoundStations i {
+.searchContainer .stationsBlockToggle .showFoundStations i {
   font-size: 1.7em;
   font-weight: 100;
   margin-top: 2px;
 }
 .searchContainer .station .add:hover,
-.searchContainer .stationsData .add:hover,
+.searchContainer .stationsBlockToggle .add:hover,
 .searchContainer .station .showFoundStations:hover,
-.searchContainer .stationsData .showFoundStations:hover {
+.searchContainer .stationsBlockToggle .showFoundStations:hover {
   background-color: rgba(0, 255, 225, 0.8);
 }
 .searchContainer .station:hover .add,
-.searchContainer .stationsData:hover .add,
+.searchContainer .stationsBlockToggle:hover .add,
 .searchContainer .station:hover .showFoundStations,
-.searchContainer .stationsData:hover .showFoundStations {
+.searchContainer .stationsBlockToggle:hover .showFoundStations {
   -webkit-justify-content: space-around;
       -ms-flex-pack: distribute;
           justify-content: space-around;
@@ -1773,6 +1772,10 @@ ol {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+}
+.searchContainer .stationsBlockToggle[data-show="open"] {
+  -webkit-box-shadow: 0 0 10px -2px #00ffff inset;
+          box-shadow: 0 0 10px -2px #00ffff inset;
 }
 /* Custom ScrollBar */
 .mCSB_inside > .mCSB_container {

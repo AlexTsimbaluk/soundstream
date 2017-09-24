@@ -815,11 +815,11 @@ ul, ol {
 		// text-align: center;
 	}
 	.station,
-	.stationsData {
+	.stationsBlockToggle {
 		border-radius: 2px;
 		cursor: default;
-		margin-bottom: 10px;
-		padding: 4px 6px;
+		// margin-bottom: 10px;
+		padding: 4px 6px 14px;
 		tansition: all .3s;
 		position: relative;
 		user-select: none;
@@ -862,6 +862,11 @@ ul, ol {
 			.showFoundStations {
 				.flex-container;
 			}
+		}
+	}
+	.stationsBlockToggle {
+		&[data-show="open"] {
+			box-shadow: 0 0 10px -2px #00ffff inset;
 		}
 	}
 }
