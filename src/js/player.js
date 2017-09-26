@@ -358,7 +358,7 @@ $(document).ready(function() {
 	    this.getVolume = function() {
 	    	return $playerTag.volume;
 	    }
-	    $playerTag.volume = playerState.volume;
+	    // self.setVolume(playerState.volume);
 	}
 
 	// Колбэк если не срабатывает Audio API
@@ -400,7 +400,6 @@ $(document).ready(function() {
 	    this.getVolume = function() {
 	    	return player.volume;
 	    }
-	    player.volume = playerState.volume;
 	}
 
 	// https://developer.mozilla.org/ru/docs/Web/Guide/Events/Media_events
@@ -807,6 +806,64 @@ $(document).ready(function() {
 			console.log('no siblings');
 		}
 	}
+
+	function makeDebugButton(objName) {
+		console.log('makeDebugButton');
+		var $debugButton 	= $('.resetLocalItem'),
+			$removePropList = $debugButton.find('.itemList'),
+			prefix 			= objName + '.',
+			removePropList 	= [],
+			markup 			= ''
+		;
+
+		removePropList.push({name: prefix + 'search.stationsOpened', value: 'StationsOpened'});
+		removePropList.push({name: prefix + 'volume', value: 'Volume'});
+
+		for(var i = 0; i < removePropList.length; i++) {
+			markup += '<li class="remove" data-change-item="' + removePropList[i].name
+						+ '"><a href="#">'
+						+ removePropList[i].value
+						+ '</a></li>'
+		}
+		$removePropList.html(markup);
+
+		$('[data-change-item]').on('click', function(e) {
+			var attr = $(this).attr('data-change-item'),
+				$resetButton = $('.resetItem')
+			;
+			console.log(attr);
+
+			$resetButton.attr('data-remove-item', attr);
+		});
+
+		$('[data-remove-item]').on('click', function(e) {
+			var attr = $(this).attr('data-remove-item'),
+				item = attr.split('.')[0],
+				$resetButton = $('.resetItem')
+			;
+			delete attr;
+
+			localStorage.setItem('playerState', JSON.stringify(playerState));
+
+			console.log('delete volume');
+			
+			return false;
+		});
+
+		/*for(var key in obj) {
+			console.log(key + ' : ' + obj[key]);
+			if(typeof obj[key] === 'object') {
+				var _o = obj[key];
+				// if(typeof +obj[key] == 'number') {
+				if(!isNaN(parseFloat(key))) {
+					console.log('number');
+				}
+				// console.log('Тип ' + typeof key);
+				makeDebugButton(_o);
+			}
+		}*/
+	}
+	
 	
 	// Остановка визуализации
 
@@ -891,6 +948,19 @@ $(document).ready(function() {
 	$('.clearUniqHash').on('click', function(e) {
 		// localStorage.removeItem('uniqHash');
 		localStorage.removeItem('stations');
+		return false;
+	});
+
+	$('.resetItem').on('click', function(e) {
+		// playerState = JSON.parse(localStorage.playerState);
+		// delete playerState.search.stationsOpened;
+		
+		delete playerState.volume;
+
+		localStorage.setItem('playerState', JSON.stringify(playerState));
+
+		console.log('delete volume');
+		
 		return false;
 	});
 
@@ -1168,16 +1238,17 @@ $(document).ready(function() {
 			result.html(markup);
 
 			$('.stationsBlockToggle').on('click', function(e) {
-				var markup 	= '',
+				var stationsOpened = playerState.search.stationsOpened,
+					markup 	= '',
 					index 	= $(this).attr('data-block-number')
 				;
 				if($(this).attr('data-show') == 'closed') {
 					
-					var stations = stationsArrayOn100[index];
-					// console.log(stations);
+					var _stations = stationsArrayOn100[index];
+					// console.log(_stations);
 					markup += '<div class="stationsBlockList" data-stations-number=' + index + '>';
-					for(var i = 0; i < stations.length; i++) {
-						var station = stations[i];
+					for(var i = 0; i < _stations.length; i++) {
+						var station = _stations[i];
 						markup += '<div class="station" data-station-id="'
 									+ station.station_id
 									+ '"><div class="add"><i class="fa fa-plus"></i></div><div class="title">'
@@ -1190,21 +1261,36 @@ $(document).ready(function() {
 					$(this).after(markup);
 					$(this).attr('data-show', 'open');
 
-					// console.log(playerState);
+					console.log(stationsOpened);
+					stationsOpened.push(index);
+					console.log(stationsOpened);
 
-					playerState.search.stationsOpened.push(index);
+					if(stationsOpened.length > 3) {
+						console.log('лишний ' + stationsOpened[0]);
 
-					if(playerState.search.stationsOpened.length > 3) {
-						playerState.search.stationsOpened.shift();
+						$('[data-stations-number="' + stationsOpened[0] + '"]').remove();
+						$('[data-stations-number="' + stationsOpened[0] + '"]').attr('data-show', 'closed');
+
+						console.log(stationsOpened);
+						stationsOpened.shift();
+						console.log(stationsOpened);
 					}
-					// TODO: при скрытии списка станций удалять его номер из этого массива
-					// https://learn.javascript.ru/array-iteration#filter
 
-					console.log(playerState.search.stationsOpened);
 					console.log('stationsBlockToggle №' + index + ' opened');
+					console.log(stationsOpened);
 
 					return false;
 				} else {
+					// TODO: при скрытии списка станций удалять его номер из этого массива
+					// https://learn.javascript.ru/array-iteration#filter
+					var _stationsOpened = stationsOpened.filter((el) => {
+						console.log('filter');
+						return el != index;
+					});
+
+					stationsOpened = _stationsOpened;
+					console.log(stationsOpened);
+
 					$(this).next('[data-stations-number]').remove();
 					$(this).attr('data-show', 'closed');
 
@@ -1313,7 +1399,8 @@ $(document).ready(function() {
 			playlistsOrder: [],
 			currentPlaylist: '',
 			// volume : player.volume,
-			volume: audioApiElement ? audioApiElement.getVolume() : .5,
+			// volume: audioApiElement ? audioApiElement.getVolume() : .2,
+			volume: .27,
 			paused: player.paused,
 			search: {
 				stationsOpened: []
@@ -1431,6 +1518,7 @@ $(document).ready(function() {
 	} else {
 		// Получаем актуальное состояние плеера из local storage
 		playerState = JSON.parse(localStorage.getItem('playerState'));
+		console.log(playerState);
 		
 		// Наполняем playlistsPanel заголовками плейлистов
 		for (var i = 0; i < playerState.playlistsOrder.length; i++) {
@@ -1443,8 +1531,8 @@ $(document).ready(function() {
 		}
 
 		// Задаем свойства объекта Audio свойствами объекта playerState
-		audioApiElement.setVolume(playerState.volume);
-		audioCbElement.setVolume(playerState.volume);		// ? - проверить, нужен ли
+		audioApiElement.setVolume(playerState.volume || .27);
+		audioCbElement.setVolume(playerState.volume || .27);
 
 		// Выставляем громкость
 		$('#player .volume input').val(audioApiElement.getVolume() * 100);
@@ -1504,7 +1592,6 @@ $(document).ready(function() {
 					playlist.html(playlist.html() + markup);
 
 					if(!playerState.paused) {
-						console.log(getCurrentTrack());
 						var streamUrl = getCurrentTrack().url;
 						audioApiElement.playStream(streamUrl);
 
@@ -1514,6 +1601,7 @@ $(document).ready(function() {
 					$('.playlistContainer').mCustomScrollbar('scrollTo', getCurrentTrack().scrollPosition);
 				}
 			});
+			makeDebugButton('playerState');
 		} else {
 			console.log(0);
 		}
