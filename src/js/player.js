@@ -726,6 +726,7 @@ $(document).ready(function() {
 		console.log('visualisation::End');
 	}
 
+	// Остановка визуализации
 	function visualisationStop() {
 		console.log('visualisationStop::Begin');
 		clearInterval(intervalVis);
@@ -807,48 +808,70 @@ $(document).ready(function() {
 		}
 	}
 
-	function makeDebugButton(objName) {
-		console.log('makeDebugButton');
-		var $debugButton 	= $('.resetLocalItem'),
-			$removePropList = $debugButton.find('.itemList'),
-			prefix 			= objName + '.',
+	function makeDebugButton() {
+		console.log('::makeDebugButton');
+		var $debug 			= $('.resetLocalStorage'),
+			$resetButton 	= $debug.find('.resetItem'),
+			$removePropList = $debug.find('.resetItemList'),
 			removePropList 	= [],
 			markup 			= ''
 		;
 
-		removePropList.push({name: prefix + 'search.stationsOpened', value: 'StationsOpened'});
-		removePropList.push({name: prefix + 'volume', value: 'Volume'});
+		$resetButton.attr('disabled', 'disabled');
+
+		removePropList.push({item: 'playerState', prop: 'search.stationsOpened', name: 'StationsOpened'});
+		removePropList.push({item: 'playerState', prop: 'volume', name: 'Volume'});
 
 		for(var i = 0; i < removePropList.length; i++) {
-			markup += '<li class="remove" data-change-item="' + removePropList[i].name
+			markup += '<li class="remove" data-change-item="'
+						+ removePropList[i].item
+						+ '" data-change-prop="'
+						+ removePropList[i].prop
 						+ '"><a href="#">'
-						+ removePropList[i].value
+						+ removePropList[i].name
 						+ '</a></li>'
 		}
 		$removePropList.html(markup);
 
-		$('[data-change-item]').on('click', function(e) {
-			var attr = $(this).attr('data-change-item'),
-				$resetButton = $('.resetItem')
-			;
-			console.log(attr);
-
-			$resetButton.attr('data-remove-item', attr);
-		});
-
-		$('[data-remove-item]').on('click', function(e) {
-			var attr = $(this).attr('data-remove-item'),
-				item = attr.split('.')[0],
-				$resetButton = $('.resetItem')
-			;
-			delete attr;
-
-			localStorage.setItem('playerState', JSON.stringify(playerState));
-
-			console.log('delete volume');
-			
+		/*$('.resetItem').on('click', function(e) {
+			var attr = $(this).attr('data-remove-item');
+			if(!attr) {
+				throw new Error('Не передан атрибут!');
+			}
 			return false;
+		});*/
+
+		$('[data-change-prop]').on('click', function(e) {
+			var item = $(this).attr('data-change-item')
+				prop = $(this).attr('data-change-prop')
+			;
+			$resetButton.attr('data-remove-item', item);
+			$resetButton.attr('data-remove-prop', prop);
+			$resetButton.removeAttr('disabled');
+
+			$('[data-remove-prop]').on('click', function(e) {
+				// item - что удаляем, например volume у playerState
+				var item = $(this).attr('data-remove-item'),
+					prop = $(this).attr('data-remove-prop'),
+					$resetButton = $('.resetItem')
+				;
+
+				switch(item) {
+					case 'playerState':
+						delete playerState[prop];
+						console.log(`delete ${prop}`);
+						break;
+
+					default:
+						break;
+				}
+				localStorage.setItem('playerState', JSON.stringify(playerState));
+
+				return false;
+			});
 		});
+
+
 
 		/*for(var key in obj) {
 			console.log(key + ' : ' + obj[key]);
@@ -863,9 +886,8 @@ $(document).ready(function() {
 			}
 		}*/
 	}
-	
-	
-	// Остановка визуализации
+
+
 
 	$('#player .prev').click(function(e) {
 		console.log('prev');
@@ -951,7 +973,7 @@ $(document).ready(function() {
 		return false;
 	});
 
-	$('.resetItem').on('click', function(e) {
+	/*$('.resetItem').on('click', function(e) {
 		// playerState = JSON.parse(localStorage.playerState);
 		// delete playerState.search.stationsOpened;
 		
@@ -962,7 +984,7 @@ $(document).ready(function() {
 		console.log('delete volume');
 		
 		return false;
-	});
+	});*/
 
 	$('.toAdmin').on('click', function(e) {
 		console.log('toAdmin');
@@ -1365,8 +1387,8 @@ $(document).ready(function() {
 
 
 	/*
-	Чтобы на экранах в высоту меньше 640px у блока playlistContainer с треками 
-	выставить всю доступную высоту
+		Чтобы на экранах в высоту меньше 640px у блока playlistContainer с треками 
+		выставить всю доступную высоту
 	*/
 	if(window.innerHeight <= 640 && window.innerWidth < 700) {
 		var _playlistContainerHeight = $('#player').height() 
@@ -1376,8 +1398,6 @@ $(document).ready(function() {
 		console.log(_playlistContainerHeight);
 		$('.searchContainer, .playlistContainer', '#player').height(_playlistContainerHeight);
 	}
-
-
 
 
 
@@ -1431,11 +1451,8 @@ $(document).ready(function() {
 		canvasVolumeHeight 	= canvasVolume.height
 	;
 
-
 	canvasVolume.width 	= 100;
 	canvasVolume.height = 30;
-
-
 
 
 	// Погнали!!!;)
@@ -1601,7 +1618,7 @@ $(document).ready(function() {
 					$('.playlistContainer').mCustomScrollbar('scrollTo', getCurrentTrack().scrollPosition);
 				}
 			});
-			makeDebugButton('playerState');
+			makeDebugButton();
 		} else {
 			console.log(0);
 		}

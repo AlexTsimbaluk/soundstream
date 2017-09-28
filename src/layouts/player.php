@@ -1,14 +1,3 @@
-<div class="resetLocalItem btn-group" title="Reset">
-	<button type="button" class="resetItem btn btn-danger">Reset</button>
-	<button class="changeItem" type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		<span class="caret"></span>
-	</button>
-	<ul class="itemList dropdown-menu">
-		<!-- <li><a href="#" data-remove-item="volume">Volume</a></li>
-		<li><a href="#" data-remove-item="search.stationsOpened">StationsOpened</a></li> -->
-	</ul>
-</div>
-
 <div id="player">
 
 	<div class="spinner">
