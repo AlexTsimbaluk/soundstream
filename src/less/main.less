@@ -109,6 +109,31 @@ a {
 }
 input:focus {outline: none;}
 
+// Уберем синюю дефолтную рамку вокруг контролов
+// и подчеркивание у активных ссылок,
+a,
+button,
+.control-button,
+.menu-button,
+.btn {
+    outline: none;
+    &:hover,
+    &:active,
+    &:focus,
+    &:active:focus {
+        outline: none;
+        text-decoration: none;
+    }
+}
+// а также у инпутов
+input[type=file],
+input[type=checkbox],
+input[type=radio] {
+	&:focus {
+		outline: none;
+	}
+}
+
 ul, ol {
     list-style-type: none;
 }
@@ -125,9 +150,11 @@ ul, ol {
 }
 
 .nav-admin {
-	margin: 17px -5px;
-	position: relative;
-	ul {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	.main-nav {
 		.flex-container;
 	}
 	.adminItem {
@@ -135,18 +162,58 @@ ul, ol {
 		line-height: 30px;
 		text-align: center;
 		width: 100%;
-		> a {
+		> .nav-btn,
+		.resetItem,
+		.changeItem {
 			background: rgba(0, 0, 0, .6);
             border: none;
+            border-radius: 0;
             color: #fff;
 			display: block;
 			height: 100%;
-		}
-		&:hover {
-			a {
-				background: rgba(45, 45, 45, .8);
+			padding: 0;
+			&.nav-btn {
+				width: 100%;
+				&:hover {
+					background: rgba(45, 45, 45, .8);
+				}
 			}
+			&.resetItem {
+				width: 80%;
+				float: left;
+				&:hover {
+					&:not[disabled] {
+						background: rgba(45, 45, 45, .8);
+					}
+				}
+				&[disabled] {
+					&:hover {
+						background: rgba(0, 0, 0, .6);
+					}
+				}
+			}
+			&.changeItem {
+				width: 20%;
+				float: left;
+				&:hover {
+					background: rgba(45, 45, 45, .8);
+				}
+			}
+			 &:hover {
+					// background: rgba(45, 45, 45, .8);
+					/* &.resetItem {
+						background: rgba(0, 0, 0, .6);
+					} */
+			} 
 		}
+		 /* &:hover {
+		  			.nav-btn {
+		  				background: rgba(45, 45, 45, .8);
+		  				&.resetItem {
+		  					background: rgba(0, 0, 0, .6);
+		  				}
+		  			}
+		  		} */ 
 	}
 }
 

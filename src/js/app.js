@@ -1,5 +1,7 @@
 'use strict';
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var dateStart = new Date().getTime();
 
 $.ajaxSetup({
@@ -773,7 +775,7 @@ $(document).ready(function () {
 				switch (item) {
 					case 'playerState':
 						delete playerState[prop];
-						console.log('delete ' + prop);
+						console.log('delete ' + item + '.' + prop);
 						break;
 
 					default:
@@ -784,19 +786,22 @@ $(document).ready(function () {
 				return false;
 			});
 		});
+	}
 
-		/*for(var key in obj) {
-  	console.log(key + ' : ' + obj[key]);
-  	if(typeof obj[key] === 'object') {
-  		var _o = obj[key];
-  		// if(typeof +obj[key] == 'number') {
-  		if(!isNaN(parseFloat(key))) {
-  			console.log('number');
-  		}
-  		// console.log('Тип ' + typeof key);
-  		makeDebugButton(_o);
-  	}
-  }*/
+	function getObjectProperties(obj) {
+		console.log('::getObjectProperties');
+		for (var key in obj) {
+			console.log(key + ' : ' + obj[key]);
+			if (_typeof(obj[key]) === 'object') {
+				var _o = obj[key];
+				// if(typeof +obj[key] == 'number') {
+				/*if(!isNaN(parseFloat(key))) {
+    	console.log('number');
+    }*/
+				// console.log('Тип ' + typeof key);
+				getObjectProperties(_o);
+			}
+		}
 	}
 
 	$('#player .prev').click(function (e) {

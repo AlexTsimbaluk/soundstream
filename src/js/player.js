@@ -859,7 +859,7 @@ $(document).ready(function() {
 				switch(item) {
 					case 'playerState':
 						delete playerState[prop];
-						console.log(`delete ${prop}`);
+						console.log(`delete ${item}.${prop}`);
 						break;
 
 					default:
@@ -870,22 +870,24 @@ $(document).ready(function() {
 				return false;
 			});
 		});
+	}
 
-
-
-		/*for(var key in obj) {
+	function getObjectProperties(obj) {
+		console.log('::getObjectProperties');
+		for(var key in obj) {
 			console.log(key + ' : ' + obj[key]);
 			if(typeof obj[key] === 'object') {
 				var _o = obj[key];
 				// if(typeof +obj[key] == 'number') {
-				if(!isNaN(parseFloat(key))) {
+				/*if(!isNaN(parseFloat(key))) {
 					console.log('number');
-				}
+				}*/
 				// console.log('Тип ' + typeof key);
-				makeDebugButton(_o);
+				getObjectProperties(_o);
 			}
-		}*/
+		}
 	}
+
 
 
 
@@ -1623,6 +1625,7 @@ $(document).ready(function() {
 			console.log(0);
 		}
 	}
+
 });
 
 

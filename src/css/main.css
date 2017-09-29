@@ -738,6 +738,41 @@ a:active {
 input:focus {
   outline: none;
 }
+a,
+button,
+.control-button,
+.menu-button,
+.btn {
+  outline: none;
+}
+a:hover,
+button:hover,
+.control-button:hover,
+.menu-button:hover,
+.btn:hover,
+a:active,
+button:active,
+.control-button:active,
+.menu-button:active,
+.btn:active,
+a:focus,
+button:focus,
+.control-button:focus,
+.menu-button:focus,
+.btn:focus,
+a:active:focus,
+button:active:focus,
+.control-button:active:focus,
+.menu-button:active:focus,
+.btn:active:focus {
+  outline: none;
+  text-decoration: none;
+}
+input[type=file]:focus,
+input[type=checkbox]:focus,
+input[type=radio]:focus {
+  outline: none;
+}
 ul,
 ol {
   list-style-type: none;
@@ -753,10 +788,12 @@ ol {
   position: relative;
 }
 .nav-admin {
-  margin: 17px -5px;
-  position: relative;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
 }
-.nav-admin ul {
+.nav-admin .main-nav {
   -webkit-justify-content: space-around;
       -ms-flex-pack: distribute;
           justify-content: space-around;
@@ -782,16 +819,70 @@ ol {
   line-height: 30px;
   text-align: center;
   width: 100%;
+  /* &:hover {
+		  			.nav-btn {
+		  				background: rgba(45, 45, 45, .8);
+		  				&.resetItem {
+		  					background: rgba(0, 0, 0, .6);
+		  				}
+		  			}
+		  		} */
 }
-.nav-admin .adminItem > a {
+.nav-admin .adminItem > .nav-btn,
+.nav-admin .adminItem .resetItem,
+.nav-admin .adminItem .changeItem {
   background: rgba(0, 0, 0, 0.6);
   border: none;
+  -webkit-border-radius: 0;
+          border-radius: 0;
   color: #fff;
   display: block;
   height: 100%;
+  padding: 0;
 }
-.nav-admin .adminItem:hover a {
+.nav-admin .adminItem > .nav-btn.nav-btn,
+.nav-admin .adminItem .resetItem.nav-btn,
+.nav-admin .adminItem .changeItem.nav-btn {
+  width: 100%;
+}
+.nav-admin .adminItem > .nav-btn.nav-btn:hover,
+.nav-admin .adminItem .resetItem.nav-btn:hover,
+.nav-admin .adminItem .changeItem.nav-btn:hover {
   background: rgba(45, 45, 45, 0.8);
+}
+.nav-admin .adminItem > .nav-btn.resetItem,
+.nav-admin .adminItem .resetItem.resetItem,
+.nav-admin .adminItem .changeItem.resetItem {
+  width: 80%;
+  float: left;
+}
+.nav-admin .adminItem > .nav-btn.resetItem:hover:not[disabled],
+.nav-admin .adminItem .resetItem.resetItem:hover:not[disabled],
+.nav-admin .adminItem .changeItem.resetItem:hover:not[disabled] {
+  background: rgba(45, 45, 45, 0.8);
+}
+.nav-admin .adminItem > .nav-btn.resetItem[disabled]:hover,
+.nav-admin .adminItem .resetItem.resetItem[disabled]:hover,
+.nav-admin .adminItem .changeItem.resetItem[disabled]:hover {
+  background: rgba(0, 0, 0, 0.6);
+}
+.nav-admin .adminItem > .nav-btn.changeItem,
+.nav-admin .adminItem .resetItem.changeItem,
+.nav-admin .adminItem .changeItem.changeItem {
+  width: 20%;
+  float: left;
+}
+.nav-admin .adminItem > .nav-btn.changeItem:hover,
+.nav-admin .adminItem .resetItem.changeItem:hover,
+.nav-admin .adminItem .changeItem.changeItem:hover {
+  background: rgba(45, 45, 45, 0.8);
+}
+.nav-admin .adminItem > .nav-btn:hover,
+.nav-admin .adminItem .resetItem:hover,
+.nav-admin .adminItem .changeItem:hover {
+  /* &.resetItem {
+						background: rgba(0, 0, 0, .6);
+					} */
 }
 .admin .nav-admin {
   margin: 0;
