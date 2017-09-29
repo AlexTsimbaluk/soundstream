@@ -839,6 +839,7 @@ ol {
   display: block;
   height: 100%;
   padding: 0;
+  overflow: hidden;
 }
 .nav-admin .adminItem > .nav-btn.nav-btn,
 .nav-admin .adminItem .resetItem.nav-btn,

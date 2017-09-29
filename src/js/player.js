@@ -818,6 +818,7 @@ $(document).ready(function() {
 		;
 
 		$resetButton.attr('disabled', 'disabled');
+		$resetButton.attr('title', 'Change item of local storage');
 
 		removePropList.push({item: 'playerState', prop: 'search.stationsOpened', name: 'StationsOpened'});
 		removePropList.push({item: 'playerState', prop: 'volume', name: 'Volume'});
@@ -848,6 +849,7 @@ $(document).ready(function() {
 			$resetButton.attr('data-remove-item', item);
 			$resetButton.attr('data-remove-prop', prop);
 			$resetButton.removeAttr('disabled');
+			$resetButton.html(prop).attr('title', item + '.' + prop);
 
 			$('[data-remove-prop]').on('click', function(e) {
 				// item - что удаляем, например volume у playerState
