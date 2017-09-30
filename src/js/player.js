@@ -810,26 +810,16 @@ $(document).ready(function() {
 
 
 	function debugPlayerState() {
-		console.log('::debugPlayerState');
-
-		var $debugLs 		= $('[data-remove="prop"]');
-
-		console.log($debugLs);
-
-		var	$removeButton 	= $debugLs.find('.removeItem'),
+		// console.log('::debugPlayerState');
+		var $debugLs 		= $('[data-remove="prop"]'),
+			$removeButton 	= $debugLs.find('.removeItem'),
 			$removeList 	= $debugLs.find('.removeItemList'),
 			removeList 		= [],
 			markup 			= ''
 		;
 
-		console.log($removeButton);
-
-
 		$removeButton.attr('disabled', 'disabled');
 		$removeButton.attr('title', 'Change item of local storage');
-
-		/*removeList.push({item: 'playerState', prop: 'search.stationsOpened', name: 'StationsOpened'});
-		removeList.push({item: 'playerState', prop: 'volume', name: 'Volume'});*/
 
 		removeList.push({prop: 'search.stationsOpened', name: 'StationsOpened'});
 		removeList.push({prop: 'volume', name: 'Volume'});
@@ -869,13 +859,9 @@ $(document).ready(function() {
 	}
 
 	function debugLocalStorage() {
-		console.log('::debugLocalStorage');
-
-		var $debugLs 		= $('[data-remove="item"]');
-
-		console.log($debugLs);
-
-		var	$removeButton 	= $debugLs.find('.removeItem'),
+		// console.log('::debugLocalStorage');
+		var $debugLs 		= $('[data-remove="item"]'),
+			$removeButton 	= $debugLs.find('.removeItem'),
 			$removeList 	= $debugLs.find('.removeItemList'),
 			removeList 		= [],
 			markup 			= ''
@@ -1269,14 +1255,15 @@ $(document).ready(function() {
 				}
 			});*/
 
-			var response 	= stationsArray,
-				size 		= response.length,
-				result 		= $('.searchContainer .result'),
+			var response 		= stationsArray,
+				stationsOpened 	= playerState.search.stationsOpened,
+				size 			= response.length,
+				result 			= $('.searchContainer .result'),
 				// станций в блоке и всего блоков
-				IN_BLOCK 	= 100,
-				totalBlocks = Math.ceil(size / IN_BLOCK),
+				IN_BLOCK 		= 100,
+				totalBlocks 	= Math.ceil(size / IN_BLOCK),
 				// начальная разметка - общее количество станций
-				markup 		= '<div class="total"><span>'
+				markup 			= '<div class="total"><span>'
 								+ size
 								+ '</span> stations is found</div>'
 			;
@@ -1314,17 +1301,17 @@ $(document).ready(function() {
 							+ '</div></div>';
 			}
 
+			
+
 			result.html(markup);
 
-			$('.stationsBlockToggle').on('click', function(e) {
-				var stationsOpened = playerState.search.stationsOpened,
-					markup 	= '',
+			// $('.stationsBlockToggle').on('click', function(e) {
+			$('[data-block-number]').on('click', function(e) {
+				var markup 	= '',
 					index 	= $(this).attr('data-block-number')
 				;
 				if($(this).attr('data-show') == 'closed') {
-					
 					var _stations = stationsArrayOn100[index];
-					// console.log(_stations);
 					markup += '<div class="stationsBlockList" data-stations-number=' + index + '>';
 					for(var i = 0; i < _stations.length; i++) {
 						var station = _stations[i];
@@ -1358,6 +1345,7 @@ $(document).ready(function() {
 					console.log('stationsBlockToggle №' + index + ' opened');
 					console.log(stationsOpened);
 
+					localStorage.setItem('playerState', JSON.stringify(playerState));
 					return false;
 				} else {
 					// TODO: при скрытии списка станций удалять его номер из этого массива
@@ -1378,6 +1366,39 @@ $(document).ready(function() {
 					return false;
 				}
 			});
+
+			if(stationsOpened.length) {
+				var targetBlock = stationsOpened[stationsOpened.length - 1]
+					$targetBlock = $('[data-block-number="' + targetBlock + '"]')
+				;
+				
+				stationsOpened = [];
+				console.log('нужно открыть блок №' + targetBlock);
+				console.log($('[data-block-number="' + targetBlock + '"]'));
+				// $('[data-block-number="' + targetBlock + '"]').click();
+				var _stations = stationsArrayOn100[targetBlock];
+				markup += '<div class="stationsBlockList" data-stations-number=' + targetBlock + '>';
+				for(var i = 0; i < _stations.length; i++) {
+					var station = _stations[i];
+					markup += '<div class="station" data-station-id="'
+								+ station.station_id
+								+ '"><div class="add"><i class="fa fa-plus"></i></div><div class="title">'
+								+ station.station_title 
+								+ '</div><div class="url">'
+								+ station.station_url
+								+ '</div></div>';
+				}
+				markup += '</div>';
+				$targetBlock.after(markup);
+				$targetBlock.attr('data-show', 'open');
+
+				console.log(stationsOpened);
+				stationsOpened.push(targetBlock);
+				console.log('stationsBlockToggle №' + targetBlock + ' opened');
+				console.log(stationsOpened);
+
+				localStorage.setItem('playerState', JSON.stringify(playerState));
+			}
 
 			$(".spinner").hide();
 
