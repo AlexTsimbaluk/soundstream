@@ -174,7 +174,7 @@ function checkUniqToday($uniqHash) {
 	echo json_encode($data);
 
 	if (!$result) {
-		echo mysqli_error($link);
+		// echo mysqli_error($link);
 	} else {
 		
 	}
