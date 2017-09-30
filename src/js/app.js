@@ -733,51 +733,123 @@ $(document).ready(function () {
 		}
 	}
 
-	function makeDebugButton() {
-		console.log('::makeDebugButton');
-		var $debug = $('.resetLocalStorage'),
-		    $resetButton = $debug.find('.resetItem'),
-		    $removePropList = $debug.find('.resetItemList'),
-		    removePropList = [],
+	function debugPlayerState() {
+		console.log('::debugPlayerState');
+
+		var $debugLs = $('[data-remove="prop"]');
+
+		console.log($debugLs);
+
+		var $removeButton = $debugLs.find('.removeItem'),
+		    $removeList = $debugLs.find('.removeItemList'),
+		    removeList = [],
 		    markup = '';
 
-		$resetButton.attr('disabled', 'disabled');
-		$resetButton.attr('title', 'Change item of local storage');
+		console.log($removeButton);
 
-		removePropList.push({ item: 'playerState', prop: 'search.stationsOpened', name: 'StationsOpened' });
-		removePropList.push({ item: 'playerState', prop: 'volume', name: 'Volume' });
+		$removeButton.attr('disabled', 'disabled');
+		$removeButton.attr('title', 'Change item of local storage');
 
-		for (var i = 0; i < removePropList.length; i++) {
-			markup += '<li class="remove" data-change-item="' + removePropList[i].item + '" data-change-prop="' + removePropList[i].prop + '"><a href="#">' + removePropList[i].name + '</a></li>';
+		/*removeList.push({item: 'playerState', prop: 'search.stationsOpened', name: 'StationsOpened'});
+  removeList.push({item: 'playerState', prop: 'volume', name: 'Volume'});*/
+
+		removeList.push({ prop: 'search.stationsOpened', name: 'StationsOpened' });
+		removeList.push({ prop: 'volume', name: 'Volume' });
+
+		for (var i = 0; i < removeList.length; i++) {
+			markup += '<li class="remove" data-change-prop="' + removeList[i].prop + '"><a href="#">' + removeList[i].name + '</a></li>';
 		}
-		$removePropList.html(markup);
-
-		/*$('.resetItem').on('click', function(e) {
-  	var attr = $(this).attr('data-remove-item');
-  	if(!attr) {
-  		throw new Error('Не передан атрибут!');
-  	}
-  	return false;
-  });*/
+		$removeList.html(markup);
 
 		$('[data-change-prop]').on('click', function (e) {
-			var item = $(this).attr('data-change-item');
-			prop = $(this).attr('data-change-prop');
-			$resetButton.attr('data-remove-item', item);
-			$resetButton.attr('data-remove-prop', prop);
-			$resetButton.removeAttr('disabled');
-			$resetButton.html(prop).attr('title', item + '.' + prop);
+			var prop = $(this).attr('data-change-prop');
+
+			console.log(prop);
+			console.log($removeButton);
+
+			$removeButton.attr('data-remove-prop', prop);
+			$removeButton.removeAttr('disabled');
+			$removeButton.html(prop).attr('title', 'playerState.' + prop);
 
 			$('[data-remove-prop]').on('click', function (e) {
-				// item - что удаляем, например volume у playerState
-				var item = $(this).attr('data-remove-item'),
-				    prop = $(this).attr('data-remove-prop'),
-				    $resetButton = $('.resetItem');
+				// prop - что удаляем, например volume у playerState
+				var prop = $(this).attr('data-remove-prop');
+
+				delete playerState[prop];
+				console.log('delete playerState.' + prop);
+
+				localStorage.setItem('playerState', JSON.stringify(playerState));
+
+				return false;
+			});
+		});
+	}
+
+	function debugLocalStorage() {
+		console.log('::debugLocalStorage');
+
+		var $debugLs = $('[data-remove="item"]');
+
+		console.log($debugLs);
+
+		var $removeButton = $debugLs.find('.removeItem'),
+		    $removeList = $debugLs.find('.removeItemList'),
+		    removeList = [],
+		    markup = '';
+
+		$removeButton.attr('disabled', 'disabled');
+		$removeButton.attr('title', 'Change item of local storage');
+
+		removeList.push({ item: 'playerState', name: 'playerState' });
+		removeList.push({ item: 'stations', name: 'stations' });
+		removeList.push({ item: 'stationsOn100', name: 'stationsOn100' });
+		removeList.push({ item: 'uniqHash', name: 'uniqHash' });
+		removeList.push({ item: 'userStatus', name: 'userStatus' });
+		removeList.push({ item: 'localStorage', name: 'localStorage' });
+
+		for (var i = 0; i < removeList.length; i++) {
+			markup += '<li class="remove" data-change-item="' + removeList[i].item + '"><a href="#">' + removeList[i].name + '</a></li>';
+		}
+		$removeList.html(markup);
+
+		$('[data-change-item]').on('click', function (e) {
+			var item = $(this).attr('data-change-item');
+
+			$removeButton.attr('data-remove-item', item);
+			$removeButton.removeAttr('disabled');
+			$removeButton.html(item).attr('title', item);
+
+			$('[data-remove-item]').on('click', function (e) {
+				// item - элемент из localStorage который удаляем
+				var item = $(this).attr('data-remove-item');
 
 				switch (item) {
 					case 'playerState':
-						delete playerState[prop];
-						console.log('delete ' + item + '.' + prop);
+						localStorage.removeItem('playerState');
+						console.log('delete ' + item);
+						break;
+
+					case 'stations':
+					case 'stationsOn100':
+						localStorage.removeItem('stations');
+						localStorage.removeItem('stationsOn100');
+						console.log('delete ' + item);
+						console.log('delete ' + item + 'On100');
+						break;
+
+					case 'uniqHash':
+						localStorage.removeItem('uniqHash');
+						console.log('delete ' + item);
+						break;
+
+					case 'userStatus':
+						localStorage.removeItem('userStatus');
+						console.log('delete ' + item);
+						break;
+
+					case 'localStorage':
+						localStorage.clear();
+						console.log('delete ' + item);
 						break;
 
 					default:
@@ -872,28 +944,6 @@ $(document).ready(function () {
 		console.log(url);
 		e.stopPropagation();
 	});
-
-	$('.clearLocalStorage').on('click', function (e) {
-		localStorage.clear();
-		return false;
-	});
-
-	$('.clearUniqHash').on('click', function (e) {
-		// localStorage.removeItem('uniqHash');
-		localStorage.removeItem('stations');
-		return false;
-	});
-
-	/*$('.resetItem').on('click', function(e) {
- 	// playerState = JSON.parse(localStorage.playerState);
- 	// delete playerState.search.stationsOpened;
- 	
- 	delete playerState.volume;
- 		localStorage.setItem('playerState', JSON.stringify(playerState));
- 		console.log('delete volume');
- 	
- 	return false;
- });*/
 
 	$('.toAdmin').on('click', function (e) {
 		console.log('toAdmin');
@@ -1400,7 +1450,8 @@ $(document).ready(function () {
 					$('.playlistContainer').mCustomScrollbar('scrollTo', getCurrentTrack().scrollPosition);
 				}
 			});
-			makeDebugButton();
+			debugPlayerState();
+			debugLocalStorage();
 		} else {
 			console.log(0);
 		}

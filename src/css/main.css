@@ -822,14 +822,14 @@ ol {
   /* &:hover {
 		  			.nav-btn {
 		  				background: rgba(45, 45, 45, .8);
-		  				&.resetItem {
+		  				&.removeItem {
 		  					background: rgba(0, 0, 0, .6);
 		  				}
 		  			}
 		  		} */
 }
 .nav-admin .adminItem > .nav-btn,
-.nav-admin .adminItem .resetItem,
+.nav-admin .adminItem .removeItem,
 .nav-admin .adminItem .changeItem {
   background: rgba(0, 0, 0, 0.6);
   border: none;
@@ -842,46 +842,46 @@ ol {
   overflow: hidden;
 }
 .nav-admin .adminItem > .nav-btn.nav-btn,
-.nav-admin .adminItem .resetItem.nav-btn,
+.nav-admin .adminItem .removeItem.nav-btn,
 .nav-admin .adminItem .changeItem.nav-btn {
   width: 100%;
 }
 .nav-admin .adminItem > .nav-btn.nav-btn:hover,
-.nav-admin .adminItem .resetItem.nav-btn:hover,
+.nav-admin .adminItem .removeItem.nav-btn:hover,
 .nav-admin .adminItem .changeItem.nav-btn:hover {
   background: rgba(45, 45, 45, 0.8);
 }
-.nav-admin .adminItem > .nav-btn.resetItem,
-.nav-admin .adminItem .resetItem.resetItem,
-.nav-admin .adminItem .changeItem.resetItem {
+.nav-admin .adminItem > .nav-btn.removeItem,
+.nav-admin .adminItem .removeItem.removeItem,
+.nav-admin .adminItem .changeItem.removeItem {
   width: 80%;
   float: left;
 }
-.nav-admin .adminItem > .nav-btn.resetItem:hover:not[disabled],
-.nav-admin .adminItem .resetItem.resetItem:hover:not[disabled],
-.nav-admin .adminItem .changeItem.resetItem:hover:not[disabled] {
+.nav-admin .adminItem > .nav-btn.removeItem:hover:not[disabled],
+.nav-admin .adminItem .removeItem.removeItem:hover:not[disabled],
+.nav-admin .adminItem .changeItem.removeItem:hover:not[disabled] {
   background: rgba(45, 45, 45, 0.8);
 }
-.nav-admin .adminItem > .nav-btn.resetItem[disabled]:hover,
-.nav-admin .adminItem .resetItem.resetItem[disabled]:hover,
-.nav-admin .adminItem .changeItem.resetItem[disabled]:hover {
+.nav-admin .adminItem > .nav-btn.removeItem[disabled]:hover,
+.nav-admin .adminItem .removeItem.removeItem[disabled]:hover,
+.nav-admin .adminItem .changeItem.removeItem[disabled]:hover {
   background: rgba(0, 0, 0, 0.6);
 }
 .nav-admin .adminItem > .nav-btn.changeItem,
-.nav-admin .adminItem .resetItem.changeItem,
+.nav-admin .adminItem .removeItem.changeItem,
 .nav-admin .adminItem .changeItem.changeItem {
   width: 20%;
   float: left;
 }
 .nav-admin .adminItem > .nav-btn.changeItem:hover,
-.nav-admin .adminItem .resetItem.changeItem:hover,
+.nav-admin .adminItem .removeItem.changeItem:hover,
 .nav-admin .adminItem .changeItem.changeItem:hover {
   background: rgba(45, 45, 45, 0.8);
 }
 .nav-admin .adminItem > .nav-btn:hover,
-.nav-admin .adminItem .resetItem:hover,
+.nav-admin .adminItem .removeItem:hover,
 .nav-admin .adminItem .changeItem:hover {
-  /* &.resetItem {
+  /* &.removeItem {
 						background: rgba(0, 0, 0, .6);
 					} */
 }
@@ -1919,8 +1919,4 @@ canvas {
   position: relative;
   z-index: 10;
   left: 50%;
-}
-.resetLocalStorage {
-  position: relative;
-  z-index: 2;
 }
