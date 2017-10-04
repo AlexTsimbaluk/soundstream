@@ -848,7 +848,12 @@ $(document).ready(function() {
 				// prop - что удаляем, например volume у playerState
 				var prop = $(this).attr('data-remove-prop');
 
+				console.log('999999999999999');
+				console.log(playerState);
+				console.log(playerState[prop]);
 				delete playerState[prop];
+				console.log(playerState);
+
 				console.log(`delete playerState.${prop}`);
 
 				localStorage.setItem('playerState', JSON.stringify(playerState));
@@ -888,19 +893,33 @@ $(document).ready(function() {
 		$removeList.html(markup);
 
 		$('[data-change-item]').on('click', function(e) {
-			var item = $(this).attr('data-change-item');
+			var $option 	= $(this),
+				item 		= $option.attr('data-change-item')
+			;
+
+			console.log($option);
 
 			$removeButton.attr('data-remove-item', item);
 			$removeButton.removeAttr('disabled');
-			$removeButton.html(item).attr('title', item);
+			$removeButton.html(item).attr('title', 'Delete::' + item);
 
 			$('[data-remove-item]').on('click', function(e) {
 				// item - элемент из localStorage который удаляем
-				var item = $(this).attr('data-remove-item');
+				var item 	= $(this).attr('data-remove-item'),
+					$option = $removeList.find('[data-change-item="' + item + '"]')
+				;
+
+				if($option.attr('data-change-item') == 'stations' || $option.attr('data-change-item') == 'stationsOn100') {
+					var $optionStations = [
+						$removeList.find('[data-change-item="stations"]'),
+						$removeList.find('[data-change-item="stationsOn100"]')
+					];
+				}
+				console.log($option);
 
 				switch(item) {
 					case 'playerState':
-						localStorage.removeItem('playerState');
+						localStorage.removeItem(item);
 						console.log(`delete ${item}`);
 						break;
 
@@ -908,17 +927,21 @@ $(document).ready(function() {
 					case 'stationsOn100':
 						localStorage.removeItem('stations');
 						localStorage.removeItem('stationsOn100');
+						// localStorage.removeItem(item);
+						// localStorage.removeItem(item);
 						console.log(`delete ${item}`);
 						console.log(`delete ${item}On100`);
 						break;
 
 					case 'uniqHash':
-						localStorage.removeItem('uniqHash');
+						// localStorage.removeItem('uniqHash');
+						localStorage.removeItem(item);
 						console.log(`delete ${item}`);
 						break;
 
 					case 'userStatus':
-						localStorage.removeItem('userStatus');
+						// localStorage.removeItem('userStatus');
+						localStorage.removeItem(item);
 						console.log(`delete ${item}`);
 						break;
 
@@ -930,8 +953,20 @@ $(document).ready(function() {
 					default:
 						break;
 				}
-				localStorage.setItem('playerState', JSON.stringify(playerState));
 
+				$(this)
+					.html('Clear')
+					.attr('disabled', 'disabled')
+					.attr('title', 'Change item of local storage')
+					.removeAttr('data-remove-item')
+				;
+
+				if($optionStations) {
+					$removeList.find('[data-change-item="stations"]').remove();
+					$removeList.find('[data-change-item="stationsOn100"]').remove();
+				} else {
+					$option.remove();
+				}
 				return false;
 			});
 		});
@@ -1198,6 +1233,7 @@ $(document).ready(function() {
 	$('#player .find .showAll').on('click', function(e) {
 		$(this).toggleClass('active');
 
+		// ??? - что за if ???
 		if(!$('.searchContainer .result .station').length) {
 			$(".spinner").show();
 			/*$.ajax({
@@ -1301,8 +1337,6 @@ $(document).ready(function() {
 							+ '</div></div>';
 			}
 
-			
-
 			result.html(markup);
 
 			// $('.stationsBlockToggle').on('click', function(e) {
@@ -1368,19 +1402,19 @@ $(document).ready(function() {
 			});
 
 			if(stationsOpened.length) {
-				var targetBlock = stationsOpened[stationsOpened.length - 1]
-					$targetBlock = $('[data-block-number="' + targetBlock + '"]')
+				var targetBlock 	= stationsOpened[stationsOpened.length - 1],
+					$targetBlock 	= $('[data-block-number="' + targetBlock + '"]'),
+					markupStationsList 			= ''
 				;
-				
+
 				stationsOpened = [];
-				console.log('нужно открыть блок №' + targetBlock);
-				console.log($('[data-block-number="' + targetBlock + '"]'));
+				console.log('targetBlock is ' + targetBlock);
 				// $('[data-block-number="' + targetBlock + '"]').click();
 				var _stations = stationsArrayOn100[targetBlock];
-				markup += '<div class="stationsBlockList" data-stations-number=' + targetBlock + '>';
+				markupStationsList += '<div class="stationsBlockList" data-stations-number=' + targetBlock + '>';
 				for(var i = 0; i < _stations.length; i++) {
 					var station = _stations[i];
-					markup += '<div class="station" data-station-id="'
+					markupStationsList += '<div class="station" data-station-id="'
 								+ station.station_id
 								+ '"><div class="add"><i class="fa fa-plus"></i></div><div class="title">'
 								+ station.station_title 
@@ -1388,9 +1422,11 @@ $(document).ready(function() {
 								+ station.station_url
 								+ '</div></div>';
 				}
-				markup += '</div>';
-				$targetBlock.after(markup);
-				$targetBlock.attr('data-show', 'open');
+				markupStationsList += '</div>';
+				// ||
+				// $targetBlock.after(markupStationsList);
+				// $targetBlock.attr('data-show', 'open');
+				$targetBlock.attr('data-show', 'open').after(markupStationsList);
 
 				console.log(stationsOpened);
 				stationsOpened.push(targetBlock);
@@ -1571,14 +1607,25 @@ $(document).ready(function() {
 		stationsArrayOn100 	= JSON.parse(localStorage.getItem('stationsOn100'));
 	}
 
+	/*	
+	function Playlist(name) {
+		this.name = name;
+		// this.active = active;
+		this.tracks = [];
+		this.currentTrack = {};
+		this.htmlEl = '<div class="playlist active sortable" data-name="' + this.name + '">';
+		playerState.playlists[name] = this;
+		playerState.playlistsOrder.push(this.name);
+	}
+	*/
+
+
 	if(localStorage.getItem('playerState') == undefined) {
+		console.log('playerState == undefined');
 		// Объект плейлиста
-		var defaultPlaylist = new Playlist('Default');
+		var defaultPlaylist 		= new Playlist('Default');		// ?? - нужен ??
 		playerState.currentPlaylist = 'Default';
-		playlistsPanel.append('<div class="plName" data-name="Default">Default</div>');
-		playlistContainer.append(playerState.playlists[playerState.currentPlaylist].htmlEl);
-		
-		// playerState.playlists[playerState.currentPlaylist].currentTrack.scrollPosition = 0;
+		playerState.playlistsOrder 	= ['Default'];
 
 		playerState
 			.playlists[playerState.currentPlaylist]
@@ -1596,16 +1643,28 @@ $(document).ready(function() {
 						4046,
 						3187,
 						4055,
-						2400
+						2400,
+						857,
+						3210
 		];
-
+		
 		playerState
 			.playlists[playerState.currentPlaylist]
 			.currentTrack = {
 				id:1330,
-				url:'http://graalradio.com:8123/future',
-				title:'Graal Radio Future'
+				url 			:'http://graalradio.com:8123/future',
+				title 			:'Graal Radio Future',
+				scrollPosition 	: 150
 		};
+
+		playerState.volume = .27;
+		playerState.paused = false;
+		playerState.search.stationsOpened = [];
+		
+		playlistsPanel.append('<div class="plName" data-name="Default">Default</div>');
+		playlistContainer.append(playerState.playlists[playerState.currentPlaylist].htmlEl);
+		
+		// playerState.playlists[playerState.currentPlaylist].currentTrack.scrollPosition = 0;
 
 		localStorage.setItem('playerState', JSON.stringify(playerState));
 
@@ -1626,15 +1685,14 @@ $(document).ready(function() {
 		}
 
 		// Задаем свойства объекта Audio свойствами объекта playerState
+		// Выставляем громкость
 		audioApiElement.setVolume(playerState.volume || .27);
 		audioCbElement.setVolume(playerState.volume || .27);
 
-		// Выставляем громкость
 		$('#player .volume input').val(audioApiElement.getVolume() * 100);
 		$('#player .volume input').val(audioCbElement.getVolume() * 100);
 		$('#player .volume .val').html(Math.floor(audioApiElement.getVolume() * 100));
 		$('#player .volume .val').html(Math.floor(audioCbElement.getVolume() * 100));
-
 		// Рисуем соответствующий регулятор
 		drawWolumeBar();
 
@@ -1702,6 +1760,14 @@ $(document).ready(function() {
 			console.log(0);
 		}
 	}
+
+	/*try {
+		localStorage.setItem('limit', 'phhhhh');
+	} catch (e) {
+			if (e == QUOTA_EXCEEDED_ERR) {
+			console.log('Превышен лимит');
+		}
+	}*/
 
 });
 
