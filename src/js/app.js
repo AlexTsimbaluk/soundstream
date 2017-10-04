@@ -764,17 +764,29 @@ $(document).ready(function () {
 
 			$('[data-remove-prop]').on('click', function (e) {
 				// prop - что удаляем, например volume у playerState
-				var prop = $(this).attr('data-remove-prop');
+				var prop = $(this).attr('data-remove-prop'),
+				    $option = $removeList.find('[data-change-prop="' + prop + '"]');
 
-				console.log('999999999999999');
+				switch (prop) {
+					case 'search.stationsOpened':
+						delete playerState.search.stationsOpened;
+						console.log('delete playerState.' + prop);
+						break;
+
+					case 'volume':
+						delete playerState.volume;
+						console.log('delete playerState.' + prop);
+						break;
+
+					default:
+						break;
+				}
+
 				console.log(playerState);
-				console.log(playerState[prop]);
-				delete playerState[prop];
-				console.log(playerState);
-
-				console.log('delete playerState.' + prop);
-
 				localStorage.setItem('playerState', JSON.stringify(playerState));
+
+				$(this).html('Reset').attr('disabled', 'disabled').attr('title', 'Change prop of playerState').removeAttr('data-remove-prop');
+				$option.remove();
 
 				return false;
 			});
@@ -834,20 +846,16 @@ $(document).ready(function () {
 					case 'stationsOn100':
 						localStorage.removeItem('stations');
 						localStorage.removeItem('stationsOn100');
-						// localStorage.removeItem(item);
-						// localStorage.removeItem(item);
 						console.log('delete ' + item);
 						console.log('delete ' + item + 'On100');
 						break;
 
 					case 'uniqHash':
-						// localStorage.removeItem('uniqHash');
 						localStorage.removeItem(item);
 						console.log('delete ' + item);
 						break;
 
 					case 'userStatus':
-						// localStorage.removeItem('userStatus');
 						localStorage.removeItem(item);
 						console.log('delete ' + item);
 						break;
@@ -1140,7 +1148,7 @@ $(document).ready(function () {
    });*/
 
 			var response = stationsArray,
-			    stationsOpened = playerState.search.stationsOpened,
+			    stationsOpened = playerState.search.stationsOpened || [],
 			    size = response.length,
 			    result = $('.searchContainer .result'),
 
@@ -1154,18 +1162,6 @@ $(document).ready(function () {
 			console.log(totalBlocks);
 
 			result.html('');
-
-			// for(var i = 0; i < size; i++) {
-			/*for(var i = 0; i < 100; i++) {
-   	var station = response[i];
-   		markup += '<div class="station" data-station-id="'
-   				+ station.station_id
-   				+ '"><div class="add"><i class="fa fa-plus"></i></div><div class="title">'
-   				+ station.station_title 
-   				+ '</div><div class="url">'
-   				+ station.station_url
-   				+ '</div></div>';
-   }*/
 
 			for (var i = 0; i < totalBlocks; i++) {
 				var from = i * 100,
@@ -1205,7 +1201,7 @@ $(document).ready(function () {
 						console.log('лишний ' + stationsOpened[0]);
 
 						$('[data-stations-number="' + stationsOpened[0] + '"]').remove();
-						$('[data-stations-number="' + stationsOpened[0] + '"]').attr('data-show', 'closed');
+						$('[data-block-number="' + stationsOpened[0] + '"]').attr('data-show', 'closed');
 
 						console.log(stationsOpened);
 						stationsOpened.shift();
@@ -1215,8 +1211,8 @@ $(document).ready(function () {
 					console.log('stationsBlockToggle №' + index + ' opened');
 					console.log(stationsOpened);
 
-					localStorage.setItem('playerState', JSON.stringify(playerState));
-					return false;
+					/*localStorage.setItem('playerState', JSON.stringify(playerState));
+     return false;*/
 				} else {
 					// TODO: при скрытии списка станций удалять его номер из этого массива
 					// https://learn.javascript.ru/array-iteration#filter
@@ -1233,11 +1229,13 @@ $(document).ready(function () {
 
 					console.log('stationsBlockToggle №' + index + ' removed');
 
-					return false;
+					// return false;
 				}
+				localStorage.setItem('playerState', JSON.stringify(playerState));
+				return false;
 			});
 
-			if (stationsOpened.length) {
+			if (stationsOpened.length > 0) {
 				var targetBlock = stationsOpened[stationsOpened.length - 1],
 				    $targetBlock = $('[data-block-number="' + targetBlock + '"]'),
 				    markupStationsList = '';
