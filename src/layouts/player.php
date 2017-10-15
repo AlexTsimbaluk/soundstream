@@ -89,10 +89,23 @@
 	</div>
 
 	<div class="playlistsPanel">
-		<div class="nav">
-			<i class="fa fa-angle-left"></i>
-			<i class="fa fa-angle-right"></i>
-		</div>
+		<ul class="nav">
+			<li>
+				<button class="playlist-control playlist-prev">
+					<i class="fa fa-angle-left"></i>
+				</button>
+			</li>
+			<li>
+				<button class="playlist-control playlist-next">
+					<i class="fa fa-angle-right"></i>
+				</button>
+			</li>
+			<li>
+				<button class="playlist-control playlist-new">
+					<i class="fa fa-plus"></i>
+				</button>
+			</li>
+		</ul>
 	</div>
 
 	<div class="playlistContainer"></div>

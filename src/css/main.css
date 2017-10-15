@@ -1437,6 +1437,13 @@ ol {
   right: 4px;
   top: -2px;
 }
+#player .playlistsPanel .nav li {
+  float: left;
+}
+#player .playlistsPanel .nav .playlist-control {
+  background-color: transparent;
+  border: none;
+}
 #player .playlistsPanel .nav i {
   color: #aaa;
   cursor: pointer;
