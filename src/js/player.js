@@ -5,14 +5,15 @@ $.ajaxSetup({
 	url: 'actions.php',
 	complete: function() {},
 	statusCode: {
-		200: function(message) {
-		},
+		200: function(message) {},
 		403: function(jqXHR) {
+			'use strict';
 			var error = JSON.parse(jqXHR.responseText);
 			$("body").prepend(error.message);
 		}
 	},
 	error: function (error, xhr, status, errorThrown) {
+		'use strict';
 		console.log('XHR error');
 	}
 });
@@ -23,7 +24,8 @@ if(getParams().admin !== undefined) {
 	$('body').removeClass('admin');
 }
 
-function getParams() { 
+function getParams() {
+	'use strict';
 	var $_GET = {}; 
 	var __GET = window
 				.location
@@ -39,27 +41,30 @@ function getParams() {
 }
 
 function d(str) {
+	'use strict';
 	$('.debug').html(str);
 }
 // Получение случайного числа в заданном диапазоне
 function getRandomInt(min, max) {
+	'use strict';
 	return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 // Получение случайного цвета rgb
 function getRandomRgbColor() {
-	var color = '';
-	return 'rgb('
-				 + getRandomInt(0, 255)
-				 + ','
-				 + getRandomInt(0, 255)
-				 + ','
-				 + getRandomInt(0, 255)
-				 + ')';
+	'use strict';
+	// var color = '';
+	return 'rgb(' 					 +
+				getRandomInt(0, 255) +
+				','					 +
+				getRandomInt(0, 255) +
+				','					 +
+				getRandomInt(0, 255) + ')';
 }
 
 // Получение случайной строки
 function getHash(size) {
+	'use strict';
 	var hash = '';
 	for(var i = 0; i < size; i++) {
 		hash += String.fromCharCode(getRandomInt(33, 127));
@@ -70,6 +75,7 @@ function getHash(size) {
 
 
 $(document).ready(function() {
+	'use strict';
 	$('body').attr('data-useragent', navigator.userAgent);
 
 	/*Sortable plugin JQueryUI*/
@@ -596,7 +602,7 @@ $(document).ready(function() {
 		var canvas = new AudioCanvas('canvas-audio-source', 500, 255 * 2);
 		canvas.ctx.clearRect(0, 0, canvas.canvasWidth, canvas.canvasHeight);
 
-	    for(bin = 0; bin < audioApiElement.streamData_1.length; bin ++) {
+	    for(var bin = 0; bin < audioApiElement.streamData_1.length; bin ++) {
 	        var val = audioApiElement.streamData_1[bin];
 	        canvas.ctx.fillStyle = 'rgb(' + (val) + ',' + (val) + ',' + (val) + ')';
 	        // canvas.ctx.fillStyle = 'rgb(' + (255 - val) + ',' + (255 - val) + ',' + (255 - val) + ')';
@@ -611,7 +617,7 @@ $(document).ready(function() {
 		var canvas = new AudioCanvas('canvas-audio-source-eq2', 500, 255 * 2);
 		canvas.ctx.clearRect(0, 0, canvas.canvasWidth, canvas.canvasHeight);
 
-	    for(bin = 0, size = audioApiElement.streamData_2.length; bin < size; bin ++) {
+	    for(var bin = 0, size = audioApiElement.streamData_2.length; bin < size; bin ++) {
 	        var val = audioApiElement.streamData_2[bin];
 	        // canvas.ctx.fillStyle = 'rgb(' + (val) + ',' + (val) + ',' + (val) + ')';
 	        // canvas.ctx.fillStyle = 'rgb(' + (255 - val) + ',' + (255 - val) + ',' + (255 - val) + ')';
@@ -665,7 +671,7 @@ $(document).ready(function() {
 		var canvas = new AudioCanvas('canvas-fractal', 500, 255 * 2);
 		canvas.ctx.clearRect(0, 0, canvas.canvasWidth, canvas.canvasHeight);
 
-	    for(bin = 0; bin < audioApiElement.streamData_4.length; bin ++) {
+	    for(var bin = 0; bin < audioApiElement.streamData_4.length; bin ++) {
 	        var val = audioApiElement.streamData_4[bin];
 	        canvas.ctx.fillStyle = 'rgb(' + (val) + ',' + (val) + ',' + (val) + ')';
 	        // canvas.ctx.fillStyle = 'rgb(' + (255 - val) + ',' + (255 - val) + ',' + (255 - val) + ')';
@@ -1574,13 +1580,16 @@ $(document).ready(function() {
 
 	// Погнали!!!;)
 
+	// Состояние пользователя - зарегистрирован или нет, авторизован или нет
 	if(localStorage.getItem('userStatus') == undefined) {
+		console.log('userStatus == undefined');
 		localStorage.setItem('userStatus', JSON.stringify(userStatus));
 	} else {
 		userStatus = JSON.parse(localStorage.userStatus);
 	}
 
 	if(localStorage.getItem('stations') == undefined) {
+		console.log('stations == undefined');
 		$.ajax({
 			data: {'action': 'getAllStations'},
 			success: function(data) {
@@ -1629,6 +1638,7 @@ $(document).ready(function() {
 		var defaultPlaylist 		= new Playlist('Default');		// ?? - нужен ??
 		playerState.currentPlaylist = 'Default';
 		playerState.playlistsOrder 	= ['Default'];
+		// playerState.playlists[playerState.currentPlaylist].tracks = [];
 
 		playerState
 			.playlists[playerState.currentPlaylist]
@@ -1771,6 +1781,9 @@ $(document).ready(function() {
 			console.log('Превышен лимит');
 		}
 	}*/
+
+
+	
 
 });
 

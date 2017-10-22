@@ -13,7 +13,8 @@ var gulp = require('gulp'),
 	;
 
 gulp.task('less', function() {
-	return gulp.src(['src/less/*.less', '!src/less/_*.less'])
+	// return gulp.src(['src/less/*.less', '!src/less/_*.less'])
+	return gulp.src('src/less/main.less')
 			.pipe(less())
 			.pipe(autoprefixer(['last 15 versions', '> 1%', 'ie 8', 'ie 7'], { cascade: true }))
 			// .pipe(browserSync.reload({stream: true}))
