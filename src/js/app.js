@@ -101,21 +101,23 @@ $(document).ready(function () {
 		// imageArr.sort(compareRandom);
 		// console.log(imageArr);
 
-		$.mbBgndGallery.buildGallery({
-			containment: "body",
-			timer: 3000,
-			effTimer: 11000,
-			shuffle: true,
-			effect: "fade",
-			// folderPath:"/img/bg/",
-			images: imageArr,
+		if (window.innerHeight <= 640 && window.innerWidth < 700) {
+			$.mbBgndGallery.buildGallery({
+				containment: "body",
+				timer: 3000,
+				effTimer: 11000,
+				shuffle: true,
+				effect: "fade",
+				// folderPath:"/img/bg/",
+				images: imageArr,
 
-			onChange: function onChange(idx) {
-				/*var effects = ['fade', 'zoom', 'slideUp', 'slideDown', 'slideRight', 'slideLeft'];
-    var index = getRandomInt(0, effects.length);
-    $.mbBgndGallery.changeEffect(effects[index]);*/
-			}
-		});
+				onChange: function onChange(idx) {
+					/*var effects = ['fade', 'zoom', 'slideUp', 'slideDown', 'slideRight', 'slideLeft'];
+     var index = getRandomInt(0, effects.length);
+     $.mbBgndGallery.changeEffect(effects[index]);*/
+				}
+			});
+		}
 	});
 
 	// mCustomScrollbar
@@ -168,7 +170,9 @@ $(document).ready(function () {
 				var markup = '';
 				for (var i = 0; i < response.length; i++) {
 					var track = response[i];
-					markup += '<div class="track" data-station-id="' + track.station_id + '" data-station-title="' + track.station_title + '" data-station-url="' + track.station_url + '"><div class="delete"><i class="fa fa-minus"></i></div><div class="title">' + track.station_title + '</div><div class="url">' + track.station_url + '</div></div>';
+					markup += '<div class="track" data-station-id="' + track.station_id + '" data-station-title="' + track.station_title + '" data-station-url="' + track.station_url + '"><div class="delete">\
+							<i class="fa fa-minus"></i>\
+							</div><div class="title">' + track.station_title + '</div><div class="url">' + track.station_url + '</div></div>';
 
 					playerState.playlists[playerState.currentPlaylist].tracks.push(+track.station_id);
 					playerState.playlists[playerState.currentPlaylist].currentTrack = {
@@ -194,11 +198,12 @@ $(document).ready(function () {
 		playerState.playlistsOrder.push(this.name);
 	}
 
-	// TODO: analyser сделать отдельным объектом, с которым будет работать AudioApiElement
+	// TODO: analyser сделать отдельным объектом,
+	// с которым будет работать AudioApiElement
 	function Analyser(ctx, src, analyserOpts) {
 		var self = this;
 		var analyser = ctx.createAnalyser();
-		analyser.smoothingTimeConstant = analyserOpts.smoothingTimeConstant || .7;
+		analyser.smoothingTimeConstant = analyserOpts.smoothingTimeConstant || 0.7;
 		analyser.fftSize = analyserOpts.fftSize || 512;
 
 		src.connect(analyser);
@@ -221,17 +226,17 @@ $(document).ready(function () {
 		var self = this;
 		function createAnalyser(opts) {
 			var a = audioCtx.createAnalyser();
-			a.smoothingTimeConstant = opts.smoothingTimeConstant || .7;
+			a.smoothingTimeConstant = opts.smoothingTimeConstant || 0.7;
 			a.fftSize = opts.fftSize || 512;
 			return a;
 		}
 
 		var source = audioCtx.createMediaElementSource($playerTag);
 
-		var analyser_1 = new Analyser(audioCtx, source, { smoothingTimeConstant: .5, fftSize: 1024 });
-		var analyser_2 = new Analyser(audioCtx, source, { smoothingTimeConstant: .5, fftSize: 1024 });
-		var analyser_3 = new Analyser(audioCtx, source, { smoothingTimeConstant: .5, fftSize: 64 });
-		var analyser_4 = new Analyser(audioCtx, source, { smoothingTimeConstant: .5, fftSize: 512 });
+		var analyser_1 = new Analyser(audioCtx, source, { smoothingTimeConstant: 0.5, fftSize: 1024 });
+		var analyser_2 = new Analyser(audioCtx, source, { smoothingTimeConstant: 0.5, fftSize: 1024 });
+		var analyser_3 = new Analyser(audioCtx, source, { smoothingTimeConstant: 0.5, fftSize: 64 });
+		var analyser_4 = new Analyser(audioCtx, source, { smoothingTimeConstant: 0.5, fftSize: 512 });
 
 		this.streamData_1 = analyser_1.streamData;
 		this.streamData_2 = analyser_2.streamData;
@@ -257,7 +262,8 @@ $(document).ready(function () {
 			// Изменим объект состояния
 			playerState.playlists[playerState.currentPlaylist].currentTrack = _currentTrack;
 
-			// Запишем в объект состояния свойтво с позицией по высоте текущего трека
+			// Запишем в объект состояния свойтво
+			// с позицией по высоте текущего трека
 			// для скрола к нему при загрузке страницы
 			playerState.playlists[playerState.currentPlaylist].currentTrack.scrollPosition = currentTrackEl.position().top;
 
@@ -550,7 +556,8 @@ $(document).ready(function () {
 		this.canvasHeight = canvas.height;
 	}
 
-	// TODO: Сделать функцию, которая принимает объект с настройками (анализатора например (fft)),
+	// TODO: Сделать функцию,
+	// которая принимает объект с настройками (анализатора например (fft)),
 	// и колбэк - функцию рисования
 
 	function drawEq1() {

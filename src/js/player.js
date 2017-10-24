@@ -82,9 +82,9 @@ $(document).ready(function() {
 	// $('.sortable').sortable({scroll: true});
 
 	// Первоначальное случайное фоновое изображение для body
-	$('body').css({'background':'url("../img/bg/bg'
-					+ getRandomInt(1, 10)
-					+ '.jpg") no-repeat center / cover'
+	$('body').css({'background':'url("../img/bg/bg' +
+					getRandomInt(1, 10) 			+
+					'.jpg") no-repeat center / cover'
 					})
 	;
 	
@@ -104,21 +104,23 @@ $(document).ready(function() {
 		// imageArr.sort(compareRandom);
 		// console.log(imageArr);
 
-		$.mbBgndGallery.buildGallery({
-			containment:"body",
-			timer:3000,
-			effTimer:11000,
-			shuffle:true,
-			effect:"fade",
-            // folderPath:"/img/bg/",
-            images: imageArr,
+		if(window.innerHeight <= 640 && window.innerWidth < 700) {
+			$.mbBgndGallery.buildGallery({
+				containment:"body",
+				timer:3000,
+				effTimer:11000,
+				shuffle:true,
+				effect:"fade",
+	            // folderPath:"/img/bg/",
+	            images: imageArr,
 
-            onChange:function(idx) {
-            	/*var effects = ['fade', 'zoom', 'slideUp', 'slideDown', 'slideRight', 'slideLeft'];
-            	var index = getRandomInt(0, effects.length);
-            	$.mbBgndGallery.changeEffect(effects[index]);*/
-            }
-        });
+	            onChange:function(idx) {
+	            	/*var effects = ['fade', 'zoom', 'slideUp', 'slideDown', 'slideRight', 'slideLeft'];
+	            	var index = getRandomInt(0, effects.length);
+	            	$.mbBgndGallery.changeEffect(effects[index]);*/
+	            }
+	        });
+		}
 	});
 
 	// mCustomScrollbar
@@ -179,24 +181,28 @@ $(document).ready(function() {
 			data: {'action': 'getStation', 'id': id},
 			success: function(data) {
 				var response = JSON.parse(data),
-					playlist = playlistContainer.find('.playlist[data-name="'
-														+ playerState.currentPlaylist
-														+ '"]')
+					playlist = playlistContainer.
+									find('.playlist[data-name="' 		+
+											playerState.currentPlaylist +
+														'"]')
 				;
 				var markup = '';
 				for(var i = 0; i < response.length; i++) {
 					var track = response[i];
-					markup += '<div class="track" data-station-id="'
-								+ track.station_id
-								+ '" data-station-title="'
-								+ track.station_title
-								+ '" data-station-url="'
-								+ track.station_url
-								+ '"><div class="delete"><i class="fa fa-minus"></i></div><div class="title">'
-								+ track.station_title
-								+ '</div><div class="url">'
-								+ track.station_url
-								+ '</div></div>';
+					markup += 
+							'<div class="track" data-station-id="' 	+
+							track.station_id 						+
+							'" data-station-title="' 				+
+							track.station_title 					+
+							'" data-station-url="' 					+
+							track.station_url 						+
+							'"><div class="delete">\
+							<i class="fa fa-minus"></i>\
+							</div><div class="title">' 				+
+							track.station_title 					+
+							'</div><div class="url">' 				+
+							track.station_url 						+
+							'</div></div>';
 
 					playerState
 						.playlists[playerState.currentPlaylist]
@@ -211,7 +217,8 @@ $(document).ready(function() {
 							title: track.station_title
 					};
 				}
-				localStorage.setItem('playerState', JSON.stringify(playerState));
+				localStorage.
+					setItem('playerState', JSON.stringify(playerState));
 				playlist.html(playlist.html() + markup);
 			}
 		});
@@ -224,16 +231,23 @@ $(document).ready(function() {
 		// this.active = active;
 		this.tracks = [];
 		this.currentTrack = {};
-		this.htmlEl = '<div class="playlist active sortable" data-name="' + this.name + '">';
+		this.htmlEl = 
+			'<div class="playlist active sortable" data-name="' +
+			this.name 											+
+			'">'
+		;
 		playerState.playlists[name] = this;
 		playerState.playlistsOrder.push(this.name);
 	}
 
-	// TODO: analyser сделать отдельным объектом, с которым будет работать AudioApiElement
+	// TODO: analyser сделать отдельным объектом,
+	// с которым будет работать AudioApiElement
 	function Analyser(ctx, src, analyserOpts) {
 		var self = this;
 	    var analyser = ctx.createAnalyser();
-    	analyser.smoothingTimeConstant = analyserOpts.smoothingTimeConstant || .7;
+    	analyser.smoothingTimeConstant =
+    									analyserOpts.smoothingTimeConstant ||
+							    		0.7;
     	analyser.fftSize = analyserOpts.fftSize || 512;
 
     	src.connect(analyser);
@@ -256,17 +270,33 @@ $(document).ready(function() {
 	    var self = this;
 	    function createAnalyser(opts) {
 		    var a = audioCtx.createAnalyser();
-	    	a.smoothingTimeConstant = opts.smoothingTimeConstant || .7;
+	    	a.smoothingTimeConstant = opts.smoothingTimeConstant || 0.7;
 	    	a.fftSize = opts.fftSize || 512;
 	    	return a;
 	    }
 
 	    var source = audioCtx.createMediaElementSource($playerTag);
 
-	    var analyser_1 = new Analyser(audioCtx, source, {smoothingTimeConstant: .5, fftSize: 1024});
-	    var analyser_2 = new Analyser(audioCtx, source, {smoothingTimeConstant: .5, fftSize: 1024});
-	    var analyser_3 = new Analyser(audioCtx, source, {smoothingTimeConstant: .5, fftSize: 64});
-	    var analyser_4 = new Analyser(audioCtx, source, {smoothingTimeConstant: .5, fftSize: 512});
+	    var analyser_1 =
+				new Analyser(
+				audioCtx,
+				source,
+				{smoothingTimeConstant: 0.5, fftSize: 1024});
+		var analyser_2 =
+				new Analyser(
+				audioCtx,
+				source,
+				{smoothingTimeConstant: 0.5, fftSize: 1024});
+		var analyser_3 =
+				new Analyser(
+				audioCtx,
+				source,
+				{smoothingTimeConstant: 0.5, fftSize: 64});
+		var analyser_4 =
+				new Analyser(
+				audioCtx,
+				source,
+				{smoothingTimeConstant: 0.5, fftSize: 512});
 
 	    this.streamData_1 = analyser_1.streamData;
 	    this.streamData_2 = analyser_2.streamData;
@@ -281,7 +311,10 @@ $(document).ready(function() {
 	    	console.log(streamUrl);
 
 	    	// jquery-объект трека, который надо играть
-	    	var currentTrackEl = $('.playlistContainer .active [data-station-url="' + streamUrl + '"]');
+	    	var currentTrackEl = 
+					    	$('.playlistContainer .active [data-station-url="' +
+				    		streamUrl +
+					    	'"]');
 
 	    	// Соберем временный объект для удобства
 	    	var _currentTrack = {
@@ -291,11 +324,17 @@ $(document).ready(function() {
 	    	};
 
 	    	// Изменим объект состояния
-	    	playerState.playlists[playerState.currentPlaylist].currentTrack = _currentTrack;
+	    	playerState.playlists[playerState.currentPlaylist].currentTrack =
+	    														_currentTrack;
 
-        	// Запишем в объект состояния свойтво с позицией по высоте текущего трека
+        	// Запишем в объект состояния свойтво
+        	// с позицией по высоте текущего трека
         	// для скрола к нему при загрузке страницы
-        	playerState.playlists[playerState.currentPlaylist].currentTrack.scrollPosition = currentTrackEl.position().top;
+        	playerState.
+        		playlists[playerState.
+        		currentPlaylist].
+        		currentTrack.
+        		scrollPosition = currentTrackEl.position().top;
 
 	        $playerTag.src = streamUrl;
 	        $playerTag.crossOrigin = 'anonymous';
@@ -342,7 +381,7 @@ $(document).ready(function() {
 	        console.log('AudioApiElement::playStream::End');
 	        // TODO: добавить на играющий трек эквалайзер
 	        // addEqToTrack(currentTrackEl, 'canvas-audio-source');
-	    }
+	    };
 	     // TODO: добавить сюда остановку анимации
 	    this.stopStream = function() {
 			visualisationStop();
@@ -357,13 +396,13 @@ $(document).ready(function() {
 			playerState.paused = $playerTag.paused;
 			console.log('AudioApiElement::stopStream');
 			localStorage.setItem('playerState', JSON.stringify(playerState));
-	    }
+	    };
 	    this.setVolume = function(vol) {
 	    	$playerTag.volume = vol;
-	    }
+	    };
 	    this.getVolume = function() {
 	    	return $playerTag.volume;
-	    }
+	    };
 	    // self.setVolume(playerState.volume);
 	}
 
@@ -386,7 +425,7 @@ $(document).ready(function() {
 
 	        localStorage.setItem('playerState', JSON.stringify(playerState));
 	        console.log('AudioCbElement::playStream::End');
-	    }
+	    };
 	    this.stopStream = function() {
 			visualisationStop();
 			$('#player .play').removeClass('visualisation');
@@ -399,13 +438,13 @@ $(document).ready(function() {
 			playerState.paused = player.paused;
 			console.log('AudioCbElement::stopStream');
 			localStorage.setItem('playerState', JSON.stringify(playerState));
-	    }
+	    };
 	    this.setVolume = function(vol) {
 	    	player.volume = vol;
-	    }
+	    };
 	    this.getVolume = function() {
 	    	return player.volume;
-	    }
+	    };
 	}
 
 	// https://developer.mozilla.org/ru/docs/Web/Guide/Events/Media_events
@@ -594,7 +633,8 @@ $(document).ready(function() {
 		this.canvasHeight 	= canvas.height;
 	}
 
-	// TODO: Сделать функцию, которая принимает объект с настройками (анализатора например (fft)),
+	// TODO: Сделать функцию,
+	// которая принимает объект с настройками (анализатора например (fft)),
 	// и колбэк - функцию рисования
 
 	function drawEq1() {
@@ -792,7 +832,9 @@ $(document).ready(function() {
 	// получим соседа
 	function getSibling(direction) {
 		var track 	= getCurrentTrack(),
-			$track 	= $('.playlistContainer .active [data-station-id="' + track.id + '"]'),
+			$track 	= $('.playlistContainer .active [data-station-id="' 	+
+																track.id 	+
+																'"]'),
 			$sibling,
 			// url для audioApiElement.playStream()
 			playUrl
