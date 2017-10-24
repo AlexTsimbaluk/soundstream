@@ -993,25 +993,6 @@ ol {
   padding-bottom: 6px;
   position: relative;
   z-index: 10;
-  /* Chrome, Opera, Safari */
-  /* input[type="range"]::-webkit-fill-lower {
-			background: #f3ae36;
-		}  
-		input[type="range"]::-webkit-fill-upper {
-			background: #f5f6f8;
-		}
-		input[type="range"]::-ms-fill-lower {
-			background: #f3ae36;
-		}  
-		input[type="range"]::-ms-fill-upper {
-			background: #f5f6f8;
-		}
-		input[type="range"]::-moz-fill-lower {
-			background: #f3ae36;
-		}  
-		input[type="range"]::-moz-fill-upper {
-			background: #f5f6f8;
-		} */
 }
 #player .controls .button {
   background: #333;
@@ -1143,75 +1124,6 @@ ol {
   position: absolute;
   left: 0;
   top: 0;
-}
-#player .controls input[type=range] {
-  -webkit-appearance: none;
-  height: auto;
-  width: 100px;
-}
-#player .controls input[type=range]:focus {
-  outline: none;
-}
-#player .controls input[type=range]::-moz-focus-outer {
-  border: 0;
-}
-#player .controls input[type=range]::-webkit-slider-runnable-track {
-  background-color: #bdc3c7;
-  -webkit-border-radius: 8px;
-          border-radius: 8px;
-  width: 100px;
-  height: 2px;
-}
-#player .controls input[type=range]::-ms-track {
-  /* должен следовать после -webkit- */
-  background-color: #bdc3c7;
-  border-color: transparent;
-  border-radius: 8px;
-  border: none;
-  color: transparent;
-  width: 100px;
-  height: 5px;
-}
-#player .controls input[type=range]::-moz-range-track {
-  background-color: #bdc3c7;
-  border-radius: 8px;
-  width: 80px;
-  height: 2px;
-}
-#player .controls input[type=range]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  background-color: #ecf0f1;
-  border: 0;
-  -webkit-border-radius: 10px;
-          border-radius: 10px;
-  cursor: pointer;
-  width: 10px;
-  height: 10px;
-  position: relative;
-  bottom: 4px;
-}
-#player .controls input[type=range]::-ms-thumb {
-  /* должен следовать после -webkit- */
-  background-color: #00ffff;
-  border: 1px solid #bdc3c7;
-  border-radius: 10px;
-  cursor: pointer;
-  width: 10px;
-  height: 20px;
-}
-#player .controls input[type=range]::-moz-range-thumb {
-  background-color: #ecf0f1;
-  border: 0;
-  border-radius: 10px;
-  cursor: pointer;
-  width: 10px;
-  height: 10px;
-}
-#player .controls input[type=range]:focus::-moz-range-track {
-  outline: none;
-}
-#player .controls input[type=range]:focus::-moz-range-thumb {
-  outline: none;
 }
 #player .controls .volumeVisualisation {
   -webkit-box-shadow: 0 0 16px 14px #00ffff;
