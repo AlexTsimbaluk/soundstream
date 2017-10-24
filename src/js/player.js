@@ -84,7 +84,8 @@ $(document).ready(function() {
 	// Первоначальное случайное фоновое изображение для body
 	$('body').css({'background':'url("../img/bg/bg' +
 					getRandomInt(1, 10) 			+
-					'.jpg") no-repeat center / cover'
+					// '.jpg") no-repeat center / cover'
+					'.jpg") no-repeat center / auto 100%'
 					})
 	;
 	
