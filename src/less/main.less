@@ -79,6 +79,7 @@ body
 	height: 100%;
 	font-size: 12px;
     font-family: "RobotoRegular", sans-serif;
+    overflow: hidden;
     
 }
 
@@ -168,6 +169,7 @@ ul, ol {
 	width: 100%;
 	.main-nav {
 		.flex-container;
+		margin-bottom: 0;
 	}
 	.adminItem {
 		font-size: 12px;
@@ -400,11 +402,12 @@ ul, ol {
 	}
 	.trackContainer {
 		background: url(../img/logo.jpg) no-repeat center;
-		height: 172px;
+		height: 208px;
 		padding: 0 6px;
 		position: relative;
 		.overlay {
 			background: rgba(0, 0, 0, .6);
+			box-shadow: 0 0 12px 5px rgba(3, 119, 134, .8);
 			height: 100%;
 			width: 100%;
 			position: absolute;
@@ -494,7 +497,7 @@ ul, ol {
 		.flex-container;
 		align-items: center;
 		flex-wrap: nowrap;
-		padding-bottom: 6px;
+		padding: 2px 0;
 		position: relative;
 		z-index: 10;
 		div {
@@ -506,8 +509,8 @@ ul, ol {
 			border: 2px solid @cyan;
 			border-radius: 100%;
 			cursor: pointer;
-			height: 30px;
-			width: 30px;
+			height: 40px;
+			width: 40px;
 			position: relative;
 			tansitions: all .3s;
 			.iconWrapper {
@@ -517,7 +520,7 @@ ul, ol {
 			}
 			i {
 				color: lighten(@cyan, 25%);
-				font-size: 1.4em;
+				font-size: 1.5em;
 			}
 			&:hover {
 				box-shadow: 0px 0px 5px 0.4px @cyan;
@@ -624,7 +627,6 @@ ul, ol {
 	}
 
 	.playlistsPanel {
-		height: 20px;
 		margin: 4px 0;
 		position: relative;
 		.nav {
@@ -636,6 +638,7 @@ ul, ol {
 			top: -2px;
 			li {
 				float: left;
+				padding: 0 8px;
 			}
 			.playlist-control {
 				background-color: transparent;
@@ -644,12 +647,12 @@ ul, ol {
 			i {
 				color: #aaa;
 				cursor: pointer;
-				font-size: 2.2em;
+				font-size: 2.6em;
 				&:hover {color: @cyan;}
 			}
 			i + i {margin-left: 4px;}
 		}
-		.plName {
+		.playlist {
 			.gradient-vertical(#555, #73c8c8, 25%, 100%);
 			// border-bottom: 2px solid #333;
 			border-radius: 1px;
@@ -666,7 +669,7 @@ ul, ol {
 				.gradient-vertical(#555, #3ee1e1 , 25%, 100%);
 			}
 		}
-		.plName + .plName {margin-left: 4px;}
+		.playlist + .playlist {margin-left: 4px;}
 	}
 
 	.track {
@@ -921,8 +924,8 @@ canvas {
 	transform: translateY(-50%);
 }
 #canvas-audio-source-eq3 {
-	bottom: 30px;
 	left: 0;
+	bottom: 30px;			// 30px - высота .nav-admin
 }
 
 .walmer {
