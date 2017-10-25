@@ -84,7 +84,7 @@ $(document).ready(function () {
 	// Первоначальное случайное фоновое изображение для body
 	$('body').css({ 'background': 'url("../img/bg/bg' + getRandomInt(1, 10) +
 		// '.jpg") no-repeat center / cover'
-		'.jpg") no-repeat center / auto 100%'
+		'.jpg") no-repeat center / cover'
 	});
 
 	/*Slider for background*/
@@ -103,23 +103,21 @@ $(document).ready(function () {
 		// imageArr.sort(compareRandom);
 		// console.log(imageArr);
 
-		if (window.innerHeight <= 640 && window.innerWidth < 700) {
-			$.mbBgndGallery.buildGallery({
-				containment: "body",
-				timer: 3000,
-				effTimer: 11000,
-				shuffle: true,
-				effect: "fade",
-				// folderPath:"/img/bg/",
-				images: imageArr,
+		$.mbBgndGallery.buildGallery({
+			containment: "body",
+			timer: 3000,
+			effTimer: 11000,
+			shuffle: true,
+			effect: "fade",
+			// folderPath:"/img/bg/",
+			images: imageArr,
 
-				onChange: function onChange(idx) {
-					/*var effects = ['fade', 'zoom', 'slideUp', 'slideDown', 'slideRight', 'slideLeft'];
-     var index = getRandomInt(0, effects.length);
-     $.mbBgndGallery.changeEffect(effects[index]);*/
-				}
-			});
-		}
+			onChange: function onChange(idx) {
+				/*var effects = ['fade', 'zoom', 'slideUp', 'slideDown', 'slideRight', 'slideLeft'];
+    var index = getRandomInt(0, effects.length);
+    $.mbBgndGallery.changeEffect(effects[index]);*/
+			}
+		});
 	});
 
 	// mCustomScrollbar
@@ -226,12 +224,12 @@ $(document).ready(function () {
 	function AudioApiElement(audioElement) {
 		var $playerTag = document.getElementById(audioElement);
 		var self = this;
-		function createAnalyser(opts) {
-			var a = audioCtx.createAnalyser();
-			a.smoothingTimeConstant = opts.smoothingTimeConstant || 0.7;
-			a.fftSize = opts.fftSize || 512;
-			return a;
-		}
+		/*function createAnalyser(opts) {
+   var a = audioCtx.createAnalyser();
+  	a.smoothingTimeConstant = opts.smoothingTimeConstant || 0.7;
+  	a.fftSize = opts.fftSize || 512;
+  	return a;
+  }*/
 
 		var source = audioCtx.createMediaElementSource($playerTag);
 
@@ -249,7 +247,6 @@ $(document).ready(function () {
 
 		this.playStream = function (streamUrl) {
 			console.log('AudioApiElement::playStream::Begin');
-			console.log(streamUrl);
 
 			// jquery-объект трека, который надо играть
 			var currentTrackEl = $('.playlistContainer .active [data-station-url="' + streamUrl + '"]');
@@ -276,7 +273,7 @@ $(document).ready(function () {
 			}, 3000);
 
 			var playPromise = $playerTag.play();
-			$(".spinner").show();
+			// $(".spinner").show();
 
 			// В конце if проверить PromiseStatus, если он rejected
 			if (playPromise !== undefined) {
@@ -287,18 +284,19 @@ $(document).ready(function () {
     	$(".spinner").hide();
     	console.log('Promise::Automatic playback failed...');
     	console.log(error);
-    	console.log($('playlistContainer .track[data-current-track]'));
     	self.stopStream();
-    	$('.playlistContainer .track[data-current-track]').removeAttr('data-current-track');
+    	$('.playlistContainer .track[data-current-track]').
+    	removeAttr('data-current-track');
     });*/
 
 				playPromise.then(function () {
 					console.log('AudioApiElement::playPromise::Success::Begin');
 					console.log('AudioApiElement::playPromise::Success::End');
-				}).catch(function (error) {
+				}).catch(function () {
 					console.log('AudioApiElement::playPromise::Failed::Begin');
-					console.log($playerTag.paused);
+
 					self.stopStream();
+
 					audioCbElement.playStream(streamUrl);
 					console.log('Start audioCbElement');
 					console.log('AudioApiElement::playPromise::Failed::End');
@@ -322,9 +320,10 @@ $(document).ready(function () {
 			$('#player .info .trackTitle').html('').removeClass('runningString').parent().css({ 'width': 'auto' });
 
 			$playerTag.pause();
+
 			audioCbElement.stopStream();
-			$playerTag.currentTime = 0;
-			playerState.paused = $playerTag.paused;
+			// $playerTag.currentTime = 0;
+			// playerState.paused = $playerTag.paused;
 			console.log('AudioApiElement::stopStream');
 			localStorage.setItem('playerState', JSON.stringify(playerState));
 		};
@@ -340,7 +339,6 @@ $(document).ready(function () {
 	// Колбэк если не срабатывает Audio API
 	function AudioCbElement() {
 		var player = new Audio();
-		var self = this;
 
 		audioBindAll(player, 'AudioCbElement');
 
@@ -349,7 +347,7 @@ $(document).ready(function () {
 			player.src = streamUrl;
 
 			player.play();
-			$(".spinner").show();
+			// $(".spinner").show();
 
 			console.log(player.paused);
 			playerState.paused = player.paused;
@@ -392,6 +390,7 @@ $(document).ready(function () {
 	function audioBindAll(player, name) {
 		player.addEventListener('abort', function (e) {
 			console.log(name + '::Event.type::' + e.type);
+			$(".spinner").hide();
 		});
 		player.addEventListener('canplay', function (e) {
 			console.log(name + '::Event.type::' + e.type);
@@ -404,6 +403,7 @@ $(document).ready(function () {
 		});
 		player.addEventListener('emptied', function (e) {
 			console.log(name + '::Event.type::' + e.type);
+			$(".spinner").hide();
 		});
 		player.addEventListener('encrypted', function (e) {
 			console.log(name + '::Event.type::' + e.type);
@@ -435,14 +435,25 @@ $(document).ready(function () {
 		});
 		player.addEventListener('pause', function (e) {
 			console.log(name + '::Event.type::' + e.type);
+
+			console.log('pause::' + player.paused);
+			player.currentTime = 0;
+			playerState.paused = player.paused;
+
 			visualisationStop();
 		});
 		player.addEventListener('play', function (e) {
 			console.log(name + '::Event.type::' + e.type);
+			$(".spinner").show();
 		});
 		player.addEventListener('playing', function (e) {
 			console.log(name + '::Event.type::' + e.type);
+
+			console.log('pause::' + player.paused);
+			playerState.paused = player.paused;
+
 			$(".spinner").hide();
+
 			visualisation();
 			displayState();
 		});
@@ -621,8 +632,9 @@ $(document).ready(function () {
 			// canvas.ctx.fillStyle = 'rgb(' + (255 - val) + ',' + (val) + ',' + (255 - val) + ')';
 			// canvas.ctx.fillRect(i, canvas.canvasHeight, 1, -val / 1);
 			for (var j = 0; j < totalBar; j++) {
-				// canvas.ctx.strokeStyle = 'rgb(' + (255 - val) + ',' + (255 - val) + ',' + (255 - val) + ')';
-				canvas.ctx.strokeStyle = 'hsl(' + (180 - j * 7) + ', 100%, 50%)';
+				// canvas.ctx.strokeStyle = 'rgb(' + (255 - val) + ',' + (0 + val) + ',' + (255 - val) + ')';
+				// canvas.ctx.strokeStyle = 'hsl(' + (0 + j * 7) + ', 100%, 50%)';
+				canvas.ctx.strokeStyle = 'rgb(' + (255 - val) + ',' + (255 - val) + ',' + (255 - val) + ')';
 				canvas.ctx.strokeRect(i * fullBarWidth, canvas.canvasHeight - j * fullBarHeight, barWidth, barHeight);
 			}
 		}
@@ -982,6 +994,7 @@ $(document).ready(function () {
 		pl.tracks.splice(pl.tracks.indexOf(id), 1);
 		$(this).parent().remove();
 		localStorage.setItem('playerState', JSON.stringify(playerState));
+		return false;
 	});
 
 	$('.playlistContainer').on('click', '.canplaytest', function (e) {
@@ -1330,6 +1343,15 @@ $(document).ready(function () {
 		addToPlaylist($(this).data('stationId'));
 	});
 
+	$('.playlist-new').on('click', function (e) {
+		console.log('::new playlist');
+
+		// построим dom
+		$$playlistLastChild = $($playlistsPanel).find('.playlist:last');
+		console.log($playlistsPanel);
+		console.log($playlistLastChild);
+	});
+
 	/*
  	Чтобы на экранах в высоту меньше 640px у блока playlistContainer с треками 
  	выставить всю доступную высоту
@@ -1471,7 +1493,7 @@ $(document).ready(function () {
 		playerState.paused = false;
 		playerState.search.stationsOpened = [];
 
-		playlistsPanel.append('<div class="plName" data-name="Default">Default</div>');
+		playlistsPanel.append('<div class="playlist" data-name="Default">Default</div>');
 		playlistContainer.append(playerState.playlists[playerState.currentPlaylist].htmlEl);
 
 		// playerState.playlists[playerState.currentPlaylist].currentTrack.scrollPosition = 0;
@@ -1486,7 +1508,7 @@ $(document).ready(function () {
 
 		// Наполняем playlistsPanel заголовками плейлистов
 		for (var i = 0; i < playerState.playlistsOrder.length; i++) {
-			playlistsPanel.append('<div class="plName" data-name="' + playerState.playlistsOrder[i] + '">' + playerState.playlistsOrder[i] + '</div>');
+			playlistsPanel.append('<div class="playlist" data-name="' + playerState.playlistsOrder[i] + '">' + playerState.playlistsOrder[i] + '</div>');
 		}
 
 		// Задаем свойства объекта Audio свойствами объекта playerState
