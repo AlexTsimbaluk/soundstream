@@ -1138,6 +1138,8 @@ ol {
 }
 #player .playlistContainer {
   height: 200px;
+  height: -webkit-calc(100% - 236px);
+  height: calc(100% - 236px);
 }
 #player .playlistContainer .playlist {
   position: relative;
