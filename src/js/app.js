@@ -82,9 +82,8 @@ $(document).ready(function () {
 	// $('.sortable').sortable({scroll: true});
 
 	// Первоначальное случайное фоновое изображение для body
-	$('body').css({ 'background': 'url("../img/bg/bg' + getRandomInt(1, 10) +
-		// '.jpg") no-repeat center / cover'
-		'.jpg") no-repeat center / cover'
+	$('body').css({ 'background': 'url("../img/bg/bg' + getRandomInt(1, 10) + '.jpg") no-repeat center / cover'
+		// '.jpg") no-repeat center / auto 100%'
 	});
 
 	/*Slider for background*/
@@ -1347,7 +1346,8 @@ $(document).ready(function () {
 		console.log('::new playlist');
 
 		// построим dom
-		$$playlistLastChild = $($playlistsPanel).find('.playlist:last');
+		var $playlistsPanel = $(this).closest('.playlistsPanel'),
+		    $$playlistLastChild = $($playlistsPanel).find('.playlist:last');
 		console.log($playlistsPanel);
 		console.log($playlistLastChild);
 	});
