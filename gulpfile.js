@@ -1,4 +1,3 @@
-'use strict';
 
 var gulp = require('gulp'),
 	babel = require("gulp-babel"),
@@ -13,6 +12,7 @@ var gulp = require('gulp'),
 	;
 
 gulp.task('less', function() {
+	'use strict';
 	// return gulp.src(['src/less/*.less', '!src/less/_*.less'])
 	return gulp.src('src/less/main.less')
 			.pipe(less())
@@ -27,11 +27,12 @@ gulp.task('less', function() {
 
 
 gulp.task('clean', function() {
+	'use strict';
     return del.sync(['dist']);
 });
 
 gulp.task('build', ['clean', 'less', 'js-min'], function() {
-
+	'use strict';
     var buildCss = gulp.src([
         'src/css/main.css',
         'src/css/libs.min.css'
@@ -56,6 +57,7 @@ gulp.task('build', ['clean', 'less', 'js-min'], function() {
 });
 
 gulp.task('browser-sync', function() {
+	'use strict';
 	browserSync({
 		/*server: {
 			baseDir: 'src'
@@ -68,6 +70,7 @@ gulp.task('browser-sync', function() {
 
 
 gulp.task('js-min', function() {
+	'use strict';
 	return gulp.src(['src/js/player.js', 'src/js/user.js', 'src/js/visits.js', 'src/js/admin.js', 'src/js/canvas.js', '!src/js/app.min.js'])
 			.pipe(babel())
 			.pipe(concat('app.js'))
@@ -81,12 +84,15 @@ gulp.task('js-min', function() {
 
 
 gulp.task('watch', ['browser-sync', 'less'], function() {
+	'use strict';
 	gulp.watch('src/*.html', browserSync.reload);
 	gulp.watch('src/*.php', browserSync.reload);
 	gulp.watch('src/layouts/*.php', browserSync.reload);
 
     gulp.watch(['src/js/player.js', 'src/js/user.js', 'src/js/visits.js', 'src/js/admin.js', 'src/js/canvas.js'], ['js-min']);
-	gulp.watch('src/less/**/*.less', ['less']);
+	
+	// gulp.watch('src/less/**/*.less', ['less']);
+	gulp.watch('src/less/*.less', ['less']);
 });
 
 gulp.task('default', ['watch']);
