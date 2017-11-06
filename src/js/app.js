@@ -181,6 +181,7 @@ $(document).ready(function () {
 					};
 				}
 				localStorage.setItem('playerState', JSON.stringify(playerState));
+
 				playlist.html(playlist.html() + markup);
 			}
 		});
@@ -192,11 +193,88 @@ $(document).ready(function () {
 		// this.active = active;
 		this.tracks = [];
 		this.currentTrack = {};
-		this.htmlEl = '<div class="playlist sortable" data-name="' + this.name + '">';
+		this.titleHtmlEl = '<div class="playlist sortable" data-name="' + this.name + '">' + this.name + '</div>';
 
-		playerState.playlists[name] = this;
+		this.htmlEl = '<div class="playlist sortable" data-name="' + this.name + '"></div>';
+
 		playerState.currentPlaylist = this.name;
 		playerState.playlistsOrder.push(this.name);
+
+		__playlists[name] = this;
+
+		localStorage.setItem('playerState', JSON.stringify(playerState));
+		localStorage.setItem('__playlists', JSON.stringify(__playlists));
+	}
+
+	// класс для управления плейлистом
+	// принимает имя плейлиста, которым будем управлять
+	function PlaylistManager() {
+		// функция для добавления плейлистов на панель
+		this.addPanel = function (name, scrollable) {
+			var pl = __playlists[name].titleHtmlEl;
+			if (scrollable) {
+				$playlistsPanel.find('.list .mCSB_container').append(pl);
+			} else {
+				$playlistsPanel.find('.list').append(pl);
+			}
+		};
+
+		this.addTrack = function () {};
+
+		this.makeTracks = function () {
+			var playlistTracks = __playlists[playerState.currentPlaylist].tracks;
+
+			console.log(playlistTracks);
+
+			if (playlistTracks.length > 0) {
+				/*var response = stationsArray,
+    	playlist = playlistContainer
+    				.find('.playlist[data-name="' 	+
+    					playerState.currentPlaylist +
+    					'"]'),
+    	markup = ''
+    ;*/
+
+				// console.log('response');
+
+				for (var i = 0; i < playlistTracks.length; i++) {
+					/*var track = response[i];
+     markup += 
+     		'<div class="track" data-station-id="' 	+
+     			track.station_id 					+
+     			'" data-station-title="' 			+
+     			track.station_title 				+
+     			'" data-station-url="' 				+
+     			track.station_url 					+
+     			'"><div class="delete"><i class="fa fa-minus"></i></div> \
+     				<div class="canplaytest"><i class="fa fa-music"></i></div>\
+     				<div class="title">' 			+
+     			track.station_title 				+
+     			'</div><div class="url">' 			+
+     			track.station_url 					+
+     			'</div></div>'
+     ;*/
+					addToPlaylist(playlistTracks[i]);
+				}
+
+				// playlist.html(playlist.html() + markup);
+
+				$('.playlistContainer').mCustomScrollbar({
+					// theme:"dark"
+				});
+			} else {
+				console.log(0);
+			}
+		};
+
+		this.setCurrent = function (name) {
+			$playlistsPanel.find('[data-name="' + playerState.currentPlaylist + '"]').removeAttr('data-current');
+
+			$playlistsPanel.find('[data-name="' + name + '"]').attr('data-current', 1);
+
+			playerState.currentPlaylist = name;
+			localStorage.setItem('playerState', JSON.stringify(playerState));
+		};
 	}
 
 	// TODO: analyser сделать отдельным объектом,
@@ -252,24 +330,36 @@ $(document).ready(function () {
 			// jquery-объект трека, который надо играть
 			var currentTrackEl = $('[data-station-url="' + streamUrl + '"]');
 
+			console.log(currentTrackEl);
+			console.log(streamUrl);
 			$('.playlistContainer').mCustomScrollbar('scrollTo', currentTrackEl.position().top);
 
-			console.log(currentTrackEl);
+			/*$('.playlistContainer')
+   	.mCustomScrollbar('scrollTo', getCurrentTrack().scrollPosition);*/
 
 			// Соберем временный объект для удобства
 			var _currentTrack = {
 				url: currentTrackEl.attr('data-station-url'),
 				title: currentTrackEl.attr('data-station-title'),
-				id: currentTrackEl.attr('data-station-id')
+				id: currentTrackEl.attr('data-station-id'),
+				scrollPosition: currentTrackEl.position().top
 			};
 
 			// Изменим объект состояния
-			playerState.playlists[playerState.currentPlaylist].currentTrack = _currentTrack;
+			playerState.playlists[getCurrentPlaylist()].currentTrack = _currentTrack;
+
+			__playlists[getCurrentPlaylist()].currentTrack = _currentTrack;
 
 			// Запишем в объект состояния свойтво
 			// с позицией по высоте текущего трека
 			// для скрола к нему при загрузке страницы
-			playerState.playlists[playerState.currentPlaylist].currentTrack.scrollPosition = currentTrackEl.position().top;
+			/*playerState.
+   	playlists[getCurrentPlaylist()].
+   	currentTrack.
+   	scrollPosition = currentTrackEl.position().top;
+   	__playlists[getCurrentPlaylist()].
+   	currentTrack.
+   	scrollPosition = currentTrackEl.position().top;*/
 
 			$playerTag.src = streamUrl;
 			$playerTag.crossOrigin = 'anonymous';
@@ -310,6 +400,7 @@ $(document).ready(function () {
 
 			playerState.paused = $playerTag.paused;
 			localStorage.setItem('playerState', JSON.stringify(playerState));
+			localStorage.setItem('__playlists', JSON.stringify(__playlists));
 			drawEq1();
 			drawEq2();
 			drawEq3();
@@ -746,8 +837,12 @@ $(document).ready(function () {
 		}, 50);
 	}
 
+	function getCurrentPlaylist() {
+		return playerState.currentPlaylist;
+	}
+
 	function getCurrentTrack() {
-		return playerState.playlists[playerState.currentPlaylist].currentTrack;
+		return __playlists[getCurrentPlaylist()].currentTrack;
 	}
 
 	// получим соседа
@@ -1351,12 +1446,23 @@ $(document).ready(function () {
 	$('.playlist-new').on('click', function (e) {
 		console.log('::new playlist');
 
-		// построим dom
-		var $container = $playlistsPanel.find('.list .mCSB_container'),
-		    markup = '<div class="playlist" data-name="Default">New</div>';
+		var defaultPLName = new Date().getTime();
 
-		console.log($container);
-		$container.append(markup);
+		var pl = new Playlist(defaultPLName);
+		console.log(pl);
+
+		/*__playlists[defaultPLName] = pl;
+  console.log(__playlists['Default']);*/
+
+		/*playerState
+  	.playlists[playerState.currentPlaylist]
+  	 = pl;*/
+
+		playlistManager.addPanel(defaultPLName, true);
+	});
+
+	$('.playlistsPanel').on('click', '.playlist', function () {
+		console.log('::Change playlist::' + $(this).attr('data-name'));
 	});
 
 	/*
@@ -1381,6 +1487,11 @@ $(document).ready(function () {
 		reg: false,
 		auth: false
 	},
+
+
+	// объект для хранения данных о плейлистах
+	__playlists = {},
+	    playlistManager = new PlaylistManager(),
 
 
 	// Объект состояния плеера
@@ -1469,34 +1580,26 @@ $(document).ready(function () {
 		stationsArrayOn100 = JSON.parse(localStorage.getItem('stationsOn100'));
 	}
 
-	/*	
- function Playlist(name) {
- 	this.name = name;
- 	// this.active = active;
- 	this.tracks = [];
- 	this.currentTrack = {};
- 	this.htmlEl = '<div class="playlist active sortable" data-name="' + this.name + '">';
- 	playerState.playlists[name] = this;
- 	playerState.playlistsOrder.push(this.name);
- }
- */
-
 	if (localStorage.getItem('playerState') == undefined) {
 		console.log('playerState == undefined');
 		// Объект плейлиста
 		var defaultPlaylist = new Playlist('Default'); // ?? - нужен ??
-		console.log(defaultPlaylist);
-		// playerState.currentPlaylist = 'Default';
 
-		// playerState.playlists[playerState.currentPlaylist].tracks = [];
-
-		playerState.playlists[playerState.currentPlaylist].tracks = [55, 760, 884, 900, 7068, 3210, 9096, 4046, 3187, 2400, 857 // не воспроизводится - для отладки ошибок
+		defaultPlaylist.tracks = [884, // Drum and Bass) (Uturn Radio
+		1331, // graal future
+		1194, // graal space
+		2404, // DubTerrain.net
+		7943, // Massive DubStep Trap And Rave
+		2411, // Dubstep.fm
+		3210, // TECHNO4EVER.FM HARD
+		916, // TeaTime.FM - 24h Happy Hardcore, Drum and Bass, UK
+		3772, // CoreTime.FM - 24h Hardcore, Industrial, Speedcore
+		3211, // Make Some Noise
+		857 // не воспроизводится - для отладки ошибок
 		];
 
 		// для базы без повторов
-		/*playerState
-  	.playlists[playerState.currentPlaylist]
-  	.currentTrack = {
+		/*defaultPlaylist.currentTrack = {
   		id 				:1330,
   		url 			:'http://graalradio.com:8123/future',
   		title 			:'Graal Radio Future',
@@ -1504,39 +1607,52 @@ $(document).ready(function () {
   };*/
 
 		// для базы с повторами
-		playerState.playlists[playerState.currentPlaylist].currentTrack = {
-			id: 3210,
-			url: 'http://46.165.203.195:80/hard_low.aac',
-			title: 'TECHNO4EVER.FM HARD',
-			scrollPosition: 256
+		defaultPlaylist.currentTrack = {
+			id: 2411,
+			url: 'http://stream.dubstep.fm:80/256mp3',
+			title: 'Dubstep.fm - 256k MP3',
+			scrollPosition: 406
 		};
 
+		playerState.playlists[playerState.currentPlaylist] = __playlists['Default'] = defaultPlaylist;
+		// __playlists['Default'] = defaultPlaylist;
+		console.log(__playlists['Default']);
+		console.log(playerState);
+
 		playerState.volume = .27;
-		playerState.paused = false;
-		// playerState.paused = true;
+		// playerState.paused = false;
+		playerState.paused = true;
 		playerState.search.stationsOpened = [];
 
-		$playlistsPanel.find('.list').append('<div class="playlist" data-name="Default">Default</div>');
-		playlistContainer.append(playerState.playlists[playerState.currentPlaylist].htmlEl);
+		// $playlistsPanel.find('.list').append('<div class="playlist" data-name="Default">Default</div>');
+		// playlistContainer.html(playerState.playlists[playerState.currentPlaylist].htmlEl);
 
-		// playerState.playlists[playerState.currentPlaylist].currentTrack.scrollPosition = 0;
-
+		playlistManager.addPanel(defaultPlaylist.name);
 
 		localStorage.setItem('playerState', JSON.stringify(playerState));
+		localStorage.setItem('__playlists', JSON.stringify(__playlists));
 		// audioApiElement.playStream(playerState.playlists[playerState.currentPlaylist].currentTrack);
 
 		location.reload();
 	} else {
 		// Получаем актуальное состояние плеера из local storage
 		playerState = JSON.parse(localStorage.getItem('playerState'));
+		__playlists = JSON.parse(localStorage.getItem('__playlists'));
 		console.log(playerState);
+		console.log(__playlists);
 
 		// Наполняем $playlistsPanel заголовками плейлистов
 		for (var i = 0; i < playerState.playlistsOrder.length; i++) {
-			$playlistsPanel.find('.list').append('<div class="playlist" data-name="' + playerState.playlistsOrder[i] + '">' + playerState.playlistsOrder[i] + '</div>');
-			// var pl = new Playlist(playerState.playlistsOrder[i]);
-			// var pl = new Playlist('default');
+			var plName = playerState.playlistsOrder[i];
+			// addPanel(__playlists[playerState.playlistsOrder[i]]);
+			playlistManager.addPanel(plName);
+			/*console.log(__playlists[playerState.playlistsOrder[i]].htmlEl == playerState.playlists[playerState.currentPlaylist].htmlEl)
+   console.log(__playlists[playerState.playlistsOrder[i]]);
+   console.log(playerState.playlists[playerState.currentPlaylist]);
+   console.log(playerState.playlistsOrder[i]);*/
 		}
+
+		$playlistsPanel.find('[data-name="' + playerState.currentPlaylist + '"]').attr('data-current', 1);
 
 		$('.playlistsPanel .list').mCustomScrollbar({
 			axis: 'x',
@@ -1558,11 +1674,27 @@ $(document).ready(function () {
 		// Рисуем соответствующий регулятор
 		drawWolumeBar();
 
+		console.log(playerState.currentPlaylist);
+
 		// Создаем контейнер для треков текущего (активного) плейлиста
-		playlistContainer.append(playerState.playlists[playerState.currentPlaylist].htmlEl);
+		/*playlistContainer.append(playerState.
+  							playlists[playerState.currentPlaylist].
+  							htmlEl
+  						);*/
+
+		playlistContainer.append(__playlists[playerState.currentPlaylist].htmlEl);
 
 		// Получить массив с id треков плейлиста и сформировать его
-		var playlistTracks = playerState.playlists[playerState.currentPlaylist].tracks;
+		/*var playlistTracks = playerState
+  						.playlists[playerState.currentPlaylist]
+  						.tracks
+  ;*/
+
+		console.log('make tracks:begin');
+		// playlistManager.makeTracks();
+		console.log('make tracks:end');
+
+		var playlistTracks = __playlists[playerState.currentPlaylist].tracks;
 
 		if (playlistTracks.length > 0) {
 			$.ajax({
