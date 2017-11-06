@@ -236,6 +236,7 @@ $(document).ready(function() {
 			'">'
 		;
 		playerState.playlists[name] = this;
+		playerState.currentPlaylist = this.name;
 		playerState.playlistsOrder.push(this.name);
 	}
 
@@ -311,8 +312,10 @@ $(document).ready(function() {
 	    	// jquery-объект трека, который надо играть
 	    	var currentTrackEl = 
 					    	$('[data-station-url="' +
-				    		streamUrl +
+				    		streamUrl 				+
 					    	'"]');
+
+			$('.playlistContainer').mCustomScrollbar('scrollTo', currentTrackEl.position().top);					    	
 
 			console.log(currentTrackEl);
 
@@ -749,7 +752,7 @@ $(document).ready(function() {
 		console.log('visualisation::Begin');
 		visualisationStop();
 		
-		var el = $('.playlistContainer .active [data-station-id="' + getCurrentTrack().id + '"]');
+		var el = $('.playlistContainer [data-station-id="' + getCurrentTrack().id + '"]');
 		el.addClass('visualisation');
 
 		$('#player .play').addClass('visualisation');
@@ -791,7 +794,7 @@ $(document).ready(function() {
 	function visualisationStop() {
 		console.log('visualisationStop::Begin');
 		clearInterval(intervalVis);
-		var el = $('.playlistContainer .active [data-station-id="' + getCurrentTrack().id + '"]');
+		var el = $('.playlistContainer [data-station-id="' + getCurrentTrack().id + '"]');
 		el.removeClass('visualisation')
 			.css({'backgroundImage': 'none'})
 			.removeAttr('style')
@@ -847,7 +850,7 @@ $(document).ready(function() {
 	// получим соседа
 	function getSibling(direction) {
 		var track 	= getCurrentTrack(),
-			$track 	= $('.playlistContainer .active [data-station-id="' 	+
+			$track 	= $('.playlistContainer [data-station-id="' 	+
 																track.id 	+
 																'"]'),
 			$sibling,
@@ -1707,8 +1710,8 @@ $(document).ready(function() {
 		console.log('playerState == undefined');
 		// Объект плейлиста
 		var defaultPlaylist 		= new Playlist('Default');		// ?? - нужен ??
-		playerState.currentPlaylist = 'Default';
-		playerState.playlistsOrder 	= ['Default'];
+		// playerState.currentPlaylist = 'Default';
+
 		// playerState.playlists[playerState.currentPlaylist].tracks = [];
 
 		playerState
@@ -1815,8 +1818,6 @@ $(document).ready(function() {
 		;
 
 		if(playlistTracks.length > 0) {
-			
-
 			$.ajax({
 				data: {'action': 'getPlaylistStations', 'id': playlistTracks},
 				success: function(data) {
@@ -1858,12 +1859,11 @@ $(document).ready(function() {
 						var streamUrl = getCurrentTrack().url;
 						audioApiElement.playStream(streamUrl);
 
-						$('.playlistContainer .active [data-station-url="' + streamUrl + '"]')
+						$('.playlistContainer [data-station-url="' + streamUrl + '"]')
 							.attr('data-current-track', 1);
 					}
 					// $('.playlistContainer').mCustomScrollbar('scrollTo', getCurrentTrack().scrollPosition);
 					// $('.playlistContainer').mCustomScrollbar('scrollTo', $('[data-current-track=1]').position().top);
-					$('.playlistContainer').mCustomScrollbar('scrollTo', $('.playlistContainer .active [data-station-url="' + streamUrl + '"]').position().top);
 				}
 			});
 			debugPlayerState();
