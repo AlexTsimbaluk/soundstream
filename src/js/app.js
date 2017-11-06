@@ -1598,14 +1598,6 @@ $(document).ready(function () {
 		857 // не воспроизводится - для отладки ошибок
 		];
 
-		// для базы без повторов
-		/*defaultPlaylist.currentTrack = {
-  		id 				:1330,
-  		url 			:'http://graalradio.com:8123/future',
-  		title 			:'Graal Radio Future',
-  		scrollPosition 	: 150
-  };*/
-
 		// для базы с повторами
 		defaultPlaylist.currentTrack = {
 			id: 2411,
@@ -1697,6 +1689,19 @@ $(document).ready(function () {
 		var playlistTracks = __playlists[playerState.currentPlaylist].tracks;
 
 		if (playlistTracks.length > 0) {
+			/*for(var i = 0; i < playlistTracks.length; i++) {
+   	addToPlaylist(playlistTracks[i]);
+   }
+   	$('.playlistContainer').mCustomScrollbar({
+   	// theme:"dark"
+   });
+   	if(!playerState.paused) {
+   	var streamUrl = getCurrentTrack().url;
+   	audioApiElement.playStream(streamUrl);
+   		$('.playlistContainer [data-station-url="' + streamUrl + '"]')
+   		.attr('data-current-track', 1);
+   }*/
+
 			$.ajax({
 				data: { 'action': 'getPlaylistStations', 'id': playlistTracks },
 				success: function success(data) {
@@ -1729,6 +1734,7 @@ $(document).ready(function () {
 					// $('.playlistContainer').mCustomScrollbar('scrollTo', $('[data-current-track=1]').position().top);
 				}
 			});
+
 			debugPlayerState();
 			debugLocalStorage();
 		} else {
