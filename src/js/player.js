@@ -231,10 +231,11 @@ $(document).ready(function() {
 		this.tracks = [];
 		this.currentTrack = {};
 		this.htmlEl = 
-			'<div class="playlist active sortable" data-name="' +
-			this.name 											+
+			'<div class="playlist sortable" data-name="' 	+
+			this.name 										+
 			'">'
 		;
+
 		playerState.playlists[name] = this;
 		playerState.currentPlaylist = this.name;
 		playerState.playlistsOrder.push(this.name);
@@ -1610,6 +1611,7 @@ $(document).ready(function() {
 			auth: false
 		},
 
+
 		// Объект состояния плеера
 		playerState = {
 			playlists: {},
@@ -1710,6 +1712,7 @@ $(document).ready(function() {
 		console.log('playerState == undefined');
 		// Объект плейлиста
 		var defaultPlaylist 		= new Playlist('Default');		// ?? - нужен ??
+		console.log(defaultPlaylist);
 		// playerState.currentPlaylist = 'Default';
 
 		// playerState.playlists[playerState.currentPlaylist].tracks = [];
@@ -1717,22 +1720,17 @@ $(document).ready(function() {
 		playerState
 			.playlists[playerState.currentPlaylist]
 			.tracks = [
-						2599,
-						1193,
-						1330,
 						55,
 						760,
 						884,
-						894,
 						900,
 						7068,
+						3210,
 						9096,
 						4046,
 						3187,
-						4055,
 						2400,
-						857,
-						3210
+						857			// не воспроизводится - для отладки ошибок
 		];
 		
 		// для базы без повторов
@@ -1752,7 +1750,7 @@ $(document).ready(function() {
 				id 				:3210,
 				url 			:'http://46.165.203.195:80/hard_low.aac',
 				title 			:'TECHNO4EVER.FM HARD',
-				scrollPosition 	: 768
+				scrollPosition 	: 256
 		};
 
 		playerState.volume = .27;
@@ -1783,6 +1781,8 @@ $(document).ready(function() {
 									+ playerState.playlistsOrder[i]
 									+ '</div>'
 								);
+			// var pl = new Playlist(playerState.playlistsOrder[i]);
+			// var pl = new Playlist('default');
 		}
 
 		$('.playlistsPanel .list').mCustomScrollbar({
