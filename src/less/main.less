@@ -620,7 +620,7 @@ ul, ol {
 	.playlistContainer {
 		// height: 49%;
 		height: 200px;
-		height: ~"calc(100% - 236px)";
+		height: ~"calc(100% - 244px)";
 		// overflow-y: scroll;
 		.playlist {
 			position: relative;
@@ -629,16 +629,19 @@ ul, ol {
 
 	.playlistsPanel {
 		clear: both;
-		height: 30px;
+		height: 38px;
 		margin: 4px 0;
-		overflow: hidden;
+		// overflow: hidden;
 		position: relative;
 		.list {
 			float: left;
 			height: 100%;
 			width: ~"calc(100% - 95px)";
 			overflow-x: auto;
-			overflow-y: hidden;
+			// overflow-y: hidden;
+			.mCSB_draggerContainer {
+				margin-top: 4px;
+			}
 		}
 		.nav {
 			cursor: default;

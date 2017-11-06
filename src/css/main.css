@@ -1138,17 +1138,16 @@ ol {
 }
 #player .playlistContainer {
   height: 200px;
-  height: -webkit-calc(100% - 236px);
-  height: calc(100% - 236px);
+  height: -webkit-calc(100% - 244px);
+  height: calc(100% - 244px);
 }
 #player .playlistContainer .playlist {
   position: relative;
 }
 #player .playlistsPanel {
   clear: both;
-  height: 30px;
+  height: 38px;
   margin: 4px 0;
-  overflow: hidden;
   position: relative;
 }
 #player .playlistsPanel .list {
@@ -1157,7 +1156,9 @@ ol {
   width: -webkit-calc(100% - 95px);
   width: calc(100% - 95px);
   overflow-x: auto;
-  overflow-y: hidden;
+}
+#player .playlistsPanel .list .mCSB_draggerContainer {
+  margin-top: 4px;
 }
 #player .playlistsPanel .nav {
   cursor: default;

@@ -1566,22 +1566,13 @@ $(document).ready(function() {
 	$('.playlist-new').on('click', function(e) {
 		console.log('::new playlist');
 
-
 		// построим dom
-		var $container 	= $playlistsPanel.find('.list'),
+		var $container 	= $playlistsPanel.find('.list .mCSB_container'),
 			markup 		= '<div class="playlist" data-name="Default">New</div>'
 		;
-		$container.mCustomScrollbar({
-			axis: 'x'
-		});
 
-		// $container.mCustomScrollbar('desrtoy');
 		console.log($container);
 		$container.append(markup);
-
-		$container.mCustomScrollbar({
-			axis: 'x'
-		});
 	});
 
 	
@@ -1792,7 +1783,11 @@ $(document).ready(function() {
 		}
 
 		$('.playlistsPanel .list').mCustomScrollbar({
-			axis: 'x'
+			axis: 'x',
+			// theme:'dark',
+			advanced:{
+				autoExpandHorizontalScroll: true
+			}
 		});
 
 		// Задаем свойства объекта Audio свойствами объекта playerState
@@ -1855,7 +1850,9 @@ $(document).ready(function() {
 
 					playlist.html(playlist.html() + markup);
 
-					$('.playlistContainer').mCustomScrollbar();
+					$('.playlistContainer').mCustomScrollbar({
+						// theme:"dark"
+					});
 
 					if(!playerState.paused) {
 						var streamUrl = getCurrentTrack().url;
