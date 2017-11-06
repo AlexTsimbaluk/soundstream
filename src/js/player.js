@@ -134,7 +134,6 @@ $(document).ready(function() {
 	});
 
 
-
 	// Отобразить название станции при воспроизведении
 	function displayState() {
 		var title = getCurrentTrack().title,
@@ -311,9 +310,11 @@ $(document).ready(function() {
 
 	    	// jquery-объект трека, который надо играть
 	    	var currentTrackEl = 
-					    	$('.playlistContainer .active [data-station-url="' +
+					    	$('[data-station-url="' +
 				    		streamUrl +
 					    	'"]');
+
+			console.log(currentTrackEl);
 
 	    	// Соберем временный объект для удобства
 	    	var _currentTrack = {
@@ -1087,8 +1088,6 @@ $(document).ready(function() {
 		}
 	});
 
-	// Почему в if(player.paused) проверяется состояние player
-	// а не audioApiElement или playerState.paused ?
 	$('#player .play').on('click', function(e) {
 		if(playerState.paused) {
 			audioApiElement.playStream(getCurrentTrack().url);
@@ -1112,6 +1111,8 @@ $(document).ready(function() {
 			var url = $(this).data('stationUrl');
 			audioApiElement.playStream(url);
 		}
+
+		console.log($(this).position().top);
 	});
 
 	// TODO: в кликах на кнопку stop проверять player.paused
@@ -1565,12 +1566,22 @@ $(document).ready(function() {
 	$('.playlist-new').on('click', function(e) {
 		console.log('::new playlist');
 
+
 		// построим dom
-		var $playlistsPanel = $(this).closest('.playlistsPanel'),
-			$$playlistLastChild = $($playlistsPanel).find('.playlist:last')
+		var $container 	= $playlistsPanel.find('.list'),
+			markup 		= '<div class="playlist" data-name="Default">New</div>'
 		;
-		console.log($playlistsPanel);
-		console.log($playlistLastChild);
+		$container.mCustomScrollbar({
+			axis: 'x'
+		});
+
+		// $container.mCustomScrollbar('desrtoy');
+		console.log($container);
+		$container.append(markup);
+
+		$container.mCustomScrollbar({
+			axis: 'x'
+		});
 	});
 
 	
@@ -1593,7 +1604,8 @@ $(document).ready(function() {
 
 
 	var playlistContainer 	= $('#player .playlistContainer'),
-		playlistsPanel 		= $('#player .playlistsPanel'),
+		// панелька для плейлистов
+		$playlistsPanel 	= $('#player .playlistsPanel'),
 		
 		player 				= new Audio(),
 
@@ -1729,25 +1741,39 @@ $(document).ready(function() {
 						3210
 		];
 		
-		playerState
+		// для базы без повторов
+		/*playerState
 			.playlists[playerState.currentPlaylist]
 			.currentTrack = {
-				id:1330,
+				id 				:1330,
 				url 			:'http://graalradio.com:8123/future',
 				title 			:'Graal Radio Future',
 				scrollPosition 	: 150
+		};*/
+
+		// для базы с повторами
+		playerState
+			.playlists[playerState.currentPlaylist]
+			.currentTrack = {
+				id 				:3210,
+				url 			:'http://46.165.203.195:80/hard_low.aac',
+				title 			:'TECHNO4EVER.FM HARD',
+				scrollPosition 	: 768
 		};
 
 		playerState.volume = .27;
 		playerState.paused = false;
+		// playerState.paused = true;
 		playerState.search.stationsOpened = [];
 		
-		playlistsPanel.append('<div class="playlist" data-name="Default">Default</div>');
+		$playlistsPanel.find('.list').append('<div class="playlist" data-name="Default">Default</div>');
 		playlistContainer.append(playerState.playlists[playerState.currentPlaylist].htmlEl);
 		
 		// playerState.playlists[playerState.currentPlaylist].currentTrack.scrollPosition = 0;
 
+
 		localStorage.setItem('playerState', JSON.stringify(playerState));
+		// audioApiElement.playStream(playerState.playlists[playerState.currentPlaylist].currentTrack);
 
 		location.reload();
 	} else {
@@ -1755,15 +1781,19 @@ $(document).ready(function() {
 		playerState = JSON.parse(localStorage.getItem('playerState'));
 		console.log(playerState);
 		
-		// Наполняем playlistsPanel заголовками плейлистов
+		// Наполняем $playlistsPanel заголовками плейлистов
 		for (var i = 0; i < playerState.playlistsOrder.length; i++) {
-			playlistsPanel.append('<div class="playlist" data-name="'
+			$playlistsPanel.find('.list').append('<div class="playlist" data-name="'
 									+ playerState.playlistsOrder[i]
 									+ '">'
 									+ playerState.playlistsOrder[i]
 									+ '</div>'
 								);
 		}
+
+		$('.playlistsPanel .list').mCustomScrollbar({
+			axis: 'x'
+		});
 
 		// Задаем свойства объекта Audio свойствами объекта playerState
 		// Выставляем громкость
@@ -1790,7 +1820,7 @@ $(document).ready(function() {
 		;
 
 		if(playlistTracks.length > 0) {
-			$('.playlistContainer').mCustomScrollbar();
+			
 
 			$.ajax({
 				data: {'action': 'getPlaylistStations', 'id': playlistTracks},
@@ -1803,7 +1833,7 @@ $(document).ready(function() {
 					;
 					
 
-					var trackMarkup = $('.template-track').html();
+					// var trackMarkup = $('.template-track').html();
 
 					for(var i = 0; i < response.length; i++) {
 						var track = response[i];
@@ -1825,6 +1855,8 @@ $(document).ready(function() {
 
 					playlist.html(playlist.html() + markup);
 
+					$('.playlistContainer').mCustomScrollbar();
+
 					if(!playerState.paused) {
 						var streamUrl = getCurrentTrack().url;
 						audioApiElement.playStream(streamUrl);
@@ -1832,7 +1864,9 @@ $(document).ready(function() {
 						$('.playlistContainer .active [data-station-url="' + streamUrl + '"]')
 							.attr('data-current-track', 1);
 					}
-					$('.playlistContainer').mCustomScrollbar('scrollTo', getCurrentTrack().scrollPosition);
+					// $('.playlistContainer').mCustomScrollbar('scrollTo', getCurrentTrack().scrollPosition);
+					// $('.playlistContainer').mCustomScrollbar('scrollTo', $('[data-current-track=1]').position().top);
+					$('.playlistContainer').mCustomScrollbar('scrollTo', $('.playlistContainer .active [data-station-url="' + streamUrl + '"]').position().top);
 				}
 			});
 			debugPlayerState();

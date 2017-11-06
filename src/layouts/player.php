@@ -89,6 +89,8 @@
 	</div>
 
 	<div class="playlistsPanel">
+		<div class="list"></div>
+
 		<ul class="nav">
 			<li>
 				<button class="playlist-control playlist-prev">
