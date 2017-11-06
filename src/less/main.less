@@ -379,7 +379,7 @@ ul, ol {
 	border-radius: 5px;
 	color: #eee;
 	padding: 1em;
-	height: 420px;
+	height: 520px;
 	width: 320px;
 	position: relative;
 	left: 50%;
@@ -532,8 +532,8 @@ ul, ol {
 					border: 2px solid transparent;
 					border-bottom-color: #0ff;
 					border-radius: 50%;
-					height: 34px;
-					width: 34px;
+					height: 44px;
+					width: 44px;
 					position: absolute;
 					left: -4px;
 					top: -4px;
@@ -543,8 +543,8 @@ ul, ol {
 					border: 2px solid transparent;
 					border-top-color: #0ff;
 					border-radius: 50%;
-					height: 38px;
-					width: 38px;
+					height: 48px;
+					width: 48px;
 					position: absolute;
 					left: -6px;
 					top: -6px;
@@ -552,7 +552,7 @@ ul, ol {
 				}
 			}
 			@keyframes buttonRotateBack {
-				 100% {
+				100% {
 					transform: rotate(-360deg);
 				} 
 			}
@@ -628,15 +628,26 @@ ul, ol {
 	}
 
 	.playlistsPanel {
+		clear: both;
+		height: 30px;
 		margin: 4px 0;
+		overflow: hidden;
 		position: relative;
+		.list {
+			float: left;
+			height: 100%;
+			width: ~"calc(100% - 95px)";
+			overflow-x: auto;
+			overflow-y: hidden;
+		}
 		.nav {
 			cursor: default;
 			// .flex-container;
-			// height: 20px;
-			position: absolute;
-			right: 4px;
-			top: -2px;
+			height: 100%;
+			// position: absolute;
+			// right: 4px;
+			// top: -2px;
+			float: right;
 			li {
 				float: left;
 				padding: 0 8px;
@@ -661,7 +672,7 @@ ul, ol {
 			display: inline-block;
 			font-size: 1.2em;
 			// line-height: 10px;
-			padding: 2px 5px;
+			padding: 5px;
 			text-align: center;
 			overflow: hidden;
 			height: 100%;
@@ -795,7 +806,7 @@ ul, ol {
 	opacity: 0;
 	position: absolute;
 	top: -4px;
-	height: 420px;
+	height: 520px;
 	width: 320px;
 	&.searchContainerFadeIn {
 		animation: searchContainerFadeIn linear .4s;

@@ -817,7 +817,7 @@ ol {
           border-radius: 5px;
   color: #eee;
   padding: 1em;
-  height: 420px;
+  height: 520px;
   width: 320px;
   position: relative;
   left: 50%;
@@ -1070,8 +1070,8 @@ ol {
   border-bottom-color: #0ff;
   -webkit-border-radius: 50%;
           border-radius: 50%;
-  height: 34px;
-  width: 34px;
+  height: 44px;
+  width: 44px;
   position: absolute;
   left: -4px;
   top: -4px;
@@ -1083,8 +1083,8 @@ ol {
   border-top-color: #0ff;
   -webkit-border-radius: 50%;
           border-radius: 50%;
-  height: 38px;
-  width: 38px;
+  height: 48px;
+  width: 48px;
   position: absolute;
   left: -6px;
   top: -6px;
@@ -1145,14 +1145,24 @@ ol {
   position: relative;
 }
 #player .playlistsPanel {
+  clear: both;
+  height: 30px;
   margin: 4px 0;
+  overflow: hidden;
   position: relative;
+}
+#player .playlistsPanel .list {
+  float: left;
+  height: 100%;
+  width: -webkit-calc(100% - 95px);
+  width: calc(100% - 95px);
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 #player .playlistsPanel .nav {
   cursor: default;
-  position: absolute;
-  right: 4px;
-  top: -2px;
+  height: 100%;
+  float: right;
 }
 #player .playlistsPanel .nav li {
   float: left;
@@ -1185,7 +1195,7 @@ ol {
   cursor: pointer;
   display: inline-block;
   font-size: 1.2em;
-  padding: 2px 5px;
+  padding: 5px;
   text-align: center;
   overflow: hidden;
   height: 100%;
@@ -1451,7 +1461,7 @@ ol {
   opacity: 0;
   position: absolute;
   top: -4px;
-  height: 420px;
+  height: 520px;
   width: 320px;
 }
 .searchContainer.searchContainerFadeIn {
