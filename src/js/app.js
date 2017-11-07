@@ -209,6 +209,7 @@ $(document).ready(function () {
 	// класс для управления плейлистом
 	// принимает имя плейлиста, которым будем управлять
 	function PlaylistManager() {
+		var self = this;
 		// функция для добавления плейлистов на панель
 		this.addPanel = function (name, scrollable) {
 			var pl = __playlists[name].titleHtmlEl;
@@ -225,6 +226,8 @@ $(document).ready(function () {
 			var playlistTracks = __playlists[playerState.currentPlaylist].tracks;
 
 			console.log(playlistTracks);
+
+			playlistContainer.append(__playlists[playerState.currentPlaylist].htmlEl);
 
 			if (playlistTracks.length > 0) {
 				/*var response = stationsArray,
@@ -273,6 +276,11 @@ $(document).ready(function () {
 			$playlistsPanel.find('[data-name="' + name + '"]').attr('data-current', 1);
 
 			playerState.currentPlaylist = name;
+			console.log(playerState.currentPlaylist);
+
+			playlistContainer.find('.mCustomScrollBox').remove();
+			self.makeTracks();
+
 			localStorage.setItem('playerState', JSON.stringify(playerState));
 		};
 	}
@@ -1463,6 +1471,7 @@ $(document).ready(function () {
 
 	$('.playlistsPanel').on('click', '.playlist', function () {
 		console.log('::Change playlist::' + $(this).attr('data-name'));
+		playlistManager.setCurrent($(this).attr('data-name'));
 	});
 
 	/*
