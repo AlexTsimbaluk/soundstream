@@ -141,9 +141,9 @@ function getAllStations() {
 	$data = array();
 
 	while ($row = mysqli_fetch_assoc($result)) {
-		$data[] = $row;
+		$key = $row['station_id'];
+		$data[$key] = $row;
 	}
-	
 	echo json_encode($data);
 
 	if (!$result) {

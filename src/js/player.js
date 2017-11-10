@@ -91,7 +91,6 @@ $(document).ready(function() {
 	
 	/*Slider for background*/
 	$(function() {
-
 		/*function compareRandom(a, b) {
 			return Math.random() - 0.5;
 		}*/
@@ -120,7 +119,6 @@ $(document).ready(function() {
             	$.mbBgndGallery.changeEffect(effects[index]);*/
             }
         });
-		
 	});
 
 	// mCustomScrollbar
@@ -1949,7 +1947,7 @@ $(document).ready(function() {
 		;
 
 		if(playlistTracks.length > 0) {
-			/*for(var i = 0; i < playlistTracks.length; i++) {
+			for(var i = 0; i < playlistTracks.length; i++) {
 				addToPlaylist(playlistTracks[i]);
 			}
 
@@ -1963,10 +1961,10 @@ $(document).ready(function() {
 
 				$('.playlistContainer [data-station-url="' + streamUrl + '"]')
 					.attr('data-current-track', 1);
-			}*/
+			}
 
 
-			$.ajax({
+			/*$.ajax({
 				data: {'action': 'getPlaylistStations', 'id': playlistTracks},
 				success: function(data) {
 					var response = JSON.parse(data),
@@ -2013,7 +2011,7 @@ $(document).ready(function() {
 					// $('.playlistContainer').mCustomScrollbar('scrollTo', getCurrentTrack().scrollPosition);
 					// $('.playlistContainer').mCustomScrollbar('scrollTo', $('[data-current-track=1]').position().top);
 				}
-			});
+			});*/
 
 
 			debugPlayerState();
