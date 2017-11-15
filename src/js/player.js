@@ -585,6 +585,11 @@ $(document).ready(function() {
 	}
 
     function audioBindAll(player, name) {
+    	function playingTrack() {
+    		if($('[data-current-track]').hasClass('waiting')) {
+	    		$('[data-current-track]').removeClass('waiting');
+    		}
+    	}
     	player.addEventListener('abort', (e)=> {
      		console.log(name + '::Event.type::' + e.type);
      		$(".spinner").hide();
@@ -642,6 +647,7 @@ $(document).ready(function() {
         player.addEventListener('play', (e)=> {
      		console.log(name + '::Event.type::' + e.type);
      		$(".spinner").show();
+     		$('[data-current-track]').addClass('waiting');
         });
         player.addEventListener('playing', (e)=> {
      		console.log(name + '::Event.type::' + e.type);
@@ -650,6 +656,8 @@ $(document).ready(function() {
      		playerState.paused = player.paused;
 
      		$(".spinner").hide();
+
+     		playingTrack();
 
      		visualisation();
      		displayState();
@@ -1947,7 +1955,7 @@ $(document).ready(function() {
 		;
 
 		if(playlistTracks.length > 0) {
-			for(var i = 0; i < playlistTracks.length; i++) {
+			/*for(var i = 0; i < playlistTracks.length; i++) {
 				addToPlaylist(playlistTracks[i]);
 			}
 
@@ -1961,10 +1969,10 @@ $(document).ready(function() {
 
 				$('.playlistContainer [data-station-url="' + streamUrl + '"]')
 					.attr('data-current-track', 1);
-			}
+			}*/
 
 
-			/*$.ajax({
+			$.ajax({
 				data: {'action': 'getPlaylistStations', 'id': playlistTracks},
 				success: function(data) {
 					var response = JSON.parse(data),
@@ -2011,7 +2019,7 @@ $(document).ready(function() {
 					// $('.playlistContainer').mCustomScrollbar('scrollTo', getCurrentTrack().scrollPosition);
 					// $('.playlistContainer').mCustomScrollbar('scrollTo', $('[data-current-track=1]').position().top);
 				}
-			});*/
+			});
 
 
 			debugPlayerState();

@@ -490,6 +490,11 @@ $(document).ready(function () {
 	}
 
 	function audioBindAll(player, name) {
+		function playingTrack() {
+			if ($('[data-current-track]').hasClass('waiting')) {
+				$('[data-current-track]').removeClass('waiting');
+			}
+		}
 		player.addEventListener('abort', function (e) {
 			console.log(name + '::Event.type::' + e.type);
 			$(".spinner").hide();
@@ -547,6 +552,7 @@ $(document).ready(function () {
 		player.addEventListener('play', function (e) {
 			console.log(name + '::Event.type::' + e.type);
 			$(".spinner").show();
+			$('[data-current-track]').addClass('waiting');
 		});
 		player.addEventListener('playing', function (e) {
 			console.log(name + '::Event.type::' + e.type);
@@ -555,6 +561,8 @@ $(document).ready(function () {
 			playerState.paused = player.paused;
 
 			$(".spinner").hide();
+
+			playingTrack();
 
 			visualisation();
 			displayState();
@@ -1696,63 +1704,51 @@ $(document).ready(function () {
 		var playlistTracks = __playlists[playerState.currentPlaylist].tracks;
 
 		if (playlistTracks.length > 0) {
-			for (var i = 0; i < playlistTracks.length; i++) {
-				addToPlaylist(playlistTracks[i]);
-			}
+			/*for(var i = 0; i < playlistTracks.length; i++) {
+   	addToPlaylist(playlistTracks[i]);
+   }
+   	$('.playlistContainer').mCustomScrollbar({
+   	// theme:"dark"
+   });
+   	if(!playerState.paused) {
+   	var streamUrl = getCurrentTrack().url;
+   	audioApiElement.playStream(streamUrl);
+   		$('.playlistContainer [data-station-url="' + streamUrl + '"]')
+   		.attr('data-current-track', 1);
+   }*/
 
-			$('.playlistContainer').mCustomScrollbar({
-				// theme:"dark"
+			$.ajax({
+				data: { 'action': 'getPlaylistStations', 'id': playlistTracks },
+				success: function success(data) {
+					var response = JSON.parse(data),
+					    playlist = playlistContainer.find('.playlist[data-name="' + playerState.currentPlaylist + '"]'),
+					    markup = '';
+
+					// var trackMarkup = $('.template-track').html();
+
+					for (var i = 0; i < response.length; i++) {
+						var track = response[i];
+						markup += '<div class="track" data-station-id="' + track.station_id + '" data-station-title="' + track.station_title + '" data-station-url="' + track.station_url + '"><div class="delete"><i class="fa fa-minus"></i></div> \
+										<div class="canplaytest"><i class="fa fa-music"></i></div>\
+										<div class="title">' + track.station_title + '</div><div class="url">' + track.station_url + '</div></div>';
+					}
+
+					playlist.html(playlist.html() + markup);
+
+					$('.playlistContainer').mCustomScrollbar({
+						// theme:"dark"
+					});
+
+					if (!playerState.paused) {
+						var streamUrl = getCurrentTrack().url;
+						audioApiElement.playStream(streamUrl);
+
+						$('.playlistContainer [data-station-url="' + streamUrl + '"]').attr('data-current-track', 1);
+					}
+					// $('.playlistContainer').mCustomScrollbar('scrollTo', getCurrentTrack().scrollPosition);
+					// $('.playlistContainer').mCustomScrollbar('scrollTo', $('[data-current-track=1]').position().top);
+				}
 			});
-
-			if (!playerState.paused) {
-				var streamUrl = getCurrentTrack().url;
-				audioApiElement.playStream(streamUrl);
-
-				$('.playlistContainer [data-station-url="' + streamUrl + '"]').attr('data-current-track', 1);
-			}
-
-			/*$.ajax({
-   	data: {'action': 'getPlaylistStations', 'id': playlistTracks},
-   	success: function(data) {
-   		var response = JSON.parse(data),
-   			playlist = playlistContainer.find('.playlist[data-name="'
-   												+ playerState.currentPlaylist
-   												+ '"]'),
-   			markup = ''
-   		;
-   		
-   			// var trackMarkup = $('.template-track').html();
-   			for(var i = 0; i < response.length; i++) {
-   			var track = response[i];
-   			markup += '<div class="track" data-station-id="'
-   						+ track.station_id
-   						+ '" data-station-title="'
-   						+ track.station_title
-   						+ '" data-station-url="'
-   						+ track.station_url
-   						+ '"><div class="delete"><i class="fa fa-minus"></i></div> \
-   							<div class="canplaytest"><i class="fa fa-music"></i></div>\
-   							<div class="title">'
-   						+ track.station_title
-   						+ '</div><div class="url">'
-   						+ track.station_url
-   						+ '</div></div>'
-   			;
-   		}
-   			playlist.html(playlist.html() + markup);
-   			$('.playlistContainer').mCustomScrollbar({
-   			// theme:"dark"
-   		});
-   			if(!playerState.paused) {
-   			var streamUrl = getCurrentTrack().url;
-   			audioApiElement.playStream(streamUrl);
-   				$('.playlistContainer [data-station-url="' + streamUrl + '"]')
-   				.attr('data-current-track', 1);
-   		}
-   		// $('.playlistContainer').mCustomScrollbar('scrollTo', getCurrentTrack().scrollPosition);
-   		// $('.playlistContainer').mCustomScrollbar('scrollTo', $('[data-current-track=1]').position().top);
-   	}
-   });*/
 
 			debugPlayerState();
 			debugLocalStorage();

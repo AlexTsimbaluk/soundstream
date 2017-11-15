@@ -1235,6 +1235,9 @@ ol {
 			// 100% { color: #00f; }
 		} */
 }
+#player .track.waiting {
+  background: rgba(0, 0, 0, 0.5);
+}
 #player .track .title {
   font-size: 1.2em;
   max-height: 20px;
