@@ -1824,6 +1824,7 @@ $(document).ready(function() {
 
 
 				for (var i = 0; i < totalArrays; i++) {
+					debugger;
 					stationsArrayOn100[i] = [];
 					for (var j = 0; j < 100; j++) {
 						var stationsIndex = i * 100 + j
@@ -1834,7 +1835,6 @@ $(document).ready(function() {
 					}
 					// console.log(stationsArrayOn100[i]);
 				}
-				debugger;
 
 				localStorage.setItem('stations', JSON.stringify(stationsArray));
 				localStorage.setItem('stationsOn100', JSON.stringify(stationsArrayOn100));
