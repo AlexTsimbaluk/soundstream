@@ -1580,14 +1580,18 @@ $(document).ready(function () {
 				;
 
 				for (var i = 0; i < totalArrays; i++) {
-					debugger;
-					stationsArrayOn100[i] = [];
+					// debugger;
+					stationsArrayOn100[i] = []; // TODO здесь баги
 					for (var j = 0; j < 100; j++) {
 						var stationsIndex = i * 100 + j;
 						if (i == totalArrays - 1 && j == size % 100) {
 							break;
 						}
+						// TODO
+						//  сделать проверку что stationsArray[stationsIndex] не null
+						// if(stationsArray[stationsIndex]) {
 						stationsArrayOn100[i][j] = stationsArray[stationsIndex];
+						// }
 					}
 					// console.log(stationsArrayOn100[i]);
 				}
