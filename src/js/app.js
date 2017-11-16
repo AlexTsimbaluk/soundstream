@@ -1525,7 +1525,7 @@ $(document).ready(function () {
 
 
 	// Массив со всеми станциями
-	stationsArray = [],
+	stationsArray = {},
 
 
 	// Массив со всеми станциями, только станции сгруппированы в массивы по 100шт
@@ -1571,8 +1571,13 @@ $(document).ready(function () {
 			data: { 'action': 'getAllStations' },
 			success: function success(data) {
 				stationsArray = JSON.parse(data);
-				var size = stationsArray.length,
-				    totalArrays = Math.ceil(size / 100);
+				var size = 0;
+				for (var key in stationsArray) {
+					size++;
+				}
+				var totalArrays = Math.ceil(size / 100)
+				// size 		= stationsArray.length
+				;
 
 				for (var i = 0; i < totalArrays; i++) {
 					stationsArrayOn100[i] = [];
@@ -1585,6 +1590,7 @@ $(document).ready(function () {
 					}
 					// console.log(stationsArrayOn100[i]);
 				}
+				debugger;
 
 				localStorage.setItem('stations', JSON.stringify(stationsArray));
 				localStorage.setItem('stationsOn100', JSON.stringify(stationsArrayOn100));
@@ -1640,7 +1646,7 @@ $(document).ready(function () {
 		localStorage.setItem('__playlists', JSON.stringify(__playlists));
 		// audioApiElement.playStream(playerState.playlists[playerState.currentPlaylist].currentTrack);
 
-		location.reload();
+		// location.reload();
 	} else {
 		// Получаем актуальное состояние плеера из local storage
 		playerState = JSON.parse(localStorage.getItem('playerState'));
