@@ -1317,8 +1317,6 @@ $(document).ready(function () {
 
 			// начальная разметка - общее количество станций
 			markup = '<div class="total"><span>' + size + '</span> stations is found</div>';
-			console.log(size);
-			console.log(totalBlocks);
 
 			result.html('');
 
@@ -1368,7 +1366,6 @@ $(document).ready(function () {
 					}
 
 					console.log('stationsBlockToggle №' + index + ' opened');
-					console.log(stationsOpened);
 
 					/*localStorage.setItem('playerState', JSON.stringify(playerState));
      return false;*/
@@ -1390,6 +1387,13 @@ $(document).ready(function () {
 
 					// return false;
 				}
+
+				playerState.search.stationsOpened = stationsOpened;
+
+				console.log(stationsOpened);
+				console.log(playerState.search);
+				console.log(playerState.search.stationsOpened);
+
 				localStorage.setItem('playerState', JSON.stringify(playerState));
 				return false;
 			});
@@ -1423,9 +1427,6 @@ $(document).ready(function () {
 			}
 
 			$(".spinner").hide();
-
-			var dateLoad = new Date().getTime();
-			console.log(dateLoad - dateStart + 'ms');
 		}
 
 		$(".spinner").show();
@@ -1607,9 +1608,7 @@ $(document).ready(function () {
 						}
 						// TODO
 						//  сделать проверку что stationsArray[stationsIndex] не null
-						if (stationsArray[stationsIndex] != null) {
-							stationsArrayOn100[i][j] = stationsArray[stationsIndex];
-						}
+						stationsArrayOn100[i][j] = stationsArray[stationsIndex];
 					}
 				}
 				// console.log(stationsArray);
