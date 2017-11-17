@@ -81,6 +81,7 @@ $(document).ready(function () {
 	/*Sortable plugin JQueryUI*/
 	// $('.sortable').sortable({scroll: true});
 
+
 	// Первоначальное случайное фоновое изображение для body
 	$('body').css({ 'background': 'url("../img/bg/bg' + getRandomInt(1, 10) + '.jpg") no-repeat center / cover'
 		// '.jpg") no-repeat center / auto 100%'
@@ -682,6 +683,7 @@ $(document).ready(function () {
 	// TODO: Сделать функцию,
 	// которая принимает объект с настройками (анализатора например (fft)),
 	// и колбэк - функцию рисования
+
 
 	function drawEq1() {
 		// получаем canvas
@@ -1299,10 +1301,15 @@ $(document).ready(function () {
    	}
    });*/
 
+			var size = 0;
+			for (var key in stationsArray) {
+				size++;
+			}
 			var response = stationsArray,
 			    stationsOpened = playerState.search.stationsOpened || [],
-			    size = response.length,
-			    result = $('.searchContainer .result'),
+
+			// size 			= response.length,
+			result = $('.searchContainer .result'),
 
 			// станций в блоке и всего блоков
 			IN_BLOCK = 100,
@@ -1484,6 +1491,7 @@ $(document).ready(function () {
  	Чтобы на экранах в высоту меньше 640px у блока playlistContainer с треками 
  	выставить всю доступную высоту
  */
+
 	if (window.innerHeight <= 640 && window.innerWidth < 700) {
 		var _playlistContainerHeight = $('#player').height() - ($('#player .playlistsPanel').height() + $('#player .trackContainer').height());
 		console.log(_playlistContainerHeight);
@@ -1556,7 +1564,6 @@ $(document).ready(function () {
 	canvasVolume.height = 30;
 
 	// Погнали!!!;)
-
 	// Состояние пользователя - зарегистрирован или нет, авторизован или нет
 	if (localStorage.getItem('userStatus') == undefined) {
 		console.log('userStatus == undefined');
@@ -1579,22 +1586,33 @@ $(document).ready(function () {
 				// size 		= stationsArray.length
 				;
 
+				// массив имен станций
+				// нужен для правильного получения stationsIndex
+				var keys = [];
+
+				for (var key in stationsArray) {
+					keys.push(key);
+				}
+
 				for (var i = 0; i < totalArrays; i++) {
 					// debugger;
 					stationsArrayOn100[i] = []; // TODO здесь баги
 					for (var j = 0; j < 100; j++) {
-						var stationsIndex = i * 100 + j;
+						var stationsIndex = keys[i * 100 + j];
+						// если последняя станция - break
+						// почему?
+						// return?
 						if (i == totalArrays - 1 && j == size % 100) {
 							break;
 						}
 						// TODO
 						//  сделать проверку что stationsArray[stationsIndex] не null
-						// if(stationsArray[stationsIndex]) {
-						stationsArrayOn100[i][j] = stationsArray[stationsIndex];
-						// }
+						if (stationsArray[stationsIndex] != null) {
+							stationsArrayOn100[i][j] = stationsArray[stationsIndex];
+						}
 					}
-					// console.log(stationsArrayOn100[i]);
 				}
+				// console.log(stationsArray);
 
 				localStorage.setItem('stations', JSON.stringify(stationsArray));
 				localStorage.setItem('stationsOn100', JSON.stringify(stationsArrayOn100));
@@ -1650,7 +1668,7 @@ $(document).ready(function () {
 		localStorage.setItem('__playlists', JSON.stringify(__playlists));
 		// audioApiElement.playStream(playerState.playlists[playerState.currentPlaylist].currentTrack);
 
-		// location.reload();
+		location.reload();
 	} else {
 		// Получаем актуальное состояние плеера из local storage
 		playerState = JSON.parse(localStorage.getItem('playerState'));
