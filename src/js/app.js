@@ -341,8 +341,12 @@ $(document).ready(function () {
 			console.log(streamUrl);
 			$('.playlistContainer').mCustomScrollbar('scrollTo', currentTrackEl.position().top);
 
-			/*$('.playlistContainer')
-   	.mCustomScrollbar('scrollTo', getCurrentTrack().scrollPosition);*/
+			// при старте воспроизведения
+			// удалим у всех треков атрибут data-current-track
+			currentTrackEl.closest('.playlist').find('[data-current-track]').removeAttr('data-current-track');
+
+			// а затем установим data-current-track нужному треку
+			currentTrackEl.attr('data-current-track', 1);
 
 			// Соберем временный объект для удобства
 			var _currentTrack = {
@@ -1081,16 +1085,16 @@ $(document).ready(function () {
 	$('.playlistContainer').on('click', '.track', function (e) {
 		if (!playerState.paused) {
 			if ($(this).attr('data-current-track')) {
-				$(this).removeAttr('data-current-track');
+				// $(this).removeAttr('data-current-track');
 				audioApiElement.stopStream();
 			} else {
-				$(this).attr('data-current-track', 1);
+				// $(this).attr('data-current-track', 1);
 				var url = $(this).data('stationUrl');
 				audioApiElement.stopStream();
 				audioApiElement.playStream(url);
 			}
 		} else {
-			$(this).attr('data-current-track', 1);
+			// $(this).attr('data-current-track', 1);
 			var url = $(this).data('stationUrl');
 			audioApiElement.playStream(url);
 		}
@@ -1770,7 +1774,8 @@ $(document).ready(function () {
 						var streamUrl = getCurrentTrack().url;
 						audioApiElement.playStream(streamUrl);
 
-						$('.playlistContainer [data-station-url="' + streamUrl + '"]').attr('data-current-track', 1);
+						/*$('.playlistContainer [data-station-url="' + streamUrl + '"]')
+      	.attr('data-current-track', 1);*/
 					}
 					// $('.playlistContainer').mCustomScrollbar('scrollTo', getCurrentTrack().scrollPosition);
 					// $('.playlistContainer').mCustomScrollbar('scrollTo', $('[data-current-track=1]').position().top);
