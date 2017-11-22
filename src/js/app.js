@@ -259,6 +259,7 @@ $(document).ready(function () {
 			var playlistTracks = __playlists[playerState.currentPlaylist].tracks;
 
 			if (playlistTracks.length > 0) {
+				// непонятно что это и зачем
 				playlistContainer.append(currentPlaylist.htmlEl);
 
 				for (var i = 0; i < tracks.length; i++) {
