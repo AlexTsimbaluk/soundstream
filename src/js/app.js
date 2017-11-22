@@ -210,6 +210,8 @@ $(document).ready(function () {
 	// принимает имя плейлиста, которым будем управлять
 	function PlaylistManager() {
 		var self = this;
+
+		this.templateTrack = $('.template-track').html();
 		// функция для добавления плейлистов на панель
 		this.addPanel = function (name, scrollable) {
 			var pl = __playlists[name].titleHtmlEl;
@@ -222,52 +224,81 @@ $(document).ready(function () {
 
 		this.addTrack = function () {};
 
+		this.makeTracksArray = function () {
+			var tracks = __playlists[playerState.currentPlaylist].tracks;
+
+			var templateTrack = $('.template-track').html(),
+			    tracksArray = [];
+
+			var size = 0;
+			for (var key in tracks) {
+				size++;
+			}
+
+			for (var i = 0; i < size; i++) {
+				var track = stationsArray[tracks[i]];
+				var $track = $(templateTrack);
+
+				$track.attr('data-station-id', track.station_id);
+				$track.attr('data-station-title', track.station_title);
+				$track.attr('data-station-url', track.station_url);
+
+				$track.find('.title').text(track.station_title);
+				$track.find('.url').text(track.station_url);
+
+				tracksArray.push($track);
+			}
+			console.log(tracksArray);
+
+			return tracksArray;
+		};
+
 		this.makeTracks = function () {
+			var currentPlaylist = __playlists[playerState.currentPlaylist],
+			    tracks = self.makeTracksArray();
 			var playlistTracks = __playlists[playerState.currentPlaylist].tracks;
 
-			console.log(playlistTracks);
-
-			playlistContainer.append(__playlists[playerState.currentPlaylist].htmlEl);
-
 			if (playlistTracks.length > 0) {
-				/*var response = stationsArray,
-    	playlist = playlistContainer
-    				.find('.playlist[data-name="' 	+
-    					playerState.currentPlaylist +
-    					'"]'),
-    	markup = ''
-    ;*/
+				playlistContainer.append(currentPlaylist.htmlEl);
 
-				// console.log('response');
-
-				for (var i = 0; i < playlistTracks.length; i++) {
-					/*var track = response[i];
-     markup += 
-     		'<div class="track" data-station-id="' 	+
-     			track.station_id 					+
-     			'" data-station-title="' 			+
-     			track.station_title 				+
-     			'" data-station-url="' 				+
-     			track.station_url 					+
-     			'"><div class="delete"><i class="fa fa-minus"></i></div> \
-     				<div class="canplaytest"><i class="fa fa-music"></i></div>\
-     				<div class="title">' 			+
-     			track.station_title 				+
-     			'</div><div class="url">' 			+
-     			track.station_url 					+
-     			'</div></div>'
-     ;*/
-					addToPlaylist(playlistTracks[i]);
+				for (var i = 0; i < tracks.length; i++) {
+					var $track = tracks[i];
+					console.log($track);
+					playlistContainer.append($track);
 				}
-
-				// playlist.html(playlist.html() + markup);
 
 				$('.playlistContainer').mCustomScrollbar({
 					// theme:"dark"
 				});
+
+				if (!playerState.paused) {
+					var streamUrl = getCurrentTrack().url;
+					audioApiElement.playStream(streamUrl);
+				}
 			} else {
 				console.log(0);
 			}
+
+			/*var playlist = playlistContainer.
+   				find('.playlist[data-name="' 	+
+   					playerState.currentPlaylist +
+   					'"]')
+   ;*/
+
+			/*var playlistTracks = __playlists[playerState.currentPlaylist]
+   						.tracks
+   ;
+   	console.log(playlistTracks);
+   		if(playlistTracks.length > 0) {
+   		for(var i = 0; i < playlistTracks.length; i++) {
+   		
+   	}
+   		$('.playlistContainer').mCustomScrollbar({
+   		// theme:"dark"
+   	});			
+   } else {
+   	console.log(0);
+   }*/
 		};
 
 		this.setCurrent = function (name) {
@@ -1252,6 +1283,8 @@ $(document).ready(function () {
 	// если окно со станциями нужно свернуть, то return false;
 
 	// TODO: перестал работать $(".spinner")
+
+
 	$('#player .find .showAll').on('click', function (e) {
 		$(this).toggleClass('active');
 
@@ -1728,11 +1761,13 @@ $(document).ready(function () {
   						.tracks
   ;*/
 
+		var playlistTracks = __playlists[playerState.currentPlaylist].tracks;
+
 		console.log('make tracks:begin');
 		// playlistManager.makeTracks();
+		// makeTrack(playlistTracks);
+		playlistManager.makeTracks();
 		console.log('make tracks:end');
-
-		var playlistTracks = __playlists[playerState.currentPlaylist].tracks;
 
 		if (playlistTracks.length > 0) {
 			/*for(var i = 0; i < playlistTracks.length; i++) {
@@ -1748,45 +1783,51 @@ $(document).ready(function () {
    		.attr('data-current-track', 1);
    }*/
 
-			$.ajax({
-				data: { 'action': 'getPlaylistStations', 'id': playlistTracks },
-				success: function success(data) {
-					var response = JSON.parse(data),
-					    playlist = playlistContainer.find('.playlist[data-name="' + playerState.currentPlaylist + '"]'),
-					    markup = '';
+			/*$.ajax({
+   	data: {'action': 'getPlaylistStations', 'id': playlistTracks},
+   	success: function(data) {
+   		var response = JSON.parse(data),
+   			playlist = playlistContainer.find('.playlist[data-name="'
+   												+ playerState.currentPlaylist
+   												+ '"]'),
+   			markup = ''
+   		;
+   		
+   			// var trackMarkup = $('.template-track').html();
+   			for(var i = 0; i < response.length; i++) {
+   			var track = response[i];
+   			markup += '<div class="track" data-station-id="'
+   						+ track.station_id
+   						+ '" data-station-title="'
+   						+ track.station_title
+   						+ '" data-station-url="'
+   						+ track.station_url
+   						+ '"><div class="delete"><i class="fa fa-minus"></i></div> \
+   							<div class="canplaytest"><i class="fa fa-music"></i></div>\
+   							<div class="title">'
+   						+ track.station_title
+   						+ '</div><div class="url">'
+   						+ track.station_url
+   						+ '</div></div>'
+   			;
+   		}
+   			playlist.html(playlist.html() + markup);
+   			$('.playlistContainer').mCustomScrollbar({
+   			// theme:"dark"
+   		});
+   			if(!playerState.paused) {
+   			var streamUrl = getCurrentTrack().url;
+   			audioApiElement.playStream(streamUrl);
+   		}
+   	}
+   });*/
 
-					// var trackMarkup = $('.template-track').html();
-
-					for (var i = 0; i < response.length; i++) {
-						var track = response[i];
-						markup += '<div class="track" data-station-id="' + track.station_id + '" data-station-title="' + track.station_title + '" data-station-url="' + track.station_url + '"><div class="delete"><i class="fa fa-minus"></i></div> \
-										<div class="canplaytest"><i class="fa fa-music"></i></div>\
-										<div class="title">' + track.station_title + '</div><div class="url">' + track.station_url + '</div></div>';
-					}
-
-					playlist.html(playlist.html() + markup);
-
-					$('.playlistContainer').mCustomScrollbar({
-						// theme:"dark"
-					});
-
-					if (!playerState.paused) {
-						var streamUrl = getCurrentTrack().url;
-						audioApiElement.playStream(streamUrl);
-
-						/*$('.playlistContainer [data-station-url="' + streamUrl + '"]')
-      	.attr('data-current-track', 1);*/
-					}
-					// $('.playlistContainer').mCustomScrollbar('scrollTo', getCurrentTrack().scrollPosition);
-					// $('.playlistContainer').mCustomScrollbar('scrollTo', $('[data-current-track=1]').position().top);
-				}
-			});
-
-			debugPlayerState();
-			debugLocalStorage();
 		} else {
 			console.log(0);
 		}
+
+		debugPlayerState();
+		debugLocalStorage();
 	}
 
 	/*try {
