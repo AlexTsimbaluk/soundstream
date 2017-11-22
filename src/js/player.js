@@ -333,7 +333,6 @@ $(document).ready(function() {
 
 				for (var i = 0; i < tracks.length; i++) {
 					var $track = tracks[i];
-					console.log($track);
 					playlistContainer.append($track);
 				}
 
