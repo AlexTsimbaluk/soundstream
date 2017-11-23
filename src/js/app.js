@@ -392,6 +392,8 @@ $(document).ready(function () {
 
 			__playlists[getCurrentPlaylist()].currentTrack = _currentTrack;
 
+			vmCurrentTrackTitle.title = _currentTrack.title;
+
 			// Запишем в объект состояния свойтво
 			// с позицией по высоте текущего трека
 			// для скрола к нему при загрузке страницы
@@ -1712,6 +1714,24 @@ $(document).ready(function () {
 		console.log(playerState);
 		console.log(__playlists);
 
+		var vmCurrentTrackTitle = new Vue({
+			el: '.currentTrackTitle',
+			data: {
+				trackTitle: getCurrentTrack().title
+			},
+			computed: {
+				title: {
+					get: function get() {
+						// return getCurrentTrack().title;
+						return this.trackTitle;
+					},
+					set: function set(title) {
+						this.trackTitle = title;
+					}
+				}
+			}
+		});
+
 		// Наполняем $playlistsPanel заголовками плейлистов
 		for (var i = 0; i < playerState.playlistsOrder.length; i++) {
 			var plName = playerState.playlistsOrder[i];
@@ -1837,18 +1857,6 @@ $(document).ready(function () {
  		console.log('Превышен лимит');
  	}
  }*/
-
-	var vmCurrentTrackTitle = new Vue({
-		el: '.currentTrackTitle',
-		data: {
-			trackTitle: playerState.playlists[playerState.currentPlaylist].currentTrack.title
-		},
-		computed: {
-			title: function title() {
-				return getCurrentTrack().title;
-			}
-		}
-	});
 });
 
 $(window).load(function () {});
