@@ -1837,6 +1837,18 @@ $(document).ready(function () {
  		console.log('Превышен лимит');
  	}
  }*/
+
+	var vmCurrentTrackTitle = new Vue({
+		el: '.currentTrackTitle',
+		data: {
+			trackTitle: playerState.playlists[playerState.currentPlaylist].currentTrack.title
+		},
+		computed: {
+			title: function title() {
+				return getCurrentTrack().title;
+			}
+		}
+	});
 });
 
 $(window).load(function () {});

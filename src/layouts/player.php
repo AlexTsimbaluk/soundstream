@@ -60,7 +60,6 @@
 			<ul class="userActions">
 				<li><button class="showFormReg">Reg</button></li>
 				<li><button class="showFormSign">Auth</button></li>
-				<!-- <li><button class="userAction">user</button></li> -->
 			</ul>
 		</div>
 
@@ -133,7 +132,9 @@
 
 <audio id="playerTag" data-audio-api></audio>
 
-
+<span class="currentTrackTitle">
+	{{ title }}
+</span>
 
 
 <!-- <audio class="walmer hidden" src="http://ml1.t4e.dj:80/dublovers_high.aac" controls></audio> -->

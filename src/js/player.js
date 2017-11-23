@@ -2022,6 +2022,7 @@ $(document).ready(function() {
 			.find('[data-name="' + playerState.currentPlaylist + '"]')
 			.attr('data-current', 1);
 
+
 		$('.playlistsPanel .list').mCustomScrollbar({
 			axis: 'x',
 			// theme:'dark',
@@ -2151,8 +2152,19 @@ $(document).ready(function() {
 		}
 	}*/
 
-
-	
+	var vmCurrentTrackTitle = new Vue({
+		el: '.currentTrackTitle',
+		data: {
+			trackTitle: playerState.
+						playlists[playerState.currentPlaylist].
+						currentTrack.title
+		},
+		computed: {
+			title: function () {
+				return getCurrentTrack().title;
+			}
+		}
+	});
 
 });
 
