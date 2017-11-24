@@ -161,8 +161,9 @@ $(document).ready(function() {
 		vmCurrentTrackTitle.title = title;
 		// titleContainer.html(title);
 
-		titleContainer.removeClass('runningString')
-						.parent().css({'width':'auto'})
+		titleContainer
+			.removeClass('runningString')
+			.parent().css({'width':'auto'})
 		;
 
 		titleContainerWidth = titleContainer.width();
@@ -181,7 +182,6 @@ $(document).ready(function() {
 			} else {
 				titleContainer.html(title.substr(0, maxSize) + '...');
 			}
-			
 		} else {
 			titleContainer.removeClass('runningString')
 							.parent()

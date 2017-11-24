@@ -163,7 +163,6 @@ $(document).ready(function () {
   	} else {
   		titleContainer.html(title.substr(0, maxSize) + '...');
   	}
-  	
   } else {
   	titleContainer.removeClass('runningString')
   					.parent()
