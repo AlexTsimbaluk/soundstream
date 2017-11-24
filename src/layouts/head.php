@@ -42,7 +42,8 @@
     	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-	<title>RadioRA</title>
+    <title>RadioRA</title>
+	<!-- <title class="currentTrackTitle">{{ title }}::RadioRA</title> -->
 
 </head>
 

@@ -152,23 +152,32 @@ $(document).ready(function() {
 			ratio
 		;
 
-		// Поставим <title>
-		$('title').html('RadioRA::' + title);
 
-		titleContainer.html(title)
-						.removeClass('runningString')
+		// Поставим <title>
+		$('title').html(title + '::RadioRA');
+
+
+		// изменим свойство за которым следит Vue
+		vmCurrentTrackTitle.title = title;
+		// titleContainer.html(title);
+
+		titleContainer.removeClass('runningString')
 						.parent().css({'width':'auto'})
 		;
 
 		titleContainerWidth = titleContainer.width();
 		ratio = titleContainerWidth / titleSize;
 		maxSize = Math.floor(maxWidth / ratio) - 5;
+		
+		console.log(titleContainerWidth);
+		console.log(titleContainer.text());
 
-		if(titleContainerWidth > 240) {
+
+		/*if(titleContainerWidth > 220) {
 			if(window.innerWidth > 700) {
 				titleContainer.addClass('runningString')
 								.parent()
-								.css({'width':'240px'});
+								.css({'width':'220px'});
 			} else {
 				titleContainer.html(title.substr(0, maxSize) + '...');
 			}
@@ -177,7 +186,12 @@ $(document).ready(function() {
 			titleContainer.removeClass('runningString')
 							.parent()
 							.css({'width':'auto'});
-		}
+		}*/
+
+		titleContainer
+			.addClass('runningString')
+			.parent()
+			.css({'width':'220px'});
 	}
 
 
@@ -398,6 +412,7 @@ $(document).ready(function() {
 		};
 	}
 
+
 	
 
 
@@ -506,7 +521,7 @@ $(document).ready(function() {
 			__playlists[getCurrentPlaylist()].currentTrack =
     														_currentTrack;
 
-			vmCurrentTrackTitle.title = _currentTrack.title;    														
+			// vmCurrentTrackTitle.title = _currentTrack.title;
 
         	// Запишем в объект состояния свойтво
         	// с позицией по высоте текущего трека
@@ -572,6 +587,9 @@ $(document).ready(function() {
 	    this.stopStream = function() {
 			visualisationStop();
 			$('#player .play').removeClass('visualisation');
+
+			vmCurrentTrackTitle.title = '';
+
 			$('#player .info .trackTitle').html('')
 											.removeClass('runningString')
 											.parent().css({'width':'auto'});
@@ -2012,7 +2030,8 @@ $(document).ready(function() {
 		var vmCurrentTrackTitle = new Vue({
 			el: '.currentTrackTitle',
 			data: {
-				trackTitle: getCurrentTrack().title
+				// trackTitle: getCurrentTrack().title
+				trackTitle: ''
 			},
 			computed: {
 				title: {

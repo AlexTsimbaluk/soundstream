@@ -37,7 +37,9 @@
 		<div class="overlay"></div>
 
 		<div class="info" title="track">
-			<div class="trackTitle"></div>
+			<div class="trackTitle currentTrackTitle">
+				{{ title }}
+			</div>
 		</div>
 
 		<div class="time">
@@ -132,9 +134,9 @@
 
 <audio id="playerTag" data-audio-api></audio>
 
-<span class="currentTrackTitle">
+<!-- <span class="currentTrackTitle">
 	{{ title }}
-</span>
+</span> -->
 
 
 <!-- <audio class="walmer hidden" src="http://ml1.t4e.dj:80/dublovers_high.aac" controls></audio> -->
