@@ -11,19 +11,7 @@ var gulp = require('gulp'),
 	browserSync = require('browser-sync')
 	;
 
-gulp.task('less', function() {
-	'use strict';
-	// return gulp.src(['src/less/*.less', '!src/less/_*.less'])
-	return gulp.src('src/less/main.less')
-			.pipe(less())
-			.pipe(autoprefixer(['last 15 versions', '> 1%', 'ie 8', 'ie 7'], { cascade: true }))
-			// .pipe(browserSync.reload({stream: true}))
-			.pipe(gulp.dest('src/css/'))
-			.pipe(concat('main.min.css'))
-	        .pipe(cssnano())
-			.pipe(browserSync.reload({stream: true}))
-			.pipe(gulp.dest('src/css/'));
-});
+
 
 
 gulp.task('clean', function() {
@@ -68,10 +56,50 @@ gulp.task('browser-sync', function() {
 	});
 });
 
+gulp.task('less', function() {
+	'use strict';
+	// return gulp.src(['src/less/*.less', '!src/less/_*.less'])
+	return gulp.src('src/less/main.less')
+			.pipe(less())
+			.pipe(autoprefixer(
+				['last 15 versions', '> 1%', 'ie 8', 'ie 7'],
+				{ cascade: true })
+			)
+			// .pipe(browserSync.reload({stream: true}))
+			.pipe(gulp.dest('src/css/'))
+			.pipe(concat('main.min.css'))
+	        .pipe(cssnano())
+			.pipe(browserSync.reload({stream: true}))
+			.pipe(gulp.dest('src/css/'));
+});
+
+gulp.task('flex', function() {
+	'use strict';
+	return gulp.src('src/less/main.less')
+			.pipe(less())
+			.pipe(autoprefixer(
+				['last 15 versions', '> 1%', 'ie 8', 'ie 7'],
+				{ cascade: true })
+			)
+			.pipe(gulp.dest('src/css/'))
+			.pipe(concat('main.min.css'))
+	        .pipe(cssnano())
+			.pipe(browserSync.reload({stream: true}))
+			.pipe(gulp.dest('src/css/'));
+});
 
 gulp.task('js-min', function() {
 	'use strict';
-	return gulp.src(['src/js/player.js', 'src/js/user.js', 'src/js/visits.js', 'src/js/admin.js', 'src/js/canvas.js', '!src/js/app.min.js'])
+	return gulp.src(
+				[
+					'src/js/player.js',
+					'src/js/user.js',
+					'src/js/visits.js',
+					'src/js/admin.js',
+					'src/js/canvas.js',
+					'!src/js/app.min.js'
+				]
+			)
 			.pipe(babel())
 			.pipe(concat('app.js'))
 			.pipe(gulp.dest('src/js'))
@@ -89,7 +117,16 @@ gulp.task('watch', ['browser-sync', 'less'], function() {
 	gulp.watch('src/*.php', browserSync.reload);
 	gulp.watch('src/layouts/*.php', browserSync.reload);
 
-    gulp.watch(['src/js/player.js', 'src/js/user.js', 'src/js/visits.js', 'src/js/admin.js', 'src/js/canvas.js'], ['js-min']);
+    gulp.watch(
+    	[
+    		'src/js/player.js',
+    		'src/js/user.js',
+    		'src/js/visits.js',
+    		'src/js/admin.js',
+    		'src/js/canvas.js'
+    	],
+    	['js-min']
+	);
 	
 	// gulp.watch('src/less/**/*.less', ['less']);
 	gulp.watch('src/less/*.less', ['less']);
