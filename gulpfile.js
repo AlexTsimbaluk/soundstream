@@ -64,6 +64,7 @@ gulp.task('less', function() {
 				['last 15 versions', '> 1%', 'ie 8', 'ie 7'],
 				{ cascade: true })
 			)
+			// TODO - починить минификацию
 			/*.pipe(gulp.dest('src/css/'))
 			.pipe(concat('main.min.css'))
 	        .pipe(cssnano())*/
@@ -71,15 +72,15 @@ gulp.task('less', function() {
 			.pipe(browserSync.reload({stream: true}));
 });
 
-gulp.task('flex', function() {
+gulp.task('utils', function() {
 	'use strict';
-	return gulp.src('src/libs/flex.less')
+	return gulp.src('src/libs/utils/layout.less')
 			.pipe(less())
 			.pipe(autoprefixer(
 				['last 15 versions', '> 1%', 'ie 8', 'ie 7'],
 				{ cascade: true })
 			)
-			.pipe(gulp.dest('src/css/'))
+			.pipe(gulp.dest('src/libs/utils/'))
 			.pipe(browserSync.reload({stream: true}));
 });
 
@@ -127,7 +128,7 @@ gulp.task('watch', ['browser-sync'], function() {
 	gulp.watch('src/less/*.less', ['less']);
 	
 
-	gulp.watch('src/libs/flex/*.less', ['flex']);
+	gulp.watch('src/libs/utils/*.less', ['utils']);
 });
 
 gulp.task('default', ['watch']);
