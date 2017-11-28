@@ -58,34 +58,29 @@ gulp.task('browser-sync', function() {
 
 gulp.task('less', function() {
 	'use strict';
-	// return gulp.src(['src/less/*.less', '!src/less/_*.less'])
 	return gulp.src('src/less/main.less')
 			.pipe(less())
 			.pipe(autoprefixer(
 				['last 15 versions', '> 1%', 'ie 8', 'ie 7'],
 				{ cascade: true })
 			)
-			// .pipe(browserSync.reload({stream: true}))
-			.pipe(gulp.dest('src/css/'))
+			/*.pipe(gulp.dest('src/css/'))
 			.pipe(concat('main.min.css'))
-	        .pipe(cssnano())
-			.pipe(browserSync.reload({stream: true}))
-			.pipe(gulp.dest('src/css/'));
+	        .pipe(cssnano())*/
+			.pipe(gulp.dest('src/css/'))
+			.pipe(browserSync.reload({stream: true}));
 });
 
 gulp.task('flex', function() {
 	'use strict';
-	return gulp.src('src/less/main.less')
+	return gulp.src('src/libs/flex.less')
 			.pipe(less())
 			.pipe(autoprefixer(
 				['last 15 versions', '> 1%', 'ie 8', 'ie 7'],
 				{ cascade: true })
 			)
 			.pipe(gulp.dest('src/css/'))
-			.pipe(concat('main.min.css'))
-	        .pipe(cssnano())
-			.pipe(browserSync.reload({stream: true}))
-			.pipe(gulp.dest('src/css/'));
+			.pipe(browserSync.reload({stream: true}));
 });
 
 gulp.task('js-min', function() {
@@ -111,7 +106,8 @@ gulp.task('js-min', function() {
 });
 
 
-gulp.task('watch', ['browser-sync', 'less'], function() {
+// gulp.task('watch', ['browser-sync', 'less'], function() {
+gulp.task('watch', ['browser-sync'], function() {
 	'use strict';
 	gulp.watch('src/*.html', browserSync.reload);
 	gulp.watch('src/*.php', browserSync.reload);
@@ -128,8 +124,10 @@ gulp.task('watch', ['browser-sync', 'less'], function() {
     	['js-min']
 	);
 	
-	// gulp.watch('src/less/**/*.less', ['less']);
 	gulp.watch('src/less/*.less', ['less']);
+	
+
+	gulp.watch('src/libs/flex/*.less', ['flex']);
 });
 
 gulp.task('default', ['watch']);
