@@ -93,7 +93,7 @@
 		<div class="list"></div>
 
 		<ul class="nav">
-			<li>
+			<!-- <li>
 				<button class="playlist-control playlist-prev">
 					<i class="fa fa-angle-left"></i>
 				</button>
@@ -102,7 +102,7 @@
 				<button class="playlist-control playlist-next">
 					<i class="fa fa-angle-right"></i>
 				</button>
-			</li>
+			</li> -->
 			<li>
 				<button class="playlist-control playlist-new">
 					<i class="fa fa-plus"></i>

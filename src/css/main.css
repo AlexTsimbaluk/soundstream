@@ -1147,8 +1147,8 @@ ol {
 #player .playlistsPanel .list {
   float: left;
   height: 100%;
-  width: -webkit-calc(100% - 95px);
-  width: calc(100% - 95px);
+  width: -webkit-calc(100% - 44px);
+  width: calc(100% - 44px);
   overflow-x: auto;
 }
 #player .playlistsPanel .list .mCSB_draggerContainer {
@@ -1180,11 +1180,11 @@ ol {
 }
 #player .playlistsPanel .playlist {
   background: #555;
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(25%, #555), color-stop(100%, #73c8c8));
-  background: -webkit-linear-gradient(top, #555 25%, #73c8c8 100%);
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(25%, #555), to(#73c8c8));
-  background: linear-gradient(to bottom, #555 25%, #73c8c8 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#555, endColorstr=#73c8c8, GradientType=0);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(25%, #555), color-stop(100%, #9f9f9f));
+  background: -webkit-linear-gradient(top, #555 25%, #9f9f9f 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(25%, #555), to(#9f9f9f));
+  background: linear-gradient(to bottom, #555 25%, #9f9f9f 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#555, endColorstr=#9f9f9f, GradientType=0);
   -webkit-border-radius: 1px;
           border-radius: 1px;
   cursor: pointer;
@@ -1203,6 +1203,14 @@ ol {
   background: -webkit-gradient(linear, left top, left bottom, color-stop(25%, #555), to(#3ee1e1));
   background: linear-gradient(to bottom, #555 25%, #3ee1e1 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#555, endColorstr=#3ee1e1, GradientType=0);
+}
+#player .playlistsPanel .playlist[data-current] {
+  background: #555;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(25%, #555), color-stop(100%, #73c8c8));
+  background: -webkit-linear-gradient(top, #555 25%, #73c8c8 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(25%, #555), to(#73c8c8));
+  background: linear-gradient(to bottom, #555 25%, #73c8c8 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#555, endColorstr=#73c8c8, GradientType=0);
 }
 #player .playlistsPanel .playlist + .playlist {
   margin-left: 4px;

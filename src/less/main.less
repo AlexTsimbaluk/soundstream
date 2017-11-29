@@ -631,7 +631,7 @@ ul, ol {
 		.list {
 			float: left;
 			height: 100%;
-			width: ~"calc(100% - 95px)";
+			width: ~"calc(100% - 44px)";
 			overflow-x: auto;
 			// overflow-y: hidden;
 			.mCSB_draggerContainer {
@@ -663,7 +663,7 @@ ul, ol {
 			i + i {margin-left: 4px;}
 		}
 		.playlist {
-			.gradient-vertical(#555, #73c8c8, 25%, 100%);
+			.gradient-vertical(#555, #9f9f9f, 25%, 100%);
 			// border-bottom: 2px solid #333;
 			border-radius: 1px;
 			cursor: pointer;
@@ -677,6 +677,9 @@ ul, ol {
 			width: 84px;
 			&:hover {
 				.gradient-vertical(#555, #3ee1e1 , 25%, 100%);
+			}
+			&[data-current] {
+				.gradient-vertical(#555, #73c8c8, 25%, 100%);
 			}
 		}
 		.playlist + .playlist {margin-left: 4px;}

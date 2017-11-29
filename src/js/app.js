@@ -235,10 +235,29 @@ $(document).ready(function () {
 			}
 		};
 
-		this.addTrack = function () {};
+		this.addTrack = function (trackId) {
+			var array = [];
+			array.push(trackId);
+			var $track = self.makeTracksArray(array);
 
-		this.makeTracksArray = function () {
-			var tracks = __playlists[playerState.currentPlaylist].tracks;
+			if (playlistContainer.hasClass('mCustomScrollbar')) {
+				playlistContainer.find('.mCSB_container').append($track);
+			} else {
+				playlistContainer.append($track);
+			}
+
+			__playlists[playerState.currentPlaylist].tracks.push(+trackId);
+
+			console.log(__playlists);
+
+			localStorage.setItem('__playlists', JSON.stringify(__playlists));
+		};
+
+		this.makeTracksArray = function (tracsIdArray) {
+			/*var tracks = __playlists[playerState.currentPlaylist]
+   						.tracks
+   ;*/
+			var tracks = tracsIdArray;
 
 			var templateTrack = $('.template-track').html(),
 			    tracksArray = [];
@@ -266,31 +285,41 @@ $(document).ready(function () {
 			return tracksArray;
 		};
 
-		this.makeTracks = function () {
+		this.makeTracks = function (tracsIdArray) {
 			var currentPlaylist = __playlists[playerState.currentPlaylist],
-			    tracks = self.makeTracksArray();
-			var playlistTracks = __playlists[playerState.currentPlaylist].tracks;
+			    tracks = self.makeTracksArray(tracsIdArray);
+			/*var playlistTracks = __playlists[playerState.currentPlaylist]
+   						.tracks
+   ;*/
 
-			if (playlistTracks.length > 0) {
-				// непонятно что это и зачем
-				playlistContainer.append(currentPlaylist.htmlEl);
+			// if(playlistTracks.length > 0) {
+			// if(tracks.length > 0) {
+			// непонятно что это и зачем
+			// playlistContainer.append(currentPlaylist.htmlEl);
 
-				for (var i = 0; i < tracks.length; i++) {
-					var $track = tracks[i];
+			for (var i = 0; i < tracks.length; i++) {
+				var $track = tracks[i];
+				if (playlistContainer.hasClass('mCustomScrollbar')) {
+					playlistContainer.find('.mCSB_container').append($track);
+				} else {
 					playlistContainer.append($track);
 				}
+				// playlistContainer.append($track);
+			}
 
+			if (!playlistContainer.hasClass('mCustomScrollbar')) {
 				$('.playlistContainer').mCustomScrollbar({
 					// theme:"dark"
 				});
-
-				if (!playerState.paused) {
-					var streamUrl = getCurrentTrack().url;
-					audioApiElement.playStream(streamUrl);
-				}
-			} else {
-				console.log(0);
 			}
+
+			if (!playerState.paused) {
+				var streamUrl = getCurrentTrack().url;
+				audioApiElement.playStream(streamUrl);
+			}
+			/*} else {
+   	console.log(0);
+   }*/
 
 			/*var playlist = playlistContainer.
    				find('.playlist[data-name="' 	+
@@ -321,8 +350,12 @@ $(document).ready(function () {
 
 			playerState.currentPlaylist = name;
 
-			playlistContainer.find('.mCustomScrollBox').remove();
-			self.makeTracks();
+			playlistContainer.find('.mCSB_container').children().remove();
+
+			var tracksArray = __playlists[playerState.currentPlaylist].tracks;
+			if (tracksArray.length) {
+				self.makeTracks(tracksArray);
+			}
 
 			localStorage.setItem('playerState', JSON.stringify(playerState));
 		};
@@ -1408,7 +1441,9 @@ $(document).ready(function () {
 					markup += '<div class="stationsBlockList" data-stations-number=' + index + '>';
 					for (var i = 0; i < _stations.length; i++) {
 						var station = _stations[i];
-						markup += '<div class="station" data-station-id="' + station.station_id + '"><div class="add"><i class="fa fa-plus"></i></div><div class="title">' + station.station_title + '</div><div class="url">' + station.station_url + '</div></div>';
+						markup += '<div class="station" data-station-id="' + station.station_id
+						// + '"><div class="add"><i class="fa fa-plus"></i></div><div class="title">'
+						+ '"><div class="title">' + station.station_title + '</div><div class="url">' + station.station_url + '</div></div>';
 					}
 					markup += '</div>';
 					$(this).after(markup);
@@ -1521,12 +1556,17 @@ $(document).ready(function () {
 
 	// Добавление станций в плейлист
 	// Доделать, чтобы станции добавлялись в активный плэйлист
-	$('.searchContainer').on('click', '.add', function (e) {
-		addToPlaylist($(this).parent().data('stationId'));
-	});
+	/*$('.searchContainer').on('click', '.add', function(e) {
+ 	addToPlaylist($(this)
+ 					.parent()
+ 					.data('stationId')
+ 				)
+ 	;
+ });*/
 
 	$('.searchContainer').on('click', '.station', function (e) {
-		addToPlaylist($(this).data('stationId'));
+		// addToPlaylist($(this).data('stationId'));
+		playlistManager.addTrack($(this).data('stationId'));
 	});
 
 	$('.playlist-new').on('click', function (e) {
@@ -1809,11 +1849,14 @@ $(document).ready(function () {
 
 		var playlistTracks = __playlists[playerState.currentPlaylist].tracks;
 
-		console.log('make tracks:begin');
-		// playlistManager.makeTracks();
-		// makeTrack(playlistTracks);
-		playlistManager.makeTracks();
-		console.log('make tracks:end');
+		if (playlistTracks.length > 0) {
+			console.log('make tracks:begin');
+			// playlistManager.makeTracks();
+			// makeTrack(playlistTracks);
+			// playlistManager.makeTracks();
+			playlistManager.makeTracks(playlistTracks);
+			console.log('make tracks:end');
+		}
 
 		if (playlistTracks.length > 0) {
 			/*for(var i = 0; i < playlistTracks.length; i++) {
