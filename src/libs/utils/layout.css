@@ -10,6 +10,9 @@
 .w-fill {
   width: 100%;
 }
+.h-auto {
+  height: auto;
+}
 @media (orientation: landscape) {
   *:not(html).portrait,
   *:not(html).flex.portrait {
@@ -219,6 +222,198 @@
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
+}
+.font-size-1 {
+  font-size: 0.1em;
+}
+.font-size-2 {
+  font-size: 0.2em;
+}
+.font-size-3 {
+  font-size: 0.3em;
+}
+.font-size-4 {
+  font-size: 0.4em;
+}
+.font-size-5 {
+  font-size: 0.5em;
+}
+.font-size-6 {
+  font-size: 0.6em;
+}
+.font-size-7 {
+  font-size: 0.7em;
+}
+.font-size-8 {
+  font-size: 0.8em;
+}
+.font-size-9 {
+  font-size: 0.9em;
+}
+.font-size-10 {
+  font-size: 1em;
+}
+.font-size-11 {
+  font-size: 1.1em;
+}
+.font-size-12 {
+  font-size: 1.2em;
+}
+.font-size-13 {
+  font-size: 1.3em;
+}
+.font-size-14 {
+  font-size: 1.4em;
+}
+.font-size-15 {
+  font-size: 1.5em;
+}
+.font-size-16 {
+  font-size: 1.6em;
+}
+.font-size-17 {
+  font-size: 1.7em;
+}
+.font-size-18 {
+  font-size: 1.8em;
+}
+.font-size-19 {
+  font-size: 1.9em;
+}
+.font-size-20 {
+  font-size: 2em;
+}
+.font-size-21 {
+  font-size: 2.1em;
+}
+.font-size-22 {
+  font-size: 2.2em;
+}
+.font-size-23 {
+  font-size: 2.3em;
+}
+.font-size-24 {
+  font-size: 2.4em;
+}
+.font-size-25 {
+  font-size: 2.5em;
+}
+.font-size-26 {
+  font-size: 2.6em;
+}
+.font-size-27 {
+  font-size: 2.7em;
+}
+.font-size-28 {
+  font-size: 2.8em;
+}
+.font-size-29 {
+  font-size: 2.9em;
+}
+.font-size-30 {
+  font-size: 3em;
+}
+.uppercase {
+  text-transform: uppercase;
+}
+.uppercase-none {
+  text-transform: none;
+}
+.text-bolder {
+  font-weight: 500;
+}
+.text-bold {
+  font-weight: 700;
+}
+.text-wrap {
+  white-space: normal;
+}
+.text-pre {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-all;
+  white-space: pre-wrap;
+}
+.noresize {
+  resize: none;
+}
+.display-block {
+  display: block;
+}
+.display-inline-block {
+  display: inline-block;
+}
+.display-inline {
+  display: inline;
+}
+.m_a {
+  margin: auto;
+}
+.mh_a {
+  margin-left: auto;
+  margin-right: auto;
+}
+.mv_a {
+  margin-bottom: auto;
+  margin-top: auto;
+}
+.ml_a {
+  margin-left: auto;
+}
+.mr_a {
+  margin-right: auto;
+}
+.mb_a {
+  margin-bottom: auto;
+}
+.mt_a {
+  margin-top: auto;
+}
+.m_0 {
+  margin: 0;
+}
+.mh_0 {
+  margin-left: 0;
+  margin-right: 0;
+}
+.mv_0 {
+  margin-bottom: 0;
+  margin-top: 0;
+}
+.ml_0 {
+  margin-left: 0;
+}
+.mr_0 {
+  margin-right: 0;
+}
+.mb_0 {
+  margin-bottom: 0;
+}
+.mt_0 {
+  margin-top: 0;
+}
+.p_0 {
+  padding: 0;
+}
+.ph_0 {
+  padding-left: 0;
+  padding-right: 0;
+}
+.pv_0 {
+  padding-bottom: 0;
+  padding-top: 0;
+}
+.pl_0 {
+  padding-left: 0;
+}
+.pr_0 {
+  padding-right: 0;
+}
+.pb_0 {
+  padding-bottom: 0;
+}
+.pt_0 {
+  padding-top: 0;
 }
 /* Собственно css */
 .flex {
