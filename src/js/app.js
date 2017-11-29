@@ -1201,11 +1201,12 @@ $(document).ready(function () {
 
 	$('.playlistContainer').on('click', '.delete', function (e) {
 		var id = $(this).parent().data('stationId'),
-		    pl = playerState.playlists[playerState.currentPlaylist];
+		    pl = __playlists[playerState.currentPlaylist];
 
 		pl.tracks.splice(pl.tracks.indexOf(id), 1);
 		$(this).parent().remove();
-		localStorage.setItem('playerState', JSON.stringify(playerState));
+		// localStorage.setItem('playerState', JSON.stringify(playerState));
+		localStorage.setItem('__playlists', JSON.stringify(__playlists));
 		return false;
 	});
 
@@ -1753,7 +1754,8 @@ $(document).ready(function () {
 			scrollPosition: 406
 		};
 
-		playerState.playlists[playerState.currentPlaylist] = __playlists['Default'] = defaultPlaylist;
+		// playerState.playlists[playerState.currentPlaylist] = __playlists['Default'] = defaultPlaylist;
+		__playlists['Default'] = defaultPlaylist;
 		// __playlists['Default'] = defaultPlaylist;
 		console.log(__playlists['Default']);
 		console.log(playerState);
