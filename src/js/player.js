@@ -550,8 +550,8 @@ $(document).ready(function() {
 	    	};
 
 	    	// Изменим объект состояния
-	    	playerState.playlists[getCurrentPlaylist()].currentTrack =
-	    														_currentTrack;
+	    	/*playerState.playlists[getCurrentPlaylist()].currentTrack =
+	    														_currentTrack;*/
 
 			__playlists[getCurrentPlaylist()].currentTrack =
     														_currentTrack;
