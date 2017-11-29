@@ -546,11 +546,6 @@ $(document).ready(function () {
 	}
 
 	function audioBindAll(player, name) {
-		function playingTrack() {
-			if ($('[data-current-track]').hasClass('waiting')) {
-				$('[data-current-track]').removeClass('waiting');
-			}
-		}
 		player.addEventListener('abort', function (e) {
 			console.log(name + '::Event.type::' + e.type);
 			$(".spinner").hide();
@@ -577,6 +572,13 @@ $(document).ready(function () {
 		player.addEventListener('error', function (e) {
 			console.log(name + '::Event.type::' + e.type);
 			$(".spinner").hide();
+			// if(!$('.track.visualisation').length) {
+			if (playerState.paused) {
+				console.log('paused');
+				$('.track.waiting').removeClass('waiting').addClass('error-playing');
+			} else {
+				console.log('это невозможно');
+			}
 		});
 		player.addEventListener('interruptbegin', function (e) {
 			console.log(name + '::Event.type::' + e.type);
@@ -618,7 +620,12 @@ $(document).ready(function () {
 
 			$(".spinner").hide();
 
-			playingTrack();
+			if ($('[data-current-track]').hasClass('waiting')) {
+				$('[data-current-track]').removeClass('waiting');
+			}
+			if ($('[data-current-track]').hasClass('error-playing')) {
+				$('[data-current-track]').removeClass('error-playing');
+			}
 
 			visualisation();
 			displayState();

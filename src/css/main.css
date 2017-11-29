@@ -1209,22 +1209,24 @@ ol {
 }
 @-webkit-keyframes trackWaiting {
   0% {
+    background: rgba(0, 0, 0, 0.5);
+  }
+  50% {
     background: rgba(127, 127, 127, 0.5);
-    width: 0%;
   }
   100% {
-    background: rgba(127, 127, 127, 0.5);
-    width: 100%;
+    background: rgba(0, 0, 0, 0.5);
   }
 }
 @keyframes trackWaiting {
   0% {
+    background: rgba(0, 0, 0, 0.5);
+  }
+  50% {
     background: rgba(127, 127, 127, 0.5);
-    width: 0%;
   }
   100% {
-    background: rgba(127, 127, 127, 0.5);
-    width: 100%;
+    background: rgba(0, 0, 0, 0.5);
   }
 }
 #player .track {
@@ -1250,10 +1252,12 @@ ol {
 		} */
 }
 #player .track.waiting {
-  background: rgba(0, 0, 0, 0.5);
-  background: rgba(127, 127, 127, 0.5);
-  -webkit-animation: trackWaiting linear;
-          animation: trackWaiting linear;
+  -webkit-animation: trackWaiting 3s ease-in-out infinite;
+          animation: trackWaiting 3s ease-in-out infinite;
+}
+#player .track.error-playing {
+  background: #000;
+  color: #7a7a7a;
 }
 #player .track .title {
   font-size: 1.2em;
