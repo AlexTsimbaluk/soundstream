@@ -52,7 +52,14 @@ gulp.task('browser-sync', function() {
 		},*/
 		proxy: 'soundstream',
 		port: 	9999,
-		notify: false
+		notify: false,
+
+		/*ghostMode: {
+		    clicks: true,
+		    forms: true,
+		    scroll: false
+		},*/
+		ghostMode: false
 	});
 });
 
