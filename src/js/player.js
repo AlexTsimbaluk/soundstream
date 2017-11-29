@@ -499,7 +499,8 @@ $(document).ready(function() {
 			// при старте воспроизведения
 			// удалим у всех треков атрибут data-current-track
 			currentTrackEl.
-				closest('.playlist').
+				// closest('.playlist').
+				parent().
 				find('[data-current-track]').
 				removeAttr('data-current-track');
 

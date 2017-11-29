@@ -387,7 +387,9 @@ $(document).ready(function () {
 
 			// при старте воспроизведения
 			// удалим у всех треков атрибут data-current-track
-			currentTrackEl.closest('.playlist').find('[data-current-track]').removeAttr('data-current-track');
+			currentTrackEl.
+			// closest('.playlist').
+			parent().find('[data-current-track]').removeAttr('data-current-track');
 
 			// а затем установим data-current-track нужному треку
 			currentTrackEl.attr('data-current-track', 1);
