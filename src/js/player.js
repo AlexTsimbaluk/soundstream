@@ -291,6 +291,16 @@ $(document).ready(function() {
 				$playlistsPanel
 					.find('.list .mCSB_container')
 					.append(pl);
+
+				let $curPl = $playlistsPanel.
+						find('[data-name="' + name + '"]');
+
+				$('.playlistsPanel').
+					find('.list').
+					mCustomScrollbar('scrollTo',
+										$curPl.position().left);
+
+				console.log($curPl.position().left);
 			} else {
 				$playlistsPanel
 					.find('.list')
@@ -298,7 +308,7 @@ $(document).ready(function() {
 			}
 		};
 
-		this.addTrack = function(trackId) {
+		this.addTrackToPlaylist = function(trackId) {
 			var array = [];
 			array.push(trackId);
 			var $track = self.makeTracksArray(array);
@@ -320,24 +330,16 @@ $(document).ready(function() {
 			localStorage.setItem('__playlists', JSON.stringify(__playlists));
 		};
 
-		this.makeTracksArray = function(tracsIdArray) {
-			/*var tracks = __playlists[playerState.currentPlaylist]
-									.tracks
-			;*/
-			var tracks = tracsIdArray;
+		this.makeTracksArray = function(tracksIdArray) {
+			var tracks = tracksIdArray;
 
 			var templateTrack 	= $('.template-track').html(),
 				tracksArray 	= []
 			;
 
-			var size = 0;
-			for (var key in tracks) {
-				size++;
-			}
-
-			for (var i = 0; i < size; i++) {
-				var track = stationsArray[tracks[i]];
-				var $track = $(templateTrack);
+			for (var i = 0; i < tracks.length; i++) {
+				var track 	= stationsArray[tracks[i]];
+				var $track 	= $(templateTrack);
 
 				$track.attr('data-station-id', track.station_id);
 				$track.attr('data-station-title', track.station_title);
@@ -353,9 +355,10 @@ $(document).ready(function() {
 			return tracksArray;
 		};
 
-		this.makeTracks = function(tracsIdArray) {
+		this.makeTracks = function(tracksIdArray) {
+			console.log(tracksIdArray);
 			var currentPlaylist = __playlists[playerState.currentPlaylist],
-				tracks 			= self.makeTracksArray(tracsIdArray)
+				tracks 			= self.makeTracksArray(tracksIdArray)
 			;
 			/*var playlistTracks = __playlists[playerState.currentPlaylist]
 									.tracks
@@ -478,12 +481,7 @@ $(document).ready(function() {
 	function AudioApiElement(audioElement) {
 	    var $playerTag = document.getElementById(audioElement);
 	    var self = this;
-	    /*function createAnalyser(opts) {
-		    var a = audioCtx.createAnalyser();
-	    	a.smoothingTimeConstant = opts.smoothingTimeConstant || 0.7;
-	    	a.fftSize = opts.fftSize || 512;
-	    	return a;
-	    }*/
+	    
 
 	    var source = audioCtx.createMediaElementSource($playerTag);
 
@@ -610,9 +608,14 @@ $(document).ready(function() {
 	        playerState.paused = $playerTag.paused;
 	        localStorage.setItem('playerState', JSON.stringify(playerState));
 			localStorage.setItem('__playlists', JSON.stringify(__playlists));
-	        drawEq1();
-	        drawEq2();
+	        
+			if((window.innerHeight >= 720  && window.innerWidth > window.innerHeight)
+				|| (window.innerWidth >= 1000  && window.innerHeight > window.innerWidth)) {
+				        drawEq1();
+				        drawEq2();
+			}
 	        drawEq3();
+
 	        
 	        console.log('AudioApiElement::playStream::End');
 	        // TODO: добавить на играющий трек эквалайзер
@@ -715,7 +718,7 @@ $(document).ready(function() {
      		console.log(name + '::Event.type::' + e.type);
         });
         player.addEventListener('durationchange', (e)=> {
-     		console.log(name + '::Event.type::' + e.type);
+     		// console.log(name + '::Event.type::' + e.type);
         });
         player.addEventListener('emptied', (e)=> {
      		console.log(name + '::Event.type::' + e.type);
@@ -813,7 +816,7 @@ $(document).ready(function() {
      		$(".spinner").hide();
         });
         player.addEventListener('suspend', (e)=> {
-     		console.log(name + '::Event.type::' + e.type);
+     		// console.log(name + '::Event.type::' + e.type);
         });
         player.addEventListener('waiting', (e)=> {
      		console.log(name + '::Event.type::' + e.type);
@@ -1298,6 +1301,7 @@ $(document).ready(function() {
 					case 'localStorage':
 						localStorage.clear();
 						console.log(`delete ${item}`);
+						location.reload();
 						break;
 
 					default:
@@ -1852,10 +1856,8 @@ $(document).ready(function() {
 
 	$('.searchContainer').on('click', '.station', function(e) {
 		// addToPlaylist($(this).data('stationId'));
-		playlistManager.addTrack($(this).data('stationId'));
+		playlistManager.addTrackToPlaylist($(this).data('stationId'));
 	});
-
-
 
 	$('.playlist-new').on('click', function(e) {
 		console.log('::new playlist');
@@ -1876,8 +1878,12 @@ $(document).ready(function() {
 	});
 
 	$('.playlistsPanel').on('click', '.playlist', function() {
-		console.log('::Change playlist::' + $(this).attr('data-name'));
-		playlistManager.setCurrent($(this).attr('data-name'));
+		if(!$(this).attr('data-current')) {
+			console.log('::Change playlist::' + $(this).attr('data-name'));
+			playlistManager.setCurrent($(this).attr('data-name'));
+		} else {
+			console.log('Плейлист уже выбран');
+		}
 	});
 
 
@@ -1977,6 +1983,7 @@ $(document).ready(function() {
 			data: {'action': 'getAllStations'},
 			success: function(data) {
 				stationsArray 	= JSON.parse(data);
+				// console.log(stationsArray);
 				var size 		= 0;
 				for (var key in stationsArray) {
 					size++;
@@ -2013,15 +2020,16 @@ $(document).ready(function() {
 
 				localStorage.setItem('stations', JSON.stringify(stationsArray));
 				localStorage.setItem('stationsOn100', JSON.stringify(stationsArrayOn100));
+
+				location.reload();
 			}
 		});
-	} else {
-		stationsArray 		= JSON.parse(localStorage.getItem('stations'));
-		stationsArrayOn100 	= JSON.parse(localStorage.getItem('stationsOn100'));
 	}
 
 	if(localStorage.getItem('playerState') == undefined) {
 		console.log('playerState == undefined');
+
+		
 		// Объект плейлиста
 		var defaultPlaylist 		= new Playlist('Default');		// ?? - нужен ??
 
@@ -2061,17 +2069,21 @@ $(document).ready(function() {
 		// $playlistsPanel.find('.list').append('<div class="playlist" data-name="Default">Default</div>');
 		// playlistContainer.html(playerState.playlists[playerState.currentPlaylist].htmlEl);
 		
-		playlistManager.addPanel(defaultPlaylist.name);
+		// playlistManager.addPanel(defaultPlaylist.name);
 
 		localStorage.setItem('playerState', JSON.stringify(playerState));
 		localStorage.setItem('__playlists', JSON.stringify(__playlists));
 		// audioApiElement.playStream(playerState.playlists[playerState.currentPlaylist].currentTrack);
 
-		location.reload();
+		// location.reload();
 	} else {
 		// Получаем актуальное состояние плеера из local storage
 		playerState = JSON.parse(localStorage.getItem('playerState'));
 		__playlists = JSON.parse(localStorage.getItem('__playlists'));
+
+		stationsArray 		= JSON.parse(localStorage.getItem('stations'));
+		stationsArrayOn100 	= JSON.parse(localStorage.getItem('stationsOn100'));
+
 		console.log(playerState);
 		console.log(__playlists);
 
@@ -2094,20 +2106,7 @@ $(document).ready(function() {
 			}
 		});
 		
-		// Наполняем $playlistsPanel заголовками плейлистов
-		for (var i = 0; i < playerState.playlistsOrder.length; i++) {
-			var plName = playerState.playlistsOrder[i];
-			// addPanel(__playlists[playerState.playlistsOrder[i]]);
-			playlistManager.addPanel(plName);
-			/*console.log(__playlists[playerState.playlistsOrder[i]].htmlEl == playerState.playlists[playerState.currentPlaylist].htmlEl)
-			console.log(__playlists[playerState.playlistsOrder[i]]);
-			console.log(playerState.playlists[playerState.currentPlaylist]);
-			console.log(playerState.playlistsOrder[i]);*/
-		}
-
-		$playlistsPanel
-			.find('[data-name="' + playerState.currentPlaylist + '"]')
-			.attr('data-current', 1);
+		
 
 
 		$('.playlistsPanel .list').mCustomScrollbar({
@@ -2117,6 +2116,21 @@ $(document).ready(function() {
 				autoExpandHorizontalScroll: true
 			}
 		});
+
+		// Наполняем $playlistsPanel заголовками плейлистов
+		for (var i = 0; i < playerState.playlistsOrder.length; i++) {
+			var plName = playerState.playlistsOrder[i];
+			// addPanel(__playlists[playerState.playlistsOrder[i]]);
+			playlistManager.addPanel(plName, true);
+			/*console.log(__playlists[playerState.playlistsOrder[i]].htmlEl == playerState.playlists[playerState.currentPlaylist].htmlEl)
+			console.log(__playlists[playerState.playlistsOrder[i]]);
+			console.log(playerState.playlists[playerState.currentPlaylist]);
+			console.log(playerState.playlistsOrder[i]);*/
+		}
+
+		$playlistsPanel
+			.find('[data-name="' + playerState.currentPlaylist + '"]')
+			.attr('data-current', 1);
 
 		// Задаем свойства объекта Audio свойствами объекта playerState
 		// Выставляем громкость
@@ -2154,76 +2168,9 @@ $(document).ready(function() {
 
 		if(playlistTracks.length > 0) {
 			console.log('make tracks:begin');
-			// playlistManager.makeTracks();
-			// makeTrack(playlistTracks);
-			// playlistManager.makeTracks();
 			playlistManager.makeTracks(playlistTracks);
+			console.log(playlistTracks);
 			console.log('make tracks:end');
-		}
-
-		if(playlistTracks.length > 0) {
-			/*for(var i = 0; i < playlistTracks.length; i++) {
-				addToPlaylist(playlistTracks[i]);
-			}
-
-			$('.playlistContainer').mCustomScrollbar({
-				// theme:"dark"
-			});
-
-			if(!playerState.paused) {
-				var streamUrl = getCurrentTrack().url;
-				audioApiElement.playStream(streamUrl);
-
-				$('.playlistContainer [data-station-url="' + streamUrl + '"]')
-					.attr('data-current-track', 1);
-			}*/
-
-
-			/*$.ajax({
-				data: {'action': 'getPlaylistStations', 'id': playlistTracks},
-				success: function(data) {
-					var response = JSON.parse(data),
-						playlist = playlistContainer.find('.playlist[data-name="'
-															+ playerState.currentPlaylist
-															+ '"]'),
-						markup = ''
-					;
-					
-
-					// var trackMarkup = $('.template-track').html();
-
-					for(var i = 0; i < response.length; i++) {
-						var track = response[i];
-						markup += '<div class="track" data-station-id="'
-									+ track.station_id
-									+ '" data-station-title="'
-									+ track.station_title
-									+ '" data-station-url="'
-									+ track.station_url
-									+ '"><div class="delete"><i class="fa fa-minus"></i></div> \
-										<div class="canplaytest"><i class="fa fa-music"></i></div>\
-										<div class="title">'
-									+ track.station_title
-									+ '</div><div class="url">'
-									+ track.station_url
-									+ '</div></div>'
-						;
-					}
-
-					playlist.html(playlist.html() + markup);
-
-					$('.playlistContainer').mCustomScrollbar({
-						// theme:"dark"
-					});
-
-					if(!playerState.paused) {
-						var streamUrl = getCurrentTrack().url;
-						audioApiElement.playStream(streamUrl);
-					}
-				}
-			});*/
-
-
 		} else {
 			console.log(0);
 		}
