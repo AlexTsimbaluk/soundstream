@@ -285,27 +285,13 @@ $(document).ready(function() {
 
 		this.templateTrack 	= $('.template-track').html();
 		// функция для добавления плейлистов на панель
-		this.addPanel = function(name, scrollable) {
+		this.addPanel = function(name) {
 			var pl = __playlists[name].titleHtmlEl;
-			if(scrollable) {
+			/*console.log(pl);
+			console.log($(pl));*/
 				$playlistsPanel
 					.find('.list .mCSB_container')
 					.append(pl);
-
-				let $curPl = $playlistsPanel.
-						find('[data-name="' + name + '"]');
-
-				$('.playlistsPanel').
-					find('.list').
-					mCustomScrollbar('scrollTo',
-										$curPl.position().left);
-
-				console.log($curPl.position().left);
-			} else {
-				$playlistsPanel
-					.find('.list')
-					.append(pl);
-			}
 		};
 
 		this.addTrackToPlaylist = function(trackId) {
@@ -350,13 +336,13 @@ $(document).ready(function() {
 
 				tracksArray.push($track);
 			}
-			console.log(tracksArray);
+			// console.log(tracksArray);
 
 			return tracksArray;
 		};
 
-		this.makeTracks = function(tracksIdArray) {
-			console.log(tracksIdArray);
+		this.makePlaylist = function(tracksIdArray) {
+			// console.log(tracksIdArray);
 			var currentPlaylist = __playlists[playerState.currentPlaylist],
 				tracks 			= self.makeTracksArray(tracksIdArray)
 			;
@@ -427,7 +413,12 @@ $(document).ready(function() {
 			}*/
 		};
 
-		this.setCurrent = function(name) {
+		this.setCurrent = function(name, scrollPosition) {
+			$('.playlistsPanel').
+				find('.list').
+				mCustomScrollbar('scrollTo', scrollPosition);
+
+
 			$playlistsPanel
 				.find('[data-name="' + playerState.currentPlaylist + '"]')
 				.removeAttr('data-current');
@@ -442,10 +433,13 @@ $(document).ready(function() {
 
 			var tracksArray = __playlists[playerState.currentPlaylist].tracks;
 			if(tracksArray.length) {
-				self.makeTracks(tracksArray);
+				self.makePlaylist(tracksArray);
 			}
 
+			__playlists[playerState.currentPlaylist].scrollPosition = scrollPosition;
+
 			localStorage.setItem('playerState', JSON.stringify(playerState));
+			localStorage.setItem('__playlists', JSON.stringify(__playlists));
 		};
 	}
 
@@ -1862,10 +1856,9 @@ $(document).ready(function() {
 	$('.playlist-new').on('click', function(e) {
 		console.log('::new playlist');
 
-		var defaultPLName = new Date().getTime();
+		var defaultPLName = new Date().getTime().toString().substr(6);
 
 		var pl = new Playlist(defaultPLName);
-		console.log(pl);
 
 		/*__playlists[defaultPLName] = pl;
 		console.log(__playlists['Default']);*/
@@ -1874,13 +1867,34 @@ $(document).ready(function() {
 			.playlists[playerState.currentPlaylist]
 			 = pl;*/
 
-		playlistManager.addPanel(defaultPLName, true);
+		playlistManager.addPanel(defaultPLName);
+		
+		$playlistsPanel
+			.find('[data-current]')
+			.removeAttr('data-current');
+
+		$playlistsPanel.
+			find('[data-name=' + defaultPLName + ']').
+			attr('data-current', 1);
+
+		playerState.currentPlaylist = defaultPLName;
+
+		var scrollPosition = $('[data-current]').position();
+
+		console.log($('[data-current]'));
+		console.log(scrollPosition);
+
+		__playlists[playerState.currentPlaylist].scrollPosition = scrollPosition;
+
+		localStorage.setItem('playerState', JSON.stringify(playerState));
+		localStorage.setItem('__playlists', JSON.stringify(__playlists));
 	});
 
 	$('.playlistsPanel').on('click', '.playlist', function() {
 		if(!$(this).attr('data-current')) {
 			console.log('::Change playlist::' + $(this).attr('data-name'));
-			playlistManager.setCurrent($(this).attr('data-name'));
+			playlistManager.
+				setCurrent($(this).attr('data-name'), $(this).position().left);
 		} else {
 			console.log('Плейлист уже выбран');
 		}
@@ -2057,6 +2071,7 @@ $(document).ready(function() {
 
 		// playerState.playlists[playerState.currentPlaylist] = __playlists['Default'] = defaultPlaylist;
 		__playlists['Default'] = defaultPlaylist;
+		__playlists['Default'].scrollPosition = 0;
 		// __playlists['Default'] = defaultPlaylist;
 		console.log(__playlists['Default']);
 		console.log(playerState);
@@ -2120,17 +2135,16 @@ $(document).ready(function() {
 		// Наполняем $playlistsPanel заголовками плейлистов
 		for (var i = 0; i < playerState.playlistsOrder.length; i++) {
 			var plName = playerState.playlistsOrder[i];
-			// addPanel(__playlists[playerState.playlistsOrder[i]]);
-			playlistManager.addPanel(plName, true);
-			/*console.log(__playlists[playerState.playlistsOrder[i]].htmlEl == playerState.playlists[playerState.currentPlaylist].htmlEl)
-			console.log(__playlists[playerState.playlistsOrder[i]]);
-			console.log(playerState.playlists[playerState.currentPlaylist]);
-			console.log(playerState.playlistsOrder[i]);*/
+			playlistManager.addPanel(plName);
 		}
 
 		$playlistsPanel
 			.find('[data-name="' + playerState.currentPlaylist + '"]')
 			.attr('data-current', 1);
+
+		/*$('.playlistsPanel').
+				find('.list').
+				mCustomScrollbar('scrollTo', __playlists[playerState.currentPlaylist].scrollPosition);*/
 
 		// Задаем свойства объекта Audio свойствами объекта playerState
 		// Выставляем громкость
@@ -2152,6 +2166,7 @@ $(document).ready(function() {
 									htmlEl
 								);*/
 
+		// ?????
 		playlistContainer.append(__playlists[playerState.currentPlaylist].
 									htmlEl
 								);								
@@ -2168,8 +2183,7 @@ $(document).ready(function() {
 
 		if(playlistTracks.length > 0) {
 			console.log('make tracks:begin');
-			playlistManager.makeTracks(playlistTracks);
-			console.log(playlistTracks);
+			playlistManager.makePlaylist(playlistTracks);
 			console.log('make tracks:end');
 		} else {
 			console.log(0);
