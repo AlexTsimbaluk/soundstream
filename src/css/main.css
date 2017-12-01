@@ -236,7 +236,8 @@ form .authSubmit:hover {
 .userActions li {
   display: inline-block;
 }
-.userActions li > button {
+.userActions li > button,
+.userActions li a {
   background: rgba(0, 0, 0, 0.6);
   border: none;
   -webkit-border-radius: 2px;
@@ -244,14 +245,16 @@ form .authSubmit:hover {
   color: #fff;
   display: block;
   font-size: 14px;
-  padding: 6px 30px;
+  padding: 6px 28px;
 }
-.userActions li > button:hover {
+.userActions li > button:hover,
+.userActions li a:hover {
   background: rgba(0, 0, 0, 0.4);
   -webkit-box-shadow: 0 0 5px 3px rgba(255, 255, 255, 0.5);
           box-shadow: 0 0 5px 3px rgba(255, 255, 255, 0.5);
 }
-.userActions li > button.active {
+.userActions li > button.active,
+.userActions li a.active {
   -webkit-box-shadow: 0 0 8px 5px #00ffff;
           box-shadow: 0 0 8px 5px #00ffff;
 }

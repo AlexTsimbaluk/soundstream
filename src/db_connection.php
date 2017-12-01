@@ -4,7 +4,7 @@
 $host = "localhost";
 $user = "root";
 $password = "9";
-$database = "stations_icecast";
+$database = "radio_ra";
 
 /*For server
 $host = "localhost";

@@ -62,6 +62,7 @@
 			<ul class="userActions">
 				<li><button class="showFormReg">Reg</button></li>
 				<li><button class="showFormSign">Auth</button></li>
+				<li><a href="sql/db_queries.php" class="runSql">SQL</a></li>
 			</ul>
 		</div>
 
