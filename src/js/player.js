@@ -289,6 +289,7 @@ $(document).ready(function() {
 		var self = this;
 
 		this.templateTrack 	= $('.template-track').html();
+
 		// функция для добавления плейлистов на панель
 		this.addPanel = function(name) {
 			$playlistsPanel
@@ -296,7 +297,12 @@ $(document).ready(function() {
 				.append($(__playlists[name].titleHtmlEl));
 
 			var totalPl = $playlistsPanel.find('.playlist').length - 1;
-			var scrollLeft = __playlists.playlistPanelWidth * totalPl;
+			var plWidth = __playlists.playlistPanelWidth || 
+							$playlistsPanel
+								.find('.playlist:first')
+								.innerWidth();
+
+			var scrollLeft = plWidth * totalPl;
 
 			$playlistsPanel
 				.find('.playlist:last')
@@ -331,6 +337,7 @@ $(document).ready(function() {
 			var templateTrack 	= $('.template-track').html(),
 				tracksArray 	= []
 			;
+			console.log($(templateTrack));
 
 			for (var i = 0; i < tracks.length; i++) {
 				var track 	= stationsArray[tracks[i]];
@@ -1959,7 +1966,7 @@ $(document).ready(function() {
 		$.ajax({
 			data: {'action': 'getAllStations'},
 			success: function(data) {
-				stationsArray 	= JSON.parse(data);
+				stationsArray = JSON.parse(data);
 				// console.log(stationsArray);
 				var size 		= 0;
 				for (var key in stationsArray) {
@@ -2011,22 +2018,27 @@ $(document).ready(function() {
 		var defaultPlaylist 		= new Playlist('Default');		// ?? - нужен ??
 
 		defaultPlaylist.tracks = [
-						884,		// Drum and Bass) (Uturn Radio
-						1331,		// graal future
-						1194,		// graal space
-						2404,		// DubTerrain.net
+						883,		// Drum and Bass) (Uturn Radio
+						1698,		// TECHNO4EVER.FM LOUNGE
+						2534,		// TECHNO4EVER.FM CLUB"
+						3162,		// TECHNO4EVER.FM MAIN
+						3207,		// TECHNO4EVER.FM HARD
+						884,		// TeaTime.FM - 24h Happy Hardcore, Drum and Bass, UK
+						3771,		// CoreTime.FM - 24h Hardcore, Industrial, Speedcore
+						1330,		// graal future
+						1193,		// graal space
+						2403,		// DubTerrain.net
 						7943,		// Massive DubStep Trap And Rave
-						2411,		// Dubstep.fm
-						3210,		// TECHNO4EVER.FM HARD
-						916,		// TeaTime.FM - 24h Happy Hardcore, Drum and Bass, UK
-						3772,		// CoreTime.FM - 24h Hardcore, Industrial, Speedcore
-						3211,		// Make Some Noise
-						857			// не воспроизводится - для отладки ошибок
+						3210,		// Make Some Noise
+						2400,		// Dubstep.fm
+						55,			// Dub & Bass
+						885,		// Dubstep) (Uturn Radio
+						7942		// не воспроизводится - для отладки ошибок
 		];
 
 		// для базы с повторами
 		defaultPlaylist.currentTrack = {
-				id 				:2411,
+				id 				:2400,
 				url 			:'http://stream.dubstep.fm:80/256mp3',
 				title 			:'Dubstep.fm - 256k MP3',
 				scrollPosition 	: 406
@@ -2145,6 +2157,13 @@ $(document).ready(function() {
 								.tracks
 		;
 
+		var playlistPanelWidth = $playlistsPanel
+									.find('.playlist:first')
+									.innerWidth();
+
+		console.log(playlistPanelWidth);
+		__playlists.playlistPanelWidth = playlistPanelWidth;
+
 		if(playlistTracks.length > 0) {
 			console.log('make tracks:begin');
 			playlistManager.makePlaylistTracks(playlistTracks);
@@ -2153,12 +2172,6 @@ $(document).ready(function() {
 			console.log('Выбранный плейлист пуст');
 		}
 
-		var playlistPanelWidth = $playlistsPanel
-									.find('.playlist:first')
-									.innerWidth();
-
-		console.log(playlistPanelWidth);
-		__playlists.playlistPanelWidth = playlistPanelWidth;
 
 		if(!playerState.paused) {
 			var streamUrl = getCurrentTrack().url;
