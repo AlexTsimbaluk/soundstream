@@ -206,9 +206,14 @@ $(document).ready(function () {
 		// this.active = active;
 		this.tracks = [];
 		this.currentTrack = {};
+		// this.scrollPosition = 
 		this.titleHtmlEl = '<div class="playlist sortable" data-name="' + this.name + '">' + this.name + '</div>';
 
 		this.htmlEl = '<div class="playlist sortable" data-name="' + this.name + '"></div>';
+
+		/*function getScroll() {
+  	
+  }*/
 
 		playerState.currentPlaylist = this.name;
 		playerState.playlistsOrder.push(this.name);
@@ -227,16 +232,18 @@ $(document).ready(function () {
 		this.templateTrack = $('.template-track').html();
 		// функция для добавления плейлистов на панель
 		this.addPanel = function (name) {
-			var pl = __playlists[name].titleHtmlEl;
-			/*console.log(pl);
-   console.log($(pl));*/
-			$playlistsPanel.find('.list .mCSB_container').append(pl);
+			$playlistsPanel.find('.list .mCSB_container').append($(__playlists[name].titleHtmlEl));
+
+			var totalPl = $playlistsPanel.find('.playlist').length - 1;
+			var scrollLeft = __playlists.playlistPanelWidth * totalPl;
+
+			$playlistsPanel.find('.playlist:last').attr('data-scroll-left', scrollLeft);
 		};
 
 		this.addTrackToPlaylist = function (trackId) {
-			var array = [];
-			array.push(trackId);
-			var $track = self.makeTracksArray(array);
+			// var array = [];
+			// array.push(trackId);
+			var $track = self.makeTrack([trackId]);
 
 			if (playlistContainer.hasClass('mCustomScrollbar')) {
 				playlistContainer.find('.mCSB_container').append($track);
@@ -251,8 +258,8 @@ $(document).ready(function () {
 			localStorage.setItem('__playlists', JSON.stringify(__playlists));
 		};
 
-		this.makeTracksArray = function (tracksIdArray) {
-			var tracks = tracksIdArray;
+		this.makeTrack = function (tracksId) {
+			var tracks = tracksId;
 
 			var templateTrack = $('.template-track').html(),
 			    tracksArray = [];
@@ -270,23 +277,14 @@ $(document).ready(function () {
 
 				tracksArray.push($track);
 			}
-			// console.log(tracksArray);
 
 			return tracksArray;
 		};
 
-		this.makePlaylist = function (tracksIdArray) {
-			// console.log(tracksIdArray);
+		this.makePlaylistTracks = function (tracksId) {
+			// console.log(tracksId);
 			var currentPlaylist = __playlists[playerState.currentPlaylist],
-			    tracks = self.makeTracksArray(tracksIdArray);
-			/*var playlistTracks = __playlists[playerState.currentPlaylist]
-   						.tracks
-   ;*/
-
-			// if(playlistTracks.length > 0) {
-			// if(tracks.length > 0) {
-			// непонятно что это и зачем
-			// playlistContainer.append(currentPlaylist.htmlEl);
+			    tracks = self.makeTrack(tracksId);
 
 			for (var i = 0; i < tracks.length; i++) {
 				var $track = tracks[i];
@@ -295,7 +293,6 @@ $(document).ready(function () {
 				} else {
 					playlistContainer.append($track);
 				}
-				// playlistContainer.append($track);
 			}
 
 			if (!playlistContainer.hasClass('mCustomScrollbar')) {
@@ -303,35 +300,6 @@ $(document).ready(function () {
 					// theme:"dark"
 				});
 			}
-
-			if (!playerState.paused) {
-				var streamUrl = getCurrentTrack().url;
-				audioApiElement.playStream(streamUrl);
-			}
-			/*} else {
-   	console.log(0);
-   }*/
-
-			/*var playlist = playlistContainer.
-   				find('.playlist[data-name="' 	+
-   					playerState.currentPlaylist +
-   					'"]')
-   ;*/
-
-			/*var playlistTracks = __playlists[playerState.currentPlaylist]
-   						.tracks
-   ;
-   	console.log(playlistTracks);
-   		if(playlistTracks.length > 0) {
-   		for(var i = 0; i < playlistTracks.length; i++) {
-   		
-   	}
-   		$('.playlistContainer').mCustomScrollbar({
-   		// theme:"dark"
-   	});			
-   } else {
-   	console.log(0);
-   }*/
 		};
 
 		this.setCurrent = function (name, scrollPosition) {
@@ -347,7 +315,7 @@ $(document).ready(function () {
 
 			var tracksArray = __playlists[playerState.currentPlaylist].tracks;
 			if (tracksArray.length) {
-				self.makePlaylist(tracksArray);
+				self.makePlaylistTracks(tracksArray);
 			}
 
 			__playlists[playerState.currentPlaylist].scrollPosition = scrollPosition;
@@ -1579,7 +1547,9 @@ $(document).ready(function () {
   	.playlists[playerState.currentPlaylist]
   	 = pl;*/
 
+		console.log($playlistsPanel.find('.playlist').length);
 		playlistManager.addPanel(defaultPLName);
+		console.log($playlistsPanel.find('.playlist').length);
 
 		$playlistsPanel.find('[data-current]').removeAttr('data-current');
 
@@ -1587,9 +1557,9 @@ $(document).ready(function () {
 
 		playerState.currentPlaylist = defaultPLName;
 
-		var scrollPosition = $('[data-current]').position();
+		var scrollPosition = $playlistsPanel.find('[data-current]').position().left;
 
-		console.log($('[data-current]'));
+		console.log($playlistsPanel.find('[data-current]'));
 		console.log(scrollPosition);
 
 		__playlists[playerState.currentPlaylist].scrollPosition = scrollPosition;
@@ -1601,7 +1571,9 @@ $(document).ready(function () {
 	$('.playlistsPanel').on('click', '.playlist', function () {
 		if (!$(this).attr('data-current')) {
 			console.log('::Change playlist::' + $(this).attr('data-name'));
-			playlistManager.setCurrent($(this).attr('data-name'), $(this).position().left);
+			playlistManager.
+			// setCurrent($(this).attr('data-name'), $(this).position().left);
+			setCurrent($(this).attr('data-name'), $(this).attr('data-scroll-left'));
 		} else {
 			console.log('Плейлист уже выбран');
 		}
@@ -1836,9 +1808,10 @@ $(document).ready(function () {
 
 		$playlistsPanel.find('[data-name="' + playerState.currentPlaylist + '"]').attr('data-current', 1);
 
-		/*$('.playlistsPanel').
-  		find('.list').
-  		mCustomScrollbar('scrollTo', __playlists[playerState.currentPlaylist].scrollPosition);*/
+		console.log($playlistsPanel.find('[data-current]').attr('data-scroll-left'));
+		$('.playlistsPanel').find('.list').
+		// mCustomScrollbar('scrollTo', __playlists[playerState.currentPlaylist].scrollPosition);
+		mCustomScrollbar('scrollTo', $playlistsPanel.find('[data-current]').attr('data-scroll-left'));
 
 		// Задаем свойства объекта Audio свойствами объекта playerState
 		// Выставляем громкость
@@ -1852,7 +1825,7 @@ $(document).ready(function () {
 		// Рисуем соответствующий регулятор
 		drawWolumeBar();
 
-		console.log(playerState.currentPlaylist);
+		// console.log(playerState.currentPlaylist);
 
 		// Создаем контейнер для треков текущего (активного) плейлиста
 		/*playlistContainer.append(playerState.
@@ -1864,19 +1837,24 @@ $(document).ready(function () {
 		playlistContainer.append(__playlists[playerState.currentPlaylist].htmlEl);
 
 		// Получить массив с id треков плейлиста и сформировать его
-		/*var playlistTracks = playerState
-  						.playlists[playerState.currentPlaylist]
-  						.tracks
-  ;*/
-
 		var playlistTracks = __playlists[playerState.currentPlaylist].tracks;
 
 		if (playlistTracks.length > 0) {
 			console.log('make tracks:begin');
-			playlistManager.makePlaylist(playlistTracks);
+			playlistManager.makePlaylistTracks(playlistTracks);
 			console.log('make tracks:end');
 		} else {
-			console.log(0);
+			console.log('Выбранный плейлист пуст');
+		}
+
+		var playlistPanelWidth = $playlistsPanel.find('.playlist:first').innerWidth();
+
+		console.log(playlistPanelWidth);
+		__playlists.playlistPanelWidth = playlistPanelWidth;
+
+		if (!playerState.paused) {
+			var streamUrl = getCurrentTrack().url;
+			audioApiElement.playStream(streamUrl);
 		}
 
 		debugPlayerState();
