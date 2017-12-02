@@ -8,6 +8,7 @@
 	// 	include_once 'layouts/admin.php';
 	// } else {
 		include_once 'layouts/player.php';
+		include_once 'layouts/vue-debug.php';
 	// }
 ?>	
 

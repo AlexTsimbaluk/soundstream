@@ -307,7 +307,9 @@ $(document).ready(function () {
 		};
 
 		this.setCurrent = function (name, scrollPosition) {
-			$('.playlistsPanel').find('.list').mCustomScrollbar('scrollTo', scrollPosition);
+			/*$('.playlistsPanel').
+   	find('.list').
+   	mCustomScrollbar('scrollTo', scrollPosition);*/
 
 			$playlistsPanel.find('[data-name="' + playerState.currentPlaylist + '"]').removeAttr('data-current');
 
@@ -457,7 +459,7 @@ $(document).ready(function () {
 			localStorage.setItem('playerState', JSON.stringify(playerState));
 			localStorage.setItem('__playlists', JSON.stringify(__playlists));
 
-			if (window.innerHeight >= 720 && window.innerWidth > window.innerHeight || window.innerWidth >= 1000 && window.innerHeight > window.innerWidth) {
+			if (window.innerHeight >= 720 || window.innerWidth >= 1000) {
 				drawEq1();
 				drawEq2();
 			}
@@ -1551,9 +1553,7 @@ $(document).ready(function () {
   	.playlists[playerState.currentPlaylist]
   	 = pl;*/
 
-		console.log($playlistsPanel.find('.playlist').length);
 		playlistManager.addPanel(defaultPLName);
-		console.log($playlistsPanel.find('.playlist').length);
 
 		$playlistsPanel.find('[data-current]').removeAttr('data-current');
 
@@ -1562,9 +1562,6 @@ $(document).ready(function () {
 		playerState.currentPlaylist = defaultPLName;
 
 		var scrollPosition = $playlistsPanel.find('[data-current]').position().left;
-
-		console.log($playlistsPanel.find('[data-current]'));
-		console.log(scrollPosition);
 
 		__playlists[playerState.currentPlaylist].scrollPosition = scrollPosition;
 
@@ -1576,8 +1573,9 @@ $(document).ready(function () {
 		if (!$(this).attr('data-current')) {
 			console.log('::Change playlist::' + $(this).attr('data-name'));
 			playlistManager.
-			// setCurrent($(this).attr('data-name'), $(this).position().left);
-			setCurrent($(this).attr('data-name'), $(this).attr('data-scroll-left'));
+			// setCurrent($(this).attr('data-name'), $(this).attr('data-scroll-left'));
+			setCurrent($(this).attr('data-name'));
+			mCustomScrollbar('scrollTo', $(this).attr('data-scroll-left'));
 		} else {
 			console.log('Плейлист уже выбран');
 		}
@@ -1741,7 +1739,6 @@ $(document).ready(function () {
 		7942 // не воспроизводится - для отладки ошибок
 		];
 
-		// для базы с повторами
 		defaultPlaylist.currentTrack = {
 			id: 2400,
 			url: 'http://stream.dubstep.fm:80/256mp3',
@@ -1749,28 +1746,17 @@ $(document).ready(function () {
 			scrollPosition: 406
 		};
 
-		// playerState.playlists[playerState.currentPlaylist] = __playlists['Default'] = defaultPlaylist;
 		__playlists['Default'] = defaultPlaylist;
 		__playlists['Default'].scrollPosition = 0;
-		// __playlists['Default'] = defaultPlaylist;
 		console.log(__playlists['Default']);
 		console.log(playerState);
 
 		playerState.volume = .27;
-		// playerState.paused = false;
 		playerState.paused = true;
 		playerState.search.stationsOpened = [];
 
-		// $playlistsPanel.find('.list').append('<div class="playlist" data-name="Default">Default</div>');
-		// playlistContainer.html(playerState.playlists[playerState.currentPlaylist].htmlEl);
-
-		// playlistManager.addPanel(defaultPlaylist.name);
-
 		localStorage.setItem('playerState', JSON.stringify(playerState));
 		localStorage.setItem('__playlists', JSON.stringify(__playlists));
-		// audioApiElement.playStream(playerState.playlists[playerState.currentPlaylist].currentTrack);
-
-		// location.reload();
 	} else {
 		// Получаем актуальное состояние плеера из local storage
 		playerState = JSON.parse(localStorage.getItem('playerState'));
@@ -1782,24 +1768,8 @@ $(document).ready(function () {
 		console.log(playerState);
 		console.log(__playlists);
 
-		var vmCurrentTrackTitle = new Vue({
-			el: '.currentTrackTitle',
-			data: {
-				// trackTitle: getCurrentTrack().title
-				trackTitle: ''
-			},
-			computed: {
-				title: {
-					get: function get() {
-						// return getCurrentTrack().title;
-						return this.trackTitle;
-					},
-					set: function set(title) {
-						this.trackTitle = title;
-					}
-				}
-			}
-		});
+		debugPlayerState();
+		debugLocalStorage();
 
 		$('.playlistsPanel .list').mCustomScrollbar({
 			axis: 'x',
@@ -1818,9 +1788,15 @@ $(document).ready(function () {
 		$playlistsPanel.find('[data-name="' + playerState.currentPlaylist + '"]').attr('data-current', 1);
 
 		console.log($playlistsPanel.find('[data-current]').attr('data-scroll-left'));
-		$('.playlistsPanel').find('.list').
-		// mCustomScrollbar('scrollTo', __playlists[playerState.currentPlaylist].scrollPosition);
-		mCustomScrollbar('scrollTo', $playlistsPanel.find('[data-current]').attr('data-scroll-left'));
+
+		$('.playlistsPanel').find('.list').mCustomScrollbar('scrollTo', 800);
+
+		/*$('.playlistsPanel').
+  		find('.list').
+  		// mCustomScrollbar('scrollTo', __playlists[playerState.currentPlaylist].scrollPosition);
+  		mCustomScrollbar('scrollTo', $playlistsPanel
+  										.find('[data-current]')
+  										.attr('data-scroll-left'));*/
 
 		// Задаем свойства объекта Audio свойствами объекта playerState
 		// Выставляем громкость
@@ -1850,7 +1826,6 @@ $(document).ready(function () {
 
 		var playlistPanelWidth = $playlistsPanel.find('.playlist:first').innerWidth();
 
-		console.log(playlistPanelWidth);
 		__playlists.playlistPanelWidth = playlistPanelWidth;
 
 		if (playlistTracks.length > 0) {
@@ -1866,8 +1841,31 @@ $(document).ready(function () {
 			audioApiElement.playStream(streamUrl);
 		}
 
-		debugPlayerState();
-		debugLocalStorage();
+		var vmCurrentTrackTitle = new Vue({
+			el: '.currentTrackTitle',
+			data: {
+				// trackTitle: getCurrentTrack().title
+				trackTitle: ''
+			},
+			computed: {
+				title: {
+					get: function get() {
+						// return getCurrentTrack().title;
+						return this.trackTitle;
+					},
+					set: function set(title) {
+						this.trackTitle = title;
+					}
+				}
+			}
+		});
+
+		var vmPlaylist = new Vue({
+			el: '.vmPlaylistsPanel',
+			data: {
+				playlistsOrder: playerState.playlistsOrder
+			}
+		});
 	}
 
 	/*try {

@@ -971,8 +971,21 @@ canvas {
 }
 
 
-.currentTrackTitle {
+
+
+
+.vue-debug {
+	border: 1px solid #fff;
 	color: #fff;
-	position: relative;
+	width: ~"calc(100% - 320px)";
+	height: 100px;
+	max-width: 320px;
+	position: absolute;
+	left: 0;
+	top: 0;
 	z-index: 2;
+	// @media (max-width: 640px) and (orientation: portrait)
+	@media (max-width: 640px) {
+		display: none;
+	}
 }
