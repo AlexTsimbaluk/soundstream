@@ -1553,7 +1553,7 @@ $(document).ready(function () {
   	.playlists[playerState.currentPlaylist]
   	 = pl;*/
 
-		playlistManager.addPanel(defaultPLName);
+		// playlistManager.addPanel(defaultPLName);
 
 		$playlistsPanel.find('[data-current]').removeAttr('data-current');
 
@@ -1561,9 +1561,11 @@ $(document).ready(function () {
 
 		playerState.currentPlaylist = defaultPLName;
 
-		var scrollPosition = $playlistsPanel.find('[data-current]').position().left;
+		console.log($playlistsPanel.find('[data-name=' + defaultPLName + ']'));
 
-		__playlists[playerState.currentPlaylist].scrollPosition = scrollPosition;
+		// var scrollPosition = $playlistsPanel.find('[data-current]').position().left;
+
+		// __playlists[playerState.currentPlaylist].scrollPosition = scrollPosition;
 
 		localStorage.setItem('playerState', JSON.stringify(playerState));
 		localStorage.setItem('__playlists', JSON.stringify(__playlists));
@@ -1771,6 +1773,13 @@ $(document).ready(function () {
 		debugPlayerState();
 		debugLocalStorage();
 
+		var vmPlaylist = new Vue({
+			el: '.vmPlaylistsPanel',
+			data: {
+				playlistsOrder: playerState.playlistsOrder
+			}
+		});
+
 		$('.playlistsPanel .list').mCustomScrollbar({
 			axis: 'x',
 			// theme:'dark',
@@ -1779,10 +1788,12 @@ $(document).ready(function () {
 			}
 		});
 
+		$('.playlistsPanel .list').find('.mCSB_container').addClass('flex left');
+
 		// Наполняем $playlistsPanel заголовками плейлистов
 		for (var i = 0; i < playerState.playlistsOrder.length; i++) {
 			var plName = playerState.playlistsOrder[i];
-			playlistManager.addPanel(plName);
+			// playlistManager.addPanel(plName);
 		}
 
 		$playlistsPanel.find('[data-name="' + playerState.currentPlaylist + '"]').attr('data-current', 1);
@@ -1860,12 +1871,12 @@ $(document).ready(function () {
 			}
 		});
 
-		var vmPlaylist = new Vue({
-			el: '.vmPlaylistsPanel',
-			data: {
-				playlistsOrder: playerState.playlistsOrder
-			}
-		});
+		/*var vmPlaylist = new Vue({
+  	el: '.vmPlaylistsPanel',
+  	data: {
+  		playlistsOrder: playerState.playlistsOrder
+  	}
+  });*/
 	}
 
 	/*try {

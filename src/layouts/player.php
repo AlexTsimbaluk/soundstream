@@ -91,7 +91,20 @@
 	</div>
 
 	<div class="playlistsPanel">
-		<div class="list"></div>
+		<!-- <div class="list"> -->
+		<div class="list vmPlaylistsPanel">
+			<div
+				class="playlist sortable flex left child-center"
+				data-name="Default"
+				data-scroll-left="0"
+				data-current="1"
+				v-for="playlist in playlistsOrder"
+			>
+				<div class="vmDelete vmAction  size-4">x</div>
+				<div class="vmTitle  size-16">{{ playlist }}</div>
+				<div class="vmEdit vmAction  size-4">...</div>
+			</div>
+		</div>
 
 		<ul class="nav">
 			<!-- <li>

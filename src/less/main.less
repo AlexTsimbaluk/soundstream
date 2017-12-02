@@ -637,6 +637,24 @@ ul, ol {
 			.mCSB_draggerContainer {
 				margin-top: 4px;
 			}
+
+			&.vmPlaylistsPanel {
+				.playlist {
+					> div {
+						// display: inline-block;
+					}
+					.vmAction {
+						cursor: pointer;
+						// text-align: center;
+						// width: 15%;
+					}
+					.vmTitle {
+						// width: 62%;
+						overflow-x: hidden;
+						text-align: center;
+					}
+				}
+			}
 		}
 		.nav {
 			cursor: default;
@@ -667,10 +685,10 @@ ul, ol {
 			// border-bottom: 2px solid #333;
 			border-radius: 1px;
 			cursor: pointer;
-			display: inline-block;
+			// display: inline-block;
 			font-size: 1.1em;
 			// line-height: 10px;
-			padding: 5px;
+			padding: 5px 0;
 			text-align: center;
 			overflow: hidden;
 			height: 30px;
@@ -680,6 +698,9 @@ ul, ol {
 			}
 			&[data-current] {
 				.gradient-vertical(#555, #73c8c8, 25%, 100%);
+			}
+			.vmTitle {
+
 			}
 		}
 		.playlist + .playlist {margin-left: 4px;}

@@ -1157,6 +1157,13 @@ ol {
 #player .playlistsPanel .list .mCSB_draggerContainer {
   margin-top: 4px;
 }
+#player .playlistsPanel .list.vmPlaylistsPanel .playlist .vmAction {
+  cursor: pointer;
+}
+#player .playlistsPanel .list.vmPlaylistsPanel .playlist .vmTitle {
+  overflow-x: hidden;
+  text-align: center;
+}
 #player .playlistsPanel .nav {
   cursor: default;
   height: 100%;
@@ -1191,9 +1198,8 @@ ol {
   -webkit-border-radius: 1px;
           border-radius: 1px;
   cursor: pointer;
-  display: inline-block;
   font-size: 1.1em;
-  padding: 5px;
+  padding: 5px 0;
   text-align: center;
   overflow: hidden;
   height: 30px;
