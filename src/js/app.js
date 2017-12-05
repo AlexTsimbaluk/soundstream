@@ -1784,12 +1784,16 @@ $(document).ready(function () {
 			data: {
 				playlistsOrder: playerState.playlistsOrder,
 				totalPl: playerState.playlistsOrder.length,
-				plWidth: 84
+				plWidth: 84,
+				curPl: playerState.currentPlaylist
 			},
 			computed: {
 				/*totalPl   : function() {
     	return this.playlistsOrder.length;
     },*/
+				currentPlaylist: function currentPlaylist(pl) {
+					return this.curPl;
+				},
 				scrollLeft: function scrollLeft() {
 					return this.plWidth * this.totalPl;
 				}

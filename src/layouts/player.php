@@ -98,8 +98,9 @@
 				data-name="Default"
 				data-current="1"
 				v-for="(playlist, index) in playlistsOrder"
-				v-if=""
 				:data-scroll-left="index * plWidth"
+				:data-current="playlist == curPl"
+				:data-name="playlist"
 				
 			>
 				<div class="vmDelete vmAction  size-4">x</div>
