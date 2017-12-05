@@ -96,9 +96,11 @@
 			<div
 				class="playlist sortable flex left child-center"
 				data-name="Default"
-				data-scroll-left="0"
 				data-current="1"
-				v-for="playlist in playlistsOrder"
+				v-for="(playlist, index) in playlistsOrder"
+				v-if=""
+				:data-scroll-left="index * plWidth"
+				
 			>
 				<div class="vmDelete vmAction  size-4">x</div>
 				<div class="vmTitle  size-16">{{ playlist }}</div>

@@ -1197,7 +1197,7 @@ ol {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#555, endColorstr=#9f9f9f, GradientType=0);
   -webkit-border-radius: 1px;
           border-radius: 1px;
-  cursor: pointer;
+  cursor: default;
   font-size: 1.1em;
   padding: 5px 0;
   text-align: center;
@@ -1700,6 +1700,7 @@ canvas {
 .vue-debug {
   border: 1px solid #fff;
   color: #fff;
+  display: none;
   width: -webkit-calc(100% - 320px);
   width: calc(100% - 320px);
   height: 100px;

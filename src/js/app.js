@@ -266,7 +266,7 @@ $(document).ready(function () {
 
 			var templateTrack = $('.template-track').html(),
 			    tracksArray = [];
-			console.log($(templateTrack));
+			// console.log($(templateTrack));
 
 			for (var i = 0; i < tracks.length; i++) {
 				var track = stationsArray[tracks[i]];
@@ -374,13 +374,19 @@ $(document).ready(function () {
 
 		this.playStream = function (streamUrl) {
 			console.log('AudioApiElement::playStream::Begin');
+			console.log(streamUrl);
 
 			// jquery-объект трека, который надо играть
 			var currentTrackEl = $('[data-station-url="' + streamUrl + '"]');
 
-			console.log(currentTrackEl);
-			console.log(streamUrl);
-			$('.playlistContainer').mCustomScrollbar('scrollTo', currentTrackEl.position().top);
+			var posLeft;
+			if (currentTrackEl.length) {
+				posLeft = currentTrackEl.position().top;
+			} else {
+				posLeft = 0;
+			}
+
+			$('.playlistContainer').mCustomScrollbar('scrollTo', posLeft);
 
 			// при старте воспроизведения
 			// удалим у всех треков атрибут data-current-track
@@ -396,7 +402,8 @@ $(document).ready(function () {
 				url: currentTrackEl.attr('data-station-url'),
 				title: currentTrackEl.attr('data-station-title'),
 				id: currentTrackEl.attr('data-station-id'),
-				scrollPosition: currentTrackEl.position().top
+				// scrollPosition 	: currentTrackEl.position().top
+				scrollPosition: posLeft
 			};
 
 			// Изменим объект состояния
@@ -629,7 +636,7 @@ $(document).ready(function () {
 			}
 
 			visualisation();
-			displayState();
+			// displayState();
 		});
 		player.addEventListener('ratechange', function (e) {
 			console.log(name + '::Event.type::' + e.type);
@@ -1724,9 +1731,6 @@ $(document).ready(function () {
 		var defaultPlaylist = new Playlist('Default'); // ?? - нужен ??
 
 		defaultPlaylist.tracks = [883, // Drum and Bass) (Uturn Radio
-		1698, // TECHNO4EVER.FM LOUNGE
-		2534, // TECHNO4EVER.FM CLUB"
-		3162, // TECHNO4EVER.FM MAIN
 		3207, // TECHNO4EVER.FM HARD
 		884, // TeaTime.FM - 24h Happy Hardcore, Drum and Bass, UK
 		3771, // CoreTime.FM - 24h Hardcore, Industrial, Speedcore
@@ -1773,12 +1777,26 @@ $(document).ready(function () {
 		debugPlayerState();
 		debugLocalStorage();
 
+		console.log($('.vmPlaylistsPanel').length);
+
 		var vmPlaylist = new Vue({
 			el: '.vmPlaylistsPanel',
 			data: {
-				playlistsOrder: playerState.playlistsOrder
+				playlistsOrder: playerState.playlistsOrder,
+				totalPl: playerState.playlistsOrder.length,
+				plWidth: 84
+			},
+			computed: {
+				/*totalPl   : function() {
+    	return this.playlistsOrder.length;
+    },*/
+				scrollLeft: function scrollLeft() {
+					return this.plWidth * this.totalPl;
+				}
 			}
 		});
+
+		console.log($('.vmPlaylistsPanel').length);
 
 		$('.playlistsPanel .list').mCustomScrollbar({
 			axis: 'x',
@@ -1847,11 +1865,6 @@ $(document).ready(function () {
 			console.log('Выбранный плейлист пуст');
 		}
 
-		if (!playerState.paused) {
-			var streamUrl = getCurrentTrack().url;
-			audioApiElement.playStream(streamUrl);
-		}
-
 		var vmCurrentTrackTitle = new Vue({
 			el: '.currentTrackTitle',
 			data: {
@@ -1870,6 +1883,12 @@ $(document).ready(function () {
 				}
 			}
 		});
+
+		if (!playerState.paused) {
+			// || __playlists[playerState.currentPlaylist].tracks.length) {
+			var streamUrl = getCurrentTrack().url;
+			audioApiElement.playStream(streamUrl);
+		}
 
 		/*var vmPlaylist = new Vue({
   	el: '.vmPlaylistsPanel',
