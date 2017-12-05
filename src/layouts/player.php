@@ -101,11 +101,19 @@
 				:data-scroll-left="index * plWidth"
 				:data-current="playlist == curPl"
 				:data-name="playlist"
-				
+				:key="index"
 			>
-				<div class="vmDelete vmAction  size-4">x</div>
+				<div
+					class="vmDelete vmAction  size-4"
+					@click.prevent="deletePlaylist(index)"
+				>x</div>
+
 				<div class="vmTitle  size-16">{{ playlist }}</div>
-				<div class="vmEdit vmAction  size-4">...</div>
+				
+				<div
+					class="vmEdit vmAction  size-4"
+					@click.prevent="editPlaylist(index)"
+				>...</div>
 			</div>
 		</div>
 

@@ -1578,13 +1578,15 @@ $(document).ready(function () {
 		localStorage.setItem('__playlists', JSON.stringify(__playlists));
 	});
 
-	$('.playlistsPanel').on('click', '.playlist', function () {
-		if (!$(this).attr('data-current')) {
-			console.log('::Change playlist::' + $(this).attr('data-name'));
+	$('.playlistsPanel').on('click', '.vmTitle', function () {
+		var $pl = $(this).closest('.playlist');
+		if (!$pl.attr('data-current')) {
+			console.log('::Change playlist::' + $pl.attr('data-name'));
 			playlistManager.
-			// setCurrent($(this).attr('data-name'), $(this).attr('data-scroll-left'));
-			setCurrent($(this).attr('data-name'));
-			mCustomScrollbar('scrollTo', $(this).attr('data-scroll-left'));
+			// setCurrent($pl.attr('data-name'), $pl.attr('data-scroll-left'));
+			setCurrent($pl.attr('data-name'));
+
+			mCustomScrollbar('scrollTo', $pl.attr('data-scroll-left'));
 		} else {
 			console.log('Плейлист уже выбран');
 		}
@@ -1796,6 +1798,26 @@ $(document).ready(function () {
 				},
 				scrollLeft: function scrollLeft() {
 					return this.plWidth * this.totalPl;
+				}
+			},
+			methods: {
+				deletePlaylist: function deletePlaylist(index, name) {
+					console.log(this.playlistsOrder);
+					console.log(playerState.playlistsOrder[index]);
+					console.log(__playlists);
+					console.log(__playlists[playerState.playlistsOrder[index]]);
+
+					delete __playlists[playerState.playlistsOrder[index]];
+					this.playlistsOrder.splice(index, 1);
+
+					playerState.playlistsOrder = this.playlistsOrder;
+					console.log(this.playlistsOrder);
+
+					localStorage.setItem('playerState', JSON.stringify(playerState));
+					localStorage.setItem('__playlists', JSON.stringify(__playlists));
+				},
+				editPlaylist: function editPlaylist(index) {
+					console.log(index);
 				}
 			}
 		});
