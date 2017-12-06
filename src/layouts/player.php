@@ -108,7 +108,12 @@
 					@click.prevent="deletePlaylist(index)"
 				>x</div>
 
-				<div class="vmTitle  size-16">{{ playlist }}</div>
+				<div
+					class="vmTitle  size-16"
+					@click.prevent="setCurrentPlaylist(index, playlist)"
+				>
+					{{ playlist }}
+				</div>
 				
 				<div
 					class="vmEdit vmAction  size-4"
