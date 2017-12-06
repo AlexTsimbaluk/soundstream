@@ -144,6 +144,7 @@ $(document).ready(function() {
 
 	// Отобразить название станции при воспроизведении
 	function displayState() {
+		console.log('function::displayState');
 		var title = getCurrentTrack().title,
 			titleSize = title.length,
 			titleContainer = $('#player .info .trackTitle'),
@@ -159,7 +160,11 @@ $(document).ready(function() {
 
 
 		// изменим свойство за которым следит Vue
-		vmCurrentTrackTitle.title = title;
+		// vmCurrentTrackTitle.title = title;
+		console.log(title);
+		console.log(vmCurrentTrackTitle.trackTitle);
+		vmCurrentTrackTitle.trackTitle = title;
+		console.log(vmCurrentTrackTitle.trackTitle);
 		// titleContainer.html(title);
 
 		titleContainer
@@ -512,6 +517,9 @@ $(document).ready(function() {
 				find('[data-current-track]').
 				removeAttr('data-current-track');
 
+	    	console.log(currentTrackEl);
+
+
 			// а затем установим data-current-track нужному треку
 			currentTrackEl.attr('data-current-track', 1);
 
@@ -768,7 +776,12 @@ $(document).ready(function() {
     		}
 
      		visualisation();
-     		// displayState();
+
+     		/*console.log(vmCurrentTrackTitle.trackTitle);
+     		vmCurrentTrackTitle.trackTitle = getCurrentTrack().title;
+     		console.log(vmCurrentTrackTitle.trackTitle);*/
+
+     		displayState();
         });
         player.addEventListener('ratechange', (e)=> {
      		console.log(name + '::Event.type::' + e.type);
