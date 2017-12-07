@@ -2110,9 +2110,6 @@ $(document).ready(function() {
 				curPl 			: playerState.currentPlaylist
 			},
 			computed: {
-				/*totalPl   : function() {
-					return this.playlistsOrder.length;
-				},*/
 				currentPlaylist : function(pl) {
 					return this.curPl;
 				},
