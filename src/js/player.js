@@ -539,6 +539,7 @@ $(document).ready(function() {
 			__playlists[getCurrentPlaylist()].currentTrack =
     														_currentTrack;
 
+
 			// vmCurrentTrackTitle.title = _currentTrack.title;
 
         	// Запишем в объект состояния свойтво
@@ -591,6 +592,8 @@ $(document).ready(function() {
 	        }
 
 	        playerState.paused = $playerTag.paused;
+
+			playerState.playingTrack = _currentTrack;
 	        localStorage.setItem('playerState', JSON.stringify(playerState));
 			localStorage.setItem('__playlists', JSON.stringify(__playlists));
 	        
@@ -1945,6 +1948,7 @@ $(document).ready(function() {
 			playlists: {},
 			playlistsOrder: [],
 			currentPlaylist: '',
+			playingTrack: {},
 			// volume : player.volume,
 			// volume: audioApiElement ? audioApiElement.getVolume() : .2,
 			volume: .27,
@@ -2264,6 +2268,15 @@ $(document).ready(function() {
 			console.log('Выбранный плейлист пуст');
 		}
 
+
+		if(!playerState.paused) {
+			// если плейлист играющего(!) текущего трека != playerState.currentPlaylist
+			// сделать что то(?)
+			// || __playlists[playerState.currentPlaylist].tracks.length) {
+			var streamUrl = getCurrentTrack().url;
+			audioApiElement.playStream(streamUrl);
+		}
+
 		var vmCurrentTrackTitle = new Vue({
 			el: '.currentTrackTitle',
 			data: {
@@ -2277,27 +2290,14 @@ $(document).ready(function() {
 						return this.trackTitle;
 					},
 					set: function (title) {
+						console.log(title);
+						console.log(getCurrentTrack().title);
 						this.trackTitle = title;
+						// this.trackTitle = getCurrentTrack().title;
 					}
 				}
 			}
 		});
-
-		if(!playerState.paused) {
-			// если плейлист играющего(!) текущего трека != playerState.currentPlaylist
-			// сделать что то(?)
-			// || __playlists[playerState.currentPlaylist].tracks.length) {
-			var streamUrl = getCurrentTrack().url;
-			audioApiElement.playStream(streamUrl);
-		}
-
-
-		/*var vmPlaylist = new Vue({
-			el: '.vmPlaylistsPanel',
-			data: {
-				playlistsOrder: playerState.playlistsOrder
-			}
-		});*/
 	}
 
 

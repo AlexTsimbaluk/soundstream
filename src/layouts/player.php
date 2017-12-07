@@ -1,4 +1,4 @@
-<div id="player">
+<div id="player" class="vmPlayer">
 
 	<div class="spinner">
 		<div class="bounce1"></div>
