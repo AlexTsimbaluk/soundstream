@@ -162,9 +162,13 @@ $(document).ready(function() {
 		// изменим свойство за которым следит Vue
 		// vmCurrentTrackTitle.title = title;
 		console.log(title);
+		
+		/*console.log(vmCurrentTrackTitle.title);
 		console.log(vmCurrentTrackTitle.trackTitle);
 		vmCurrentTrackTitle.trackTitle = title;
-		console.log(vmCurrentTrackTitle.trackTitle);
+		console.log(vmCurrentTrackTitle.title);
+		console.log(vmCurrentTrackTitle.trackTitle);*/
+
 		// titleContainer.html(title);
 
 		titleContainer
@@ -592,8 +596,10 @@ $(document).ready(function() {
 	        }
 
 	        playerState.paused = $playerTag.paused;
-
 			playerState.playingTrack = _currentTrack;
+
+			vmCurrentTrackTitle.trackTitle = playerState.playingTrack.title;
+
 	        localStorage.setItem('playerState', JSON.stringify(playerState));
 			localStorage.setItem('__playlists', JSON.stringify(__playlists));
 	        
@@ -614,6 +620,7 @@ $(document).ready(function() {
 			visualisationStop();
 			$('#player .play').removeClass('visualisation');
 
+			playerState.playingTrack = {};
 			vmCurrentTrackTitle.title = '';
 
 			$('#player .info .trackTitle').html('')
@@ -779,9 +786,13 @@ $(document).ready(function() {
     		}
 
      		visualisation();
+     		
+     		console.log(getCurrentTrack().title);
 
-     		/*console.log(vmCurrentTrackTitle.trackTitle);
+     		/*console.log(vmCurrentTrackTitle.title);
+     		console.log(vmCurrentTrackTitle.trackTitle);
      		vmCurrentTrackTitle.trackTitle = getCurrentTrack().title;
+     		console.log(vmCurrentTrackTitle.title);
      		console.log(vmCurrentTrackTitle.trackTitle);*/
 
      		displayState();
@@ -2268,20 +2279,12 @@ $(document).ready(function() {
 			console.log('Выбранный плейлист пуст');
 		}
 
-
-		if(!playerState.paused) {
-			// если плейлист играющего(!) текущего трека != playerState.currentPlaylist
-			// сделать что то(?)
-			// || __playlists[playerState.currentPlaylist].tracks.length) {
-			var streamUrl = getCurrentTrack().url;
-			audioApiElement.playStream(streamUrl);
-		}
-
 		var vmCurrentTrackTitle = new Vue({
 			el: '.currentTrackTitle',
 			data: {
 				// trackTitle: getCurrentTrack().title
 				trackTitle: ''
+				// title: playerState.playingTrack.title
 			},
 			computed: {
 				title: {
@@ -2296,8 +2299,41 @@ $(document).ready(function() {
 						// this.trackTitle = getCurrentTrack().title;
 					}
 				}
-			}
+			},
+			beforeCreate: function(){
+		        console.log('vmCurrentTrackTitle::beforeCreate');
+		    },
+		    created: function(){
+		        console.log('vmCurrentTrackTitle::created');
+		    },
+		    beforeMount: function(){
+		        console.log('vmCurrentTrackTitle::beforeMount');
+		    },
+		    mounted: function(){
+		        console.log('vmCurrentTrackTitle::mounted');
+		    },
+		    beforeUpdate: function(){
+		        console.log('vmCurrentTrackTitle::beforeUpdate');
+		    },
+		    updated: function(){
+		        console.log('vmCurrentTrackTitle::updated');
+		    },
+		    beforeDestroy: function(){
+		        console.log('vmCurrentTrackTitle::beforeDestroy');
+		    },
+		    destroyed: function(){
+		        console.log('vmCurrentTrackTitle::destroyed');
+		    }
 		});
+
+		if(!playerState.paused) {
+			// если плейлист играющего(!) текущего трека != playerState.currentPlaylist
+			// сделать что то(?)
+			// || __playlists[playerState.currentPlaylist].tracks.length) {
+			var streamUrl = getCurrentTrack().url;
+			audioApiElement.playStream(streamUrl);
+		}
+
 	}
 
 
