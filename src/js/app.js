@@ -477,7 +477,8 @@ $(document).ready(function () {
 			playerState.paused = $playerTag.paused;
 			playerState.playingTrack = _currentTrack;
 
-			vmCurrentTrackTitle.trackTitle = playerState.playingTrack.title;
+			// vmCurrentTrackTitle.trackTitle = playerState.playingTrack.title;
+			vmCurrentTrackTitle.trackTitle = _currentTrack.title;
 
 			localStorage.setItem('playerState', JSON.stringify(playerState));
 			localStorage.setItem('__playlists', JSON.stringify(__playlists));
@@ -878,11 +879,9 @@ $(document).ready(function () {
 		visualisationStop();
 
 		var el = $('.playlistContainer [data-station-id="' + getCurrentTrack().id + '"]');
-		el.addClass('visualisation');
+		el.addClass('visualisation').find('.url').addClass('runningString');
 
 		$('#player .play').addClass('visualisation');
-		$('#player .play span').remove();
-		$('#player .play.visualisation').prepend('<span class="inner"></span><span class="outer"></span>');
 
 		var stepGrad1 = Math.floor(Math.random() * 360),
 		    stepGrad2 = stepGrad1 + 180,
@@ -897,7 +896,7 @@ $(document).ready(function () {
 
 				$('#player .play.visualisation .inner').css({ 'borderBottomColor': 'hsl(' + ++stepBorder1 % 360 + ', 100%, 50%)' });
 
-				$('#player .play.visualisation .outer').css({ 'borderTopColor': 'hsl(' + ++stepBorder1 % 360 + ', 100%, 50%)' });
+				$('#player .play.visualisation .outer').css({ 'borderTopColor': 'hsl(' + (360 - stepBorder1) % 360 + ', 100%, 50%)' });
 			}, 50);
 		}
 		console.log('visualisation::End');
@@ -908,9 +907,9 @@ $(document).ready(function () {
 		console.log('visualisationStop::Begin');
 		clearInterval(intervalVis);
 		var el = $('.playlistContainer [data-station-id="' + getCurrentTrack().id + '"]');
-		el.removeClass('visualisation').css({ 'backgroundImage': 'none' }).removeAttr('style');
+		el.removeClass('visualisation').css({ 'backgroundImage': 'none' }).removeAttr('style').find('.url').removeClass('runningString');
 		$('#player .play').removeClass('visualisation').css({ 'boxShadow': 'none', 'borderColor': '#0ff' }).removeAttr('style');
-		$('#player .play span').remove();
+		// $('#player .play span').remove();
 		console.log('visualisationStop::End');
 	}
 

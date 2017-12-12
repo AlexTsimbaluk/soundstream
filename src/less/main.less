@@ -344,8 +344,23 @@ ul, ol {
 	}
 }
 
+@keyframes runningString_ {
+	0% {
+		height: 0;
+	}
+	100% {
+		height: 100%;
+	}
+}
+
 #player {
 	z-index: 2;
+	p,
+	div {
+		&.runningString {
+			animation: runningString linear infinite 17s;
+		}
+	}
 	@media (max-width: 380px) and (orientation: portrait) {
 		border: 0;
 		border-radius: 0;
@@ -613,8 +628,6 @@ ul, ol {
 	}
 
 	.playlistContainer {
-		// height: 49%;
-		height: 200px;
 		height: ~"calc(100% - 244px)";
 		// overflow-y: scroll;
 		.playlist {
@@ -624,7 +637,7 @@ ul, ol {
 
 	.playlistsPanel {
 		clear: both;
-		height: 38px;
+		height: 30px;
 		margin: 4px 0;
 		// overflow: hidden;
 		position: relative;
@@ -640,8 +653,8 @@ ul, ol {
 
 			&.vmPlaylistsPanel {
 				.playlist {
-					> div {
-						// display: inline-block;
+					.icon {
+						font-size: 1em;
 					}
 					.vmAction {
 						cursor: pointer;
@@ -673,7 +686,7 @@ ul, ol {
 				background-color: transparent;
 				border: none;
 			}
-			i {
+			.icon {
 				color: #aaa;
 				cursor: pointer;
 				font-size: 2.6em;
@@ -686,9 +699,6 @@ ul, ol {
 			// border-bottom: 2px solid #333;
 			border-radius: 1px;
 			cursor: default;
-			// display: inline-block;
-			font-size: 1.1em;
-			// line-height: 10px;
 			padding: 5px 0;
 			text-align: center;
 			overflow: hidden;
@@ -704,7 +714,9 @@ ul, ol {
 
 			}
 		}
-		.playlist + .playlist {margin-left: 4px;}
+		.playlist + .playlist {
+			margin-left: 4px;
+		}
 	}
 
 	@keyframes trackWaiting {
@@ -719,9 +731,22 @@ ul, ol {
 		}
 	}
 
+	@keyframes runningStringReverse {
+		0% {
+			left: 100%;
+		}
+		50% {
+			left: -100%;
+		}
+		100% {
+			left: 100%;
+		}
+	}
+
 	.track {
 		border-radius: 2px;
 		cursor: default;
+		height: 50px;
 		padding: 6px;
 		tansition: all .3s;
 		position: relative;
@@ -750,6 +775,12 @@ ul, ol {
 			max-height: 20px;
 			overflow: hidden;
 			word-break: break-all;
+			position: absolute;
+			// bottom: 0;
+			top: 60%;
+			&.runningString {
+				animation: runningStringReverse linear infinite 14s;
+			}
 		}
 		.track-icon {
 			background-color: rgba(0, 255, 225, .6);

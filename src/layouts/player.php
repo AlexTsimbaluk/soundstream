@@ -38,7 +38,7 @@
 
 		<div class="info" title="track">
 			<div class="trackTitle currentTrackTitle">
-				<!-- {{ title }} -->
+				{{ title }}
 			</div>
 		</div>
 
@@ -68,10 +68,29 @@
 
 		<div class="controls">
 			<!-- <div class="play button"><span class="inner"></span><span class="outer"></span><div class="iconWrapper"><i class="fa fa-play"></i></div></div> -->
-			<div class="play button"><div class="iconWrapper"><i class="fa fa-play"></i></div></div>
-			<div class="stop button"><div class="iconWrapper"><i class="fa fa-stop"></i></div></div>
-			<div class="prev button"><div class="iconWrapper"><i class="fa fa-step-backward"></i></div></div>
-			<div class="next button"><div class="iconWrapper"><i class="fa fa-step-forward"></i></div></div>
+			<div class="play button">
+				<span class="inner js-animate"></span>
+				<span class="outer js-animate"></span>
+				
+				<div class="iconWrapper">
+					<div class="icon">play_arrow</div>
+				</div>
+			</div>
+			<div class="stop button">
+				<div class="iconWrapper">
+					<div class="icon">stop</div>
+				</div>
+			</div>
+			<div class="prev button">
+				<div class="iconWrapper">
+					<div class="icon">skip_previous</div>
+				</div>
+			</div>
+			<div class="next button">
+				<div class="iconWrapper">
+					<div class="icon">skip_next</div>
+				</div>
+			</div>
 
 			<div class="volume">
 				<canvas id="canvas-volume" width="100" height="30"></canvas>
@@ -104,21 +123,25 @@
 				:key="index"
 			>
 				<div
-					class="vmDelete vmAction  size-4"
+					class="vmDelete vmAction size-4"
 					@click.prevent="deletePlaylist(index)"
-				>x</div>
+				>
+					<div class="icon">clear</div>
+				</div>
 
 				<div
-					class="vmTitle  size-16"
+					class="vmTitle size-16"
 					@click.prevent="setCurrentPlaylist(index, playlist)"
 				>
 					{{ playlist }}
 				</div>
 				
 				<div
-					class="vmEdit vmAction  size-4"
+					class="vmEdit vmAction size-4"
 					@click.prevent="editPlaylist(index)"
-				>...</div>
+				>
+					<div class="icon">more_horiz</div>
+				</div>
 			</div>
 		</div>
 
@@ -135,7 +158,7 @@
 			</li> -->
 			<li>
 				<button class="playlist-control playlist-new">
-					<i class="fa fa-plus"></i>
+					<div class="icon">add</div>
 				</button>
 			</li>
 		</ul>

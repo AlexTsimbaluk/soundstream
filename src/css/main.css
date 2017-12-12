@@ -851,6 +851,22 @@ ol {
     left: -100%;
   }
 }
+@-webkit-keyframes runningString_ {
+  0% {
+    height: 0;
+  }
+  100% {
+    height: 100%;
+  }
+}
+@keyframes runningString_ {
+  0% {
+    height: 0;
+  }
+  100% {
+    height: 100%;
+  }
+}
 #player {
   z-index: 2;
   background: rgba(17, 17, 17, 0.7);
@@ -867,6 +883,11 @@ ol {
   -webkit-transform: translate(-50%, -50%);
       -ms-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
+}
+#player p.runningString,
+#player div.runningString {
+  -webkit-animation: runningString linear infinite 17s;
+          animation: runningString linear infinite 17s;
 }
 @media (max-width: 380px) and (orientation: portrait) {
   #player {
@@ -1179,7 +1200,6 @@ ol {
   top: -15px;
 }
 #player .playlistContainer {
-  height: 200px;
   height: -webkit-calc(100% - 244px);
   height: calc(100% - 244px);
 }
@@ -1188,7 +1208,7 @@ ol {
 }
 #player .playlistsPanel {
   clear: both;
-  height: 38px;
+  height: 30px;
   margin: 4px 0;
   position: relative;
 }
@@ -1201,6 +1221,9 @@ ol {
 }
 #player .playlistsPanel .list .mCSB_draggerContainer {
   margin-top: 4px;
+}
+#player .playlistsPanel .list.vmPlaylistsPanel .playlist .icon {
+  font-size: 1em;
 }
 #player .playlistsPanel .list.vmPlaylistsPanel .playlist .vmAction {
   cursor: pointer;
@@ -1223,12 +1246,12 @@ ol {
   background-color: transparent;
   border: none;
 }
-#player .playlistsPanel .nav i {
+#player .playlistsPanel .nav .icon {
   color: #aaa;
   cursor: pointer;
   font-size: 2.6em;
 }
-#player .playlistsPanel .nav i:hover {
+#player .playlistsPanel .nav .icon:hover {
   color: #00ffff;
 }
 #player .playlistsPanel .nav i + i {
@@ -1244,7 +1267,6 @@ ol {
   -webkit-border-radius: 1px;
           border-radius: 1px;
   cursor: default;
-  font-size: 1.1em;
   padding: 5px 0;
   text-align: center;
   overflow: hidden;
@@ -1292,10 +1314,33 @@ ol {
     background: rgba(0, 0, 0, 0.5);
   }
 }
+@-webkit-keyframes runningStringReverse {
+  0% {
+    left: 100%;
+  }
+  50% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+@keyframes runningStringReverse {
+  0% {
+    left: 100%;
+  }
+  50% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
 #player .track {
   -webkit-border-radius: 2px;
           border-radius: 2px;
   cursor: default;
+  height: 50px;
   padding: 6px;
   tansition: all .3s;
   position: relative;
@@ -1334,6 +1379,12 @@ ol {
   max-height: 20px;
   overflow: hidden;
   word-break: break-all;
+  position: absolute;
+  top: 60%;
+}
+#player .track .url.runningString {
+  -webkit-animation: runningStringReverse linear infinite 14s;
+          animation: runningStringReverse linear infinite 14s;
 }
 #player .track .track-icon {
   background-color: rgba(0, 255, 225, 0.6);
