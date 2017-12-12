@@ -38,7 +38,7 @@
 
 		<div class="info" title="track">
 			<div class="trackTitle currentTrackTitle">
-				{{ title }}
+				<!-- {{ title }} -->
 			</div>
 		</div>
 
@@ -148,12 +148,8 @@
 			<div class="delete">
 				<i class="fa fa-minus"></i>
 			</div>
-			<div class="title">
-				@station_title
-			</div>
-			<div class="url">
-				@station_url
-			</div>
+			<div class="title"></div>
+			<div class="url"></div>
 		</div>
 	</template>
 </div>

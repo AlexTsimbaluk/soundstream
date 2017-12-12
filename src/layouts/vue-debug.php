@@ -16,4 +16,8 @@
 			<div class="vmEdit size-4">...</div>
 		</div>
 	</div> -->
+
+	<div class="vmPlayer">
+		{{ playingTrack }}
+	</div>
 </div>
