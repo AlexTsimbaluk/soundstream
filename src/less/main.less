@@ -637,7 +637,7 @@ ul, ol {
 
 	.playlistsPanel {
 		clear: both;
-		height: 30px;
+		height: 40px;
 		margin: 4px 0;
 		// overflow: hidden;
 		position: relative;
@@ -647,8 +647,11 @@ ul, ol {
 			width: ~"calc(100% - 44px)";
 			overflow-x: auto;
 			// overflow-y: hidden;
+			.mCSB_scrollTools.mCSB_scrollTools_horizontal {
+				bottom: -2px;
+			}
 			.mCSB_draggerContainer {
-				margin-top: 4px;
+				// margin-top: 4px;
 			}
 
 			&.vmPlaylistsPanel {

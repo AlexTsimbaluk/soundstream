@@ -1208,7 +1208,7 @@ ol {
 }
 #player .playlistsPanel {
   clear: both;
-  height: 30px;
+  height: 40px;
   margin: 4px 0;
   position: relative;
 }
@@ -1219,8 +1219,8 @@ ol {
   width: calc(100% - 44px);
   overflow-x: auto;
 }
-#player .playlistsPanel .list .mCSB_draggerContainer {
-  margin-top: 4px;
+#player .playlistsPanel .list .mCSB_scrollTools.mCSB_scrollTools_horizontal {
+  bottom: -2px;
 }
 #player .playlistsPanel .list.vmPlaylistsPanel .playlist .icon {
   font-size: 1em;

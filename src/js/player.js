@@ -2117,9 +2117,6 @@ $(document).ready(function() {
 		debugPlayerState();
 		debugLocalStorage();
 
-
-		console.log($('.vmPlaylistsPanel').length);
-
 		var vmPlaylist = new Vue({
 			el: '.vmPlaylistsPanel',
 			data: {
@@ -2195,7 +2192,7 @@ $(document).ready(function() {
 			}
 		});
 
-		console.log($('.vmPlaylistsPanel').length);
+		console.log($('.vmPlaylistsPanel'));
 
 		$('.playlistsPanel .list').mCustomScrollbar({
 			axis: 'x',
@@ -2280,7 +2277,7 @@ $(document).ready(function() {
 			playlistManager.makePlaylistTracks(playlistTracks);
 			console.log('make tracks:end');
 		} else {
-			console.log('Выбранный плейлист пуст');
+			console.log('Выбранный плейлист пуст - нет треков');
 		}
 
 		var vmCurrentTrackTitle = new Vue({
