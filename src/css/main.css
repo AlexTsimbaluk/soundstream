@@ -1223,13 +1223,20 @@ ol {
   bottom: -2px;
 }
 #player .playlistsPanel .list.vmPlaylistsPanel .playlist .icon {
-  font-size: 1em;
+  font-size: 1.2em;
 }
 #player .playlistsPanel .list.vmPlaylistsPanel .playlist .vmAction {
   cursor: pointer;
 }
 #player .playlistsPanel .list.vmPlaylistsPanel .playlist .vmTitle {
   overflow-x: hidden;
+  text-align: center;
+}
+#player .playlistsPanel .list.vmPlaylistsPanel .playlist input {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #00fa00;
+  color: #010;
   text-align: center;
 }
 #player .playlistsPanel .nav {
@@ -1283,11 +1290,11 @@ ol {
 }
 #player .playlistsPanel .playlist[data-current] {
   background: #555;
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(25%, #555), color-stop(100%, #73c8c8));
-  background: -webkit-linear-gradient(top, #555 25%, #73c8c8 100%);
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(25%, #555), to(#73c8c8));
-  background: linear-gradient(to bottom, #555 25%, #73c8c8 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#555, endColorstr=#73c8c8, GradientType=0);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(25%, #555), color-stop(100%, rgba(0, 0, 0, 0.6)));
+  background: -webkit-linear-gradient(top, #555 25%, rgba(0, 0, 0, 0.6) 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(25%, #555), to(rgba(0, 0, 0, 0.6)));
+  background: linear-gradient(to bottom, #555 25%, rgba(0, 0, 0, 0.6) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#555, endColorstr=rgba(0, 0, 0, 0.6), GradientType=0);
 }
 #player .playlistsPanel .playlist + .playlist {
   margin-left: 4px;

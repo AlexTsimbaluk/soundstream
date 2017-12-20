@@ -657,7 +657,7 @@ ul, ol {
 			&.vmPlaylistsPanel {
 				.playlist {
 					.icon {
-						font-size: 1em;
+						font-size: 1.2em;
 					}
 					.vmAction {
 						cursor: pointer;
@@ -667,6 +667,13 @@ ul, ol {
 					.vmTitle {
 						// width: 62%;
 						overflow-x: hidden;
+						text-align: center;
+					}
+					input {
+						background: transparent;
+						border: 0;
+						border-bottom: 1px solid #00fa00;
+						color: #010;
 						text-align: center;
 					}
 				}
@@ -711,10 +718,7 @@ ul, ol {
 				.gradient-vertical(#555, #3ee1e1 , 25%, 100%);
 			}
 			&[data-current] {
-				.gradient-vertical(#555, #73c8c8, 25%, 100%);
-			}
-			.vmTitle {
-
+				.gradient-vertical(#555, rgba(0, 0, 0, 0.6), 25%, 100%);
 			}
 		}
 		.playlist + .playlist {

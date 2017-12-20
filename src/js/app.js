@@ -210,15 +210,22 @@ $(document).ready(function () {
 	}
 
 	// Конструктор объекта Playlist
-	function Playlist(name) {
+	function Playlist(name, opts) {
 		this.name = name;
-		// this.active = active;
 		this.tracks = [];
 		this.currentTrack = {};
-		// this.scrollPosition = 
-		this.titleHtmlEl = '<div class="playlist sortable" data-name="' + this.name + '">' + this.name + '</div>';
-
-		this.htmlEl = '<div class="playlist sortable" data-name="' + this.name + '"></div>';
+		/*this.titleHtmlEl = 
+  	'<div class="playlist sortable" data-name="' 	+
+  	this.name 										+
+  	'">'											+
+  	this.name 										+
+  	'</div>'
+  ;
+  	this.htmlEl = 
+  	'<div class="playlist sortable" data-name="' 	+
+  	this.name 										+
+  	'"></div>'
+  ;*/
 
 		/*function getScroll() {
   	
@@ -404,7 +411,11 @@ $(document).ready(function () {
 			// closest('.playlist').
 			parent().find('[data-current-track]').removeAttr('data-current-track');
 
+			console.log('');
+			console.log('');
 			console.log(currentTrackEl);
+			console.log('');
+			console.log('');
 
 			// а затем установим data-current-track нужному треку
 			currentTrackEl.attr('data-current-track', 1);
@@ -475,10 +486,23 @@ $(document).ready(function () {
 			}
 
 			playerState.paused = $playerTag.paused;
-			playerState.playingTrack = _currentTrack;
+			// playerState.playingTrack = _currentTrack;
+			// playerState.lastActivePlaylist = playerState.currentPlaylist;
 
 			// vmCurrentTrackTitle.trackTitle = playerState.playingTrack.title;
-			vmCurrentTrackTitle.trackTitle = _currentTrack.title;
+			// vmCurrentTrackTitle.trackTitle = _currentTrack.title;
+
+			if (!playerState.nowPlaying.playlistName) {
+				playerState.nowPlaying.playlistName = playerState.currentPlaylist;
+				playerState.nowPlaying.track = _currentTrack;
+			} else if (playerState.nowPlaying.playlistName == playerState.currentPlaylist) {
+				playerState.nowPlaying.track = _currentTrack;
+			} else if (playerState.nowPlaying.playlistName != playerState.currentPlaylist) {
+				console.log('pppp');
+				playerState.nowPlaying.playlistName = playerState.currentPlaylist;
+				playerState.nowPlaying.track = _currentTrack;
+			}
+			// __playlists.nowPlaying.playlistName = playerState.currentPlaylist;
 
 			localStorage.setItem('playerState', JSON.stringify(playerState));
 			localStorage.setItem('__playlists', JSON.stringify(__playlists));
@@ -498,7 +522,7 @@ $(document).ready(function () {
 			visualisationStop();
 			$('#player .play').removeClass('visualisation');
 
-			playerState.playingTrack = {};
+			// playerState.playingTrack = {};
 			vmCurrentTrackTitle.title = '';
 
 			$('#player .info .trackTitle').html('').removeClass('runningString').parent().css({ 'width': 'auto' });
@@ -657,11 +681,11 @@ $(document).ready(function () {
 
 			console.log(getCurrentTrack().title);
 
-			/*console.log(vmCurrentTrackTitle.title);
-   console.log(vmCurrentTrackTitle.trackTitle);
-   vmCurrentTrackTitle.trackTitle = getCurrentTrack().title;
-   console.log(vmCurrentTrackTitle.title);
-   console.log(vmCurrentTrackTitle.trackTitle);*/
+			console.log(vmCurrentTrackTitle.title);
+			console.log(vmCurrentTrackTitle.trackTitle);
+			vmCurrentTrackTitle.trackTitle = getCurrentTrack().title;
+			console.log(vmCurrentTrackTitle.title);
+			console.log(vmCurrentTrackTitle.trackTitle);
 
 			displayState();
 		});
@@ -953,6 +977,7 @@ $(document).ready(function () {
 	}
 
 	function getCurrentTrack() {
+		// console.log(__playlists[getCurrentPlaylist()].currentTrack);
 		return __playlists[getCurrentPlaylist()].currentTrack;
 	}
 
@@ -1600,7 +1625,7 @@ $(document).ready(function () {
 		// __playlists[playerState.currentPlaylist].scrollPosition = scrollPosition;
 
 		localStorage.setItem('playerState', JSON.stringify(playerState));
-		localStorage.setItem('__playlists', JSON.stringify(__playlists));
+		// localStorage.setItem('__playlists', JSON.stringify(__playlists));
 	});
 
 	$('.playlistsPanel').on('click', '.vmTitle', function () {
@@ -1653,7 +1678,8 @@ $(document).ready(function () {
 		playlists: {},
 		playlistsOrder: [],
 		currentPlaylist: '',
-		playingTrack: {},
+		// lastActivePlaylist: '',
+		nowPlaying: {},
 		// volume : player.volume,
 		// volume: audioApiElement ? audioApiElement.getVolume() : .2,
 		volume: .27,
@@ -1783,9 +1809,11 @@ $(document).ready(function () {
 
 		__playlists['Default'] = defaultPlaylist;
 		__playlists['Default'].scrollPosition = 0;
-		console.log(__playlists['Default']);
-		console.log(playerState);
+		// console.log(__playlists['Default']);
+		// console.log(playerState);
 
+		playerState.currentPlaylist = 'Default';
+		// playerState.nowPlaying = {};
 		playerState.volume = .27;
 		playerState.paused = true;
 		playerState.search.stationsOpened = [];
@@ -1809,6 +1837,7 @@ $(document).ready(function () {
 		var vmPlaylist = new Vue({
 			el: '.vmPlaylistsPanel',
 			data: {
+				edited: false,
 				playlistsOrder: playerState.playlistsOrder,
 				totalPl: playerState.playlistsOrder.length,
 				plWidth: 84,
@@ -1862,8 +1891,22 @@ $(document).ready(function () {
 					localStorage.setItem('playerState', JSON.stringify(playerState));
 					localStorage.setItem('__playlists', JSON.stringify(__playlists));
 				},
-				editPlaylist: function editPlaylist(index) {
-					console.log(index);
+				editPlaylist: function editPlaylist(index, name, event) {
+					var newName = $(event.target).val();
+
+					playerState.playlistsOrder[index] = newName;
+
+					console.log($(event.target));
+					if ($(event.target).closest('.playlist').attr('data-current')) {
+						playerState.currentPlaylist = newName;
+					}
+
+					__playlists[name].name = newName;
+					__playlists[newName] = __playlists[name];
+					delete __playlists[name];
+
+					localStorage.setItem('playerState', JSON.stringify(playerState));
+					localStorage.setItem('__playlists', JSON.stringify(__playlists));
 				}
 			}
 		});
@@ -1911,16 +1954,10 @@ $(document).ready(function () {
 		// Рисуем соответствующий регулятор
 		drawWolumeBar();
 
-		// console.log(playerState.currentPlaylist);
-
 		// Создаем контейнер для треков текущего (активного) плейлиста
-		/*playlistContainer.append(playerState.
-  							playlists[playerState.currentPlaylist].
+		/*playlistContainer.append(__playlists[playerState.currentPlaylist].
   							htmlEl
   						);*/
-
-		// ?????
-		playlistContainer.append(__playlists[playerState.currentPlaylist].htmlEl);
 
 		// Получить массив с id треков плейлиста и сформировать его
 		var playlistTracks = __playlists[playerState.currentPlaylist].tracks;
@@ -1940,9 +1977,7 @@ $(document).ready(function () {
 		var vmCurrentTrackTitle = new Vue({
 			el: '.currentTrackTitle',
 			data: {
-				// trackTitle: getCurrentTrack().title
 				trackTitle: ''
-				// title: playerState.playingTrack.title
 			},
 			computed: {
 				title: {
@@ -1987,9 +2022,18 @@ $(document).ready(function () {
 		if (!playerState.paused) {
 			// если плейлист играющего(!) текущего трека != playerState.currentPlaylist
 			// сделать что то(?)
-			// || __playlists[playerState.currentPlaylist].tracks.length) {
-			var streamUrl = getCurrentTrack().url;
-			audioApiElement.playStream(streamUrl);
+			/*if(__playlists[playerState.currentPlaylist].tracks.length) {
+   	audioApiElement.playStream(getCurrentTrack().url);
+   } else {
+   	console.log('няма трэкау');
+   	vmPlaylist.setCurrentPlaylist(0, playerState.nowPlaying.playlistName);
+   	audioApiElement.playStream(playerState.nowPlaying.track.url);
+   }*/
+
+			if (!__playlists[playerState.currentPlaylist].tracks.length) {
+				vmPlaylist.setCurrentPlaylist(0, playerState.nowPlaying.playlistName);
+			}
+			audioApiElement.playStream(getCurrentTrack().url);
 		}
 	}
 

@@ -129,16 +129,66 @@
 					<div class="icon">clear</div>
 				</div>
 
-				<div
+
+
+
+				<!-- <div
 					class="vmTitle size-16"
+					v-if="!edited"
 					@click.prevent="setCurrentPlaylist(index, playlist)"
 				>
 					{{ playlist }}
 				</div>
+
+				<div
+					class="vmTitle size-16"
+					v-if="edited"
+				>
+					<input type="text" v-model="playlistsOrder[index]" />
+				</div> -->
+
+				<div class="size-16">
+					<div
+						class="vmTitle"
+						v-if="!edited"
+						@click.prevent="setCurrentPlaylist(index, playlist)"
+					>
+						{{ playlist }}
+					</div>
+
+					<div
+						class="vmEditTitle fill"
+						v-if="edited"
+					>
+						<!-- <input
+							class="fill"
+							type="text"
+							v-model="playlistsOrder[index]"
+						/> -->
+
+						<input
+							class="fill"
+							type="text"
+							@input="editPlaylist(index, playlist, $event)"
+							v-model="playlistsOrder[index]"
+						/>
+					</div>
+				</div>
+
+
+
+
 				
+				<!-- <div
+					class="vmEdit vmAction size-4"
+					@click.prevent="editPlaylist(index, playlist, $event)"
+				>
+					<div class="icon">more_horiz</div>
+				</div> -->
+
 				<div
 					class="vmEdit vmAction size-4"
-					@click.prevent="editPlaylist(index)"
+					@click.prevent="edited = !edited"
 				>
 					<div class="icon">more_horiz</div>
 				</div>
