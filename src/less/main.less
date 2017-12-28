@@ -167,6 +167,9 @@ ul, ol {
 		margin-bottom: 0;
 	}
 	.adminItem {
+		&.adminConsole {
+			width: auto;
+		}
 		font-size: 12px;
 		line-height: 30px;
 		text-align: center;
@@ -1047,5 +1050,30 @@ canvas {
 	// @media (max-width: 640px) and (orientation: portrait)
 	@media (max-width: 640px) {
 		display: none;
+	}
+}
+
+.console {
+	background: rgba(255, 255, 255, .7);
+	color: #000;
+	font-family: "MonoSpace";
+	height: 31%;
+	width: ~"calc(100% - 2em)";
+	padding: .5em;
+	position: absolute;
+	top: 50%;
+	z-index: 1;
+	.clearConsole {
+		background: transparent;
+		background: rgba(255, 255, 255, 0);
+		border: 0;
+		// cursor: pointer;
+		position: absolute;
+		right: .7em;
+		top: .5em;
+		z-index: 2;
+	}
+	.consoleList {
+		height: 100%;
 	}
 }

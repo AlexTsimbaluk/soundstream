@@ -1,5 +1,4 @@
 <div id="player" class="vmPlayer">
-
 	<div class="spinner">
 		<div class="bounce1"></div>
 		<div class="bounce2"></div>
@@ -7,6 +6,14 @@
 	</div>
 
 	<div class="overlayFull"></div>
+
+	<div class="console hidden">
+		<button class="clearConsole">
+			<div class="icon">not_interested</div>
+		</button>
+		
+		<div class="consoleList mCustomScrollbar"></div>
+	</div>
 
 	<form action="" method="post" class="form-reg" novalidate>
 		<input type="text" class="regLogin" name="regLogin" placeholder="Login">

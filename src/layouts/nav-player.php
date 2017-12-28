@@ -4,8 +4,11 @@
 			<button class="nav-btn toAdmin">Admin</button>
 		</li>
 
-		<!-- <li class="adminItem"><a class="clearLocalStorage" href="">Clear</a></li> -->
-		<!-- <li class="adminItem"><a class="clearUniqHash" href=""></a>Reset</li> -->
+		<li class="adminItem adminConsole">
+			<button class="nav-btn showConsole">
+				<div class="icon">bug_report</div>
+			</button>
+		</li>
 
 		<li class="adminItem debugLsProp btn-group" data-debug="remove" data-remove="prop" title="Reset">
 			<button type="button" class="nav-btn removeItem">Reset</button>
