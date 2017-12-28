@@ -16,10 +16,10 @@
 	</div>
 
 	<form action="" method="post" class="form-reg" novalidate>
-		<input type="text" class="regLogin" name="regLogin" placeholder="Login">
+		<input type="text" class="focus-right regLogin" name="regLogin" placeholder="Login">
 		<div class="loginsUniq"></div>
-		<input type="password" class="regPass" name="regPass" placeholder="Password">
-		<input type="password" class="regPassEx" name="regPassEx" placeholder="Repeat Password">
+		<input type="password" class="focus-right regPass" name="regPass" placeholder="Password">
+		<input type="password" class="focus-right regPassEx" name="regPassEx" placeholder="Repeat Password">
 		<button class="regSubmit">Register</button>
 	</form>
 	<div class="registration-bad"></div>
@@ -27,8 +27,8 @@
 
 	<form action="" method="post" class="form-auth">
 		<div class="errors"></div>
-		<input type="text" class="authLogin" name="authLogin" placeholder="Login">
-		<input type="password" class="authPass" name="authPass" placeholder="Password">
+		<input type="text" class="focus-fade authLogin" name="authLogin" placeholder="Login">
+		<input type="password" class="focus-fade authPass" name="authPass" placeholder="Password">
 		<button class="authSubmit">Sign In</button>
 	</form>
 

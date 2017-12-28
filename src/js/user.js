@@ -41,6 +41,7 @@ $(document).ready(function() {
 		$(this).toggleClass('active').siblings().toggleClass('active');
 		$('.form-auth').toggleClass('visible').fadeToggle(300);
 		$('.overlayFull').toggleClass('visible').fadeToggle(300);
+		$('.showFormReg').attr('disabled', 'disabled');
 	});
 
 	$('.showFormReg').click(function() {
@@ -50,6 +51,21 @@ $(document).ready(function() {
 		if($('.form-reg .regLogin').val().length > 0) {
 			checkLoginUniq($('.form-reg .regLogin').val());
 		}
+		$('.showFormSign').attr('disabled', 'disabled');
+	});
+
+	$(".overlayFull").on('click', function () {
+		/*popupClose($("form.visible"), 500);
+		popupClose($(this), 500);*/
+
+		if($("form.visible").hasClass('form-reg')) {
+			$('.showFormReg').trigger('click');
+		} else {
+			$('.showFormSign').trigger('click');
+		}
+
+		$('.overlayFull').toggleClass('visible').hide();
+		$('.showFormSign, .showFormReg').removeAttr('disabled');
 	});
 
 	function popupClose(popup, delay) {

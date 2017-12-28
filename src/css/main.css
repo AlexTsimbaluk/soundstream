@@ -300,8 +300,8 @@ form .authSubmit:hover {
 }
 .userActions li > button.active,
 .userActions li a.active {
-  -webkit-box-shadow: 0 0 8px 5px #00ffff;
-          box-shadow: 0 0 8px 5px #00ffff;
+  -webkit-box-shadow: 0 0 8px 2px #00ffff;
+          box-shadow: 0 0 8px 2px #00ffff;
 }
 #admin {
   position: relative;
@@ -373,127 +373,181 @@ label {
     width: 292px;
   }
 }
-::-webkit-input-placeholder {
+:not(.focus-fade)::-webkit-input-placeholder {
   color: #fff;
-}
-::-moz-placeholder {
-  color: #fff;
-}
-/* Firefox 19+ */
-:-moz-placeholder {
-  color: #fff;
-}
-/* Firefox 18- */
-:-ms-input-placeholder {
-  color: #fff;
-}
-input[placeholder] {
   text-overflow: ellipsis;
 }
-input::-moz-placeholder {
+:not(.focus-fade)::-moz-placeholder {
+  color: #fff;
   text-overflow: ellipsis;
 }
-input:-moz-placeholder {
+:not(.focus-fade):-ms-input-placeholder {
+  color: #fff;
   text-overflow: ellipsis;
 }
-input:-ms-input-placeholder {
+:not(.focus-fade)::placeholder {
+  color: #fff;
   text-overflow: ellipsis;
 }
-:focus::-webkit-input-placeholder {
+:not(.focus-fade):focus::-webkit-input-placeholder {
   color: transparent;
 }
-:focus::-moz-placeholder {
+:not(.focus-fade):focus::-moz-placeholder {
   color: transparent;
 }
-:focus:-moz-placeholder {
+:not(.focus-fade):focus:-ms-input-placeholder {
   color: transparent;
 }
-:focus:-ms-input-placeholder {
+:not(.focus-fade):focus::placeholder {
   color: transparent;
 }
 /* плавное изменение прозрачности  placeholder-а при фокусе */
-.input1::-webkit-input-placeholder {
+.focus-fade::-webkit-input-placeholder {
+  color: #fff;
   opacity: 1;
-  -webkit-transition: opacity 0.3s ease;
-  transition: opacity 0.3s ease;
+  -webkit-transition: opacity .3s ease;
+  transition: opacity .3s ease;
 }
-.input1::-moz-placeholder {
+.focus-fade::-moz-placeholder {
+  color: #fff;
   opacity: 1;
-  -webkit-transition: opacity 0.3s ease;
-  transition: opacity 0.3s ease;
+  -webkit-transition: opacity .3s ease;
+  transition: opacity .3s ease;
 }
-.input1:-moz-placeholder {
+.focus-fade:-ms-input-placeholder {
+  color: #fff;
   opacity: 1;
-  -webkit-transition: opacity 0.3s ease;
-  transition: opacity 0.3s ease;
+  -webkit-transition: opacity .3s ease;
+  transition: opacity .3s ease;
 }
-.input1:-ms-input-placeholder {
+.focus-fade::placeholder {
+  color: #fff;
   opacity: 1;
-  -webkit-transition: opacity 0.3s ease;
-  transition: opacity 0.3s ease;
+  -webkit-transition: opacity .3s ease;
+  transition: opacity .3s ease;
 }
-.input1:focus::-webkit-input-placeholder {
+.focus-fade:focus::-webkit-input-placeholder {
+  color: #000;
   opacity: 0;
-  -webkit-transition: opacity 0.3s ease;
-  transition: opacity 0.3s ease;
+  -webkit-transition: opacity .3s ease;
+  transition: opacity .3s ease;
 }
-.input1:focus::-moz-placeholder {
+.focus-fade:focus::-moz-placeholder {
+  color: #000;
   opacity: 0;
-  -webkit-transition: opacity 0.3s ease;
-  transition: opacity 0.3s ease;
+  -webkit-transition: opacity .3s ease;
+  transition: opacity .3s ease;
 }
-.input1:focus:-moz-placeholder {
+.focus-fade:focus:-ms-input-placeholder {
+  color: #000;
   opacity: 0;
-  -webkit-transition: opacity 0.3s ease;
-  transition: opacity 0.3s ease;
+  -webkit-transition: opacity .3s ease;
+  transition: opacity .3s ease;
 }
-.input1:focus:-ms-input-placeholder {
+.focus-fade:focus::placeholder {
+  color: #000;
   opacity: 0;
-  -webkit-transition: opacity 0.3s ease;
-  transition: opacity 0.3s ease;
+  -webkit-transition: opacity .3s ease;
+  transition: opacity .3s ease;
 }
 /* сдвиг placeholder-а вправо при фокусе*/
-.input2::-webkit-input-placeholder {
+.focus-right::-webkit-input-placeholder {
+  color: #fff;
   text-indent: 0px;
-  -webkit-transition: text-indent 0.3s ease;
-  transition: text-indent 0.3s ease;
+  -webkit-transition: text-indent 0.8s ease-in-out;
+  transition: text-indent 0.8s ease-in-out;
 }
-.input2::-moz-placeholder {
+.focus-right::-moz-placeholder {
+  color: #fff;
   text-indent: 0px;
-  -webkit-transition: text-indent 0.3s ease;
-  transition: text-indent 0.3s ease;
+  -webkit-transition: text-indent 0.8s ease-in-out;
+  transition: text-indent 0.8s ease-in-out;
 }
-.input2:-moz-placeholder {
+.focus-right:-ms-input-placeholder {
+  color: #fff;
   text-indent: 0px;
-  -webkit-transition: text-indent 0.3s ease;
-  transition: text-indent 0.3s ease;
+  -webkit-transition: text-indent 0.8s ease-in-out;
+  transition: text-indent 0.8s ease-in-out;
 }
-.input2:-ms-input-placeholder {
+.focus-right::placeholder {
+  color: #fff;
   text-indent: 0px;
-  -webkit-transition: text-indent 0.3s ease;
-  transition: text-indent 0.3s ease;
+  -webkit-transition: text-indent 0.8s ease-in-out;
+  transition: text-indent 0.8s ease-in-out;
 }
-.input2:focus::-webkit-input-placeholder {
-  text-indent: 500px;
-  -webkit-transition: text-indent 0.3s ease;
-  transition: text-indent 0.3s ease;
+.focus-right:focus::-webkit-input-placeholder {
+  color: #000;
+  text-indent: 100vw;
+  -webkit-transition: text-indent 1.6s linear;
+  transition: text-indent 1.6s linear;
 }
-.input2:focus::-moz-placeholder {
-  text-indent: 500px;
-  -webkit-transition: text-indent 0.3s ease;
-  transition: text-indent 0.3s ease;
+.focus-right:focus::-moz-placeholder {
+  color: #000;
+  text-indent: 100vw;
+  -webkit-transition: text-indent 1.6s linear;
+  transition: text-indent 1.6s linear;
 }
-.input2:focus:-moz-placeholder {
-  text-indent: 500px;
-  -webkit-transition: text-indent 0.3s ease;
-  transition: text-indent 0.3s ease;
+.focus-right:focus:-ms-input-placeholder {
+  color: #000;
+  text-indent: 100vw;
+  -webkit-transition: text-indent 1.6s linear;
+  transition: text-indent 1.6s linear;
 }
-.input2:focus:-ms-input-placeholder {
-  text-indent: 500px;
-  -webkit-transition: text-indent 0.3s ease;
-  transition: text-indent 0.3s ease;
+.focus-right:focus::placeholder {
+  color: #000;
+  text-indent: 100vw;
+  -webkit-transition: text-indent 1.6s linear;
+  transition: text-indent 1.6s linear;
 }
 /* сдвиг placeholder-а вниз при фокусе*/
+.focus-bottom::-webkit-input-placeholder {
+  color: #fff;
+  line-height: normal;
+  -webkit-transition: line-height 0.5s ease;
+  transition: line-height 0.5s ease;
+}
+.focus-bottom::-moz-placeholder {
+  color: #fff;
+  line-height: normal;
+  -webkit-transition: line-height 0.5s ease;
+  transition: line-height 0.5s ease;
+}
+.focus-bottom:-ms-input-placeholder {
+  color: #fff;
+  line-height: normal;
+  -webkit-transition: line-height 0.5s ease;
+  transition: line-height 0.5s ease;
+}
+.focus-bottom::placeholder {
+  color: #fff;
+  line-height: normal;
+  -webkit-transition: line-height 0.5s ease;
+  transition: line-height 0.5s ease;
+}
+.focus-bottom:focus::-webkit-input-placeholder {
+  color: #000;
+  line-height: 10;
+  -webkit-transition: line-height 0.5s ease;
+  transition: line-height 0.5s ease;
+}
+.focus-bottom:focus::-moz-placeholder {
+  color: #000;
+  line-height: 10;
+  -webkit-transition: line-height 0.5s ease;
+  transition: line-height 0.5s ease;
+}
+.focus-bottom:focus:-ms-input-placeholder {
+  color: #000;
+  line-height: 10;
+  -webkit-transition: line-height 0.5s ease;
+  transition: line-height 0.5s ease;
+}
+.focus-bottom:focus::placeholder {
+  color: #000;
+  line-height: 10;
+  -webkit-transition: line-height 0.5s ease;
+  transition: line-height 0.5s ease;
+}
 .input3::-webkit-input-placeholder {
   line-height: 20px;
   -webkit-transition: line-height 0.5s ease;
@@ -537,6 +591,17 @@ input:-ms-input-placeholder {
 * {
   margin: 0;
   padding: 0;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+*:before,
+*:after {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 html {
   height: 100%;
