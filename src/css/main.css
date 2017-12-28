@@ -1845,3 +1845,9 @@ canvas {
 .console .consoleList {
   height: 100%;
 }
+.console .consoleItem:not(:empty) {
+  border-bottom: 1px solid #333;
+  margin-top: 4px;
+  line-height: 1.2;
+  word-wrap: break-word;
+}
