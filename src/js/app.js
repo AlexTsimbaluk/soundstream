@@ -1175,7 +1175,9 @@ $(document).ready(function () {
 	function consoleOutput(outputText, disableCustomConsole) {
 		console.log(outputText);
 		if (!disableCustomConsole) {
-			$('.consoleList .mCSB_container').append('<div class="consoleItem">' + outputText + '</div>');
+			$('.consoleList .mCSB_container').append('<div class="consoleItem">' + $('.consoleItem').length + ':' + outputText + '</div>');
+
+			$('.consoleList').mCustomScrollbar('scrollTo', '.consoleItem:last');
 		}
 	}
 
@@ -1652,6 +1654,7 @@ $(document).ready(function () {
 
 	$('.showConsole').on('click', function () {
 		$('.console').toggleClass('hidden');
+		$('.consoleList').mCustomScrollbar('scrollTo', '.consoleItem:last');
 		return false;
 	});
 
