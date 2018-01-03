@@ -398,6 +398,13 @@ ul, ol {
 		bottom: 0;
 		transform: none;
 	}
+	@media (max-height : 640px) and (orientation: portrait) {
+		height: 100vh;
+		&.playerRight,
+		&.playerLeft {
+			animation: none;
+		}
+	}
 	.overlayFull {
 		background: rgba(0, 0, 0, .7);
 		display: none;
@@ -683,10 +690,11 @@ ul, ol {
 			&.vmPlaylistsPanel {
 				.playlist {
 					.icon {
-						font-size: 1.2em;
+						font-size: 1.3em;
 					}
 					.vmAction {
 						cursor: pointer;
+						// padding: 0 1px;
 						// text-align: center;
 						// width: 15%;
 					}
@@ -740,6 +748,10 @@ ul, ol {
 			overflow: hidden;
 			height: 30px;
 			width: 84px;
+			@media (max-height : 640px) and (max-width: 360px) {
+				width: 94px;
+				// width: 23%;
+			}
 			&:hover {
 				.gradient-vertical(#555, #3ee1e1 , 25%, 100%);
 			}
@@ -800,6 +812,7 @@ ul, ol {
 			font-size: 1.2em;
 			max-height: 20px;
 			overflow: hidden;
+			max-width: 250px;
 			word-break: break-all;
 		}
 		.url {
@@ -807,6 +820,7 @@ ul, ol {
 			font-style: italic;
 			max-height: 20px;
 			overflow: hidden;
+			max-width: 250px;
 			word-break: break-all;
 			position: absolute;
 			// bottom: 0;
@@ -816,18 +830,22 @@ ul, ol {
 			}
 		}
 		.track-icon {
-			background-color: rgba(0, 255, 225, .6);
+			// background-color: rgba(0, 255, 225, .6);
 			border-radius: 100%;
 			cursor: pointer;
 			display: none;
 			height: 26px;
 			width: 26px;
 			position: absolute;
-			right: 2px;
+			// right: 2px;
+			left: 252px;
 			top: 10px;
 			transition: all .3s;
 			@media only screen and (max-width : 700px) {
 				.flex-container;
+			}
+			@media (max-height : 640px) and (max-width: 360px) {
+				// left: 90vw;
 			}
 			i {
 				font-size: 1.7em;
@@ -835,7 +853,7 @@ ul, ol {
 				margin-top: 2px;
 			}
 			&:hover {
-				background-color: rgba(0, 255, 225, .8);
+				background-color: rgba(0, 0, 0, .6);
 			}
 		}
 
@@ -845,7 +863,7 @@ ul, ol {
 			.track-icon;
 		}
 		.delete {
-			right: 2px;
+			// left: 252px;
 		}
 		.canplaytest {
 			right: 30px;

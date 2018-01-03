@@ -130,7 +130,7 @@
 				:key="index"
 			>
 				<div
-					class="vmDelete vmAction size-4"
+					class="vmDelete vmAction size-5 chld-center"
 					@click.prevent="deletePlaylist(index)"
 				>
 					<div class="icon">clear</div>
@@ -154,7 +154,7 @@
 					<input type="text" v-model="playlistsOrder[index]" />
 				</div> -->
 
-				<div class="size-16">
+				<div class="size-14">
 					<div
 						class="vmTitle"
 						v-if="!edited"
@@ -167,12 +167,10 @@
 						class="vmEditTitle fill"
 						v-if="edited"
 					>
-						<!-- <input
-							class="fill"
-							type="text"
-							v-model="playlistsOrder[index]"
-						/> -->
-
+					<!-- <div
+						class="vmEditTitle fill"
+						v-if="playlistEdited == index"
+					> -->
 						<input
 							class="fill"
 							type="text"
@@ -188,13 +186,13 @@
 				
 				<!-- <div
 					class="vmEdit vmAction size-4"
-					@click.prevent="editPlaylist(index, playlist, $event)"
+					@click.prevent="changeEditMode(index, $event)"
 				>
 					<div class="icon">more_horiz</div>
 				</div> -->
 
 				<div
-					class="vmEdit vmAction size-4"
+					class="vmEdit vmAction size-5 chld-center"
 					@click.prevent="edited = !edited"
 				>
 					<div class="icon">more_horiz</div>
@@ -226,7 +224,7 @@
 	<template class="template-track">
 		<div class="track" data-station-id="@station_id" data-station-title="@station_title" data-station-url="@station_url">
 			<div class="delete">
-				<i class="fa fa-minus"></i>
+				<div class="icon">clear</div>
 			</div>
 			<div class="title"></div>
 			<div class="url"></div>

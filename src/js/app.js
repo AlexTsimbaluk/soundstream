@@ -1859,6 +1859,7 @@ $(document).ready(function () {
 			data: {
 				edited: false,
 				playlistsOrder: playerState.playlistsOrder,
+				playlistEdited: -1,
 				totalPl: playerState.playlistsOrder.length,
 				plWidth: 84,
 				curPl: playerState.currentPlaylist
@@ -1910,6 +1911,17 @@ $(document).ready(function () {
 
 					localStorage.setItem('playerState', JSON.stringify(playerState));
 					localStorage.setItem('__playlists', JSON.stringify(__playlists));
+				},
+				changeEditMode: function changeEditMode(index, event) {
+					consoleOutput(index);
+					// consoleOutput($(event.target));
+					consoleOutput(this.playlistEdited);
+					this.edited = !this.edited;
+					if (this.edited) {
+						this.playlistEdited = index;
+					} else {
+						this.playlistEdited = -1;
+					}
 				},
 				editPlaylist: function editPlaylist(index, name, event) {
 					var newName = $(event.target).val();
