@@ -544,7 +544,7 @@ $(document).ready(function () {
 		// self.setVolume(playerState.volume);
 	}
 
-	// Колбэк если не срабатывает Audio API
+	// Фолбэк если не срабатывает Audio API
 	function AudioCbElement() {
 		var player = new Audio();
 
@@ -1815,6 +1815,9 @@ $(document).ready(function () {
 		7943, // Massive DubStep Trap And Rave
 		3210, // Make Some Noise
 		2400, // Dubstep.fm
+		2599, // Walmer Radio
+		4055, // UFO TRAP Radio Station
+		6369, // RapTrapRadio
 		55, // Dub & Bass
 		885, // Dubstep) (Uturn Radio
 		7942 // не воспроизводится - для отладки ошибок

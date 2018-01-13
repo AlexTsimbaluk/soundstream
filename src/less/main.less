@@ -71,17 +71,9 @@
 		transition: line-height 0.5s ease;
 	}
 }
-.input3::-webkit-input-placeholder       {line-height: 20px;  transition: line-height 0.5s ease;}
-.input3::-moz-placeholder                {line-height: 20px;  transition: line-height 0.5s ease;}
-.input3:-moz-placeholder                 {line-height: 20px;  transition: line-height 0.5s ease;}
-.input3:-ms-input-placeholder            {line-height: 20px;  transition: line-height 0.5s ease;}
-.input3:focus::-webkit-input-placeholder {line-height: 100px; transition: line-height 0.5s ease;}
-.input3:focus::-moz-placeholder          {line-height: 100px; transition: line-height 0.5s ease;}
-.input3:focus:-moz-placeholder           {line-height: 100px; transition: line-height 0.5s ease;}
-.input3:focus:-ms-input-placeholder      {line-height: 100px; transition: line-height 0.5s ease;}
 
-*
-{
+
+* {
     margin: 0;
     padding: 0;
     user-select: none;
@@ -95,10 +87,7 @@ html {
 	height: 100%;
 	min-height: 100%;
 }
-body
-{
-	// .flex-container;
-	// background: rgba(0, 0, 0, 0) url("../img/bg.jpg") no-repeat scroll 0 0 / cover;
+body {
 	height: 100%;
 	font-size: 12px;
     font-family: "RobotoRegular", sans-serif;
@@ -106,27 +95,14 @@ body
     
 }
 
-// body.onload
-// {
-//     overflow: hidden;
-// }
-
 /* выделение текста */
-::-moz-selection
-{
-    background: #b3d4fc;
-    text-shadow: none;
-}
-
-::selection
-{
+::selection {
     background: #b3d4fc;
     text-shadow: none;
 }
 
 a {
     color: #000;
-
     &:visited,
     &:hover,
     &:focus,
@@ -171,14 +147,6 @@ ul, ol {
 	display: none;
 	opacity: 0;
 }
-
-
-// .mbBgndGallery {
-// 	> img["w"] {
-// 		height: 100% !important;
-// 		width: auto !important;
-// 	}
-// }
 
 .nav-admin {
 	position: absolute;
@@ -236,20 +204,9 @@ ul, ol {
 				}
 			}
 			 &:hover {
-					// background: rgba(45, 45, 45, .8);
-					/* &.removeItem {
-						background: rgba(0, 0, 0, .6);
-					} */
+				
 			} 
 		}
-		 /* &:hover {
-		  			.nav-btn {
-		  				background: rgba(45, 45, 45, .8);
-		  				&.removeItem {
-		  					background: rgba(0, 0, 0, .6);
-		  				}
-		  			}
-		  		} */ 
 	}
 }
 
@@ -259,17 +216,6 @@ ul, ol {
 	}
 }
 
-/* .loader {
-	background: none repeat scroll 0 0 #ffffff;
-	bottom: 0;
-	height: 100%;
-	left: 0;
-	position: fixed;
-	right: 0;
-	top: 0;
-	width: 100%;
-	z-index: 9999;
-} */
 .loader_inner {
 	height: 60px;
 	width: 60px;
@@ -309,7 +255,6 @@ ul, ol {
 	width: 18px;
 	height: 18px;
 	background-color: @cyan;
-
 	border-radius: 100%;
 	box-shadow: 0 0 6px 4px #000 inset, 0 0 8px 5px #0ff;
 	display: inline-block;
@@ -387,24 +332,6 @@ ul, ol {
 			animation: runningString linear infinite 17s;
 		}
 	}
-	@media (max-width: 380px) and (orientation: portrait) {
-		border: 0;
-		border-radius: 0;
-		width: 100%;
-		height: 100%;
-		left: 0;
-		right: 0;
-		top: 0;
-		bottom: 0;
-		transform: none;
-	}
-	@media (max-height : 640px) and (orientation: portrait) {
-		height: 100vh;
-		&.playerRight,
-		&.playerLeft {
-			animation: none;
-		}
-	}
 	.overlayFull {
 		background: rgba(0, 0, 0, .7);
 		display: none;
@@ -433,6 +360,25 @@ ul, ol {
 		transition: opacity .3s;
 		&:hover {
 			opacity: 1;
+		}
+	}
+	@media (max-width: 380px) and (orientation: portrait) {
+		border: 0;
+		border-radius: 0;
+		width: 100%;
+		height: 100%;
+		// left: 0;
+		right: 0;
+		// top: 0;
+		bottom: 0;
+		transform: none;
+	}
+	// @media (max-height : 640px) and (orientation: portrait) {
+	@media (max-height : 640px) {
+		height: 100vh;
+		&.playerRight,
+		&.playerLeft {
+			animation: none;
 		}
 	}
 	&.playerRight {
@@ -844,8 +790,9 @@ ul, ol {
 			@media only screen and (max-width : 700px) {
 				.flex-container;
 			}
-			@media (max-height : 640px) and (max-width: 360px) {
-				// left: 90vw;
+			// @media (max-height : 640px) and (max-width: 360px) {
+			@media (max-width: 380px) and (orientation: portrait) {
+				left: 82vw;
 			}
 			i {
 				font-size: 1.7em;
