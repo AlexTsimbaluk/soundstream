@@ -30,6 +30,10 @@
     <link rel="stylesheet" href="libs/custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css" />
 
     <link rel="stylesheet" href="libs/bootstrap/css/bootstrap.css">
+
+    <link rel="stylesheet" href="libs/bootstrap-material-design-master/dist/css/bootstrap-material-design.min.css">
+    <link rel="stylesheet" href="libs/bootstrap-material-design-master/dist/css/ripples.min.css">
+
     <link rel="stylesheet" href="libs/utils/layout.css">
 
 	<link rel="stylesheet" href="css/main.css">

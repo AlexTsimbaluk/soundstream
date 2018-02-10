@@ -82,6 +82,8 @@ $(document).ready(function() {
 	'use strict';
 	$('body').attr('data-useragent', navigator.userAgent);
 
+	$.material.init();
+
 	/*Sortable plugin JQueryUI*/
 	// $('.sortable').sortable({scroll: true});
 
