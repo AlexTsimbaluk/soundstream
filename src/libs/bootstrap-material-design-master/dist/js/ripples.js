@@ -202,7 +202,7 @@
 
       if(event.touches.length === 1) {
         return event.touches[0].pageY - wrapperOffset.top;
-      }
+      }rgba(0,255,255,.5)
 
       return false;
     }
@@ -215,7 +215,7 @@
   Ripples.prototype.getRipplesColor = function($element) {
 
     var color = $element.data("ripple-color") ? $element.data("ripple-color") : window.getComputedStyle($element[0]).color;
-
+    color = "rgba(0,255,255,1)"
     return color;
   };
 

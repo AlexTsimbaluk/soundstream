@@ -74,12 +74,14 @@
 @mdb-help-block-size-ratio: 75 / 100;
 
 @mdb-input-font-size-base: 16px;
+@font-size-base: @mdb-input-font-size-base;
 @mdb-input-font-size-large: ceil((@font-size-base * 1.25)); // ~20px
 @mdb-input-font-size-small: ceil((@font-size-base * 0.75)); // ~12px
 
 // FIXME: with #733 customization of bootstrap, consider how these could be based on the original bs customized variables
 //** Unit-less `line-height` for use in components like buttons.
-@mdb-input-line-height-base:        @line-height-base; //1.428571429; // 20/14
+// @mdb-input-line-height-base:        @line-height-base; //1.428571429; // 20/14
+@mdb-input-line-height-base:        1.428571429; // 20/14
 //** Computed "line-height" (`font-size` * `line-height`) for use with `margin`, `padding`, etc.
 @mdb-input-line-height-computed:    floor((@mdb-input-font-size-base * @mdb-input-line-height-base)); // ~20px
 @mdb-input-line-height-large:         1.3333333; // extra decimals for Win 8.1 Chrome
@@ -177,3 +179,7 @@
 @mdb-shadow-key-umbra-opacity: 0.2;
 @mdb-shadow-key-penumbra-opacity: 0.14;
 @mdb-shadow-ambient-shadow-opacity: 0.12;
+
+
+
+@screen-sm-min: 360px;

@@ -13,7 +13,7 @@
 	<!-- <script src="libs/jquery-ui-sortable/jquery-ui.min.js"></script> -->
 	
 	<script src="libs/bootstrap-material-design-master/dist/js/material.min.js"></script>
-	<script src="libs/bootstrap-material-design-master/dist/js/ripples.min.js"></script>
+	<script src="libs/bootstrap-material-design-master/dist/js/ripples.js"></script>
 
 	<!-- <script src="js/app.js"></script> -->
 	

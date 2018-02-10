@@ -1,5 +1,5 @@
 body {
-  background-color: @body-bg;
+  // background-color: @body-bg;
   &.inverse {
     background: #333333;
     &, .form-control {
@@ -19,7 +19,7 @@ body {
 }
 
 
-body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4 {
+/* body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4 {
   font-family: @font-family-sans-serif;
   font-weight: 300;
 }
@@ -29,27 +29,21 @@ h5, h6{
 }
 
 a, a:hover, a:focus {
-  color: @link-color;
-
   & .material-icons {
     vertical-align: middle;
   }
-}
+} */
 
 @import "_form.less";
-@import "_welljumbo.less";
 @import "_buttons.less";
-@import "_checkboxes.less";
-@import "_togglebutton.less";
-@import "_radios.less";
 @import "_inputs.less";
+// @import "_welljumbo.less";
+// @import "_checkboxes.less";
+// @import "_togglebutton.less";
+// @import "_radios.less";
 
-legend {
-  border-bottom: 0;
-}
-
-@import "_lists.less";
-@import "_navbar.less";
+// @import "_lists.less";
+// @import "_navbar.less";
 
 .dropdown-menu {
   border: 0;
@@ -67,15 +61,15 @@ legend {
   }
 }
 
-@import "_alerts.less";
-@import "_progress.less";
 @import "_typography.less";
-@import "_tabs.less";
-@import "_popups.less";
-@import "_cards.less";
-@import "_dialogs.less";
-@import "_panels.less";
-@import "_dividers.less";
+// @import "_alerts.less";
+// @import "_progress.less";
+// @import "_tabs.less";
+// @import "_popups.less";
+// @import "_cards.less";
+// @import "_dialogs.less";
+// @import "_panels.less";
+// @import "_dividers.less";
 
 // Prevent highlight on mobile
 * {
@@ -87,7 +81,7 @@ legend {
 }
 
 
-@import "_themes.less";
+// @import "_themes.less";
 
 // External plugins
 @import "_plugins.less";

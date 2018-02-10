@@ -75,7 +75,7 @@
 
 		<div class="controls">
 			<!-- <div class="play button"><span class="inner"></span><span class="outer"></span><div class="iconWrapper"><i class="fa fa-play"></i></div></div> -->
-			<div class="play button">
+			<div class="play button btn">
 				<span class="inner js-animate"></span>
 				<span class="outer js-animate"></span>
 				
@@ -83,17 +83,17 @@
 					<div class="icon">play_arrow</div>
 				</div>
 			</div>
-			<div class="stop button">
+			<div class="stop button btn">
 				<div class="iconWrapper">
 					<div class="icon">stop</div>
 				</div>
 			</div>
-			<div class="prev button">
+			<div class="prev button btn">
 				<div class="iconWrapper">
 					<div class="icon">skip_previous</div>
 				</div>
 			</div>
-			<div class="next button">
+			<div class="next button btn">
 				<div class="iconWrapper">
 					<div class="icon">skip_next</div>
 				</div>
@@ -212,7 +212,7 @@
 				</button>
 			</li> -->
 			<li>
-				<button class="playlist-control playlist-new">
+				<button class="playlist-control playlist-new btn">
 					<div class="icon">add</div>
 				</button>
 			</li>
@@ -222,7 +222,7 @@
 	<div class="playlistContainer"></div>
 
 	<template class="template-track">
-		<div class="track" data-station-id="@station_id" data-station-title="@station_title" data-station-url="@station_url">
+		<div class="track btn" data-station-id="@station_id" data-station-title="@station_title" data-station-url="@station_url">
 			<div class="delete">
 				<div class="icon">clear</div>
 			</div>

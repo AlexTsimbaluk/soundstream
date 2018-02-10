@@ -1355,7 +1355,9 @@ $(document).ready(function () {
 					for (var i = 0; i < response.length; i++) {
 						var station = response[i];
 
-						markup += '<div class="station" data-station-id="' + station.station_id + '"><div class="add"><i class="fa fa-plus"></i></div><div class="title">' + station.station_title + '</div><div class="url">' + station.station_url + '</div></div>';
+						markup += '<div class="station btn" data-station-id="' + station.station_id
+						// + '"><div class="add"><i class="fa fa-plus"></i></div><div class="title">'
+						+ '"><div class="add"><div class="icon">add</div></div><div class="title">' + station.station_title + '</div><div class="url">' + station.station_url + '</div></div>';
 					}
 
 					result.html(markup);
