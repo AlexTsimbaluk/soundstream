@@ -91,6 +91,18 @@ gulp.task('utils', function() {
 			.pipe(browserSync.reload({stream: true}));
 });
 
+gulp.task('_bootstrap-material', function() {
+	'use strict';
+	return gulp.src('src/libs/bootstrap-material-design-master/less/bootstrap-material-design.less')
+			.pipe(less())
+			.pipe(autoprefixer(
+				['last 15 versions', '> 1%', 'ie 8', 'ie 7'],
+				{ cascade: true })
+			)
+			.pipe(gulp.dest('src/libs/libs/bootstrap-material-design-master/dist/css'))
+			.pipe(browserSync.reload({stream: true}));
+});
+
 gulp.task('js-min', function() {
 	'use strict';
 	return gulp.src(
@@ -132,7 +144,10 @@ gulp.task('watch', ['browser-sync'], function() {
     	['js-min']
 	);
 	
-	gulp.watch('src/less/*.less', ['less']);
+	gulp.watch([
+			'src/less/*.less',
+			'src/libs/bootstrap-material-design-master/less/*.less'
+		], ['less']);
 	
 
 	gulp.watch('src/libs/utils/*.less', ['utils']);
