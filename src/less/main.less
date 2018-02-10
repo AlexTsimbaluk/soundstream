@@ -347,6 +347,15 @@ ul, ol {
 	}
 }
 
+@media (max-height : 480px) {
+	body {
+		overflow-y: auto;
+	}
+	#player {
+		height: 480px;
+	}
+}
+
 #player {
 	z-index: 2;
 	p,
@@ -399,10 +408,16 @@ ul, ol {
 	// @media (max-height : 640px) and (orientation: portrait) {
 	@media (max-height : 640px) {
 		height: 100vh;
+		min-height: 380px;
 		&.playerRight,
 		&.playerLeft {
 			animation: none;
 		}
+	}
+	@media (max-height : 480px) {
+		height: 480px;
+		top: 0;
+		transform: translate(-50%, 0);
 	}
 	&.playerRight {
 		animation: playerRight linear .4s;

@@ -2665,6 +2665,14 @@ ol {
     height: 100%;
   }
 }
+@media (max-height: 480px) {
+  body {
+    overflow-y: auto;
+  }
+  #player {
+    height: 480px;
+  }
+}
 #player {
   z-index: 2;
   background: rgba(17, 17, 17, 0.7);
@@ -2725,11 +2733,21 @@ ol {
 @media (max-height: 640px) {
   #player {
     height: 100vh;
+    min-height: 380px;
   }
   #player.playerRight,
   #player.playerLeft {
     -webkit-animation: none;
             animation: none;
+  }
+}
+@media (max-height: 480px) {
+  #player {
+    height: 480px;
+    top: 0;
+    -webkit-transform: translate(-50%, 0);
+        -ms-transform: translate(-50%, 0);
+            transform: translate(-50%, 0);
   }
 }
 #player.playerRight {
