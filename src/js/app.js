@@ -2500,21 +2500,6 @@ $(document).ready(function () {
 	Фрактал на кривых
 */
 
-/* var hour = document.getElementById("hours");
-var minute = document.getElementById("minutes");
-var second = document.getElementById("seconds");
-
-setInterval(function() {
-	var date = new Date();
-	if (hour < 10) hours = "0" + hour;
-	if (minute < 10) minutes = "0" + minute;
-	if (second < 10) seconds = "0" + second;
-	hour.innerHTML = date.getHours();
-	minute.innerHTML = date.getMinutes();
-	second.innerHTML = date.getSeconds();
-},
-1000); */
-
 // Инициализация переменных
 var canvasSquare = document.getElementById("square");
 var contextSquare = canvasSquare.getContext("2d");
@@ -2530,11 +2515,8 @@ var qtMin = 5;
 var fib = 1.6180339;
 // contextSquare.fillStyle   = "#fff";
 contextSquare.lineWidth = 1;
-// contextSquare.fillRect(0, 0, canvasSquare.width, canvasSquare.height);
 contextSquare.beginPath();
 contextSquare.save();
-// drawFractal(120);
-// contextSquare.stroke();
 
 function drawRound(qt) {
 	if (qt <= qtMin) {
@@ -2693,25 +2675,21 @@ function getRandom() {
 	return random;
 }
 
-/* rand.onclick = function() {
-	console.log(getRandom());
-} */
-
 var drawFractalRound = document.getElementById("draw_round");
+
 drawFractalRound.onclick = function () {
-	console.log(getRandom());
 	drawRound(getRandom() * 10);
 };
 
 var drawFractalSquare = document.getElementById("draw_square");
+
 drawFractalSquare.onclick = function () {
-	console.log(getRandom());
 	drawSquare(getRandom() * 5);
 };
 
 var drawFractal = document.getElementById("add_fractal");
+
 drawFractal.onclick = function () {
-	console.log(getRandom());
 	addFractal(getRandom() * 10);
 };
 
@@ -2806,49 +2784,47 @@ function drawFractalTriangle(qt1) {
 	}
 }
 
-var canvasKoh = document.getElementById("koh");
-var contextKoh = canvasKoh.getContext("2d");
-canvasKoh.width = 640;
-canvasKoh.height = 640;
-var x = canvasKoh.width / 2;
-var y = canvasKoh.height / 2;
-contextKoh.translate(x, y);
-var ln = 50;
-var minLn = 2;
-contextKoh.lineWidth = 1;
+// var canvasKoh    = document.getElementById("koh");
+// var contextKoh       = canvasKoh.getContext("2d");
+// canvasKoh.width  = 640;
+// canvasKoh.height = 640;
+// var x = canvasKoh.width / 2;
+// var y = canvasKoh.height / 2;
+// contextKoh.translate(x, y);
+// var ln    = 50;
+// var minLn = 2;
+// contextKoh.lineWidth   = 1;
 
 // drawKohLeg(1);
 
-function drawKohLeg(n) {
+/*function drawKohLeg(n) {
 	if (n >= 0) {
-		var canvasKoh = document.getElementById("koh");
-		var contextKoh = canvasKoh.getContext("2d");
-		contextKoh.moveTo(0 - ln, 0);
-		contextKoh.lineTo(0, 0);
+		var canvasKoh    = document.getElementById("koh");
+		var contextKoh       = canvasKoh.getContext("2d");
+		contextKoh.moveTo(0-ln,0);
+		contextKoh.lineTo(0,0);
 		contextKoh.rotate(Math.PI / 1.5);
 		// console.log(2 * Math.PI / (n - 1));
-		drawKohLeg(n - 1);
+		drawKohLeg(n - 1);	
 	}
-}
+}*/
 
-/* for (var i = 0; i < n; i++) {
-	if (i % 2 == 0) {
-		contextKoh.strokeStyle = "rgb(" + Math.floor(255 - 255 / n * i) + "0," + Math.floor(255 - 255 / n * i) + ")";
-	} else if (i % 3 == 0) { 
-		contextKoh.strokeStyle = "rgb(0," + Math.floor(0 + 255 / n * i) + "," + Math.floor(0 + 255 / n * i) + ")";
-	} else  { 
-		contextKoh.strokeStyle = "rgb(" + Math.floor(255 - 255 / n * i) + "," + Math.floor(0 + 255 / n * i) + "," + Math.floor(255 - 255 / n * i) + ")";
-	}
-	contextKoh.rotate(2 * Math.PI * 5 / (n - 1));
-	// contextKoh.scale(0.5);
-} */
+//  for (var i = 0; i < n; i++) {
+// 	if (i % 2 == 0) {
+// 		contextKoh.strokeStyle = "rgb(" + Math.floor(255 - 255 / n * i) + "0," + Math.floor(255 - 255 / n * i) + ")";
+// 	} else if (i % 3 == 0) { 
+// 		contextKoh.strokeStyle = "rgb(0," + Math.floor(0 + 255 / n * i) + "," + Math.floor(0 + 255 / n * i) + ")";
+// 	} else  { 
+// 		contextKoh.strokeStyle = "rgb(" + Math.floor(255 - 255 / n * i) + "," + Math.floor(0 + 255 / n * i) + "," + Math.floor(255 - 255 / n * i) + ")";
+// 	}
+// 	contextKoh.rotate(2 * Math.PI * 5 / (n - 1));
+// 	// contextKoh.scale(0.5);
+// } 
 
 // initKoh();
 
-
 // Снежинка Коха
 // alpha = 60 deg or Math.PI / 3
-
 
 /*
  *	function degToRad(alpha) {
@@ -2871,55 +2847,57 @@ function rotate(x0, y0, x, y, alpha) {
 	};
 }
 
-function drawKochCurve(x1, y1, x2, y2, n) {
-	if (n > 0) {
-		var xn1 = (2 * x1 + x2) / 3,
-		    yn1 = (2 * y1 + y2) / 3,
-		    xn3 = (x1 + 2 * x2) / 3,
-		    yn3 = (y1 + 2 * y2) / 3,
-		    xn2 = xn1 + (xn3 - xn1) * cos + (yn3 - yn1) * sin,
-		    yn2 = yn1 + (yn3 - yn1) * cos - (xn3 - xn1) * sin;
+// function drawKochCurve(x1, y1, x2, y2, n) {
+// 	if (n > 0) {
+// 		var xn1 = (2 * x1 + x2) / 3,
+// 			yn1 = (2 * y1 + y2) / 3,
+// 			xn3 = (x1 + 2 * x2) / 3,
+// 			yn3 = (y1 + 2 * y2) / 3,
 
-		n--;
-		drawKochCurve(x1, y1, xn1, yn1, n);
-		drawKochCurve(xn1, yn1, xn2, yn2, n);
-		drawKochCurve(xn2, yn2, xn3, yn3, n);
-		drawKochCurve(xn3, yn3, x2, y2, n);
-	} else {
-		ctx.moveTo(x1, y1);
-		ctx.lineTo(x2, y2);
-	}
-}
+// 			xn2 = xn1 + (xn3 - xn1) * cos + (yn3 - yn1) * sin,
+// 			yn2 = yn1 + (yn3 - yn1) * cos - (xn3 - xn1) * sin;
 
-function drawKochSnowflake(cx, cy, a, n) {
-	var tr = getEquilateralTriangle(canv.width / 2, canv.height / 2, a, -Math.PI / 12);
-	drawKochCurve(tr[0].x, tr[0].y, tr[1].x, tr[1].y, n);
-	drawKochCurve(tr[1].x, tr[1].y, tr[2].x, tr[2].y, n);
-	drawKochCurve(tr[2].x, tr[2].y, tr[0].x, tr[0].y, n);
-}
+// 		n--;
+// 		drawKochCurve(x1, y1, xn1, yn1, n);
+// 		drawKochCurve(xn1, yn1, xn2, yn2, n);
+// 		drawKochCurve(xn2, yn2, xn3, yn3, n);
+// 		drawKochCurve(xn3, yn3, x2, y2, n);
+// 	} else {
+// 		ctx.moveTo(x1, y1);
+// 		ctx.lineTo(x2, y2);
+// 	}
+// }
 
-function getEquilateralTriangle(cx, cy, a, alpha0) {
-	if (typeof alpha0 === 'undefined') {
-		alpha0 = 0;
-	}
-	var r = Math.sqrt(3) / 3 * a,
-	    points = [];
+// function drawKochSnowflake(cx, cy, a, n) {
+// 	var tr = getEquilateralTriangle(canv.width / 2, canv.height / 2, a, -Math.PI / 12);
+// 	drawKochCurve(tr[0].x, tr[0].y, tr[1].x, tr[1].y, n);
+// 	drawKochCurve(tr[1].x, tr[1].y, tr[2].x, tr[2].y, n);
+// 	drawKochCurve(tr[2].x, tr[2].y, tr[0].x, tr[0].y, n);
+// }
 
-	points.push(rotate(cx, cy, cx + r, cy + r, alpha0));
-	for (var i = 1; i < 3; i++) {
-		points.push(rotate(cx, cy, cx + r, cy + r, alpha0 + 2 * Math.PI / 3 * i));
-	}
-	return points;
-}
+// function getEquilateralTriangle(cx, cy, a, alpha0) {
+// 	if (typeof alpha0 === 'undefined') {
+// 		alpha0 = 0;
+// 	}
+// 	var r = Math.sqrt(3) / 3 * a,
+// 		points = [];
 
-var canv = document.getElementById('canv');
-window.onload = function () {
-	ctx = canv.getContext('2d');
-	canv.width = 640;
-	canv.height = 640;
-	drawKochSnowflake(320, 240, 280, 5);
-	ctx.stroke();
-};
+// 	points.push(rotate(cx, cy, cx + r, cy + r, alpha0));
+// 	for (var i = 1; i < 3; i++) {
+// 		points.push(rotate(cx, cy, cx + r, cy + r, alpha0 + 2 * Math.PI / 3 * i));
+// 	}
+// 	return points;
+// }
+
+// var canv = document.getElementById('canv');
+// window.onload = function () {
+// 	ctx = canv.getContext('2d');
+// 	canv.width  = 640;
+// 	canv.height = 640;
+// 	drawKochSnowflake(320, 240, 280, 5);
+// 	ctx.stroke();
+// }
+
 
 // Ковер Серпинского
 /* var canvSerp, ctxSerp;
@@ -2972,8 +2950,8 @@ function setC() {
 	setColor = stringColor.replace(/,/g, '');
 	fullColor = '#' + setColor;
 	canvasTriangle.style.borderColor = fullColor;
-	canvasKoh.style.borderColor = fullColor;
-	canv.style.borderColor = "#fff";
+	// canvasKoh.style.borderColor = fullColor;
+	// canv.style.borderColor = "#fff";
 	// canvSerp.style.borderColor = "#fff";
 
 	// console.log(fullColor);
@@ -2981,11 +2959,7 @@ function setC() {
 }
 setInterval(setC, 100);
 
-function setBg() {
-	// color[0] = colorsArray[13];
-	// color[1] = colorsArray[13];
-	// color[2] = colorsArray[13];
-	// color[3] = colorsArray[13];
+/*function setBg() {
 	color[0] = colorsArray[Math.floor(Math.random() * colorsArray.length)];
 	color[1] = colorsArray[Math.floor(Math.random() * colorsArray.length)];
 	color[2] = colorsArray[Math.floor(Math.random() * colorsArray.length)];
@@ -2995,15 +2969,9 @@ function setBg() {
 	var stringColor = color.toString();
 	setColorBg = stringColor.replace(/,/g, '');
 	fullColorBg = '#' + setColorBg;
-	/* hour.style.color = fullColor;
- minute.style.color = fullColor;
- second.style.color = fullColor; */
-	// btn.style.color = fullColor;
-
-	// console.log(fullColorBg);
 	return fullColorBg;
-}
-setInterval(setBg, 100);
+}*/
+// setInterval(setBg, 100);
 
 // function setRgbColor() {
 //   contextSquare.strokeStyle = "rgb(0," + Math.floor(255-42.5*i) + "," + Math.floor(255-42.5*i) + ")";
@@ -3014,14 +2982,14 @@ setInterval(setBg, 100);
 function setTreeColor() {
 	contextSquare.strokeStyle = setC();
 	contextTriangle.strokeStyle = setC();
-	contextKoh.strokeStyle = setC();
-	ctx.strokeStyle = setC();
-	// contextSquare.stroke();
-	// contextTriangle.stroke();
-	contextKoh.stroke();
-	ctx.stroke();
+	// contextKoh.strokeStyle = setC();
+	// ctx.strokeStyle = setC();
+	contextSquare.stroke();
+	contextTriangle.stroke();
+	// contextKoh.stroke();
+	// ctx.stroke();
 }
-setInterval(setTreeColor, 100);
+// setInterval(setTreeColor, 100);
 
 function setBgColor() {
 	contextSquare.fillStyle = setBg();

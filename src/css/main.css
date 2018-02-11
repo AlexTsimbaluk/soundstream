@@ -2366,6 +2366,7 @@ body {
   font-size: 12px;
   font-family: "RobotoRegular", sans-serif;
   overflow: hidden;
+  overflow-y: auto;
 }
 /* выделение текста */
 ::-moz-selection {
@@ -3726,5 +3727,24 @@ canvas {
 }
 .fractals {
   position: absolute;
+  position: relative;
   z-index: 1;
+}
+.controls-panel {
+  margin: 10px 0;
+}
+.draw-fractal,
+.btn.draw-fractal {
+  background: rgba(0, 0, 0, 0.6);
+  border: none;
+  -webkit-border-radius: 2px;
+          border-radius: 2px;
+  color: #fff;
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  text-align: center;
+  width: 100px;
+  height: 30px;
 }
