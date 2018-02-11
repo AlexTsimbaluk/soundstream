@@ -138,7 +138,6 @@ gulp.task('js-min', function() {
 	return gulp.src('src/js/app.js')
 			.pipe(rename('app.min.js'))
 			.pipe(uglify())
-			.pipe(browserSync.reload({stream: true}))
 			.pipe(gulp.dest('src/js'));
 });
 
@@ -159,7 +158,7 @@ gulp.task('watch', ['browser-sync'], function() {
     		'src/js/fractals.js',
     		'src/js/canvas.js'
     	],
-    	['js']
+    	['js', 'js-min']
 	);
 	
 	gulp.watch([
