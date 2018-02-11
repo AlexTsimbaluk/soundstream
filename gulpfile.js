@@ -19,7 +19,7 @@ gulp.task('clean', function() {
     return del.sync(['dist']);
 });
 
-gulp.task('build', ['clean', 'less', 'js-min'], function() {
+gulp.task('build', ['clean', 'less', 'js'], function() {
 	'use strict';
     var buildCss = gulp.src([
         'src/css/main.css',
@@ -103,18 +103,9 @@ gulp.task('_bootstrap-material', function() {
 			.pipe(browserSync.reload({stream: true}));
 });
 
-gulp.task('js-min', function() {
+/*gulp.task('js', function() {
 	'use strict';
-	return gulp.src(
-				[
-					'src/js/player.js',
-					'src/js/user.js',
-					'src/js/visits.js',
-					'src/js/admin.js',
-					'src/js/canvas.js',
-					'!src/js/app.min.js'
-				]
-			)
+	return gulp.src('src/js/*.js')
 			.pipe(babel())
 			.pipe(concat('app.js'))
 			.pipe(gulp.dest('src/js'))
@@ -122,7 +113,33 @@ gulp.task('js-min', function() {
 			.pipe(uglify())
 			.pipe(browserSync.reload({stream: true}))
 			.pipe(gulp.dest('src/js'));
+});*/
 
+gulp.task('js', function() {
+	'use strict';
+	return gulp.src([
+			// 'src/js/*.js', '!src/js/app.min.js'
+				'src/js/player.js',
+				'src/js/user.js',
+				'src/js/visits.js',
+				'src/js/admin.js',
+				'src/js/fractals.js',
+				'src/js/canvas.js'
+
+			])
+			.pipe(babel())
+			.pipe(concat('app.js'))
+			.pipe(gulp.dest('src/js'))
+			.pipe(browserSync.reload({stream: true}));
+});
+
+gulp.task('js-min', function() {
+	'use strict';
+	return gulp.src('src/js/app.js')
+			.pipe(rename('app.min.js'))
+			.pipe(uglify())
+			.pipe(browserSync.reload({stream: true}))
+			.pipe(gulp.dest('src/js'));
 });
 
 
@@ -139,9 +156,10 @@ gulp.task('watch', ['browser-sync'], function() {
     		'src/js/user.js',
     		'src/js/visits.js',
     		'src/js/admin.js',
+    		'src/js/fractals.js',
     		'src/js/canvas.js'
     	],
-    	['js-min']
+    	['js']
 	);
 	
 	gulp.watch([
