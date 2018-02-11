@@ -1,5 +1,3 @@
-var dateStart = new Date().getTime();
-
 /*Fractals*/
 $(document).ready(function() {
 
@@ -298,9 +296,4 @@ $(document).ready(function() {
 
 });
 
-$(window).load(function() {
-
-	// console.log(new Date().getTime() - dateStart);
-
-});
 
