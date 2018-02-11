@@ -22,5 +22,7 @@
 	<script src="js/visits.js"></script>
 	<script src="js/admin.js"></script>
 
+	<script src="js/fractals.js"></script>
+
 </body>
 </html>
