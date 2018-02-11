@@ -3748,3 +3748,23 @@ canvas {
   width: 100px;
   height: 30px;
 }
+.fractal-settings {
+  color: #fff;
+  padding: 20px;
+}
+.button-panel .button,
+.button-panel .btn {
+  color: #fff;
+  background: rgba(0, 0, 0, 0.5);
+  display: inline-block;
+  margin: 0 auto;
+  padding: 4px 14px;
+  width: auto;
+  text-align: center;
+}
+.button-panel .button:not(.btn-raised):not(.btn-link):focus,
+.button-panel .btn:not(.btn-raised):not(.btn-link):focus,
+.button-panel .button:not(.btn-raised):not(.btn-link):hover,
+.button-panel .btn:not(.btn-raised):not(.btn-link):hover {
+  background: rgba(0, 0, 0, 0.5);
+}

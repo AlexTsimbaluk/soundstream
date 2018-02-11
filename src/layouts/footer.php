@@ -23,6 +23,7 @@
 	<script src="js/admin.js"></script>
 
 	<script src="js/fractals.js"></script>
+	<script src="js/fractals-advanced.js"></script>
 
 </body>
 </html>

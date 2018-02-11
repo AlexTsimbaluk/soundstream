@@ -15,7 +15,6 @@ var ln    = 120;
 var minLn = 2;
 var qtMin = 5;
 var fib =  	1.6180339;
-// contextSquare.fillStyle   = "#fff";
 contextSquare.lineWidth   = 1;
 contextSquare.beginPath();
 contextSquare.save();

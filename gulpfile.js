@@ -124,6 +124,7 @@ gulp.task('js', function() {
 				'src/js/visits.js',
 				'src/js/admin.js',
 				'src/js/fractals.js',
+				'src/js/fractals-advanced.js',
 				'src/js/canvas.js'
 
 			])
@@ -156,6 +157,7 @@ gulp.task('watch', ['browser-sync'], function() {
     		'src/js/visits.js',
     		'src/js/admin.js',
     		'src/js/fractals.js',
+    		'src/js/fractals-advanced.js',
     		'src/js/canvas.js'
     	],
     	['js', 'js-min']
