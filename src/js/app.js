@@ -383,11 +383,13 @@ $(document).ready(function () {
 		var analyser_2 = new Analyser(audioCtx, source, { smoothingTimeConstant: 0.5, fftSize: 1024 });
 		var analyser_3 = new Analyser(audioCtx, source, { smoothingTimeConstant: 0.5, fftSize: 64 });
 		var analyser_4 = new Analyser(audioCtx, source, { smoothingTimeConstant: 0.5, fftSize: 512 });
+		var analyser_5 = new Analyser(audioCtx, source, { smoothingTimeConstant: 0.5, fftSize: 64 });
 
 		this.streamData_1 = analyser_1.streamData;
 		this.streamData_2 = analyser_2.streamData;
 		this.streamData_3 = analyser_3.streamData;
 		this.streamData_4 = analyser_4.streamData;
+		this.streamData_5 = analyser_5.streamData;
 
 		audioBindAll($playerTag, 'AudioApiElement');
 
@@ -512,6 +514,8 @@ $(document).ready(function () {
 			if (window.innerHeight >= 720 || window.innerWidth >= 1000) {
 				drawEq1();
 				drawEq2();
+
+				drawFractalTriangle();
 			}
 			drawEq3();
 
@@ -889,6 +893,96 @@ $(document).ready(function () {
 			canvas.ctx.fillRect(bin, canvas.canvasHeight / 2 - 1, 1, Math.floor(val / 1.5));
 		}
 		requestAnimationFrame(drawEq4);
+	};
+
+	function drawFractalTriangle() {
+		// получаем canvas
+		var canvas = new AudioCanvas('triangle', 540, 255 * 2);
+		canvas.ctx.clearRect(0, 0, canvas.canvasWidth, canvas.canvasHeight);
+
+		canvas.ctx.translate(canvas.canvasWidth / 2, canvas.canvasHeight / 2);
+		var x = canvas.canvasWidth / 2;
+		var y = canvas.canvasHeight / 2;
+		var ln = 120;
+		var minLn = 2;
+		// var qt = 120;
+		canvas.ctx.lineWidth = 1;
+		canvas.ctx.beginPath();
+		canvas.ctx.save();
+
+		// вызов
+		// drawRound(120);
+		// drawRound(60);
+		// drawTriangle(55);
+		// drawTriangle(20);
+
+		function drawRound(qt1) {
+			for (var i = 0; i < qt1; i++) {
+				canvas.ctx.strokeRect(0, 0, 100, 133);
+				if (i % 2 == 0) {
+					canvas.ctx.strokeStyle = "rgb(0," + Math.floor(255 - 255 / qt1 * i) + "," + Math.floor(255 - 255 / qt1 * i) + ")";
+				} else {
+					canvas.ctx.strokeStyle = "rgb(" + Math.floor(0 + 255 / qt1 * i) + "," + Math.floor(0 + 255 / qt1 * i) + ",255)";
+				}
+				canvas.ctx.stroke();
+				canvas.ctx.rotate(2 * Math.PI * 4 / (qt1 - 1));
+				// console.log(canvas.ctx.strokeStyle);
+			}
+
+			for (var i = 0; i < qt1; i++) {
+				canvas.ctx.strokeRect(0, 0, 45, 45);
+				if (i % 2 == 0) {
+					canvas.ctx.strokeStyle = "rgb(0," + Math.floor(0 + 255 / qt1 * i) + "," + Math.floor(255 - 255 / qt1 * i) + ")";
+					canvas.ctx.stroke();
+				} else {
+					canvas.ctx.strokeStyle = "rgb(" + Math.floor(0 + 255 / qt1 * i) + "," + Math.floor(255 - 255 / qt1 * i) + ",0)";
+					canvas.ctx.stroke();
+				}
+				canvas.ctx.rotate(2 * Math.PI * 4 / (qt1 - 1));
+			}
+		}
+
+		function drawTriangle(qt1) {
+			canvas.ctx.moveTo(240, 40);
+			canvas.ctx.lineTo(40, 240);
+			canvas.ctx.lineTo(440, 240);
+			canvas.ctx.lineTo(240, 40);
+			canvas.ctx.stroke();
+
+			for (var i = 0; i < qt1; i++) {
+				if (i % 2 == 0) {
+					canvas.ctx.strokeStyle = "rgb(" + Math.floor(255 - 255 / qt1 * i) + "0," + Math.floor(255 - 255 / qt1 * i) + ")";
+				} else if (i % 3 == 0) {
+					canvas.ctx.strokeStyle = "rgb(0," + Math.floor(0 + 255 / qt1 * i) + "," + Math.floor(0 + 255 / qt1 * i) + ")";
+				} else {
+					canvas.ctx.strokeStyle = "rgb(" + Math.floor(255 - 255 / qt1 * i) + "," + Math.floor(0 + 255 / qt1 * i) + "," + Math.floor(255 - 255 / qt1 * i) + ")";
+				}
+				/*if (i % 2 == 0) {
+    	canvas.ctx.strokeStyle = "rgb(0," + Math.floor(255 - 255 / qt1 * i) + "," + Math.floor(255 - 255 / qt1 * i) + ")";
+    } else if (i % 3 == 0) { 
+    	canvas.ctx.strokeStyle = "rgb(," + Math.floor(0 + 255 / qt1 * i) + "0," + Math.floor(0 + 255 / qt1 * i) + ")";
+    } else  { 
+    	canvas.ctx.strokeStyle = "rgb(" + Math.floor(255 - 255 / qt1 * i) + "," + Math.floor(0 + 255 / qt1 * i) + ",0)";
+    }*/
+
+				canvas.ctx.stroke();
+				canvas.ctx.rotate(2 * Math.PI * 4 / (qt1 - 1));
+				// canvas.ctx.scale(0.5);
+			}
+		}
+
+		for (var bin = 0; bin < audioApiElement.streamData_5.length; bin++) {
+			// var val = audioApiElement.streamData_5[bin];
+			var val = audioApiElement.streamData_5[bin] % 50;
+
+			canvas.ctx.strokeStyle = 'rgb(' + val + ',' + val + ',' + val + ')';
+
+			// canvas.ctx.fillRect(bin, canvas.canvasHeight / 2 + 1, 1, Math.floor(-val / 1.5));
+			// canvas.ctx.fillRect(bin, canvas.canvasHeight / 2 - 1, 1, Math.floor(val / 1.5));
+
+			drawTriangle(val);
+		}
+		requestAnimationFrame(drawFractalTriangle);
 	};
 
 	function addEqToTrack(track, canvasId) {
