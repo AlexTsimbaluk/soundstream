@@ -959,7 +959,7 @@ $(document).ready(function () {
 		for (var bin = 0; bin < audioApiElement.streamData_3.length; bin++) {
 			var val = audioApiElement.streamData_3[bin] % 50;
 
-			canvas.ctx.strokeStyle = 'rgb(' + val + ',' + val + ',' + val + ')';
+			// canvas.ctx.strokeStyle = 'rgb(' + (val) + ',' + (val) + ',' + (val) + ')';
 			canvas.ctx.strokeStyle = 'rgb(255, 255, 255)';
 
 			// drawTriangle(val);
@@ -978,7 +978,11 @@ $(document).ready(function () {
 			canvas.ctx.lineTo(240, 40);
 
 			canvas.ctx.stroke();
-			canvas.ctx.rotate(2 * Math.PI * 4 / (val - 1));
+			// canvas.ctx.strokeRect(0, 0, 100, 133);
+			canvas.ctx.strokeRect(0, 0, val, 133);
+			canvas.ctx.strokeRect(0, 0, val, 45);
+
+			canvas.ctx.rotate(2 * Math.PI * 3 / (val - 1));
 		}
 		requestAnimationFrame(drawFractalTriangle);
 	};

@@ -1040,29 +1040,29 @@ $(document).ready(function() {
 		canvas.ctx.translate(canvas.canvasWidth / 2, canvas.canvasHeight / 2);
 
 		function drawRound(qt1) {
-		  for (var i = 0; i < qt1; i++) {
-		    canvas.ctx.strokeRect(0, 0, 100, 133);
-		    if (i % 2 == 0) {
-		      canvas.ctx.strokeStyle = "rgb(0," + Math.floor(255 - 255 / qt1 * i) + "," + Math.floor(255 - 255 / qt1 * i) + ")";
-		    } else {
-		      canvas.ctx.strokeStyle = "rgb(" + Math.floor(0 + 255 / qt1 * i) + "," + Math.floor(0 + 255 / qt1 * i) + ",255)";
-		    }
-		    canvas.ctx.stroke();
-		    canvas.ctx.rotate(2 * Math.PI * 4 / (qt1 - 1));
-		  // console.log(canvas.ctx.strokeStyle);
-		  }
+			for (var i = 0; i < qt1; i++) {
+				canvas.ctx.strokeRect(0, 0, 100, 133);
+				if (i % 2 == 0) {
+				canvas.ctx.strokeStyle = "rgb(0," + Math.floor(255 - 255 / qt1 * i) + "," + Math.floor(255 - 255 / qt1 * i) + ")";
+				} else {
+					canvas.ctx.strokeStyle = "rgb(" + Math.floor(0 + 255 / qt1 * i) + "," + Math.floor(0 + 255 / qt1 * i) + ",255)";
+				}
+				canvas.ctx.stroke();
+				canvas.ctx.rotate(2 * Math.PI * 4 / (qt1 - 1));
+				// console.log(canvas.ctx.strokeStyle);
+			}
 
-		  for (var i = 0; i < qt1; i++) {
-		    canvas.ctx.strokeRect(0, 0, 45, 45);
-		    if (i % 2 == 0) {
-		      canvas.ctx.strokeStyle = "rgb(0," + Math.floor(0 + 255 / qt1 * i) + "," + Math.floor(255 - 255 / qt1 * i) + ")";
-		      canvas.ctx.stroke();
-		    } else {
-		      canvas.ctx.strokeStyle = "rgb(" + Math.floor(0 + 255 / qt1 * i) + "," + Math.floor(255 - 255 / qt1 * i) + ",0)";
-		      canvas.ctx.stroke();
-		    }
-		    canvas.ctx.rotate(2 * Math.PI * 4 / (qt1 - 1));
-		  }
+			for (var i = 0; i < qt1; i++) {
+				canvas.ctx.strokeRect(0, 0, 45, 45);
+				if (i % 2 == 0) {
+					canvas.ctx.strokeStyle = "rgb(0," + Math.floor(0 + 255 / qt1 * i) + "," + Math.floor(255 - 255 / qt1 * i) + ")";
+					canvas.ctx.stroke();
+				} else {
+					canvas.ctx.strokeStyle = "rgb(" + Math.floor(0 + 255 / qt1 * i) + "," + Math.floor(255 - 255 / qt1 * i) + ",0)";
+					canvas.ctx.stroke();
+				}
+				canvas.ctx.rotate(2 * Math.PI * 4 / (qt1 - 1));
+			}
 		}
 
 		function drawTriangle(qt1) {
@@ -1098,7 +1098,7 @@ $(document).ready(function() {
 	    for(var bin = 0; bin < audioApiElement.streamData_3.length; bin ++) {
 	        var val = audioApiElement.streamData_3[bin] % 50;
 
-	        canvas.ctx.strokeStyle = 'rgb(' + (val) + ',' + (val) + ',' + (val) + ')';
+	        // canvas.ctx.strokeStyle = 'rgb(' + (val) + ',' + (val) + ',' + (val) + ')';
 	        canvas.ctx.strokeStyle = 'rgb(255, 255, 255)';
 	        
 	        // drawTriangle(val);
@@ -1115,9 +1115,14 @@ $(document).ready(function() {
 	        canvas.ctx.lineTo(40,240);
 	        canvas.ctx.lineTo(440,240);
 	        canvas.ctx.lineTo(240,40);
+
 	        
 	        canvas.ctx.stroke();
-	        canvas.ctx.rotate(2 * Math.PI * 4 / (val - 1));
+	        // canvas.ctx.strokeRect(0, 0, 100, 133);
+	        canvas.ctx.strokeRect(0, 0, val, 133);
+	        canvas.ctx.strokeRect(0, 0, val, 45);
+
+	        canvas.ctx.rotate(2 * Math.PI * 3 / (val - 1));
 	    	
 	    }
 	    requestAnimationFrame(drawFractalTriangle);
