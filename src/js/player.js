@@ -1099,6 +1099,7 @@ $(document).ready(function() {
 	        var val = audioApiElement.streamData_3[bin] % 50;
 
 	        canvas.ctx.strokeStyle = 'rgb(' + (val) + ',' + (val) + ',' + (val) + ')';
+	        canvas.ctx.strokeStyle = 'rgb(255, 255, 255)';
 	        
 	        // drawTriangle(val);
 

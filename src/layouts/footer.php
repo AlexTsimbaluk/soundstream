@@ -1,3 +1,8 @@
+		<!-- container end -->
+		<!-- </div> -->
+	<!-- .section end -->
+	</div>
+	
 <!--[if lt IE 9]>
 	<script src="libs/html5shiv/es5-shim.min.js"></script>
 	<script src="libs/html5shiv/html5shiv.min.js"></script>
