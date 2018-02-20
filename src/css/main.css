@@ -3781,3 +3781,11 @@ canvas {
 .button-panel .btn:not(.btn-raised):not(.btn-link):hover {
   background: rgba(0, 0, 0, 0.5);
 }
+#triangle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}

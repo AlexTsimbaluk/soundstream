@@ -484,12 +484,18 @@ $(document).ready(function() {
 				audioCtx,
 				source,
 				{smoothingTimeConstant: 0.5, fftSize: 512});
+		var analyser_5 =
+				new Analyser(
+				audioCtx,
+				source,
+				{smoothingTimeConstant: 0.5, fftSize: 128});
 
 
 	    this.streamData_1 = analyser_1.streamData;
 	    this.streamData_2 = analyser_2.streamData;
 	    this.streamData_3 = analyser_3.streamData;
 	    this.streamData_4 = analyser_4.streamData;
+	    this.streamData_5 = analyser_5.streamData;
 
     	audioBindAll($playerTag, 'AudioApiElement');
 		
@@ -1039,9 +1045,10 @@ $(document).ready(function() {
 
 		canvas.ctx.translate(canvas.canvasWidth / 2, canvas.canvasHeight / 2);
 
-		// streamData_3 потому что при fftSize > 64 тормозит
-	    for(var bin = 0; bin < audioApiElement.streamData_3.length; bin ++) {
-	        var val = audioApiElement.streamData_3[bin] % 50;
+		// при fftSize > 64 тормозит
+	    for(var bin = 0; bin < audioApiElement.streamData_5.length; bin ++) {
+	        // var val = audioApiElement.streamData_5[bin] % 50;
+	        var val = audioApiElement.streamData_5[bin] % 10;
 
 	        // canvas.ctx.strokeStyle = 'rgb(' + (val) + ',' + (val) + ',' + (val) + ')';
 	        canvas.ctx.strokeStyle = 'rgb(255, 255, 255)';
@@ -1055,24 +1062,25 @@ $(document).ready(function() {
 	        	canvas.ctx.strokeStyle = "rgb(" + Math.floor(255 - 255 / val * bin) + "," + Math.floor(0 + 255 / val * bin) + "," + Math.floor(255 - 255 / val * bin) + ")";
 	        }
 
-	        /*canvas.ctx.moveTo(240,40);
-	        canvas.ctx.lineTo(40,240);
-	        canvas.ctx.lineTo(440,240);
-	        canvas.ctx.lineTo(240,40);*/
+	        canvas.ctx.moveTo(audioApiElement.streamData_5[bin] / 3,audioApiElement.streamData_5[bin]);
+	        canvas.ctx.lineTo(audioApiElement.streamData_5[bin] % 5,audioApiElement.streamData_5[bin] / 1.618);
+	        canvas.ctx.lineTo(audioApiElement.streamData_5[bin] / 1.618,audioApiElement.streamData_5[bin]);
+	        canvas.ctx.lineTo(audioApiElement.streamData_5[bin],audioApiElement.streamData_5[bin]);
 
-	        canvas.ctx.moveTo(240, val * 1.7);
+	        /*canvas.ctx.moveTo(240, val * 1.7);
 	        canvas.ctx.lineTo(val * 1.7, val * 3);
 	        canvas.ctx.lineTo(val * 3, val * 1.7);
-	        canvas.ctx.lineTo(240, val * 1.7);
+	        canvas.ctx.lineTo(240, val * 1.7);*/
 
 	        
 	        canvas.ctx.stroke();
-	        // canvas.ctx.strokeRect(0, 0, 70, 133);
-	        canvas.ctx.strokeRect(0, 0, val * 1.7, val * 3);
+	        canvas.ctx.strokeRect(0, 0, audioApiElement.streamData_5[bin], audioApiElement.streamData_5[bin]);
 	        // canvas.ctx.strokeRect(0, 0, val, 45);
 
-	        // canvas.ctx.rotate(2 * Math.PI * 3 / (val - 1));
-	        canvas.ctx.rotate(2 * Math.PI * 3 / 60);
+	        canvas.ctx.rotate(4 * Math.PI );
+	        canvas.ctx.rotate(Math.PI * 3 / 90);
+	        canvas.ctx.rotate(2 * Math.PI);
+	        canvas.ctx.rotate(Math.PI / 4 );
 	    	
 	    }
 	    requestAnimationFrame(drawFractalTriangle);

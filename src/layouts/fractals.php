@@ -1,5 +1,6 @@
+<canvas id="triangle"></canvas>
+
 <div class="fractals">
-	<canvas id="triangle"></canvas>
 	
 	<!-- Фрактал на кривых -->
 	<canvas id="square"></canvas>
