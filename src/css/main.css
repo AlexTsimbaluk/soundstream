@@ -2149,6 +2149,13 @@ select.form-control[multiple],
     width: 292px;
   }
 }
+* {
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  -webkit-tap-highlight-color: transparent;
+}
+*:focus {
+  outline: 0;
+}
 .btn,
 .btn:not(.btn-raised) {
   color: inherit;
