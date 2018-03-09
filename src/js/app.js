@@ -1217,11 +1217,11 @@ $(document).ready(function () {
 	function enableVisualisations() {
 		var vis = playerState.visualisations;
 		var visOrder = vis.order;
-		console.log(vis, visOrder);
+		console.log(vis);
 		var markup = '';
 
 		for (var i = 0, size = visOrder.length; i < size; i++) {
-			markup += '<label title="' + visOrder[i] + '"><input type="checkbox" data-animation-name="' + visOrder[i] + '" data-animation-state="' + vis[visOrder[i].state] + '" class="toggle-animation" /><div class=" button btn"><div class="iconWrapper"><div class="icon">flash_auto</div></div></div></label>';
+			markup += '<label title="' + visOrder[i] + '"><input type="checkbox" data-animation-name="' + visOrder[i] + '" data-animation-state="' + vis[visOrder[i]].state + '" class="toggle-animation" /><div class=" button btn"><div class="iconWrapper"><div class="icon">' + vis[visOrder[i]].icon + '</div></div></div></label>';
 		}
 		$('.animation-settings').append(markup);
 	}
@@ -1936,22 +1936,27 @@ $(document).ready(function () {
 		playerState.visualisations = {};
 		playerState.visualisations.order = ['allEnabled', 'canvas-audio-source', 'canvas-audio-source-eq2', 'canvas-audio-source-eq3', 'triangle'];
 		playerState.visualisations['allEnabled'] = {
+			icon: 'flash_auto',
 			name: 'allEnabled',
 			state: true
 		};
 		playerState.visualisations['canvas-audio-source'] = {
+			icon: 'graphic_eq',
 			name: 'canvas-audio-source',
 			state: true
 		};
 		playerState.visualisations['canvas-audio-source-eq2'] = {
+			icon: 'graphic_eq',
 			name: 'canvas-audio-source-eq2',
 			state: true
 		};
 		playerState.visualisations['canvas-audio-source-eq3'] = {
+			icon: 'equalizer',
 			name: 'canvas-audio-source-eq3',
 			state: true
 		};
 		playerState.visualisations['triangle'] = {
+			icon: 'brightness_auto',
 			name: 'triangle',
 			state: true
 		};
@@ -2172,12 +2177,6 @@ $(document).ready(function () {
 				consoleOutput('vmCurrentTrackTitle::destroyed');
 			}
 		});
-
-		if (playerState.visualisations['allEnabled'].state) {
-			$('.toggle-animation').next('.button').find('.icon').text('flash_auto');
-		} else {
-			$('.toggle-animation').next('.button').find('.icon').text('flash_off');
-		}
 
 		if (!playerState.paused) {
 			// если плейлист играющего(!) текущего трека != playerState.currentPlaylist
