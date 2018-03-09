@@ -368,7 +368,7 @@ $(document).ready(function () {
 				total += self.streamData[i];
 			}
 		};
-		setInterval(sampleAudioStream, 20);
+		var aInterval = setInterval(sampleAudioStream, 20);
 
 		self.streamData = new Uint8Array(analyser.frequencyBinCount);
 	}
@@ -415,11 +415,7 @@ $(document).ready(function () {
 			// closest('.playlist').
 			parent().find('[data-current-track]').removeAttr('data-current-track');
 
-			consoleOutput('');
-			consoleOutput('');
 			consoleOutput(currentTrackEl);
-			consoleOutput('');
-			consoleOutput('');
 
 			// а затем установим data-current-track нужному треку
 			currentTrackEl.attr('data-current-track', 1);
@@ -512,15 +508,22 @@ $(document).ready(function () {
 			localStorage.setItem('__playlists', JSON.stringify(__playlists));
 
 			if (window.innerHeight >= 720 || window.innerWidth >= 1000) {
-				if (playerState.visualisations['allEnabled'].state) {
+				if (playerState.visualisations['canvas-audio-source'].state) {
+					drawEq1();
+				} else if (playerState.visualisations['canvas-audio-source-eq2'].state) {
+					drawEq2();
+				} else if (playerState.visualisations['canvas-audio-source-eq3'].state) {
+					drawEq3();
+				} else if (playerState.visualisations['triangle'].state) {
+					drawFractalTriangle();
+				} else if (playerState.visualisations['allEnabled'].state) {
 					// if(false) {
 					drawEq1();
 					drawEq2();
-
+					drawEq3();
 					drawFractalTriangle();
 				}
 			}
-			drawEq3();
 
 			consoleOutput('AudioApiElement::playStream::End');
 			// TODO: добавить на играющий трек эквалайзер
@@ -847,6 +850,7 @@ $(document).ready(function () {
 	};
 
 	function drawEq3() {
+		// громкость
 		var canvas = new AudioCanvas('canvas-audio-source-eq3', 288, 20);
 		canvas.ctx.clearRect(0, 0, canvas.canvasWidth, canvas.canvasHeight);
 		// получаем число плиток в вертикальном ряду при максимальном значении частоты 255
@@ -1209,6 +1213,20 @@ $(document).ready(function () {
 			});
 		});
 	}
+
+	function enableVisualisations() {
+		var vis = playerState.visualisations;
+		var visOrder = vis.order;
+		console.log(vis, visOrder);
+		var markup = '';
+
+		for (var i = 0, size = visOrder.length; i < size; i++) {
+			markup += '<label title="' + visOrder[i] + '"><input type="checkbox" data-animation-name="' + visOrder[i] + '" data-animation-state="' + vis[visOrder[i].state] + '" class="toggle-animation" /><div class=" button btn"><div class="iconWrapper"><div class="icon">flash_auto</div></div></div></label>';
+		}
+		$('.animation-settings').append(markup);
+	}
+
+	function visStop(name) {}
 
 	function getObjectProperties(obj) {
 		consoleOutput('::getObjectProperties');
@@ -1719,19 +1737,20 @@ $(document).ready(function () {
 		return false;
 	});
 
-	$('.toggle-animation').on('change', function () {
+	$('.toggle-animation').on('change', function (event) {
 		var $el = $(this);
 		var aName = $el.attr('data-animation-name');
 		var aState = $el.attr('data-animation-state');
-		console.log(playerState.visualisations[aName]);
+		console.log(playerState.visualisations[aName].name + ' - ' + playerState.visualisations[aName].state);
 		if (playerState.visualisations[aName].state) {
-			$(this).next('.button').find('.icon').text('flash_off');
+			visStop(playerState.visualisations[aName].name);
+			// $(this).next('.button').find('.icon').text('flash_off');
 		} else {
-			$(this).next('.button').find('.icon').text('flash_auto');
-		}
+				// $(this).next('.button').find('.icon').text('flash_auto');
+			}
 		playerState.visualisations[aName].state = !playerState.visualisations[aName].state;
 
-		console.log(playerState.visualisations[aName]);
+		console.log(playerState.visualisations[aName].name + ' - ' + playerState.visualisations[aName].state);
 		localStorage.setItem('playerState', JSON.stringify(playerState));
 
 		return false;
@@ -1915,7 +1934,25 @@ $(document).ready(function () {
 		playerState.paused = true;
 
 		playerState.visualisations = {};
+		playerState.visualisations.order = ['allEnabled', 'canvas-audio-source', 'canvas-audio-source-eq2', 'canvas-audio-source-eq3', 'triangle'];
 		playerState.visualisations['allEnabled'] = {
+			name: 'allEnabled',
+			state: true
+		};
+		playerState.visualisations['canvas-audio-source'] = {
+			name: 'canvas-audio-source',
+			state: true
+		};
+		playerState.visualisations['canvas-audio-source-eq2'] = {
+			name: 'canvas-audio-source-eq2',
+			state: true
+		};
+		playerState.visualisations['canvas-audio-source-eq3'] = {
+			name: 'canvas-audio-source-eq3',
+			state: true
+		};
+		playerState.visualisations['triangle'] = {
+			name: 'triangle',
 			state: true
 		};
 
@@ -1936,6 +1973,7 @@ $(document).ready(function () {
 
 		debugPlayerState();
 		debugLocalStorage();
+		enableVisualisations();
 
 		var vmPlaylist = new Vue({
 			el: '.vmPlaylistsPanel',

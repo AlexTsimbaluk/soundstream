@@ -74,7 +74,7 @@
 		</div>
 
 		<div class="animation-settings controls">
-			<label>
+			<!-- <label>
 				<input type="checkbox" data-animation-name="allEnabled" data-animation-state class="toggle-animation" />
 				<div class=" button btn">
 					<div class="iconWrapper">
@@ -82,6 +82,42 @@
 					</div>
 				</div>
 			</label>
+
+			<label>
+				<input type="checkbox" data-animation-name="canvas-audio-source" data-animation-state class="toggle-animation" />
+				<div class=" button btn">
+					<div class="iconWrapper">
+						<div class="icon"></div>
+					</div>
+				</div>
+			</label>
+
+			<label>
+				<input type="checkbox" data-animation-name="canvas-audio-source-eq2" data-animation-state class="toggle-animation" />
+				<div class=" button btn">
+					<div class="iconWrapper">
+						<div class="icon"></div>
+					</div>
+				</div>
+			</label>
+
+			<label>
+				<input type="checkbox" data-animation-name="canvas-audio-source-eq3" data-animation-state class="toggle-animation" />
+				<div class=" button btn">
+					<div class="iconWrapper">
+						<div class="icon"></div>
+					</div>
+				</div>
+			</label>
+
+			<label>
+				<input type="checkbox" data-animation-name="triangle" data-animation-state class="toggle-animation" />
+				<div class=" button btn">
+					<div class="iconWrapper">
+						<div class="icon"></div>
+					</div>
+				</div>
+			</label> -->
 		</div>
 
 		<div class="controls">
