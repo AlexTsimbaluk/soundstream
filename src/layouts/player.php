@@ -65,12 +65,23 @@
 
 		<!-- <div class="view"></div> -->
 
-		<div class="userPanel">
+		<div class="userPanel hidden">
 			<ul class="userActions">
 				<li><button class="showFormReg">Reg</button></li>
 				<li><button class="showFormSign">Auth</button></li>
 				<li><a href="sql/db_queries.php" class="runSql">SQL</a></li>
 			</ul>
+		</div>
+
+		<div class="animation-settings controls">
+			<label>
+				<input type="checkbox" data-animation-name="allEnabled" data-animation-state class="toggle-animation" />
+				<div class=" button btn">
+					<div class="iconWrapper">
+						<div class="icon"></div>
+					</div>
+				</div>
+			</label>
 		</div>
 
 		<div class="controls">

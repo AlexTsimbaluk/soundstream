@@ -634,10 +634,13 @@ $(document).ready(function() {
 	        
 			if(window.innerHeight >= 720  ||
 				window.innerWidth >= 1000) {
+					if(playerState.visualisations['allEnabled'].state) {
+					// if(false) {
 				        drawEq1();
 				        drawEq2();
 
 				        drawFractalTriangle();
+					}
 			}
 	        drawEq3();
 
@@ -2029,6 +2032,24 @@ $(document).ready(function() {
 		return false;
 	});
 
+	$('.toggle-animation').on('change', function() {
+		var $el = $(this);
+		var aName = $el.attr('data-animation-name');
+		var aState = $el.attr('data-animation-state');
+		console.log(playerState.visualisations[aName]);
+		if(playerState.visualisations[aName].state) {
+			$(this).next('.button').find('.icon').text('flash_off');
+		} else {
+			$(this).next('.button').find('.icon').text('flash_auto');
+		}
+		playerState.visualisations[aName].state = !playerState.visualisations[aName].state;
+
+		console.log(playerState.visualisations[aName]);
+		localStorage.setItem('playerState', JSON.stringify(playerState));
+
+		return false;
+	});
+
 
 
 
@@ -2213,6 +2234,12 @@ $(document).ready(function() {
 		// playerState.nowPlaying = {};
 		playerState.volume = .27;
 		playerState.paused = true;
+
+		playerState.visualisations = {};
+		playerState.visualisations['allEnabled'] = {
+			state: true
+		};
+
 		playerState.search.stationsOpened = [];
 		
 		localStorage.setItem('playerState', JSON.stringify(playerState));
@@ -2344,6 +2371,7 @@ $(document).ready(function() {
 			}
 		});
 
+		// хак
 		$('.playlistsPanel .list').
 			find('.mCSB_container').
 			addClass('flex left');
@@ -2458,6 +2486,12 @@ $(document).ready(function() {
 		        consoleOutput('vmCurrentTrackTitle::destroyed');
 		    }
 		});
+
+		if(playerState.visualisations['allEnabled'].state) {
+			$('.toggle-animation').next('.button').find('.icon').text('flash_auto');
+		} else {
+			$('.toggle-animation').next('.button').find('.icon').text('flash_off');
+		}
 
 		if(!playerState.paused) {
 			// если плейлист играющего(!) текущего трека != playerState.currentPlaylist
