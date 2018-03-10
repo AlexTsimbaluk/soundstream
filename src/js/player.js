@@ -457,6 +457,25 @@ $(document).ready(function() {
 	    self.streamData = new Uint8Array(analyser.frequencyBinCount);
 	}
 
+
+
+	// объект, который запускает и останавливает  функцию отрисовки звуковых данных из streamdata
+	function DrawSound() {
+		var self = this;
+		var interval;
+
+		self.getCtx = function(canvasId, width, height) {
+			var canvas = new AudioCanvas(canvasId, width, height);
+		}
+
+		this.start = function(cb) {
+			interval = requestAnimationFrame(cb);
+		}
+		this.stop = function(cb) {
+			clearRequestAnimationFrame(cb);
+		}
+	}
+
 	function AudioApiElement(audioElement) {
 	    var $playerTag = document.getElementById(audioElement);
 	    var self = this;
@@ -628,28 +647,31 @@ $(document).ready(function() {
 	        localStorage.setItem('playerState', JSON.stringify(playerState));
 			localStorage.setItem('__playlists', JSON.stringify(__playlists));
 	        
-			if(window.innerHeight >= 720  ||
-				window.innerWidth >= 1000) {
+			// if(window.innerHeight >= 720  ||
+				// window.innerWidth >= 1000) {
 					if(playerState.visualisations['canvas-audio-source'].state) {
 						drawEq1();
 					}
-					else if(playerState.visualisations['canvas-audio-source-eq2'].state) {
+					if(playerState.visualisations['canvas-audio-source-eq2'].state) {
 						drawEq2();
 					}
-					else if(playerState.visualisations['canvas-audio-source-eq3'].state) {
+					if(playerState.visualisations['canvas-audio-source-eq3'].state) {
 						drawEq3();
+						// canvasAudioSourceEq3.start(drawEq3);
+
+						// requestAnimationFrame(drawEq3);
 					}
-					else if(playerState.visualisations['triangle'].state) {
+					if(playerState.visualisations['triangle'].state) {
 				        drawFractalTriangle();
 					}
-					else if(playerState.visualisations['allEnabled'].state) {
+					if(playerState.visualisations['allEnabled'].state) {
 					// if(false) {
 				        drawEq1();
 				        drawEq2();
 				        drawEq3();
 				        drawFractalTriangle();
 					}
-			}
+			// }
 
 	        
 	        consoleOutput('AudioApiElement::playStream::End');
@@ -961,7 +983,7 @@ $(document).ready(function() {
 	// которая принимает объект с настройками (анализатора например (fft)),
 	// и колбэк - функцию рисования
 
-
+	
 
 	function drawEq1() {
 		// получаем canvas
@@ -1030,7 +1052,7 @@ $(document).ready(function() {
         								);
 	        }
 	    }
-	    requestAnimationFrame(drawEq3);
+	    var aInterval = requestAnimationFrame(drawEq3);
 	};
 
 	function drawEq4() {
@@ -1430,17 +1452,49 @@ $(document).ready(function() {
 	function enableVisualisations() {
 		var vis = playerState.visualisations;
 		var visOrder = vis.order;
-		console.log(vis);
-		var markup = '';
 
 		for (var i = 0, size = visOrder.length; i < size; i++) {
-			markup += '<label title="' + visOrder[i] + '"><input type="checkbox" data-animation-name="' + visOrder[i] + '" data-animation-state="' + vis[visOrder[i]].state + '" class="toggle-animation" /><div class=" button btn"><div class="iconWrapper"><div class="icon">' + vis[visOrder[i]].icon + '</div></div></div></label>';
+			var markup = '<label title="' + visOrder[i] + '"><input type="checkbox" data-animation-name="' + visOrder[i] + '" data-animation-state="' + vis[visOrder[i]].state + '" class="toggle-animation" /><div class="button btn"><div class="iconWrapper"><div class="icon">' + vis[visOrder[i]].icon + '</div></div></div></label>';
+			
+			$('.animation-settings').append(markup);
+
+			if(vis[visOrder[i]].state) {
+				$('[data-animation-name=' + visOrder[i] + ']').prop('checked', true);
+			} else {
+				$('[data-animation-name=' + visOrder[i] + ']').prop('checked', false);
+			}
 		}
-		$('.animation-settings').append(markup);
+
+		$('.toggle-animation').on('change', function(event) {
+			var $el = $(this);
+			var aName = $el.attr('data-animation-name');
+			var aState = $el.attr('data-animation-state');
+
+			console.log(playerState.visualisations[aName].name + ' - ' + playerState.visualisations[aName].state);
+
+			if(playerState.visualisations[aName].state) {
+				visStop(playerState.visualisations[aName].name);
+				
+			} else {
+				// $(this).next('.button').find('.icon').text('flash_auto');
+			}
+
+			$el.attr('data-animation-state', !playerState.visualisations[aName].state);
+			playerState.visualisations[aName].state = !playerState.visualisations[aName].state;
+
+			console.log(playerState.visualisations[aName].name + ' - ' + playerState.visualisations[aName].state);
+			localStorage.setItem('playerState', JSON.stringify(playerState));
+
+			return false;
+		});
 	}
 
 	function visStop(name) {
-		
+		console.log('::visStop');
+
+		// drawEq3.stop();
+		audioApiElement.streamData_3 = null;
+		// clearInterval(aInterval);
 	}
 
 	function getObjectProperties(obj) {
@@ -2055,25 +2109,6 @@ $(document).ready(function() {
 		return false;
 	});
 
-	$('.toggle-animation').on('change', function(event) {
-		var $el = $(this);
-		var aName = $el.attr('data-animation-name');
-		var aState = $el.attr('data-animation-state');
-		console.log(playerState.visualisations[aName].name + ' - ' + playerState.visualisations[aName].state);
-		if(playerState.visualisations[aName].state) {
-			visStop(playerState.visualisations[aName].name);
-			// $(this).next('.button').find('.icon').text('flash_off');
-		} else {
-			// $(this).next('.button').find('.icon').text('flash_auto');
-		}
-		playerState.visualisations[aName].state = !playerState.visualisations[aName].state;
-
-		console.log(playerState.visualisations[aName].name + ' - ' + playerState.visualisations[aName].state);
-		localStorage.setItem('playerState', JSON.stringify(playerState));
-
-		return false;
-	});
-
 
 
 
@@ -2141,6 +2176,8 @@ $(document).ready(function() {
 		// Основной и запасной аудио источники
 		audioApiElement 	= new AudioApiElement('playerTag'),
 		audioCbElement 		= new AudioCbElement(),
+
+		canvasAudioSourceEq3 = new DrawSound(),
 
 		// Таймер для визуализации трека
 		// TODO: переделать на requestAnimationFrame
@@ -2550,19 +2587,6 @@ $(document).ready(function() {
 			audioApiElement.playStream(getCurrentTrack().url);
 		}
 	}
-
-
-
-
-
-	/*try {
-		localStorage.setItem('limit', 'phhhhh');
-	} catch (e) {
-			if (e == QUOTA_EXCEEDED_ERR) {
-			consoleOutput('Превышен лимит');
-		}
-	}*/
-
 });
 
 
