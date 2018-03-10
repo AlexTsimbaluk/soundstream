@@ -160,7 +160,8 @@ gulp.task('watch', ['browser-sync'], function() {
     		'src/js/fractals-advanced.js',
     		'src/js/canvas.js'
     	],
-    	['js', 'js-min']
+    	// ['js', 'js-min']
+    	['js']
 	);
 	
 	gulp.watch([
