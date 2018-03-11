@@ -3201,6 +3201,7 @@ ol {
           border-radius: 2px;
   cursor: default;
   height: 50px;
+  margin: 0;
   padding: 6px;
   tansition: all .3s;
   position: relative;
@@ -3243,7 +3244,7 @@ ol {
   font-style: italic;
   max-height: 20px;
   overflow: hidden;
-  max-width: 250px;
+  width: 100%;
   word-break: break-all;
   position: absolute;
   top: 60%;
@@ -3673,8 +3674,8 @@ canvas {
 }
 #canvas-eq,
 #canvas-audio-source,
-#canvas-audio-source-eq2,
-#canvas-audio-source-eq3 {
+#visEqRight,
+#analyserVisVolume {
   position: absolute;
 }
 #canvas-audio-source {
@@ -3684,14 +3685,14 @@ canvas {
       -ms-transform: translateY(-50%);
           transform: translateY(-50%);
 }
-#canvas-audio-source-eq2 {
+#visEqRight {
   right: 0;
   top: 50%;
   -webkit-transform: translateY(-50%);
       -ms-transform: translateY(-50%);
           transform: translateY(-50%);
 }
-#canvas-audio-source-eq3 {
+#analyserVisVolume {
   left: 0;
   bottom: 30px;
 }
@@ -3806,4 +3807,22 @@ canvas {
 }
 .toggle-animation {
   display: none;
+}
+.toggle-animation + .button,
+.toggle-animation + .button.btn {
+  border: 0;
+  background: transparent;
+}
+.toggle-animation + .button:hover,
+.toggle-animation + .button.btn:hover {
+  background: transparent;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+.toggle-animation + .button .icon,
+.toggle-animation + .button.btn .icon {
+  color: rgba(189, 189, 189, 0.4);
+}
+.toggle-animation:checked + .button .icon {
+  color: #bdbdbd;
 }

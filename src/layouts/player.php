@@ -93,7 +93,7 @@
 			</label>
 
 			<label>
-				<input type="checkbox" data-animation-name="canvas-audio-source-eq2" data-animation-state class="toggle-animation" />
+				<input type="checkbox" data-animation-name="visEqRight" data-animation-state class="toggle-animation" />
 				<div class=" button btn">
 					<div class="iconWrapper">
 						<div class="icon"></div>
@@ -151,12 +151,9 @@
 				<input class="hidden" type="range" min="0" max="100" step="1" />
 				<span class="val"></span>
 			</div>
-			<!-- <div class="volumeVisualisation"></div> -->
 		</div>
 		
-		<!-- <canvas id="canvas-audio-source"></canvas>
-		<canvas id="canvas-audio-source-eq2"></canvas> -->
-		<canvas id="canvas-audio-source-eq3" width="288" height="20"></canvas>
+		<canvas id="analyserVisVolume" width="288" height="20"></canvas>
 		
 		<?php
 	        include_once 'layouts/nav-player.php';
@@ -280,7 +277,7 @@
 </div>
 
 <canvas id="canvas-audio-source"></canvas>
-<canvas id="canvas-audio-source-eq2"></canvas>
+<canvas id="visEqRight"></canvas>
 
 
 <audio id="playerTag" data-audio-api></audio>

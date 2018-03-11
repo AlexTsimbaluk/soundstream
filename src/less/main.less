@@ -804,6 +804,7 @@ ul, ol {
 		border-radius: 2px;
 		cursor: default;
 		height: 50px;
+		margin: 0;
 		padding: 6px;
 		tansition: all .3s;
 		position: relative;
@@ -832,7 +833,7 @@ ul, ol {
 			font-style: italic;
 			max-height: 20px;
 			overflow: hidden;
-			max-width: 250px;
+			width: 100%;
 			word-break: break-all;
 			position: absolute;
 			// bottom: 0;
@@ -1063,8 +1064,8 @@ canvas {
 
 #canvas-eq,
 #canvas-audio-source,
-#canvas-audio-source-eq2,
-#canvas-audio-source-eq3 {
+#visEqRight,
+#analyserVisVolume {
 	position: absolute;
 	
 }
@@ -1073,12 +1074,12 @@ canvas {
 	top: 50%;
 	transform: translateY(-50%);
 }
-#canvas-audio-source-eq2 {
+#visEqRight {
 	right: 0;
 	top: 50%;
 	transform: translateY(-50%);
 }
-#canvas-audio-source-eq3 {
+#analyserVisVolume {
 	left: 0;
 	bottom: 30px;			// 30px - высота .nav-admin
 }
@@ -1205,4 +1206,23 @@ canvas {
 	// [type=checkbox] {
 		display: none;
 	// }
+	+ .button,
+	+ .button.btn {
+		border: 0;
+		background: transparent;
+		&:hover {
+			background: transparent;
+			box-shadow: none;
+		}
+		.icon {
+			color: rgba(189, 189,189, .4);
+		}
+	}
+	&:checked {
+		+ .button {
+			.icon {
+				color: rgba(189, 189,189, 1);
+			}
+		}
+	}
 }

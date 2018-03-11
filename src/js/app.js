@@ -350,16 +350,18 @@ $(document).ready(function () {
 		};
 	}
 
-	// TODO: analyser сделать отдельным объектом,
-	// с которым будет работать AudioApiElement
-	function Analyser(ctx, src, analyserOpts) {
+	// http://ianreah.com/2013/02/28/Real-time-analysis-of-streaming-audio-data-with-Web-Audio-API.html
+	// https://dzone.com/articles/exploring-html5-web-audio - разделить каналы
+	function Analyser(src, analyserOpts) {
 		var self = this;
-		var analyser = ctx.createAnalyser();
+		var analyser = audioCtx.createAnalyser();
 		analyser.smoothingTimeConstant = analyserOpts.smoothingTimeConstant || 0.7;
 		analyser.fftSize = analyserOpts.fftSize || 512;
 
 		src.connect(analyser);
 		analyser.connect(audioCtx.destination);
+
+		self.streamData = new Uint8Array(analyser.frequencyBinCount);
 
 		var sampleAudioStream = function sampleAudioStream() {
 			analyser.getByteFrequencyData(self.streamData);
@@ -368,9 +370,8 @@ $(document).ready(function () {
 				total += self.streamData[i];
 			}
 		};
-		var aInterval = setInterval(sampleAudioStream, 20);
 
-		self.streamData = new Uint8Array(analyser.frequencyBinCount);
+		var aInterval = setInterval(sampleAudioStream, 20);
 	}
 
 	// объект, который запускает и останавливает  функцию отрисовки звуковых данных из streamdata
@@ -395,20 +396,53 @@ $(document).ready(function () {
 		var self = this;
 
 		var source = audioCtx.createMediaElementSource($playerTag);
-
-		var analyser_1 = new Analyser(audioCtx, source, { smoothingTimeConstant: 0.5, fftSize: 1024 });
-		var analyser_2 = new Analyser(audioCtx, source, { smoothingTimeConstant: 0.5, fftSize: 1024 });
-		var analyser_3 = new Analyser(audioCtx, source, { smoothingTimeConstant: 0.5, fftSize: 64 });
-		var analyser_4 = new Analyser(audioCtx, source, { smoothingTimeConstant: 0.5, fftSize: 512 });
-		var analyser_5 = new Analyser(audioCtx, source, { smoothingTimeConstant: 0.5, fftSize: 128 });
+		var analyser_1, analyserEqRight, analyserVolume, analyser_4, analyser_5;
+		analyser_1 = new Analyser(source, { smoothingTimeConstant: 0.2, fftSize: 1024 });
+		analyserEqRight = new Analyser(source, { smoothingTimeConstant: 0.5, fftSize: 1024 });
+		analyserVolume = new Analyser(source, { smoothingTimeConstant: 0.5, fftSize: 64 });
+		analyser_4 = new Analyser(source, { smoothingTimeConstant: 0.5, fftSize: 512 });
+		analyser_5 = new Analyser(source, { smoothingTimeConstant: 0.5, fftSize: 128 });
 
 		this.streamData_1 = analyser_1.streamData;
-		this.streamData_2 = analyser_2.streamData;
-		this.streamData_3 = analyser_3.streamData;
+		this.streamDataEqRight = analyserEqRight.streamData;
+		this.streamDataVolume = analyserVolume.streamData;
 		this.streamData_4 = analyser_4.streamData;
 		this.streamData_5 = analyser_5.streamData;
 
 		audioBindAll($playerTag, 'AudioApiElement');
+
+		this.visStart = function (visName) {
+			switch (visName) {
+				// case 'canvas-audio-source':
+				// case 'visEqRight':
+				// case 'triangle':
+				case 'visEqRight':
+					this.streamDataEqRight = analyserEqRight.streamData;
+					drawVisVolume();
+					break;
+				case 'analyserVisVolume':
+					this.streamDataVolume = analyserVolume.streamData;
+					drawVisVolume();
+					break;
+				default:
+					console.log('передано не canvas[id]');
+			}
+		};
+
+		this.visStop = function (visName) {
+			switch (visName) {
+				// case 'canvas-audio-source':
+				// case 'triangle':
+				case 'visEqRight':
+					this.streamDataEqRight = null;
+					break;
+				case 'analyserVisVolume':
+					this.streamDataVolume = null;
+					break;
+				default:
+					console.log('передано не canvas[id]');
+			}
+		};
 
 		this.playStream = function (streamUrl) {
 			consoleOutput('AudioApiElement::playStream::Begin');
@@ -442,7 +476,6 @@ $(document).ready(function () {
 				url: currentTrackEl.attr('data-station-url'),
 				title: currentTrackEl.attr('data-station-title'),
 				id: currentTrackEl.attr('data-station-id'),
-				// scrollPosition 	: currentTrackEl.position().top
 				scrollPosition: posLeft
 			};
 
@@ -451,19 +484,7 @@ $(document).ready(function () {
    													_currentTrack;*/
 
 			__playlists[getCurrentPlaylist()].currentTrack = _currentTrack;
-
 			// vmCurrentTrackTitle.title = _currentTrack.title;
-
-			// Запишем в объект состояния свойтво
-			// с позицией по высоте текущего трека
-			// для скрола к нему при загрузке страницы
-			/*playerState.
-   	playlists[getCurrentPlaylist()].
-   	currentTrack.
-   	scrollPosition = currentTrackEl.position().top;
-   	__playlists[getCurrentPlaylist()].
-   	currentTrack.
-   	scrollPosition = currentTrackEl.position().top;*/
 
 			$playerTag.src = streamUrl;
 			$playerTag.crossOrigin = 'anonymous';
@@ -529,14 +550,11 @@ $(document).ready(function () {
 			if (playerState.visualisations['canvas-audio-source'].state) {
 				drawEq1();
 			}
-			if (playerState.visualisations['canvas-audio-source-eq2'].state) {
-				drawEq2();
+			if (playerState.visualisations['visEqRight'].state) {
+				drawEqRight();
 			}
-			if (playerState.visualisations['canvas-audio-source-eq3'].state) {
-				drawEq3();
-				// canvasAudioSourceEq3.start(drawEq3);
-
-				// requestAnimationFrame(drawEq3);
+			if (playerState.visualisations['analyserVisVolume'].state) {
+				drawVisVolume();
 			}
 			if (playerState.visualisations['triangle'].state) {
 				drawFractalTriangle();
@@ -544,8 +562,8 @@ $(document).ready(function () {
 			if (playerState.visualisations['allEnabled'].state) {
 				// if(false) {
 				drawEq1();
-				drawEq2();
-				drawEq3();
+				drawEqRight();
+				drawVisVolume();
 				drawFractalTriangle();
 			}
 			// }
@@ -859,25 +877,26 @@ $(document).ready(function () {
 		requestAnimationFrame(drawEq1);
 	};
 
-	function drawEq2() {
+	function drawEqRight() {
+		// правый eq
 		// получаем canvas
-		var canvas = new AudioCanvas('canvas-audio-source-eq2', 500, 255 * 2);
+		var canvas = new AudioCanvas('visEqRight', 500, 255 * 2);
 		canvas.ctx.clearRect(0, 0, canvas.canvasWidth, canvas.canvasHeight);
 
-		for (var bin = 0, size = audioApiElement.streamData_2.length; bin < size; bin++) {
-			var val = audioApiElement.streamData_2[bin];
+		for (var bin = 0; audioApiElement.streamDataEqRight && bin < audioApiElement.streamDataEqRight.length; bin++) {
+			var val = audioApiElement.streamDataEqRight[bin];
 			// canvas.ctx.fillStyle = 'rgb(' + (val) + ',' + (val) + ',' + (val) + ')';
 			// canvas.ctx.fillStyle = 'rgb(' + (255 - val) + ',' + (255 - val) + ',' + (255 - val) + ')';
 			canvas.ctx.fillStyle = 'rgb(' + (255 - val) + ',' + val + ',' + (255 - val) + ')';
-			canvas.ctx.fillRect(size - bin, canvas.canvasHeight / 2 + 1, 1, -val / 1.5);
-			canvas.ctx.fillRect(size - bin, canvas.canvasHeight / 2 - 1, 1, val / 1.5);
+			canvas.ctx.fillRect(audioApiElement.streamDataEqRight.length - bin, canvas.canvasHeight / 2 + 1, 1, -val / 1.5);
+			canvas.ctx.fillRect(audioApiElement.streamDataEqRight.length - bin, canvas.canvasHeight / 2 - 1, 1, val / 1.5);
 		}
-		requestAnimationFrame(drawEq2);
+		requestAnimationFrame(drawEqRight);
 	};
 
-	function drawEq3() {
+	function drawVisVolume() {
 		// громкость
-		var canvas = new AudioCanvas('canvas-audio-source-eq3', 288, 20);
+		var canvas = new AudioCanvas('analyserVisVolume', 288, 20);
 		canvas.ctx.clearRect(0, 0, canvas.canvasWidth, canvas.canvasHeight);
 		// получаем число плиток в вертикальном ряду при максимальном значении частоты 255
 		// в одной плитке - 10 едениц частоты
@@ -898,8 +917,8 @@ $(document).ready(function () {
 
 		// полная высота плитки  с зазором
 		fullBarHeight = barHeight + gutter;
-		for (var i = 0; i < audioApiElement.streamData_3.length; i++) {
-			var val = audioApiElement.streamData_3[i],
+		for (var i = 0; audioApiElement.streamDataVolume && i < audioApiElement.streamDataVolume.length; i++) {
+			var val = audioApiElement.streamDataVolume[i],
 			    totalBar = Math.floor(val / 10);
 			// canvas.ctx.fillStyle = 'rgb(' + (255 - val) + ',' + (val) + ',' + (255 - val) + ')';
 			// canvas.ctx.fillRect(i, canvas.canvasHeight, 1, -val / 1);
@@ -910,7 +929,12 @@ $(document).ready(function () {
 				canvas.ctx.strokeRect(i * fullBarWidth, canvas.canvasHeight - j * fullBarHeight, barWidth, barHeight);
 			}
 		}
-		var aInterval = requestAnimationFrame(drawEq3);
+		requestAnimationFrame(drawVisVolume);
+
+		/*setTimeout(function() {
+  	console.log('asdasdsad');
+  	cancelAnimationFrame(requestAnimationFrame(drawVisVolume));
+  }, 8000);*/
 	};
 
 	function drawEq4() {
@@ -1261,30 +1285,18 @@ $(document).ready(function () {
 			var aName = $el.attr('data-animation-name');
 			var aState = $el.attr('data-animation-state');
 
-			console.log(playerState.visualisations[aName].name + ' - ' + playerState.visualisations[aName].state);
+			$el.attr('data-animation-state', !playerState.visualisations[aName].state);
 
 			if (playerState.visualisations[aName].state) {
-				visStop(playerState.visualisations[aName].name);
+				audioApiElement.visStop(playerState.visualisations[aName].name);
 			} else {
-				// $(this).next('.button').find('.icon').text('flash_auto');
+				audioApiElement.visStart(playerState.visualisations[aName].name);
 			}
-
-			$el.attr('data-animation-state', !playerState.visualisations[aName].state);
 			playerState.visualisations[aName].state = !playerState.visualisations[aName].state;
 
-			console.log(playerState.visualisations[aName].name + ' - ' + playerState.visualisations[aName].state);
 			localStorage.setItem('playerState', JSON.stringify(playerState));
-
 			return false;
 		});
-	}
-
-	function visStop(name) {
-		console.log('::visStop');
-
-		// drawEq3.stop();
-		audioApiElement.streamData_3 = null;
-		// clearInterval(aInterval);
 	}
 
 	function getObjectProperties(obj) {
@@ -1975,31 +1987,31 @@ $(document).ready(function () {
 		playerState.paused = true;
 
 		playerState.visualisations = {};
-		playerState.visualisations.order = ['allEnabled', 'canvas-audio-source', 'canvas-audio-source-eq2', 'canvas-audio-source-eq3', 'triangle'];
+		playerState.visualisations.order = ['allEnabled', 'canvas-audio-source', 'visEqRight', 'analyserVisVolume', 'triangle'];
 		playerState.visualisations['allEnabled'] = {
 			icon: 'flash_auto',
 			name: 'allEnabled',
-			state: true
+			state: false
 		};
 		playerState.visualisations['canvas-audio-source'] = {
 			icon: 'graphic_eq',
 			name: 'canvas-audio-source',
-			state: true
+			state: false
 		};
-		playerState.visualisations['canvas-audio-source-eq2'] = {
+		playerState.visualisations['visEqRight'] = {
 			icon: 'graphic_eq',
-			name: 'canvas-audio-source-eq2',
-			state: true
+			name: 'visEqRight',
+			state: false
 		};
-		playerState.visualisations['canvas-audio-source-eq3'] = {
+		playerState.visualisations['analyserVisVolume'] = {
 			icon: 'equalizer',
-			name: 'canvas-audio-source-eq3',
+			name: 'analyserVisVolume',
 			state: true
 		};
 		playerState.visualisations['triangle'] = {
 			icon: 'brightness_auto',
 			name: 'triangle',
-			state: true
+			state: false
 		};
 
 		playerState.search.stationsOpened = [];
