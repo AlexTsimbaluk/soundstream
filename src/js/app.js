@@ -396,29 +396,32 @@ $(document).ready(function () {
 		var self = this;
 
 		var source = audioCtx.createMediaElementSource($playerTag);
-		var analyser_1, analyserEqRight, analyserVolume, analyser_4, analyser_5;
-		analyser_1 = new Analyser(source, { smoothingTimeConstant: 0.2, fftSize: 1024 });
+		var analyserEqLeft, analyserEqRight, analyserVolume, analyserTriangle;
+		analyserEqLeft = new Analyser(source, { smoothingTimeConstant: 0.2, fftSize: 1024 });
 		analyserEqRight = new Analyser(source, { smoothingTimeConstant: 0.5, fftSize: 1024 });
 		analyserVolume = new Analyser(source, { smoothingTimeConstant: 0.5, fftSize: 64 });
-		analyser_4 = new Analyser(source, { smoothingTimeConstant: 0.5, fftSize: 512 });
-		analyser_5 = new Analyser(source, { smoothingTimeConstant: 0.5, fftSize: 128 });
+		analyserTriangle = new Analyser(source, { smoothingTimeConstant: 0.5, fftSize: 128 });
 
-		this.streamData_1 = analyser_1.streamData;
+		this.streamDataEqLeft = analyserEqLeft.streamData;
 		this.streamDataEqRight = analyserEqRight.streamData;
 		this.streamDataVolume = analyserVolume.streamData;
-		this.streamData_4 = analyser_4.streamData;
-		this.streamData_5 = analyser_5.streamData;
+		this.streamDataTriangle = analyserTriangle.streamData;
 
 		audioBindAll($playerTag, 'AudioApiElement');
 
 		this.visStart = function (visName) {
 			switch (visName) {
-				// case 'canvas-audio-source':
-				// case 'visEqRight':
-				// case 'triangle':
+				case 'visTriangle':
+					this.streamDataTriangle = analyserTriangle.streamData;
+					drawTriangle();
+					break;
+				case 'visEqLeft':
+					this.streamDataEqLeft = analyserEqLeft.streamData;
+					drawEqLeft();
+					break;
 				case 'visEqRight':
 					this.streamDataEqRight = analyserEqRight.streamData;
-					drawVisVolume();
+					drawEqRight();
 					break;
 				case 'analyserVisVolume':
 					this.streamDataVolume = analyserVolume.streamData;
@@ -431,8 +434,12 @@ $(document).ready(function () {
 
 		this.visStop = function (visName) {
 			switch (visName) {
-				// case 'canvas-audio-source':
-				// case 'triangle':
+				case 'visTriangle':
+					this.streamDataTriangle = null;
+					break;
+				case 'visEqLeft':
+					this.streamDataEqLeft = null;
+					break;
 				case 'visEqRight':
 					this.streamDataEqRight = null;
 					break;
@@ -545,10 +552,8 @@ $(document).ready(function () {
 			localStorage.setItem('playerState', JSON.stringify(playerState));
 			localStorage.setItem('__playlists', JSON.stringify(__playlists));
 
-			// if(window.innerHeight >= 720  ||
-			// window.innerWidth >= 1000) {
-			if (playerState.visualisations['canvas-audio-source'].state) {
-				drawEq1();
+			if (playerState.visualisations['visEqLeft'].state) {
+				drawEqLeft();
 			}
 			if (playerState.visualisations['visEqRight'].state) {
 				drawEqRight();
@@ -556,22 +561,18 @@ $(document).ready(function () {
 			if (playerState.visualisations['analyserVisVolume'].state) {
 				drawVisVolume();
 			}
-			if (playerState.visualisations['triangle'].state) {
-				drawFractalTriangle();
+			if (playerState.visualisations['visTriangle'].state) {
+				drawTriangle();
 			}
 			if (playerState.visualisations['allEnabled'].state) {
-				// if(false) {
-				drawEq1();
+				drawEqLeft();
 				drawEqRight();
 				drawVisVolume();
-				drawFractalTriangle();
+				drawTriangle();
 			}
-			// }
-
 
 			consoleOutput('AudioApiElement::playStream::End');
 			// TODO: добавить на играющий трек эквалайзер
-			// addEqToTrack(currentTrackEl, 'canvas-audio-source');
 		};
 		// TODO: добавить сюда остановку анимации
 		this.stopStream = function () {
@@ -597,7 +598,6 @@ $(document).ready(function () {
 		this.getVolume = function () {
 			return $playerTag.volume;
 		};
-		// self.setVolume(playerState.volume);
 	}
 
 	// Фолбэк если не срабатывает Audio API
@@ -862,25 +862,29 @@ $(document).ready(function () {
 	// и колбэк - функцию рисования
 
 
-	function drawEq1() {
+	function drawEqLeft() {
+		// левый eq
+		var maxValue = window.innerHeight > 510 ? 510 : Math.ceil(window.innerHeight / 2);
 		// получаем canvas
-		var canvas = new AudioCanvas('canvas-audio-source', 500, 255 * 2);
+		// var canvas = new AudioCanvas('visEqLeft', 500, 255 * 2);
+		var canvas = new AudioCanvas('visEqLeft', 500, maxValue * 2);
 		canvas.ctx.clearRect(0, 0, canvas.canvasWidth, canvas.canvasHeight);
 
-		for (var bin = 0; bin < audioApiElement.streamData_1.length; bin++) {
-			var val = audioApiElement.streamData_1[bin];
+		for (var bin = 0; audioApiElement.streamDataEqLeft && bin < audioApiElement.streamDataEqLeft.length; bin++) {
+			var val = audioApiElement.streamDataEqLeft[bin];
 			canvas.ctx.fillStyle = 'rgb(' + val + ',' + val + ',' + val + ')';
 			// canvas.ctx.fillStyle = 'rgb(' + (255 - val) + ',' + (255 - val) + ',' + (255 - val) + ')';
 			canvas.ctx.fillRect(bin, canvas.canvasHeight / 2 + 1, 1, Math.floor(-val / 1.5));
 			canvas.ctx.fillRect(bin, canvas.canvasHeight / 2 - 1, 1, Math.floor(val / 1.5));
 		}
-		requestAnimationFrame(drawEq1);
+		requestAnimationFrame(drawEqLeft);
 	};
 
 	function drawEqRight() {
 		// правый eq
+		var maxValue = window.innerHeight > 510 ? 510 : Math.ceil(window.innerHeight / 2);
 		// получаем canvas
-		var canvas = new AudioCanvas('visEqRight', 500, 255 * 2);
+		var canvas = new AudioCanvas('visEqRight', 500, maxValue * 2);
 		canvas.ctx.clearRect(0, 0, canvas.canvasWidth, canvas.canvasHeight);
 
 		for (var bin = 0; audioApiElement.streamDataEqRight && bin < audioApiElement.streamDataEqRight.length; bin++) {
@@ -930,39 +934,20 @@ $(document).ready(function () {
 			}
 		}
 		requestAnimationFrame(drawVisVolume);
-
-		/*setTimeout(function() {
-  	console.log('asdasdsad');
-  	cancelAnimationFrame(requestAnimationFrame(drawVisVolume));
-  }, 8000);*/
 	};
 
-	function drawEq4() {
+	function drawTriangle() {
+		var maxValue = window.innerHeight > 510 ? 510 : Math.ceil(window.innerHeight / 2);
 		// получаем canvas
-		var canvas = new AudioCanvas('canvas-fractal', 500, 255 * 2);
-		canvas.ctx.clearRect(0, 0, canvas.canvasWidth, canvas.canvasHeight);
-
-		for (var bin = 0; bin < audioApiElement.streamData_4.length; bin++) {
-			var val = audioApiElement.streamData_4[bin];
-			canvas.ctx.fillStyle = 'rgb(' + val + ',' + val + ',' + val + ')';
-			// canvas.ctx.fillStyle = 'rgb(' + (255 - val) + ',' + (255 - val) + ',' + (255 - val) + ')';
-			canvas.ctx.fillRect(bin, canvas.canvasHeight / 2 + 1, 1, Math.floor(-val / 1.5));
-			canvas.ctx.fillRect(bin, canvas.canvasHeight / 2 - 1, 1, Math.floor(val / 1.5));
-		}
-		requestAnimationFrame(drawEq4);
-	};
-
-	function drawFractalTriangle() {
-		// получаем canvas
-		var canvas = new AudioCanvas('triangle', 540, 255 * 2);
+		var canvas = new AudioCanvas('visTriangle', 540, maxValue * 2);
 		canvas.ctx.clearRect(0, 0, canvas.canvasWidth, canvas.canvasHeight);
 
 		canvas.ctx.translate(canvas.canvasWidth / 2, canvas.canvasHeight / 2);
 
 		// при fftSize > 64 тормозит
-		for (var bin = 0; bin < audioApiElement.streamData_5.length; bin++) {
-			// var val = audioApiElement.streamData_5[bin] % 50;
-			var val = audioApiElement.streamData_5[bin] % 10;
+		for (var bin = 0; audioApiElement.streamDataTriangle && bin < audioApiElement.streamDataTriangle.length; bin++) {
+			// var val = audioApiElement.streamDataTriangle[bin] % 50;
+			var val = audioApiElement.streamDataTriangle[bin] % 10;
 
 			// canvas.ctx.strokeStyle = 'rgb(' + (val) + ',' + (val) + ',' + (val) + ')';
 			canvas.ctx.strokeStyle = 'rgb(255, 255, 255)';
@@ -975,10 +960,10 @@ $(document).ready(function () {
 				canvas.ctx.strokeStyle = "rgb(" + Math.floor(255 - 255 / val * bin) + "," + Math.floor(0 + 255 / val * bin) + "," + Math.floor(255 - 255 / val * bin) + ")";
 			}
 
-			canvas.ctx.moveTo(audioApiElement.streamData_5[bin] / 3, audioApiElement.streamData_5[bin]);
-			canvas.ctx.lineTo(audioApiElement.streamData_5[bin] % 5, audioApiElement.streamData_5[bin] / 1.618);
-			canvas.ctx.lineTo(audioApiElement.streamData_5[bin] / 1.618, audioApiElement.streamData_5[bin]);
-			canvas.ctx.lineTo(audioApiElement.streamData_5[bin], audioApiElement.streamData_5[bin]);
+			canvas.ctx.moveTo(audioApiElement.streamDataTriangle[bin] / 3, audioApiElement.streamDataTriangle[bin]);
+			canvas.ctx.lineTo(audioApiElement.streamDataTriangle[bin] % 5, audioApiElement.streamDataTriangle[bin] / 1.618);
+			canvas.ctx.lineTo(audioApiElement.streamDataTriangle[bin] / 1.618, audioApiElement.streamDataTriangle[bin]);
+			canvas.ctx.lineTo(audioApiElement.streamDataTriangle[bin], audioApiElement.streamDataTriangle[bin]);
 
 			/*canvas.ctx.moveTo(240, val * 1.7);
    canvas.ctx.lineTo(val * 1.7, val * 3);
@@ -986,7 +971,7 @@ $(document).ready(function () {
    canvas.ctx.lineTo(240, val * 1.7);*/
 
 			canvas.ctx.stroke();
-			canvas.ctx.strokeRect(0, 0, audioApiElement.streamData_5[bin], audioApiElement.streamData_5[bin]);
+			canvas.ctx.strokeRect(0, 0, audioApiElement.streamDataTriangle[bin], audioApiElement.streamDataTriangle[bin]);
 			// canvas.ctx.strokeRect(0, 0, val, 45);
 
 			canvas.ctx.rotate(4 * Math.PI);
@@ -994,7 +979,21 @@ $(document).ready(function () {
 			canvas.ctx.rotate(2 * Math.PI);
 			canvas.ctx.rotate(Math.PI / 4);
 		}
-		requestAnimationFrame(drawFractalTriangle);
+		requestAnimationFrame(drawTriangle);
+	};
+
+	function drawEq4() {
+		var canvas = new AudioCanvas('canvas-fractal', 500, 255 * 2);
+		canvas.ctx.clearRect(0, 0, canvas.canvasWidth, canvas.canvasHeight);
+
+		for (var bin = 0; bin < audioApiElement.streamData_4.length; bin++) {
+			var val = audioApiElement.streamData_4[bin];
+			canvas.ctx.fillStyle = 'rgb(' + val + ',' + val + ',' + val + ')';
+			// canvas.ctx.fillStyle = 'rgb(' + (255 - val) + ',' + (255 - val) + ',' + (255 - val) + ')';
+			canvas.ctx.fillRect(bin, canvas.canvasHeight / 2 + 1, 1, Math.floor(-val / 1.5));
+			canvas.ctx.fillRect(bin, canvas.canvasHeight / 2 - 1, 1, Math.floor(val / 1.5));
+		}
+		requestAnimationFrame(drawEq4);
 	};
 
 	function addEqToTrack(track, canvasId) {
@@ -1987,15 +1986,15 @@ $(document).ready(function () {
 		playerState.paused = true;
 
 		playerState.visualisations = {};
-		playerState.visualisations.order = ['allEnabled', 'canvas-audio-source', 'visEqRight', 'analyserVisVolume', 'triangle'];
+		playerState.visualisations.order = ['allEnabled', 'visEqLeft', 'analyserVisVolume', 'visEqRight', 'visTriangle'];
 		playerState.visualisations['allEnabled'] = {
 			icon: 'flash_auto',
 			name: 'allEnabled',
 			state: false
 		};
-		playerState.visualisations['canvas-audio-source'] = {
+		playerState.visualisations['visEqLeft'] = {
 			icon: 'graphic_eq',
-			name: 'canvas-audio-source',
+			name: 'visEqLeft',
 			state: false
 		};
 		playerState.visualisations['visEqRight'] = {
@@ -2008,9 +2007,9 @@ $(document).ready(function () {
 			name: 'analyserVisVolume',
 			state: true
 		};
-		playerState.visualisations['triangle'] = {
+		playerState.visualisations['visTriangle'] = {
 			icon: 'brightness_auto',
-			name: 'triangle',
+			name: 'visTriangle',
 			state: false
 		};
 

@@ -3673,12 +3673,12 @@ canvas {
   right: 10px;
 }
 #canvas-eq,
-#canvas-audio-source,
+#visEqLeft,
 #visEqRight,
 #analyserVisVolume {
   position: absolute;
 }
-#canvas-audio-source {
+#visEqLeft {
   left: 0;
   top: 50%;
   -webkit-transform: translateY(-50%);
@@ -3791,7 +3791,7 @@ canvas {
 .button-panel .btn:not(.btn-raised):not(.btn-link):hover {
   background: rgba(0, 0, 0, 0.5);
 }
-#triangle {
+#visTriangle {
   position: absolute;
   left: 50%;
   top: 50%;

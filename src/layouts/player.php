@@ -276,8 +276,9 @@
 	</template>
 </div>
 
-<canvas id="canvas-audio-source"></canvas>
+<canvas id="visEqLeft"></canvas>
 <canvas id="visEqRight"></canvas>
+<canvas id="visTriangle"></canvas>
 
 
 <audio id="playerTag" data-audio-api></audio>

@@ -1,5 +1,3 @@
-<canvas id="triangle"></canvas>
-
 <div class="fractals hidden">
 	
 	<!-- Фрактал на кривых -->
