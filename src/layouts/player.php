@@ -75,10 +75,17 @@
 
 		<div class="animation-settings controls">
 			<label>
-				<div class="getConfig button btn" title="Import your configuration in file">
+				<div class="getConfig config button btn" title="Import your configuration in file">
 					<div class="iconWrapper">
 						<div class="icon">receipt</div>
 					</div>
+				</div>
+			</label>
+			<label>
+				<div class="downloadConfig config button btn" title="Download file with your configuration">
+					<a href="config.txt" download class="iconWrapper">
+						<div class="icon">file_download</div>
+					</a>
 				</div>
 			</label>
 			<!-- <label>

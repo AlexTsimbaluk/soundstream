@@ -2119,7 +2119,7 @@ $(document).ready(function() {
 
 	$('.getConfig').on('click', function() {
 		$.ajax({
-			data: {'action': 'configToFile', 'config': playerState},
+			data: {'action': 'configToFile', 'config': JSON.stringify(playerState)},
 			success: function(data) {
 				// stationsArray = JSON.parse(data);
 			}
