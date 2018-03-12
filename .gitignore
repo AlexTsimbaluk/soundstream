@@ -3,3 +3,4 @@ package-lock.json
 users
 'apache2 and nginx config'
 server*
+__*.txt

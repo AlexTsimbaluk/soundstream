@@ -1536,6 +1536,15 @@ $(document).ready(function() {
 		}
 	}
 
+	function makeConfig() {
+		$.ajax({
+			data: {'action': 'configToFile', 'config': JSON.stringify(playerState)},
+			success: function(data) {
+				console.log('config is made');
+			}
+		});
+	}
+
 
 
 
@@ -2117,18 +2126,7 @@ $(document).ready(function() {
 		return false;
 	});
 
-	$('.getConfig').on('click', function() {
-		$.ajax({
-			data: {'action': 'configToFile', 'config': JSON.stringify(playerState)},
-			success: function(data) {
-				// stationsArray = JSON.parse(data);
-			}
-		});
-		return false;
-	});
-
-
-
+	
 
 
 	/*
@@ -2605,10 +2603,6 @@ $(document).ready(function() {
 			}
 			audioApiElement.playStream(getCurrentTrack().url);
 		}
+		makeConfig();
 	}
-});
-
-
-$(window).load(function() {
-
 });

@@ -396,13 +396,16 @@ function configToFile($config) {
 	global $link;
 
 	// в этот файл запишем сосотояние
-	$file = 'config.txt';
+	$file = '__config.txt';
 	// Открываем файл для получения существующего содержимого
 	// $current = file_get_contents($file);
 	// Добавляем нового человека в файл
 	// $current .= "John Smith\n";
 	// Пишем содержимое обратно в файл
 	// file_put_contents($file, $current);
+	// echo json_encode($config);
+	// echo ($config);
+
 	file_put_contents($file, ($config));
 
 	/*$query = "select * from stations order by station_id";

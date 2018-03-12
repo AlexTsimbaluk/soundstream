@@ -1335,6 +1335,15 @@ $(document).ready(function () {
 		}
 	}
 
+	function makeConfig() {
+		$.ajax({
+			data: { 'action': 'configToFile', 'config': JSON.stringify(playerState) },
+			success: function success(data) {
+				console.log('config is made');
+			}
+		});
+	}
+
 	$('#player .prev').click(function (e) {
 		consoleOutput('prev');
 		var playUrl = getSibling('prev');
@@ -1819,16 +1828,6 @@ $(document).ready(function () {
 		return false;
 	});
 
-	$('.getConfig').on('click', function () {
-		$.ajax({
-			data: { 'action': 'configToFile', 'config': JSON.stringify(playerState) },
-			success: function success(data) {
-				// stationsArray = JSON.parse(data);
-			}
-		});
-		return false;
-	});
-
 	/*
  	Чтобы на экранах в высоту меньше 640px у блока playlistContainer с треками 
  	выставить всю доступную высоту
@@ -2268,10 +2267,9 @@ $(document).ready(function () {
 			}
 			audioApiElement.playStream(getCurrentTrack().url);
 		}
+		makeConfig();
 	}
 });
-
-$(window).load(function () {});
 'use strict';
 
 $(document).ready(function () {
