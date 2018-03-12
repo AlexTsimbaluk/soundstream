@@ -74,49 +74,15 @@
 		</div>
 
 		<div class="animation-settings controls">
-			<div class="getConfig button btn" title="Import your configuration in .txt file">
-				<div class="iconWrapper">
-					<div class="icon">receipt</div>
+			<label>
+				<div class="getConfig button btn" title="Import your configuration in file">
+					<div class="iconWrapper">
+						<div class="icon">receipt</div>
+					</div>
 				</div>
-			</div>
+			</label>
 			<!-- <label>
 				<input type="checkbox" data-animation-name="allEnabled" data-animation-state class="toggle-animation" />
-				<div class=" button btn">
-					<div class="iconWrapper">
-						<div class="icon"></div>
-					</div>
-				</div>
-			</label>
-
-			<label>
-				<input type="checkbox" data-animation-name="canvas-audio-source" data-animation-state class="toggle-animation" />
-				<div class=" button btn">
-					<div class="iconWrapper">
-						<div class="icon"></div>
-					</div>
-				</div>
-			</label>
-
-			<label>
-				<input type="checkbox" data-animation-name="visEqRight" data-animation-state class="toggle-animation" />
-				<div class=" button btn">
-					<div class="iconWrapper">
-						<div class="icon"></div>
-					</div>
-				</div>
-			</label>
-
-			<label>
-				<input type="checkbox" data-animation-name="canvas-audio-source-eq3" data-animation-state class="toggle-animation" />
-				<div class=" button btn">
-					<div class="iconWrapper">
-						<div class="icon"></div>
-					</div>
-				</div>
-			</label>
-
-			<label>
-				<input type="checkbox" data-animation-name="triangle" data-animation-state class="toggle-animation" />
 				<div class=" button btn">
 					<div class="iconWrapper">
 						<div class="icon"></div>
@@ -126,7 +92,6 @@
 		</div>
 
 		<div class="controls">
-			<!-- <div class="play button"><span class="inner"></span><span class="outer"></span><div class="iconWrapper"><i class="fa fa-play"></i></div></div> -->
 			<div class="play button btn">
 				<span class="inner js-animate"></span>
 				<span class="outer js-animate"></span>

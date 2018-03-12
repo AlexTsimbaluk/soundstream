@@ -1821,7 +1821,7 @@ $(document).ready(function () {
 
 	$('.getConfig').on('click', function () {
 		$.ajax({
-			data: { 'action': 'configToFile', 'config': JSON.stringify(playerState) },
+			data: { 'action': 'configToFile', 'config': playerState },
 			success: function success(data) {
 				// stationsArray = JSON.parse(data);
 			}

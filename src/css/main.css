@@ -3826,3 +3826,21 @@ canvas {
 .toggle-animation:checked + .button .icon {
   color: #bdbdbd;
 }
+.getConfig,
+.getConfig.button,
+.getConfig.button.btn {
+  border: 0;
+  background: transparent;
+}
+.getConfig:hover,
+.getConfig.button:hover,
+.getConfig.button.btn:hover {
+  background: transparent;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+.getConfig .icon,
+.getConfig.button .icon,
+.getConfig.button.btn .icon {
+  color: #bdbdbd;
+}
