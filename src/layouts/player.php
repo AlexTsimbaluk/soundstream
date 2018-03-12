@@ -74,6 +74,11 @@
 		</div>
 
 		<div class="animation-settings controls">
+			<div class="getConfig button btn" title="Import your configuration in .txt file">
+				<div class="iconWrapper">
+					<div class="icon">receipt</div>
+				</div>
+			</div>
 			<!-- <label>
 				<input type="checkbox" data-animation-name="allEnabled" data-animation-state class="toggle-animation" />
 				<div class=" button btn">

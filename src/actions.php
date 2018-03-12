@@ -86,3 +86,8 @@ if ($_POST['action'] == 'checkUniqToday' && !empty($_POST['cookie'])) {
 if ($_POST['admin'] == 1) {
 	include_once 'layouts/admin.php';
 }
+
+// сохраняем все состояние в файл
+if ($_POST['action'] == 'configToFile' && !empty($_POST['config'])) {
+	configToFile($_POST['config']);
+}

@@ -1819,6 +1819,16 @@ $(document).ready(function () {
 		return false;
 	});
 
+	$('.getConfig').on('click', function () {
+		$.ajax({
+			data: { 'action': 'configToFile', 'config': JSON.stringify(playerState) },
+			success: function success(data) {
+				// stationsArray = JSON.parse(data);
+			}
+		});
+		return false;
+	});
+
 	/*
  	Чтобы на экранах в высоту меньше 640px у блока playlistContainer с треками 
  	выставить всю доступную высоту

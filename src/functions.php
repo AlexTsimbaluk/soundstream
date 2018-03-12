@@ -389,3 +389,37 @@ function authUser($login, $password) {
 	}
 	mysqli_close($link);
 }*/
+
+
+// сохраняем все сосояние в файл
+function configToFile($config) {
+	global $link;
+
+	// в этот файл запишем сосотояние
+	$file = 'config.txt';
+	// Открываем файл для получения существующего содержимого
+	// $current = file_get_contents($file);
+	// Добавляем нового человека в файл
+	// $current .= "John Smith\n";
+	// Пишем содержимое обратно в файл
+	// file_put_contents($file, $current);
+	file_put_contents($file, $config);
+
+	/*$query = "select * from stations order by station_id";
+	$result = mysqli_query($link, $query);
+	$data = array();
+
+	while ($row = mysqli_fetch_assoc($result)) {
+		$key = $row['station_id'];
+		$data[$key] = $row;
+	}
+	echo json_encode($data);
+
+	if (!$result) {
+		echo mysqli_error($link);
+	} else {
+		// echo 'GOOD QUERY!';
+	}*/
+
+	mysqli_close($link);
+}
