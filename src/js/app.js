@@ -400,7 +400,7 @@ $(document).ready(function () {
 		analyserEqLeft = new Analyser(source, { smoothingTimeConstant: 0.2, fftSize: 1024 });
 		analyserEqRight = new Analyser(source, { smoothingTimeConstant: 0.5, fftSize: 1024 });
 		analyserVolume = new Analyser(source, { smoothingTimeConstant: 0.5, fftSize: 64 });
-		analyserTriangle = new Analyser(source, { smoothingTimeConstant: 0.5, fftSize: 128 });
+		analyserTriangle = new Analyser(source, { smoothingTimeConstant: 0.9, fftSize: 32 });
 
 		this.streamDataEqLeft = analyserEqLeft.streamData;
 		this.streamDataEqRight = analyserEqRight.streamData;
@@ -941,8 +941,9 @@ $(document).ready(function () {
 		// получаем canvas
 		var canvas = new AudioCanvas('visTriangle', 540, maxValue * 2);
 		canvas.ctx.clearRect(0, 0, canvas.canvasWidth, canvas.canvasHeight);
-
 		canvas.ctx.translate(canvas.canvasWidth / 2, canvas.canvasHeight / 2);
+
+		var fib = 1.6180339;
 
 		// при fftSize > 64 тормозит
 		for (var bin = 0; audioApiElement.streamDataTriangle && bin < audioApiElement.streamDataTriangle.length; bin++) {
@@ -957,10 +958,10 @@ $(document).ready(function () {
 			} else if (bin % 3 == 0) {
 				canvas.ctx.strokeStyle = "rgb(0," + Math.floor(0 + 255 / val * bin) + "," + Math.floor(0 + 255 / val * bin) + ")";
 			} else {
-				canvas.ctx.strokeStyle = "rgb(" + Math.floor(255 - 255 / val * bin) + "," + Math.floor(0 + 255 / val * bin) + "," + Math.floor(255 - 255 / val * bin) + ")";
+				canvas.ctx.strokeStyle = "rgba(" + Math.floor(255 - 255 / val * bin) + "," + Math.floor(0 + 255 / val * bin) + "," + Math.floor(255 - 255 / val * bin) + ".5)";
 			}
 
-			canvas.ctx.moveTo(audioApiElement.streamDataTriangle[bin] / 3, audioApiElement.streamDataTriangle[bin]);
+			canvas.ctx.moveTo(audioApiElement.streamDataTriangle[bin], audioApiElement.streamDataTriangle[bin]);
 			canvas.ctx.lineTo(audioApiElement.streamDataTriangle[bin] % 5, audioApiElement.streamDataTriangle[bin] / 1.618);
 			canvas.ctx.lineTo(audioApiElement.streamDataTriangle[bin] / 1.618, audioApiElement.streamDataTriangle[bin]);
 			canvas.ctx.lineTo(audioApiElement.streamDataTriangle[bin], audioApiElement.streamDataTriangle[bin]);
@@ -975,25 +976,36 @@ $(document).ready(function () {
 			// canvas.ctx.strokeRect(0, 0, val, 45);
 
 			canvas.ctx.rotate(4 * Math.PI);
-			canvas.ctx.rotate(Math.PI * 3 / 90);
+			canvas.ctx.rotate(Math.PI * 3 / 60);
 			canvas.ctx.rotate(2 * Math.PI);
 			canvas.ctx.rotate(Math.PI / 4);
 		}
 		requestAnimationFrame(drawTriangle);
 	};
 
-	function drawEq4() {
-		var canvas = new AudioCanvas('canvas-fractal', 500, 255 * 2);
+	function drawFractal() {
+		var canvas = new AudioCanvas('visFractal', 500, 255 * 2);
 		canvas.ctx.clearRect(0, 0, canvas.canvasWidth, canvas.canvasHeight);
+
+		var qtMin = 5;
+		var fib = 1.6180339;
 
 		for (var bin = 0; bin < audioApiElement.streamData_4.length; bin++) {
 			var val = audioApiElement.streamData_4[bin];
-			canvas.ctx.fillStyle = 'rgb(' + val + ',' + val + ',' + val + ')';
-			// canvas.ctx.fillStyle = 'rgb(' + (255 - val) + ',' + (255 - val) + ',' + (255 - val) + ')';
-			canvas.ctx.fillRect(bin, canvas.canvasHeight / 2 + 1, 1, Math.floor(-val / 1.5));
-			canvas.ctx.fillRect(bin, canvas.canvasHeight / 2 - 1, 1, Math.floor(val / 1.5));
+			/*canvas.ctx.fillStyle = 'rgb(' + (val) + ',' + (val) + ',' + (val) + ')';
+   canvas.ctx.fillRect(bin, canvas.canvasHeight / 2 + 1, 1, Math.floor(-val / 1.5));
+   canvas.ctx.fillRect(bin, canvas.canvasHeight / 2 - 1, 1, Math.floor(val / 1.5));*/
+			if (qt <= qtMin) {
+				canvas.ctx.stroke();
+			} else {
+				for (var i = 0; i < qt; i++) {
+					canvas.ctx.arc(bin * bin * fib, 3 * bin, fib * bin, 0, 2 * Math.PI);
+					canvas.ctx.rotate(2 * Math.PI * 3 / (qt - 1));
+				}
+				drawRound(qt * 0.5);
+			}
 		}
-		requestAnimationFrame(drawEq4);
+		requestAnimationFrame(drawFractal);
 	};
 
 	function addEqToTrack(track, canvasId) {

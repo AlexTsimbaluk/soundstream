@@ -279,6 +279,7 @@
 <canvas id="visEqLeft"></canvas>
 <canvas id="visEqRight"></canvas>
 <canvas id="visTriangle"></canvas>
+<canvas id="visFractal"></canvas>
 
 
 <audio id="playerTag" data-audio-api></audio>
