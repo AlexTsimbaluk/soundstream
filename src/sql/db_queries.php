@@ -3,6 +3,9 @@
 include_once '../db_connection.php';
 include_once '../functions.php';
 
+// Создание базы данных radio_ra с кодировкой utf8
+/*$query = "CREATE DATABASE radio_ra CHARACTER SET utf8 COLLATE utf8_general_ci";*/
+
 // Stations table
 /*$query = "CREATE TABLE stations ( 
 	station_id INT(11) UNSIGNED NOT NULL AUTO_INCREMENT, 
