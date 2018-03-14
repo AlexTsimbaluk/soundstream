@@ -5,7 +5,7 @@
 		<div class="bounce3"></div>
 	</div>
 
-	<div class="overlayFull"></div>
+	<div class="overlayFull" data-visible="false"></div>
 
 	<div class="console hidden">
 		<button class="clearConsole">
@@ -79,6 +79,20 @@
 					<a href="config.txt" download class="iconWrapper">
 						<span class="icon">file_download</span>
 					</a>
+				</div>
+			</label>
+			<label>
+				<div class="showFormReg config button btn" data-form=".form-reg" title="Register">
+					<div class="iconWrapper">
+						<div class="icon">person_add</div>
+					</div>
+				</div>
+			</label>
+			<label>
+				<div class="showFormSign config button btn" data-form=".form-auth" title="Sign">
+					<div class="iconWrapper">
+						<div class="icon">forward</div>
+					</div>
 				</div>
 			</label>
 			<!-- <label>

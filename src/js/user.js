@@ -37,34 +37,29 @@ $(document).ready(function() {
 		$('.form-auth, .form-reg').fadeOut()
 	});*/
 
-	$('.showFormSign').click(function() {
-		$(this).toggleClass('active').siblings().toggleClass('active');
-		$('.form-auth').toggleClass('visible').fadeToggle(300);
-		$('.overlayFull').toggleClass('visible').fadeToggle(300);
-		$('.showFormReg').attr('disabled', 'disabled');
+	$('.showFormSign, .showFormReg').on('click', function() {
+		var $el = $(this);
+		var targetEl = $el.attr('data-form');
+		console.log('покажем форму ' + targetEl);
+		$el.toggleClass('active').siblings().toggleClass('active');
+		$(targetEl).toggleClass('visible').fadeToggle(300);
+		$('.overlayFull').attr('data-visible', true).fadeToggle(300);
+		$el.attr('disabled', 'disabled');
+
+		if(!$('.overlayFull').attr('data-visible')) {
+			$el.attr('data-visible', true).fadeToggle(300);
+		}
 	});
 
-	$('.showFormReg').click(function() {
-		$(this).toggleClass('active').siblings().toggleClass('active');
-		$('.form-reg').toggleClass('visible').fadeToggle(300);
-		$('.overlayFull').toggleClass('visible').fadeToggle(300);
-		if($('.form-reg .regLogin').val().length > 0) {
-			checkLoginUniq($('.form-reg .regLogin').val());
-		}
-		$('.showFormSign').attr('disabled', 'disabled');
-	});
 
 	$(".overlayFull").on('click', function () {
-		/*popupClose($("form.visible"), 500);
-		popupClose($(this), 500);*/
+		var $el = $(this);
 
-		if($("form.visible").hasClass('form-reg')) {
-			$('.showFormReg').trigger('click');
-		} else {
-			$('.showFormSign').trigger('click');
+		if($el.attr('data-visible')) {
+			$el.attr('data-visible', false).hide();
 		}
-
-		$('.overlayFull').toggleClass('visible').hide();
+		
+		$('.form-reg, .form-auth').hide();
 		$('.showFormSign, .showFormReg').removeAttr('disabled');
 	});
 

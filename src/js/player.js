@@ -2218,6 +2218,7 @@ $(document).ready(function() {
 		localStorage.setItem('userStatus', JSON.stringify(userStatus));
 	} else {
 		userStatus = JSON.parse(localStorage.userStatus);
+		console.log(userStatus);
 	}
 
 
