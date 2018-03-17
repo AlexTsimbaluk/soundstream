@@ -63,7 +63,6 @@
 			<span></span>
 		</div>
 
-		<!-- <div class="view"></div> -->
 
 		<div class="userPanel hidden">
 			<ul class="userActions">
@@ -73,7 +72,7 @@
 			</ul>
 		</div>
 
-		<div class="animation-settings controls">
+		<div class="flex left animation-settings controls">
 			<label>
 				<div class="downloadConfig config button btn" title="Download file with your configuration">
 					<a href="config.txt" download class="iconWrapper">
@@ -105,7 +104,7 @@
 			</label> -->
 		</div>
 
-		<div class="controls">
+		<div class="flex left controls track-control">
 			<div class="play button btn">
 				<span class="inner js-animate"></span>
 				<span class="outer js-animate"></span>

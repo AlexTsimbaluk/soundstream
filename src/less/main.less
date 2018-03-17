@@ -382,15 +382,13 @@ ul, ol {
 }
 
 .controls {
-	.flex-container;
-	align-items: center;
-	flex-wrap: nowrap;
-	padding: 2px 0;
+	height: 40px;
 	position: relative;
 	z-index: 10;
-	div {
-		// display: inline-block;
-		// margin: auto;
+	&.track-control {
+		.button {
+			margin-right: 6px;
+		}
 	}
 	.button {
 		background: #333;

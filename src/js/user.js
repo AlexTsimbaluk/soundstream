@@ -51,7 +51,6 @@ $(document).ready(function() {
 		}
 	});
 
-
 	$(".overlayFull").on('click', function () {
 		var $el = $(this);
 
@@ -67,13 +66,13 @@ $(document).ready(function() {
 		popup.fadeOut(delay);
 	}
 
+
 	//закрытие модального окна и формы, сброс полей формы
 	$(".popup-overlay, .close-popup").click(function (e){
 		popupClose($(".popup-container, .popup-overlay"), 500);
 		// $(".popup-container, .popup-overlay").fadeOut(500);
 		$(':input', ".popup-container").not(':button, :submit, :reset, :hidden').val('').removeAttr('checked').removeAttr('selected');
 	});
-
 
 	function validateField(element) {
 		// console.log('validateField');
@@ -167,7 +166,6 @@ $(document).ready(function() {
 	/*****************************************
 	REGISTRATION
 	******************************************/
-
 	$('.form-reg .regLogin').keyup(function(e) {
 		
 		var login = $('.form-reg .regLogin');
@@ -180,7 +178,6 @@ $(document).ready(function() {
 		// return false;
 		e.preventDefault();
 	});
-
 	
 	$('.form-reg .regPass').keyup(function() {
 		validateField($(this));
@@ -196,6 +193,7 @@ $(document).ready(function() {
 	$('.form-reg .regPassEx').keyup(function() {
 		equalPassword($('.form-reg .regPass'), $(this));	
 	});
+
 
 
 	$('.form-reg .regSubmit').click(function(e) {
@@ -259,7 +257,5 @@ $(document).ready(function() {
 		}
 		return false;
 	});
-
-
 });
 

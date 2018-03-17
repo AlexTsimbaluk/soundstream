@@ -2221,7 +2221,6 @@ $(document).ready(function() {
 		console.log(userStatus);
 	}
 
-
 	if(localStorage.getItem('stations') == undefined) {
 		consoleOutput('stations == undefined');
 		$.ajax({

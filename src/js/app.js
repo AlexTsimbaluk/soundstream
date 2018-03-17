@@ -2439,7 +2439,6 @@ $(document).ready(function () {
 	/*****************************************
  REGISTRATION
  ******************************************/
-
 	$('.form-reg .regLogin').keyup(function (e) {
 
 		var login = $('.form-reg .regLogin');
