@@ -1,11 +1,12 @@
 <?php
 
+session_start();
+
 /*For home*/
 $host = "localhost";
 $user = "root";
 $password = "9";
 $database = "radio_ra";
-// $database = "stations_icecast";
 
 /*For server
 $host = "localhost";
@@ -32,5 +33,7 @@ if(!mysqli_select_db($link, $database)) {
 } else {
 	// echo 'Connect to DB<br>';
 }
+
+// session_start();
 
 ?>

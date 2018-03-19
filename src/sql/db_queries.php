@@ -28,6 +28,7 @@ include_once '../functions.php';
 	user_password VARCHAR(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, 
 	user_salt VARCHAR(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, 
 	user_reg_date VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, 
+	user_cookie VARCHAR(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, 
 	PRIMARY KEY (user_id)) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci";*/
 
 // Visits table

@@ -324,10 +324,31 @@ function authUser($login, $password) {
 		// echo $password . '<br>' . $user['user_password'];
 		// echo $user['user_password'];
 		if($user['user_password'] == $password) {
-			session_start(); 
+			// session_start();
 			$_SESSION['auth'] = true;
 			$_SESSION['id'] = $user['user_id']; 
 			$_SESSION['login'] = $user['user_login'];
+			// echo $_SESSION['login'];
+
+			// if ( !empty($_REQUEST['remember']) and $_REQUEST['remember'] == 1 ) {
+				$key = getSalt(); //назовем ее $key
+
+				//Пишем куки (имя куки, значение, время жизни - сейчас+месяц)
+				setcookie('user_login', $user['user_login'], time()+ 60 * 60 * 24 * 30); //логин
+				setcookie('user_key', $key, time()+ 60 * 60 * 24 * 30); //случайная строка
+
+				$query = 'update `users` set `user_cookie`="'.$key.'" WHERE `user_login`="'.$login.'"';
+				$result = mysqli_query($link, $query);
+
+				$user['user_cookie'] = $key;
+
+				if (!$result) {
+					echo mysqli_error($link);
+				} else {
+					// echo 'GOOD QUERY!';
+				}
+			// }
+
 			echo json_encode($user);
 			// d($user);
 		} else {
@@ -342,6 +363,19 @@ function authUser($login, $password) {
 	} else {
 		
 	}
+
+	mysqli_close($link);
+}
+
+// Logout
+function logout() {
+	global $link;
+
+	session_start();
+	unset($_SESSION['auth']);
+	unset($_SESSION['id']);
+	unset($_SESSION['login']);
+	session_destroy();
 
 	mysqli_close($link);
 }

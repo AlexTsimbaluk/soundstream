@@ -1,4 +1,5 @@
-<div class="vue-debug hidden">
+<!-- <div class="vue-debug hidden"> -->
+<div class="vue-debug">
 	<!-- <div class="vmPlaylistsPanel">
 		<div
 			class="playlist sortable flex left"
@@ -21,14 +22,29 @@
 		{{ playingTrack }}
 	</div> -->
 
-	<div class="animation-settings controls">
-			<label>
-				<input type="checkbox" data-animation-name="allEnabled" data-animation-state class="toggle-animation" />
-				<div class=" button btn">
-					<div class="iconWrapper">
-						<div class="icon"></div>
-					</div>
+	<?php
+	if($_SESSION['auth']) {
+		echo '<p>' . $_SESSION['login'] . '</p>';
+	} else {
+		echo '<p>You are not authorizated</p>';
+	}
+	?>
+
+	<?php if($_SESSION['auth']) { ?>
+		<label>
+			<div class="logout config button btn" title="Logout">
+				<div class="iconWrapper">
+					<div class="icon">exit_to_app</div>
 				</div>
-			</label>
-	</div>
+			</div>
+		</label>
+	<?php } else { ?>
+		<label>
+			<div class="showFormSign config button btn" data-form=".form-auth" title="Sign">
+				<div class="iconWrapper">
+					<div class="icon">forward</div>
+				</div>
+			</div>
+		</label>
+	<?php } ?>
 </div>

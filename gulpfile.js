@@ -147,7 +147,7 @@ gulp.task('js-min', function() {
 gulp.task('watch', ['browser-sync'], function() {
 	'use strict';
 	gulp.watch('src/*.html', browserSync.reload);
-	gulp.watch('src/*.php', browserSync.reload);
+	gulp.watch('src/**/*.php', browserSync.reload);
 	gulp.watch('src/layouts/*.php', browserSync.reload);
 
     gulp.watch(

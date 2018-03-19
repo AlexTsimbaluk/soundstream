@@ -87,13 +87,24 @@
 					</div>
 				</div>
 			</label>
-			<label>
-				<div class="showFormSign config button btn" data-form=".form-auth" title="Sign">
-					<div class="iconWrapper">
-						<div class="icon">forward</div>
+
+			<?php if($_SESSION['auth']) { ?>
+				<label>
+					<div class="logout config button btn" title="Logout">
+						<div class="iconWrapper <?php echo $_SESSION['login']; ?>">
+							<div class="icon">exit_to_app</div>
+						</div>
 					</div>
-				</div>
-			</label>
+				</label>
+			<?php } else { ?>
+				<label>
+					<div class="showFormSign config button btn" data-form=".form-auth" title="Sign">
+						<div class="iconWrapper">
+							<div class="icon">forward</div>
+						</div>
+					</div>
+				</label>
+			<?php } ?>
 			<!-- <label>
 				<input type="checkbox" data-animation-name="allEnabled" data-animation-state class="toggle-animation" />
 				<div class=" button btn">

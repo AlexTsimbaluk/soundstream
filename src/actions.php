@@ -1,5 +1,7 @@
 <?php
 
+// session_start();
+
 require_once 'db_connection.php';
 require_once 'functions.php';
 
@@ -18,6 +20,11 @@ if ($_POST['action'] == 'regUser' && !empty($_POST['regLogin']) && !empty($_POST
 // Авторизация пользователя
 if ($_POST['action'] == 'authUser' && !empty($_POST['authLogin']) && !empty($_POST['authPass'])) {
 	authUser($_POST['authLogin'], $_POST['authPass']);
+}
+
+// Logout
+if ($_POST['action'] == 'logout') {
+	logout();
 }
 
 

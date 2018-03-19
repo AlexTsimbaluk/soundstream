@@ -1,6 +1,7 @@
 $(document).ready(function() {
 
 	function checkLoginUniq(login) {
+		console.log('checkLoginUniq');
 		$.ajax({
 			data: {'action': 'loginUniq', 'regLogin': login},
 			success: function(data) {
@@ -31,48 +32,9 @@ $(document).ready(function() {
 		});
 	}
 
-	/*$('.userPanel button').click(function(e) {
-		console.log((this));
-		$('.userPanel button').removeClass('active');
-		$('.form-auth, .form-reg').fadeOut()
-	});*/
-
-	$('.showFormSign, .showFormReg').on('click', function() {
-		var $el = $(this);
-		var targetEl = $el.attr('data-form');
-		console.log('покажем форму ' + targetEl);
-		$el.toggleClass('active').siblings().toggleClass('active');
-		$(targetEl).toggleClass('visible').fadeToggle(300);
-		$('.overlayFull').attr('data-visible', true).fadeToggle(300);
-		$el.attr('disabled', 'disabled');
-
-		if(!$('.overlayFull').attr('data-visible')) {
-			$el.attr('data-visible', true).fadeToggle(300);
-		}
-	});
-
-	$(".overlayFull").on('click', function () {
-		var $el = $(this);
-
-		if($el.attr('data-visible')) {
-			$el.attr('data-visible', false).hide();
-		}
-		
-		$('.form-reg, .form-auth').hide();
-		$('.showFormSign, .showFormReg').removeAttr('disabled');
-	});
-
 	function popupClose(popup, delay) {
 		popup.fadeOut(delay);
 	}
-
-
-	//закрытие модального окна и формы, сброс полей формы
-	$(".popup-overlay, .close-popup").click(function (e){
-		popupClose($(".popup-container, .popup-overlay"), 500);
-		// $(".popup-container, .popup-overlay").fadeOut(500);
-		$(':input', ".popup-container").not(':button, :submit, :reset, :hidden').val('').removeAttr('checked').removeAttr('selected');
-	});
 
 	function validateField(element) {
 		// console.log('validateField');
@@ -163,6 +125,46 @@ $(document).ready(function() {
 		});
 	}
 
+	/*$('.userPanel button').click(function(e) {
+		console.log((this));
+		$('.userPanel button').removeClass('active');
+		$('.form-auth, .form-reg').fadeOut()
+	});*/
+
+	$('.showFormSign, .showFormReg').on('click', function() {
+		var $el = $(this);
+		var targetEl = $el.attr('data-form');
+		console.log('покажем форму ' + targetEl);
+		$el.toggleClass('active').siblings().toggleClass('active');
+		$(targetEl).toggleClass('visible').fadeToggle(300);
+		$('.overlayFull').attr('data-visible', true).fadeToggle(300);
+		$el.attr('disabled', 'disabled');
+
+		if(!$('.overlayFull').attr('data-visible')) {
+			$el.attr('data-visible', true).fadeToggle(300);
+		}
+	});
+
+	$(".overlayFull").on('click', function () {
+		var $el = $(this);
+
+		if($el.attr('data-visible')) {
+			$el.attr('data-visible', false).hide();
+		}
+		
+		$('.form-reg, .form-auth').hide();
+		$('.showFormSign, .showFormReg').removeAttr('disabled');
+	});
+
+	//закрытие модального окна и формы, сброс полей формы
+	$(".popup-overlay, .close-popup").click(function (e){
+		popupClose($(".popup-container, .popup-overlay"), 500);
+		// $(".popup-container, .popup-overlay").fadeOut(500);
+		$(':input', ".popup-container").not(':button, :submit, :reset, :hidden').val('').removeAttr('checked').removeAttr('selected');
+	});
+
+
+
 	/*****************************************
 	REGISTRATION
 	******************************************/
@@ -196,7 +198,7 @@ $(document).ready(function() {
 
 
 
-	$('.form-reg .regSubmit').click(function(e) {
+	$('.form-reg .regSubmit').on('click', function(e) {
 		var login = $('.form-reg .regLogin');
 		var pass = $('.form-reg .regPass');
 		var pass2 = $('.form-reg .regPassEx');
@@ -209,7 +211,7 @@ $(document).ready(function() {
 				data: {'action': 'regUser', 'regLogin': login.val(), 'regPass': pass.val()},
 				// url: 'actionsRegistration.php',
 				success: function(data) {
-					console.log("success");
+					console.log('Registration is success!!!');
 					$('.form-reg').fadeOut(300);
 					$('.showFormReg').toggleClass('active').fadeToggle(300);
 					$('.successReg').html('You have successfully signed up!').fadeIn(300).addClass('popupHide');
@@ -218,13 +220,38 @@ $(document).ready(function() {
 						$('.overlayFull').fadeOut(500);
 						// $('.success').removeClass('popupHide');
 					}, 4000);
+
+					$.ajax({
+						data: {'action': 'authUser', 'authLogin': login.val(), 'authPass': pass.val()},
+						success: function(data) {
+							if(data) {
+								// $('.success').removeClass('popupHide, transparentText');
+								console.log('Authorization is success!!!');
+								var response = JSON.parse(data);
+								console.log(response);
+								$('.form-auth').fadeOut(300);
+								$('.showFormSign').toggleClass('active').fadeToggle(300);
+								$('.successAuth').html('Hi, ' + response.user_login + '<br>Welcome to RA').fadeIn(300).addClass('popupHide');
+								setTimeout(function() {
+									$('.overlayFull').fadeOut(500);
+								}, 4000);
+							} else {
+								console.log('no data');
+								$('.errors').html('Login or password is not correct :(');
+								setTimeout(function() {
+									$('.errors').html('');
+								}, 5000);
+							}
+							
+						}
+					});
 				}
 			});
 		}
 		return false;
 	});
 
-	$('.form-auth .authSubmit').click(function(e) {
+	$('.form-auth .authSubmit').on('click', function(e) {
 
 		var login = $('.form-auth .authLogin');
 		var pass = $('.form-auth .authPass');
@@ -255,6 +282,11 @@ $(document).ready(function() {
 				}
 			});
 		}
+		return false;
+	});
+
+	$('.controls .logout').on('click', function(e) {
+		console.log('logout');
 		return false;
 	});
 });
