@@ -117,42 +117,70 @@
 }
 .flex > *.overflow-y,
 .flex.eflex > *.overflow-y,
+.flex.eflex.overflow-y,
+.flex.overflow-y,
 .overflow-y {
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
 .flex > *.overflow-x,
 .flex.eflex > *.overflow-x,
+.flex.eflex.overflow-x,
+.flex.overflow-x,
 .overflow-x {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
 }
-.flex.eflex.overflow-y {
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
+@media (orientation: landscape) {
+  .flex > *.lo-overflow-y,
+  .flex.eflex > *.lo-overflow-y,
+  .flex.eflex.lo-overflow-y,
+  .flex.lo-overflow-y,
+  .lo-overflow-y {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .flex > *.lo-overflow-x,
+  .flex.eflex > *.lo-overflow-x,
+  .flex.eflex.lo-overflow-x,
+  .flex.lo-overflow-x,
+  .lo-overflow-x {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
 }
-.flex.eflex.overflow-x {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
+@media (orientation: portrait) {
+  .flex > *.po-overflow-y,
+  .flex.eflex > *.po-overflow-y,
+  .flex.eflex.po-overflow-y,
+  .flex.po-overflow-y,
+  .po-overflow-y {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .flex > *.po-overflow-x,
+  .flex.eflex > *.po-overflow-x,
+  .flex.eflex.po-overflow-x,
+  .flex.po-overflow-x,
+  .po-overflow-x {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
 }
 @media (max-width: 767px) {
   .flex > *.overflow-xs-y,
   .flex.eflex > *.overflow-xs-y,
+  .flex.eflex.overflow-xs-y,
+  .flex.overflow-xs-y,
   .overflow-xs-y {
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   }
   .flex > *.overflow-xs-x,
   .flex.eflex > *.overflow-xs-x,
+  .flex.eflex.overflow-xs-x,
+  .flex.overflow-xs-x,
   .overflow-xs-x {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-  .flex.eflex.overflow-xs-y {
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-  .flex.eflex.overflow-xs-x {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
@@ -160,21 +188,17 @@
 @media (min-width: 768px) and (max-width: 991px) {
   .flex > *.overflow-sm-y,
   .flex.eflex > *.overflow-sm-y,
+  .flex.eflex.overflow-sm-y,
+  .flex.overflow-sm-y,
   .overflow-sm-y {
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   }
   .flex > *.overflow-sm-x,
   .flex.eflex > *.overflow-sm-x,
+  .flex.eflex.overflow-sm-x,
+  .flex.overflow-sm-x,
   .overflow-sm-x {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-  .flex.eflex.overflow-sm-y {
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-  .flex.eflex.overflow-sm-x {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
@@ -182,21 +206,17 @@
 @media (min-width: 992px) and (max-width: 1200px) {
   .flex > *.overflow-md-y,
   .flex.eflex > *.overflow-md-y,
+  .flex.eflex.overflow-md-y,
+  .flex.overflow-md-y,
   .overflow-md-y {
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   }
   .flex > *.overflow-md-x,
   .flex.eflex > *.overflow-md-x,
+  .flex.eflex.overflow-md-x,
+  .flex.overflow-md-x,
   .overflow-md-x {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-  .flex.eflex.overflow-md-y {
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-  .flex.eflex.overflow-md-x {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
@@ -204,21 +224,17 @@
 @media (min-width: 1200px) {
   .flex > *.overflow-lg-y,
   .flex.eflex > *.overflow-lg-y,
+  .flex.eflex.overflow-lg-y,
+  .flex.overflow-lg-y,
   .overflow-lg-y {
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   }
   .flex > *.overflow-lg-x,
   .flex.eflex > *.overflow-lg-x,
+  .flex.eflex.overflow-lg-x,
+  .flex.overflow-lg-x,
   .overflow-lg-x {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-  .flex.eflex.overflow-lg-y {
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-  .flex.eflex.overflow-lg-x {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }

@@ -89,6 +89,8 @@
 
 .flex > *.overflow,
 .flex.eflex > *.overflow,
+.flex.eflex.overflow,
+.flex.overflow,
 .overflow {
     &-y {
         overflow-y: auto;
@@ -100,22 +102,13 @@
         -webkit-overflow-scrolling: touch;
     }   
 }
-.flex.eflex.overflow {
-    &-y {
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
-    }   
 
-    &-x {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-    }   
-}    
-
-@media (max-width: 767px) {
-    .flex > *.overflow-xs,
-    .flex.eflex > *.overflow-xs,
-    .overflow-xs {
+@media (orientation: landscape) {
+    .flex > *.lo-overflow,
+    .flex.eflex > *.lo-overflow,
+    .flex.eflex.lo-overflow,
+    .flex.lo-overflow,
+    .lo-overflow {
         &-y {
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
@@ -126,7 +119,32 @@
             -webkit-overflow-scrolling: touch;
         }   
     }
-    .flex.eflex.overflow-xs {
+}
+
+@media (orientation: portrait) {
+    .flex > *.po-overflow,
+    .flex.eflex > *.po-overflow,
+    .flex.eflex.po-overflow,
+    .flex.po-overflow,
+    .po-overflow {
+        &-y {
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }   
+
+        &-x {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }   
+    }
+}
+
+@media (max-width: 767px) {
+    .flex > *.overflow-xs,
+    .flex.eflex > *.overflow-xs,
+    .flex.eflex.overflow-xs,
+    .flex.overflow-xs,
+    .overflow-xs {
         &-y {
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
@@ -142,18 +160,9 @@
 @media (min-width: @width-sm) and (max-width: 991px) {
     .flex > *.overflow-sm,
     .flex.eflex > *.overflow-sm,
+    .flex.eflex.overflow-sm,
+    .flex.overflow-sm,
     .overflow-sm {
-        &-y {
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-        }   
-
-        &-x {
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-        }   
-    }
-    .flex.eflex.overflow-sm {
         &-y {
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
@@ -169,18 +178,9 @@
 @media (min-width: @width-md) and (max-width: 1200px) {
     .flex > *.overflow-md,
     .flex.eflex > *.overflow-md,
+    .flex.eflex.overflow-md,
+    .flex.overflow-md,
     .overflow-md {
-        &-y {
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-        }   
-
-        &-x {
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-        }   
-    }
-    .flex.eflex.overflow-md {
         &-y {
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
@@ -196,18 +196,9 @@
 @media (min-width: @width-lg) {
     .flex > *.overflow-lg,
     .flex.eflex > *.overflow-lg,
+    .flex.eflex.overflow-lg,
+    .flex.overflow-lg,
     .overflow-lg {
-        &-y {
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-        }   
-
-        &-x {
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-        }   
-    }
-    .flex.eflex.overflow-lg {
         &-y {
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
