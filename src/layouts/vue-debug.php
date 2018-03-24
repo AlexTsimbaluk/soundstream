@@ -23,14 +23,17 @@
 	</div> -->
 
 	<?php
-	if($_SESSION['auth']) {
+	echo $_SESSION['login'];
+	if(isset($_SESSION['login'])) {
 		echo '<p>' . $_SESSION['login'] . '</p>';
+		echo '<div class="icon">exit_to_app</div>';
 	} else {
 		echo '<p>You are not authorizated</p>';
+		echo '<div class="icon">forward</div>';
 	}
 	?>
 
-	<?php if($_SESSION['auth']) { ?>
+	<?php if(isset($_SESSION['login'])) { ?>
 		<label>
 			<div class="logout config button btn" title="Logout">
 				<div class="iconWrapper">

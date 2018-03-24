@@ -2161,6 +2161,8 @@ $(document).ready(function() {
 		});
 	}
 
+
+
 	function popupClose(popup, delay) {
 		popup.fadeOut(delay);
 	}
@@ -2279,13 +2281,14 @@ $(document).ready(function() {
 		$('.showFormSign, .showFormReg').removeAttr('disabled');
 	});
 
+
+
 	//закрытие модального окна и формы, сброс полей формы
 	$(".popup-overlay, .close-popup").click(function (e){
 		popupClose($(".popup-container, .popup-overlay"), 500);
 		// $(".popup-container, .popup-overlay").fadeOut(500);
 		$(':input', ".popup-container").not(':button, :submit, :reset, :hidden').val('').removeAttr('checked').removeAttr('selected');
 	});
-
 
 	$('.form-reg .regLogin').keyup(function(e) {
 		var login = $('.form-reg .regLogin');

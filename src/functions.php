@@ -254,7 +254,7 @@ function addHit($hit) {
 
 
 /*
-* Registraiton & Authorization
+* Registration & Authorization
 */
 function loginUniq($field) {
 	global $link;
@@ -305,6 +305,7 @@ function regUser($login, $password) {
 
 function authUser($login, $password) {
 	global $link;
+	session_start();
 
 	$login = secureData($login);
 	// $password = secureData($password);
