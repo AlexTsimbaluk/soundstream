@@ -305,7 +305,6 @@ function regUser($login, $password) {
 
 function authUser($login, $password) {
 	global $link;
-	session_start();
 
 	$login = secureData($login);
 	// $password = secureData($password);
