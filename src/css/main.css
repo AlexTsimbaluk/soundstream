@@ -3781,10 +3781,21 @@ canvas {
           transform: translate(-50%, -50%);
 }
 .animation-settings {
-  -webkit-box-pack: left ;
-  -webkit-justify-content: left ;
-      -ms-flex-pack: left ;
-          justify-content: left ;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+      -ms-flex-pack: left;
+          justify-content: left;
+  position: relative;
+}
+.animation-settings .user-name {
+  height: auto !important;
+  position: absolute;
+  left: 10px;
+  top: -4px;
+}
+.animation-settings label {
+  margin: 0 auto;
+  width: auto;
 }
 .toggle-animation {
   display: none;
@@ -3793,6 +3804,7 @@ canvas {
 .toggle-animation + .button.btn {
   border: 0;
   background: transparent;
+  width: auto;
 }
 .toggle-animation + .button:hover,
 .toggle-animation + .button.btn:hover {

@@ -1,5 +1,5 @@
-<!-- <div class="vue-debug hidden"> -->
-<div class="vue-debug">
+<div class="vue-debug hidden">
+<!-- <div class="vue-debug"> -->
 	<!-- <div class="vmPlaylistsPanel">
 		<div
 			class="playlist sortable flex left"

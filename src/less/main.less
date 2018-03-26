@@ -1199,7 +1199,18 @@ canvas {
 
 
 .animation-settings {
-	justify-content:left ;
+	justify-content: left;
+	position: relative;
+	.user-name {
+		height: auto !important;
+		position: absolute;
+		left: 10px;
+		top: -4px;
+	}
+	label {
+		margin: 0 auto;
+		width: auto;
+	}
 }
 .toggle-animation {
 	// [type=checkbox] {
@@ -1209,6 +1220,7 @@ canvas {
 	+ .button.btn {
 		border: 0;
 		background: transparent;
+		width: auto;
 		&:hover {
 			background: transparent;
 			box-shadow: none;

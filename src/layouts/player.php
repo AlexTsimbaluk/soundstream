@@ -88,7 +88,7 @@
 				</div>
 			</label>
 
-			<?php if($_SESSION['auth']) { ?>
+			<?php if(isset($_SESSION['auth'])) { ?>
 				<label>
 					<div class="logout config button btn" title="Logout">
 						<div class="iconWrapper <?php echo $_SESSION['login']; ?>">
@@ -113,6 +113,12 @@
 					</div>
 				</div>
 			</label> -->
+
+			<?php if(isset($_SESSION['login'])) { ?>
+				<p class="user-name">
+					<?php echo $_SESSION['login'] ?>
+				</p>
+			<?php } ?>
 		</div>
 
 		<div class="flex left controls track-control">
