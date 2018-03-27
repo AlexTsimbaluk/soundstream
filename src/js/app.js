@@ -2084,9 +2084,18 @@ $(document).ready(function () {
 						// $('.showFormSign').toggleClass('active').fadeToggle(300);
 						// $('.showFormSign').toggleClass('active');
 						$('.successAuth').html('Hi, ' + response.user_login + '<br>Welcome to RA').fadeIn(300).addClass('popupHide');
+
 						setTimeout(function () {
 							$('.overlayFull').fadeOut(500);
 						}, 4000);
+
+						Cookies.set('userLogin', response.user_login, { expires: 30, path: "/" });
+						Cookies.set('userKey', response.user_cookie, { expires: 30, path: "/" });
+						// Cookies.get('sliderState')
+
+						$('.showFormSign').removeClass('showFormSign').addClass('logout').removeAttr('data-form').attr('title', 'Logout').find('.icon').text('exit_to_app');
+
+						$(this).closest('.animation-settings').append('<p class="user-name">' + response.user_login + '</p>');
 					} else {
 						console.log('no data');
 						$('.errors').html('Login or password is not correct :(');
@@ -2105,7 +2114,10 @@ $(document).ready(function () {
 		$.ajax({
 			data: { 'action': 'logout' },
 			success: function success(data) {
-				console.log('You log out');
+				console.log('You logged out');
+				$('.logout').removeClass('logout').addClass('showFormSign').attr('data-form', '.form-auth').attr('title', 'Sign in').find('.icon').text('forward');
+
+				$(this).closest('.animation-settings').find('.user-name').remove();
 			}
 		});
 		return false;

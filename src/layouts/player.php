@@ -98,7 +98,7 @@
 				</label>
 			<?php } else { ?>
 				<label>
-					<div class="showFormSign config button btn" data-form=".form-auth" title="Sign">
+					<div class="showFormSign config button btn" data-form=".form-auth" title="Sign in">
 						<div class="iconWrapper">
 							<div class="icon">forward</div>
 						</div>
