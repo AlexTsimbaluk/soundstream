@@ -354,6 +354,23 @@ ul, ol {
 	}
 }
 
+@keyframes playerRight640h {
+	0% {
+		transform: translate(-50%, 0);
+	}
+	100% {
+		transform: translate(0, 0);
+	}
+}
+@keyframes playerLeft640h {
+	0% {
+		transform: translate(0, 0);
+	}
+	100% {
+		transform: translate(-50%, 0);
+	}
+}
+
 @keyframes runningString {
 	0% {
 		left: 100%;
@@ -524,6 +541,13 @@ ul, ol {
 		// z-index: 9; // есть доступ к элементам управления
 		z-index: 11; // нет доступа к элементам управления, overlayFull сверху
 	}
+
+	&.playerRight {
+		animation: playerRight linear .4s;		
+	}
+	&.playerLeft {
+		animation: playerLeft linear .4s;		
+	}
 	
 	background: rgba(17, 17, 17, .7);
 	border: 4px solid @cyan;
@@ -536,6 +560,7 @@ ul, ol {
 	left: 50%;
 	top: 50vh;
 	transform: translate(-50%, -50%);
+	animation-fill-mode: forwards;
 	@media only screen and (min-width : 992px) {
 		opacity: .7;
 		transition: opacity .3s;
@@ -559,22 +584,23 @@ ul, ol {
 		min-height: 380px;
 		top: 0;
 		transform: translate(-50%, 0);
-		&.playerRight,
+		/* &.playerRight,
 		&.playerLeft {
 			animation: none;
+		} */
+		&.playerRight {
+			animation: playerRight640h linear .4s;
+			// transform: translate(-50%, 0);
+		}
+		&.playerLeft {
+			animation: playerLeft640h linear .4s;
+			// transform: translate(-50%, 0);
 		}
 	}
 	@media (max-width: 360px) {
 		transform: none;
 	}
-	&.playerRight {
-		animation: playerRight linear .4s;
-		animation-fill-mode: forwards;
-	}
-	&.playerLeft {
-		animation: playerLeft linear .4s;
-		animation-fill-mode: forwards;
-	}
+	
 	.trackContainer {
 		background: url(../img/logo.jpg) no-repeat center;
 		height: 208px;
@@ -949,8 +975,14 @@ ul, ol {
 	opacity: 0;
 	position: absolute;
 	top: -4px;
-	height: 100vh;
+	height: 480px;
 	width: 320px;
+	@media (max-width: 360px) and (orientation: portrait) {
+		height: 100%;
+	}
+	@media (max-height: 640px) {
+		height: 100vh;
+	}
 	&.searchContainerFadeIn {
 		animation: searchContainerFadeIn linear .4s;
 		animation-fill-mode: forwards;
@@ -1064,6 +1096,7 @@ canvas {
 #canvas-eq,
 #visEqLeft,
 #visEqRight,
+#visFractal,
 #analyserVisVolume {
 	position: absolute;
 	
@@ -1081,6 +1114,9 @@ canvas {
 #analyserVisVolume {
 	left: 0;
 	bottom: 30px;			// 30px - высота .nav-admin
+}
+#visFractal {
+	top: 0;
 }
 
 .walmer {

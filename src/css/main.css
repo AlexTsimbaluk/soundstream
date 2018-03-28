@@ -2654,6 +2654,46 @@ ol {
             transform: translate(-50%, -50%);
   }
 }
+@-webkit-keyframes playerRight640h {
+  0% {
+    -webkit-transform: translate(-50%, 0);
+            transform: translate(-50%, 0);
+  }
+  100% {
+    -webkit-transform: translate(0, 0);
+            transform: translate(0, 0);
+  }
+}
+@keyframes playerRight640h {
+  0% {
+    -webkit-transform: translate(-50%, 0);
+            transform: translate(-50%, 0);
+  }
+  100% {
+    -webkit-transform: translate(0, 0);
+            transform: translate(0, 0);
+  }
+}
+@-webkit-keyframes playerLeft640h {
+  0% {
+    -webkit-transform: translate(0, 0);
+            transform: translate(0, 0);
+  }
+  100% {
+    -webkit-transform: translate(-50%, 0);
+            transform: translate(-50%, 0);
+  }
+}
+@keyframes playerLeft640h {
+  0% {
+    -webkit-transform: translate(0, 0);
+            transform: translate(0, 0);
+  }
+  100% {
+    -webkit-transform: translate(-50%, 0);
+            transform: translate(-50%, 0);
+  }
+}
 @-webkit-keyframes runningString {
   0% {
     left: 100%;
@@ -2856,6 +2896,8 @@ ol {
   -webkit-transform: translate(-50%, -50%);
       -ms-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
 }
 #player p.runningString,
 #player div.runningString {
@@ -2872,6 +2914,14 @@ ol {
   left: 0;
   top: 0;
   z-index: 11;
+}
+#player.playerRight {
+  -webkit-animation: playerRight linear .4s;
+          animation: playerRight linear .4s;
+}
+#player.playerLeft {
+  -webkit-animation: playerLeft linear .4s;
+          animation: playerLeft linear .4s;
 }
 @media only screen and (min-width: 992px) {
   #player {
@@ -2907,11 +2957,18 @@ ol {
     -webkit-transform: translate(-50%, 0);
         -ms-transform: translate(-50%, 0);
             transform: translate(-50%, 0);
+    /* &.playerRight,
+		&.playerLeft {
+			animation: none;
+		} */
   }
-  #player.playerRight,
+  #player.playerRight {
+    -webkit-animation: playerRight640h linear .4s;
+            animation: playerRight640h linear .4s;
+  }
   #player.playerLeft {
-    -webkit-animation: none;
-            animation: none;
+    -webkit-animation: playerLeft640h linear .4s;
+            animation: playerLeft640h linear .4s;
   }
 }
 @media (max-width: 360px) {
@@ -2920,18 +2977,6 @@ ol {
         -ms-transform: none;
             transform: none;
   }
-}
-#player.playerRight {
-  -webkit-animation: playerRight linear .4s;
-          animation: playerRight linear .4s;
-  -webkit-animation-fill-mode: forwards;
-          animation-fill-mode: forwards;
-}
-#player.playerLeft {
-  -webkit-animation: playerLeft linear .4s;
-          animation: playerLeft linear .4s;
-  -webkit-animation-fill-mode: forwards;
-          animation-fill-mode: forwards;
 }
 #player .trackContainer {
   background: url(../img/logo.jpg) no-repeat center;
@@ -3488,8 +3533,18 @@ ol {
   opacity: 0;
   position: absolute;
   top: -4px;
-  height: 100vh;
+  height: 480px;
   width: 320px;
+}
+@media (max-width: 360px) and (orientation: portrait) {
+  .searchContainer {
+    height: 100%;
+  }
+}
+@media (max-height: 640px) {
+  .searchContainer {
+    height: 100vh;
+  }
 }
 .searchContainer.searchContainerFadeIn {
   -webkit-animation: searchContainerFadeIn linear .4s;
@@ -3656,6 +3711,7 @@ canvas {
 #canvas-eq,
 #visEqLeft,
 #visEqRight,
+#visFractal,
 #analyserVisVolume {
   position: absolute;
 }
@@ -3676,6 +3732,9 @@ canvas {
 #analyserVisVolume {
   left: 0;
   bottom: 30px;
+}
+#visFractal {
+  top: 0;
 }
 .walmer {
   position: relative;
