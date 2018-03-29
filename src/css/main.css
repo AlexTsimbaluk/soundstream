@@ -2623,12 +2623,18 @@ ol {
   }
 }
 @-webkit-keyframes playerRight {
+  /* 0% {
+		transform: translate(-50%, -50%);
+	} */
   100% {
     -webkit-transform: translate(0, -50%);
             transform: translate(0, -50%);
   }
 }
 @keyframes playerRight {
+  /* 0% {
+		transform: translate(-50%, -50%);
+	} */
   100% {
     -webkit-transform: translate(0, -50%);
             transform: translate(0, -50%);
@@ -2672,6 +2678,44 @@ ol {
   100% {
     -webkit-transform: translate(0, 0);
             transform: translate(0, 0);
+  }
+}
+@-webkit-keyframes searchContainerFadeIn {
+  100% {
+    opacity: 1;
+    -webkit-transform: translateX(-105%);
+            transform: translateX(-105%);
+  }
+}
+@keyframes searchContainerFadeIn {
+  100% {
+    opacity: 1;
+    -webkit-transform: translateX(-105%);
+            transform: translateX(-105%);
+  }
+}
+@-webkit-keyframes searchContainerFadeOut {
+  0% {
+    opacity: 1;
+    -webkit-transform: translateX(-104%);
+            transform: translateX(-104%);
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform: translateX(0%);
+            transform: translateX(0%);
+  }
+}
+@keyframes searchContainerFadeOut {
+  0% {
+    opacity: 1;
+    -webkit-transform: translateX(-104%);
+            transform: translateX(-104%);
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform: translateX(0%);
+            transform: translateX(0%);
   }
 }
 @-webkit-keyframes playerLeft640h {
@@ -2893,11 +2937,11 @@ ol {
   position: relative;
   left: 50%;
   top: 50vh;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
   -webkit-transform: translate(-50%, -50%);
       -ms-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
-  -webkit-animation-fill-mode: forwards;
-          animation-fill-mode: forwards;
 }
 #player p.runningString,
 #player div.runningString {
@@ -3480,48 +3524,6 @@ ol {
     left: 104%;
   }
 }
-/* IE hacks */
-[data-useragent*="Trident"] #player .controls .volume {
-  bottom: 13px;
-}
-@-webkit-keyframes searchContainerFadeIn {
-  100% {
-    opacity: 1;
-    -webkit-transform: translateX(-105%);
-            transform: translateX(-105%);
-  }
-}
-@keyframes searchContainerFadeIn {
-  100% {
-    opacity: 1;
-    -webkit-transform: translateX(-105%);
-            transform: translateX(-105%);
-  }
-}
-@-webkit-keyframes searchContainerFadeOut {
-  0% {
-    opacity: 1;
-    -webkit-transform: translateX(-104%);
-            transform: translateX(-104%);
-  }
-  100% {
-    opacity: 0;
-    -webkit-transform: translateX(0%);
-            transform: translateX(0%);
-  }
-}
-@keyframes searchContainerFadeOut {
-  0% {
-    opacity: 1;
-    -webkit-transform: translateX(-104%);
-            transform: translateX(-104%);
-  }
-  100% {
-    opacity: 0;
-    -webkit-transform: translateX(0%);
-            transform: translateX(0%);
-  }
-}
 .searchContainer {
   background: rgba(17, 17, 17, 0.7);
   border: 4px solid #00bcd4;
@@ -3686,6 +3688,10 @@ ol {
   -webkit-box-shadow: 0 0 10px -2px #00ffff inset;
           box-shadow: 0 0 10px -2px #00ffff inset;
 }
+/* IE hacks */
+[data-useragent*="Trident"] #player .controls .volume {
+  bottom: 13px;
+}
 /* Custom ScrollBar */
 .mCSB_inside > .mCSB_container {
   margin-right: 10px;
@@ -3735,11 +3741,6 @@ canvas {
 }
 #visFractal {
   top: 0;
-}
-.walmer {
-  position: relative;
-  z-index: 10;
-  left: 50%;
 }
 .vue-debug {
   border: 1px solid #fff;

@@ -2014,6 +2014,7 @@ $(document).ready(function() {
 								.parent().removeClass('playerRight')
 								.addClass('playerLeft')
 			;
+
 		} else {
 			$('.searchContainer').removeClass('searchContainerFadeOut')
 								.addClass('searchContainerFadeIn visible')
