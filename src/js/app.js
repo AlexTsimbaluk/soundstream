@@ -1344,6 +1344,41 @@ $(document).ready(function () {
 		});
 	}
 
+	function toggleSearchContainer(time) {
+		var $player = $('#player'),
+		    $search = $('.searchContainer');
+
+		if (!$player.attr('data-search-container') && !$search.attr('data-visible')) {
+			console.log('hidden');
+
+			$player.animate({
+				left: '+=' + $player.outerWidth() / 2 + 'px'
+			}, time);
+
+			$search.animate({
+				left: '-=100%',
+				opacity: 1
+			}, time);
+
+			$player.attr('data-search-container', true);
+			$search.attr('data-visible', true);
+		} else {
+			console.log('visible');
+
+			$player.animate({
+				left: '-=' + $player.outerWidth() / 2 + 'px'
+			}, time);
+
+			$search.animate({
+				left: '+=100%',
+				opacity: 0
+			}, time);
+
+			$player.removeAttr('data-search-container');
+			$search.removeAttr('data-visible');
+		}
+	}
+
 	$('#player .prev').click(function (e) {
 		consoleOutput('prev');
 		var playUrl = getSibling('prev');
@@ -1525,7 +1560,9 @@ $(document).ready(function () {
 
 					$(".spinner").hide();
 
-					$('.searchContainer').removeClass('searchContainerFadeOut').addClass('searchContainerFadeIn visible').parent().removeClass('playerLeft').addClass('playerRight');
+					if (!$('.vmPlayer').attr('data-search-container')) {
+						toggleSearchContainer(400);
+					}
 
 					if (window.innerHeight <= 640 && window.innerWidth < 700) {
 						$('.playlistContainer').toggleClass('hidden');
@@ -1731,11 +1768,22 @@ $(document).ready(function () {
 
 		$(".spinner").show();
 
-		if ($('.searchContainer').hasClass('visible')) {
-			$('.searchContainer').removeClass('searchContainerFadeIn visible').addClass('searchContainerFadeOut').parent().removeClass('playerRight').addClass('playerLeft');
-		} else {
-			$('.searchContainer').removeClass('searchContainerFadeOut').addClass('searchContainerFadeIn visible').parent().removeClass('playerLeft').addClass('playerRight');
-		}
+		/*if($('.searchContainer').hasClass('visible')) {
+  	$('.searchContainer').removeClass('searchContainerFadeIn visible')
+  						.addClass('searchContainerFadeOut')
+  						.parent().removeClass('playerRight')
+  						.addClass('playerLeft')
+  	;
+  	} else {
+  	$('.searchContainer').removeClass('searchContainerFadeOut')
+  						.addClass('searchContainerFadeIn visible')
+  						.parent()
+  						.removeClass('playerLeft')
+  						.addClass('playerRight')
+  	;
+  }*/
+
+		toggleSearchContainer(600);
 
 		if (window.innerHeight <= 640 && window.innerWidth < 700) {
 			$('.playlistContainer').toggleClass('hidden');
@@ -1752,7 +1800,13 @@ $(document).ready(function () {
 			$('.playlistContainer').toggleClass('hidden');
 		}
 
-		$('.searchContainer').removeClass('searchContainerFadeIn visible').addClass('searchContainerFadeOut').parent().removeClass('playerRight').addClass('playerLeft');
+		/*$('.searchContainer').removeClass('searchContainerFadeIn visible')
+  					.addClass('searchContainerFadeOut')
+  					.parent().removeClass('playerRight')
+  					.addClass('playerLeft')
+  ;*/
+
+		toggleSearchContainer(600);
 	});
 
 	// Добавление станций в плейлист

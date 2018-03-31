@@ -2960,12 +2960,12 @@ ol {
   z-index: 11;
 }
 #player.playerRight {
-  -webkit-animation: playerRight linear .4s;
-          animation: playerRight linear .4s;
+  -webkit-animation: playerRight linear 1.4s;
+          animation: playerRight linear 1.4s;
 }
 #player.playerLeft {
-  -webkit-animation: playerLeft linear .4s;
-          animation: playerLeft linear .4s;
+  -webkit-animation: playerLeft linear 1.4s;
+          animation: playerLeft linear 1.4s;
 }
 @media only screen and (min-width: 992px) {
   #player {
@@ -3007,12 +3007,12 @@ ol {
 		} */
   }
   #player.playerRight {
-    -webkit-animation: playerRight640h linear .4s;
-            animation: playerRight640h linear .4s;
+    -webkit-animation: playerRight640h linear 1.4s;
+            animation: playerRight640h linear 1.4s;
   }
   #player.playerLeft {
-    -webkit-animation: playerLeft640h linear .4s;
-            animation: playerLeft640h linear .4s;
+    -webkit-animation: playerLeft640h linear 1.4s;
+            animation: playerLeft640h linear 1.4s;
   }
 }
 @media (max-width: 360px) {
@@ -3534,6 +3534,7 @@ ol {
   padding: 10px;
   opacity: 0;
   position: absolute;
+  left: 0;
   top: -4px;
   height: 480px;
   width: 320px;
@@ -3549,14 +3550,14 @@ ol {
   }
 }
 .searchContainer.searchContainerFadeIn {
-  -webkit-animation: searchContainerFadeIn linear .4s;
-          animation: searchContainerFadeIn linear .4s;
+  -webkit-animation: searchContainerFadeIn linear 1.4s;
+          animation: searchContainerFadeIn linear 1.4s;
   -webkit-animation-fill-mode: forwards;
           animation-fill-mode: forwards;
 }
 .searchContainer.searchContainerFadeOut {
-  -webkit-animation: searchContainerFadeOut linear .4s;
-          animation: searchContainerFadeOut linear .4s;
+  -webkit-animation: searchContainerFadeOut linear 1.4s;
+          animation: searchContainerFadeOut linear 1.4s;
   -webkit-animation-fill-mode: forwards;
           animation-fill-mode: forwards;
 }
