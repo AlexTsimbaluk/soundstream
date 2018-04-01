@@ -3539,6 +3539,9 @@ ol {
   height: 480px;
   width: 320px;
 }
+[data-smartphone] .searchContainer {
+  height: 368px;
+}
 @media (max-width: 360px) and (orientation: portrait) {
   .searchContainer {
     height: 100%;
@@ -3547,6 +3550,9 @@ ol {
 @media (max-height: 640px) {
   .searchContainer {
     height: 100vh;
+    width: 100%;
+    bottom: 0;
+    top: auto;
   }
 }
 .searchContainer.searchContainerFadeIn {
