@@ -3568,8 +3568,8 @@ ol {
   top: 10px;
   z-index: 10;
 }
-.searchContainer .close i {
-  color: #777;
+.searchContainer .close .icon {
+  color: #fff;
   font-size: 2em;
   font-weight: 100;
 }

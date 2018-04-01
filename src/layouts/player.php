@@ -36,7 +36,7 @@
 	<div class="successAuth"></div>
 
 	<div class="searchContainer mCustomScrollbar">
-		<div class="close"><i class="fa fa-close"></i></div>
+		<div class="close"><span class="icon">clear</span></div>
 		<div class="result"></div>
 	</div>
 

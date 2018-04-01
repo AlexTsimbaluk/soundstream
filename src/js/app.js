@@ -73,10 +73,63 @@ function getHash(size) {
 	return hash;
 }
 
+// определяем устройство
+function detectDevice() {
+	console.log('::detectDevice');
+
+	var width = $('body').width(),
+	    height = $('body').height(),
+	    screenWidth = screen.width,
+	    screenHeight = screen.height,
+	    device = '';
+
+	$('body').removeAttr('data-smartphone').removeAttr('data-tab').removeAttr('data-desktop').removeAttr('data-console');
+
+	if (height <= 712) {
+		if (height / width >= 1.75) {
+			device = 'smartphone';
+			$('body').attr('data-smartphone', 1);
+		} else {
+			device = 'desktop';
+			$('body').attr('data-desktop', 1);
+			if (screenHeight - height > 115) {
+				$('body').attr('data-console', 1);
+			}
+		}
+	} else if (height <= 1024) {
+		if (height / width >= 1.32) {
+			device = 'tab';
+			$('body').attr('data-tab', 1);
+		} else {
+			device = 'desktop';
+			$('body').attr('data-desktop', 1);
+			if (screenHeight - height > 115) {
+				$('body').attr('data-console', 1);
+			}
+		}
+	} else {
+		device = 'desktop';
+		$('body').attr('data-desktop', 1);
+		if (screenHeight - height > 115) {
+			$('body').attr('data-console', 1);
+		}
+	}
+	console.log(device);
+
+	$('body').attr('data-screen-width', width);
+	$('body').attr('data-screen-height', height);
+}
+
 $(document).ready(function () {
 	'use strict';
 
 	$('body').attr('data-useragent', navigator.userAgent);
+
+	detectDevice();
+
+	$(window).on('resize', function () {
+		detectDevice();
+	});
 
 	$.material.init();
 
@@ -1767,22 +1820,6 @@ $(document).ready(function () {
 		}
 
 		$(".spinner").show();
-
-		/*if($('.searchContainer').hasClass('visible')) {
-  	$('.searchContainer').removeClass('searchContainerFadeIn visible')
-  						.addClass('searchContainerFadeOut')
-  						.parent().removeClass('playerRight')
-  						.addClass('playerLeft')
-  	;
-  	} else {
-  	$('.searchContainer').removeClass('searchContainerFadeOut')
-  						.addClass('searchContainerFadeIn visible')
-  						.parent()
-  						.removeClass('playerLeft')
-  						.addClass('playerRight')
-  	;
-  }*/
-
 		toggleSearchContainer(600);
 
 		if (window.innerHeight <= 640 && window.innerWidth < 700) {
@@ -1799,12 +1836,6 @@ $(document).ready(function () {
 		if (window.innerHeight <= 640 && window.innerWidth < 700) {
 			$('.playlistContainer').toggleClass('hidden');
 		}
-
-		/*$('.searchContainer').removeClass('searchContainerFadeIn visible')
-  					.addClass('searchContainerFadeOut')
-  					.parent().removeClass('playerRight')
-  					.addClass('playerLeft')
-  ;*/
 
 		toggleSearchContainer(600);
 	});
