@@ -1879,17 +1879,35 @@ $(document).ready(function() {
 					for(var i = 0; i < response.length; i++) {
 						var station = response[i];
 
-						markup += '<div class="station btn" data-station-id="'
-									+ station.station_id
-									// + '"><div class="add"><i class="fa fa-plus"></i></div><div class="title">'
-									+ '"><div class="add"><div class="icon">add</div></div><div class="title">'
-									+ station.station_title
-									+ '</div><div class="url">'
-									+ station.station_url
-									+ '</div></div>';
+						markup
+							+= '<div class="station btn" data-station-id="'
+							+ station.station_id
+							+ '"><div class="add"><div class="icon">add</div></div><div class="title">'
+							+ station.station_title
+							+ '</div><div class="url">'
+							+ station.station_url
+							+ '</div></div>'
+						;
 					}
 
 					result.html(markup);
+
+					$('.searchContainer .station').each(function(index, el) {
+						var $station = $(el);
+						var title    = $station.find('.title').text();
+						var url      = $station.find('.url').text();
+						var regExp 	 = new RegExp(target, 'gi')
+
+						title = title.replace(regExp, '<span class="search-target">' + target + '</span>');
+						url   = url.replace(regExp, '<span class="search-target">' + target + '</span>');
+
+						console.log(title);
+						console.log(url);
+						// console.log($station.find('.title'));
+
+						$station.find('.title').html(title);
+						$station.find('.url').html(url);
+					});
 
 					$(".spinner").hide();
 
@@ -1897,9 +1915,7 @@ $(document).ready(function() {
 						toggleSearchContainer(400);
 					}
 
-					/*if(window.innerHeight <= 640 && window.innerWidth < 700) {
-						$('.playlistContainer').toggleClass('hidden');
-					}*/
+
 				}
 			});
 		}
