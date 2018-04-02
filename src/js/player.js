@@ -94,6 +94,7 @@ function detectDevice() {
 		.removeAttr('data-tab')
 		.removeAttr('data-desktop')
 		.removeAttr('data-console')
+	;
 
 	if(height <= 712) {
 		if(height / width >= 1.75) {
@@ -128,13 +129,13 @@ function detectDevice() {
 
 	$('body').attr('data-screen-width', width);
 	$('body').attr('data-screen-height', height);
+	$('body').attr('data-useragent', navigator.userAgent);
 }
 
 
 
 $(document).ready(function() {
 	'use strict';
-	$('body').attr('data-useragent', navigator.userAgent);
 	
 	detectDevice();
 
@@ -1606,16 +1607,16 @@ $(document).ready(function() {
 	}
 
 	function toggleSearchContainer(time) {
-		var $playerDesktop              = $('[data-desktop]').find('#player'),
-			$searchDesktop              = $('[data-desktop]').find('.searchContainer'),
+		var $playerDesktop    = $('[data-desktop]').find('#player'),
+			$searchDesktop    = $('[data-desktop]').find('.searchContainer'),
 
-			$playerTab           = $('[data-tab]').find('#player'),
-			$searchTab           = $('[data-tab]').find('.searchContainer'),
+			$playerTab        = $('[data-tab]').find('#player'),
+			$searchTab        = $('[data-tab]').find('.searchContainer'),
 			
-			$playerSmartphone    = $('[data-smartphone]').find('#player'),
-			$searchSmartphone    = $('[data-smartphone]').find('.searchContainer'),
+			$playerSmartphone = $('[data-smartphone]').find('#player'),
+			$searchSmartphone = $('[data-smartphone]').find('.searchContainer'),
 
-			playerWidth = $('#player').outerWidth()
+			playerWidth 	  = $('#player').outerWidth()
 		;
 
 		if(!$('#player').attr('data-search-container')) {
@@ -1663,18 +1664,6 @@ $(document).ready(function() {
 					opacity: 0,
 				}, time);
 			}
-			/*else if($playerSmartphone.length) {
-				console.log($playerSmartphone);
-				$playerSmartphone
-					.find('.playlistContainer')
-					.animate({
-					opacity: '1'
-				}, time);
-
-				$searchSmartphone.animate({
-					opacity: '0'
-				}, time);
-			}*/
 
 			$('#player').removeAttr('data-search-container');
 			$('.searchContainer').removeAttr('data-visible');

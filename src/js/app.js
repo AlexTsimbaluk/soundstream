@@ -118,12 +118,11 @@ function detectDevice() {
 
 	$('body').attr('data-screen-width', width);
 	$('body').attr('data-screen-height', height);
+	$('body').attr('data-useragent', navigator.userAgent);
 }
 
 $(document).ready(function () {
 	'use strict';
-
-	$('body').attr('data-useragent', navigator.userAgent);
 
 	detectDevice();
 
@@ -1447,17 +1446,6 @@ $(document).ready(function () {
 					opacity: 0
 				}, time);
 			}
-			/*else if($playerSmartphone.length) {
-   	console.log($playerSmartphone);
-   	$playerSmartphone
-   		.find('.playlistContainer')
-   		.animate({
-   		opacity: '1'
-   	}, time);
-   		$searchSmartphone.animate({
-   		opacity: '0'
-   	}, time);
-   }*/
 
 			$('#player').removeAttr('data-search-container');
 			$('.searchContainer').removeAttr('data-visible');
