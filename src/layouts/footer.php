@@ -1,5 +1,5 @@
 		<!-- container end -->
-		<!-- </div> -->
+		</div>
 	<!-- .section end -->
 	</div>
 	

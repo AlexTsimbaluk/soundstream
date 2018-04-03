@@ -55,12 +55,18 @@
 			<span class="seconds">00</span>
 		</div>
 
-		<div class="find">
-			<input type="text" placeholder="Search" />
-			<img class="showFieldSearch" src="img/icon-eye.png" alt="" title="Search" />
-			<span></span>
-			<img class="showAll" src="img/icon-list.png" alt="" title="Show all stations" />
-			<span></span>
+		<div class="find flex left">
+			<div class="size-16">
+				<input type="text" class="searchInput" placeholder="Search" />
+			</div>
+
+			<div class="child-center size-4">
+				<img class="showFieldSearch" src="img/icon-eye.png" alt="" title="Search" />
+			</div>
+
+			<div class="child-center size-4">
+				<img class="showAll" src="img/icon-list.png" alt="" title="Show all stations" />
+			</div>
 		</div>
 
 

@@ -73,54 +73,6 @@ function getHash(size) {
 	return hash;
 }
 
-// определяем устройство
-function detectDevice() {
-	console.log('::detectDevice');
-
-	var width = $('body').width(),
-	    height = $('body').height(),
-	    screenWidth = screen.width,
-	    screenHeight = screen.height,
-	    device = '';
-
-	$('body').removeAttr('data-smartphone').removeAttr('data-tab').removeAttr('data-desktop').removeAttr('data-console');
-
-	if (height <= 712) {
-		if (height / width >= 1.75) {
-			device = 'smartphone';
-			$('body').attr('data-smartphone', 1);
-		} else {
-			device = 'desktop';
-			$('body').attr('data-desktop', 1);
-			if (screenHeight - height > 115) {
-				$('body').attr('data-console', 1);
-			}
-		}
-	} else if (height <= 1024) {
-		if (height / width >= 1.32) {
-			device = 'tab';
-			$('body').attr('data-tab', 1);
-		} else {
-			device = 'desktop';
-			$('body').attr('data-desktop', 1);
-			if (screenHeight - height > 115) {
-				$('body').attr('data-console', 1);
-			}
-		}
-	} else {
-		device = 'desktop';
-		$('body').attr('data-desktop', 1);
-		if (screenHeight - height > 115) {
-			$('body').attr('data-console', 1);
-		}
-	}
-	console.log(device);
-
-	$('body').attr('data-screen-width', width);
-	$('body').attr('data-screen-height', height);
-	$('body').attr('data-useragent', navigator.userAgent);
-}
-
 $(document).ready(function () {
 	'use strict';
 
@@ -182,6 +134,59 @@ $(document).ready(function () {
 			}
 		}
 	});
+
+	// определяем устройство
+	function detectDevice() {
+		console.log('::detectDevice');
+
+		var width = $('body').width(),
+		    height = $('body').height(),
+		    screenWidth = screen.width,
+		    screenHeight = screen.height,
+		    device = '';
+
+		$('body').removeAttr('data-smartphone').removeAttr('data-tab').removeAttr('data-desktop').removeAttr('data-console');
+
+		if (height <= 712) {
+			if (Math.max(width, height) / Math.min(width, height) >= 1.5) {
+				device = 'smartphone';
+				$('body').attr('data-smartphone', 1);
+			} else {
+				device = 'desktop';
+				$('body').attr('data-desktop', 1);
+				if (screenHeight - height > 115) {
+					$('body').attr('data-console', 1);
+				}
+			}
+		} else if (height <= 1024) {
+			if (Math.max(width, height) / Math.min(width, height) >= 1.3) {
+				device = 'tab';
+				$('body').attr('data-tab', 1);
+			} else {
+				device = 'desktop';
+				$('body').attr('data-desktop', 1);
+				if (screenHeight - height > 115) {
+					$('body').attr('data-console', 1);
+				}
+			}
+		} else {
+			device = 'desktop';
+			$('body').attr('data-desktop', 1);
+			if (screenHeight - height > 115) {
+				$('body').attr('data-console', 1);
+			}
+		}
+		consoleOutput(device);
+		consoleOutput(width);
+		consoleOutput(height);
+		consoleOutput(screenHeight);
+		consoleOutput(Math.max(width, height) / Math.min(width, height));
+		consoleOutput(Math.max(width, screenHeight) / Math.min(width, screenHeight));
+
+		$('body').attr('data-screen-width', width);
+		$('body').attr('data-screen-height', height);
+		$('body').attr('data-useragent', navigator.userAgent);
+	}
 
 	// Отобразить название станции при воспроизведении
 	function displayState() {
@@ -1589,13 +1594,13 @@ $(document).ready(function () {
 	});
 
 	// Показать поле ввода для поиска
-	$('#player .find .showFieldSearch').click(function (e) {
+	$('.showFieldSearch').click(function (e) {
 		$(this).toggleClass('active');
 
-		var searchInput = $(this).parent().find('input');
+		var searchInput = $(this).closest('.find').find('.searchInput');
 
 		if (searchInput.hasClass('visible') == false) {
-			searchInput.addClass('visible').animate({ opacity: 1, width: 190 }, 100);
+			searchInput.addClass('visible').animate({ opacity: 1, width: '100%' }, 100);
 
 			setTimeout(function () {
 				searchInput.focus();
@@ -1629,7 +1634,7 @@ $(document).ready(function () {
 
 					result.html(markup);
 
-					$('.searchContainer .station').each(function (index, el) {
+					$('[data-station-id]').each(function (index, el) {
 						var $station = $(el);
 						var title = $station.find('.title').text();
 						var url = $station.find('.url').text();
@@ -1637,10 +1642,6 @@ $(document).ready(function () {
 
 						title = title.replace(regExp, '<span class="search-target">' + target + '</span>');
 						url = url.replace(regExp, '<span class="search-target">' + target + '</span>');
-
-						console.log(title);
-						console.log(url);
-						// console.log($station.find('.title'));
 
 						$station.find('.title').html(title);
 						$station.find('.url').html(url);
@@ -1936,6 +1937,8 @@ $(document).ready(function () {
 	$('.showConsole').on('click', function () {
 		$('.console').toggleClass('hidden');
 		$('.consoleList').mCustomScrollbar('scrollTo', '.consoleItem:last');
+
+		detectDevice();
 		return false;
 	});
 

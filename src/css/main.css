@@ -2977,46 +2977,27 @@ ol {
     opacity: 1;
   }
 }
-@media (max-width: 360px) and (orientation: portrait) {
+@media (max-height: 712px) {
+  #player {
+    height: 100%;
+    min-height: 380px;
+  }
+}
+@media (max-height: 712px) and (orientation: portrait) {
+  #player {
+    top: 0;
+  }
+}
+@media (max-width: 420px) {
   #player {
     border: 0;
     -webkit-border-radius: 0;
             border-radius: 0;
     width: 100%;
-    height: 100%;
     left: 0;
     right: 0;
     top: 0;
     bottom: 0;
-    -webkit-transform: none;
-        -ms-transform: none;
-            transform: none;
-  }
-}
-@media (max-height: 640px) {
-  #player {
-    height: 100vh;
-    min-height: 380px;
-    top: 0;
-    -webkit-transform: translate(-50%, 0);
-        -ms-transform: translate(-50%, 0);
-            transform: translate(-50%, 0);
-    /* &.playerRight,
-		&.playerLeft {
-			animation: none;
-		} */
-  }
-  #player.playerRight {
-    -webkit-animation: playerRight640h linear 1.4s;
-            animation: playerRight640h linear 1.4s;
-  }
-  #player.playerLeft {
-    -webkit-animation: playerLeft640h linear 1.4s;
-            animation: playerLeft640h linear 1.4s;
-  }
-}
-@media (max-width: 360px) {
-  #player {
     -webkit-transform: none;
         -ms-transform: none;
             transform: none;
@@ -3088,21 +3069,17 @@ ol {
   -webkit-box-shadow: 0 0 5px 0 #0ff inset;
           box-shadow: 0 0 5px 0 #0ff inset;
 }
-#player .find .showFieldSearch {
+#player .find .showFieldSearch,
+#player .find .showAll {
   cursor: pointer;
   height: 100%;
 }
 #player .find .showFieldSearch.active + span,
 #player .find .showFieldSearch:hover + span {
   display: block;
-  -webkit-box-shadow: 0 0 12px 12px rgba(0, 255, 255, 0.3);
-          box-shadow: 0 0 12px 12px rgba(0, 255, 255, 0.3);
   position: absolute;
   right: 56px;
   top: 20px;
-}
-#player .find .showAll {
-  cursor: pointer;
 }
 #player .find .showAll.active + span,
 #player .find .showAll:hover + span {
@@ -3542,12 +3519,16 @@ ol {
 [data-smartphone] .searchContainer {
   height: 368px;
 }
-@media (max-width: 360px) and (orientation: portrait) {
+@media (max-width: 420px) {
   .searchContainer {
+    background: transparent;
+    border: 0;
+    -webkit-border-radius: 0;
+            border-radius: 0;
     height: 100%;
   }
 }
-@media (max-height: 640px) {
+@media (max-height: 712px) {
   .searchContainer {
     height: 100vh;
     width: 100%;

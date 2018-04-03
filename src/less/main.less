@@ -599,6 +599,7 @@ ul, ol {
 	animation-fill-mode: forwards;
 	transform: translate(-50%, -50%);
 	
+	
 	@media only screen and (min-width : 992px) {
 		opacity: .7;
 		transition: opacity .3s;
@@ -606,34 +607,27 @@ ul, ol {
 			opacity: 1;
 		}
 	}
-	@media (max-width: 360px) and (orientation: portrait) {
+	
+	// @media (orientation: landscape) and (max-device-pixel-ratio: 16/13) {}
+
+	@media (max-height : 712px) {
+		height: 100%;
+		min-height: 380px;
+		@media (orientation: portrait) {
+			top: 0;
+		}
+		// transform: translate(-50%, 0);
+	}
+
+	@media (max-width: 420px) {
 		border: 0;
 		border-radius: 0;
 		width: 100%;
-		height: 100%;
+		// height: 100%;
 		left: 0;
 		right: 0;
 		top: 0;
 		bottom: 0;
-		transform: none;
-	}
-	@media (max-height : 640px) {
-		height: 100vh;
-		min-height: 380px;
-		top: 0;
-		transform: translate(-50%, 0);
-		/* &.playerRight,
-		&.playerLeft {
-			animation: none;
-		} */
-		&.playerRight {
-			animation: playerRight640h linear 1.4s;
-		}
-		&.playerLeft {
-			animation: playerLeft640h linear 1.4s;
-		} 
-	}
-	@media (max-width: 360px) {
 		transform: none;
 	}
 	
@@ -701,20 +695,26 @@ ul, ol {
 			}
 			&:focus {box-shadow: 0 0 5px 0 #0ff inset;}
 		}
-		.showFieldSearch {
+		.showFieldSearch,
+		.showAll {
+			// margin: 0 auto;
 			cursor: pointer;
 			height: 100%;
+			&.active,
+			&:hover {
+                // box-shadow: 0 0 12px 12px rgba(0, 255, 255, .3);
+			}
+		}
+		.showFieldSearch {
 			&.active + span,
 			&:hover + span {
 				display: block;
-                box-shadow: 0 0 12px 12px rgba(0, 255, 255, .3);
                 position: absolute;
                 right: 56px;
                 top: 20px;
             }
 		}
 		.showAll {
-			cursor: pointer;
 			&.active + span,
 			&:hover + span {
 				display: block;
@@ -1000,10 +1000,13 @@ ul, ol {
 	[data-smartphone] & {
 		height: 368px;
 	}
-	@media (max-width: 360px) and (orientation: portrait) {
+	@media (max-width: 420px) {
+		background: transparent;
+		border: 0;
+		border-radius: 0;
 		height: 100%;
 	}
-	@media (max-height: 640px) {
+	@media (max-height: 712px) {
 		height: 100vh;
 		// height: ~"calc(100% - 255px)";
 		width: 100%;
