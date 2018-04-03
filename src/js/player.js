@@ -153,15 +153,18 @@ $(document).ready(function() {
 	});
 
 
+
 	// определяем устройство
 	function detectDevice() {
 		console.log('::detectDevice');
 
-		var width = $('body').width(),
-			height = $('body').height(),
-			screenWidth = screen.width,
+		var width        = $('body').width(),
+			height       = $('body').height(),
+			screenWidth  = screen.width,
 			screenHeight = screen.height,
-			device = ''
+			ratio        = Math.max(width, height) / Math.min(width, height),
+			screenRatio  = Math.max(width, screenHeight) / Math.min(width, screenHeight),
+			device       = ''
 		;
 
 		$('body')
@@ -172,7 +175,8 @@ $(document).ready(function() {
 		;
 
 		if(height <= 712) {
-			if(Math.max(width, height) / Math.min(width, height) >= 1.5) {
+			// if(ratio >= 1.7 && ratio < 1.8) {
+			if(screenRatio >= 1.7 && screenRatio < 1.8) {
 				device = 'smartphone';
 				$('body').attr('data-smartphone', 1);
 			} else {
@@ -183,7 +187,7 @@ $(document).ready(function() {
 				}
 			}
 		} else if(height <= 1024) {
-			if(Math.max(width, height) / Math.min(width, height) >= 1.3) {
+			if(screenRatio >= 1.3 && screenRatio < 1.4) {
 				device = 'tab';
 				$('body').attr('data-tab', 1);
 			} else {
@@ -204,13 +208,15 @@ $(document).ready(function() {
 		consoleOutput(width);
 		consoleOutput(height);
 		consoleOutput(screenHeight);
-		consoleOutput(Math.max(width, height) / Math.min(width, height));
-		consoleOutput(Math.max(width, screenHeight) / Math.min(width, screenHeight));
+		consoleOutput(ratio);
+		consoleOutput(screenRatio);
 
 		$('body').attr('data-screen-width', width);
 		$('body').attr('data-screen-height', height);
 		$('body').attr('data-useragent', navigator.userAgent);
 	}
+
+
 
 	// Отобразить название станции при воспроизведении
 	function displayState() {
@@ -2159,11 +2165,6 @@ $(document).ready(function() {
 	// Закрытие блока с результатами поиска
 	$('.searchContainer .close').on('click', function(e) {
 		$('.showAll').removeClass('active');
-
-		if(window.innerHeight <= 640 && window.innerWidth < 700) {
-			$('.playlistContainer').toggleClass('hidden');
-		}
-
 		toggleSearchContainer(600);
 	});
 
