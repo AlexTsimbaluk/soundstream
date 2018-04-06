@@ -1,4 +1,4 @@
-<div id="player" class="vmPlayer">
+<div id="player" class="vmPlayer flex top">
 	<div class="spinner">
 		<div class="bounce1"></div>
 		<div class="bounce2"></div>
@@ -269,7 +269,7 @@
 		</ul>
 	</div>
 
-	<div class="playlistContainer"></div>
+	<div class="playlistContainer grow-1 size-12"></div>
 
 	<template class="template-track">
 		<div class="track btn" data-station-id="@station_id" data-station-title="@station_title" data-station-url="@station_url">

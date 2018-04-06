@@ -147,13 +147,16 @@ $(document).ready(function () {
 		    screenRatio = Math.max(width, screenHeight) / Math.min(width, screenHeight),
 		    device = '';
 
-		$('body').removeAttr('data-smartphone').removeAttr('data-tab').removeAttr('data-desktop').removeAttr('data-console');
+		$('body').removeAttr('data-smartphone').removeAttr('data-tab').removeAttr('data-desktop').removeAttr('data-keyboard').removeAttr('data-console');
 
-		if (height <= 712) {
+		if (height <= 732) {
 			// if(ratio >= 1.7 && ratio < 1.8) {
 			if (screenRatio >= 1.7 && screenRatio < 1.8) {
 				device = 'smartphone';
 				$('body').attr('data-smartphone', 1);
+			} else if (ratio >= 1.09 && ratio < 1.25) {
+				device = 'smartphone-keyboard';
+				$('body').attr('data-keyboard', 1);
 			} else {
 				device = 'desktop';
 				$('body').attr('data-desktop', 1);
