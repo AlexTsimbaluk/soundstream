@@ -1150,7 +1150,7 @@ $(document).ready(function () {
 
 	function animateCloseButton(el) {
 		setTimeout(function () {
-			$('.searchContainer .close').animate({ top: -(el.mcs.top - 10) + 'px' }, 150);
+			$('.searchContainer .close').animate({ top: -(el.mcs.top + 10) + 'px' }, 150);
 		}, 50);
 	}
 

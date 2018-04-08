@@ -863,6 +863,8 @@ ul, ol {
 		}
 	}
 
+
+
 	.track,
 	.station {
 		border-radius: 2px;
@@ -1002,7 +1004,10 @@ ul, ol {
 	height: 480px;
 	width: 320px;
 	[data-smartphone] & {
-		height: 368px;
+		height: ~'calc(100% - 250px)';
+		width: 100%;
+		bottom: 0;
+		top: auto;
 	}
 	@media (max-width: 420px) {
 		background: transparent;
@@ -1010,12 +1015,12 @@ ul, ol {
 		border-radius: 0;
 		height: 100%;
 	}
-	@media (max-height: 712px) {
-		height: 100vh;
+	@media (max-height: 732px) {
+		// height: 100vh;
 		// height: ~"calc(100% - 255px)";
-		width: 100%;
-		bottom: 0;
-		top: auto;
+		// width: 100%;
+		// bottom: 0;
+		// top: auto;
 	}
 	&.searchContainerFadeIn {
 		animation: searchContainerFadeIn linear 1.4s;
@@ -1029,7 +1034,7 @@ ul, ol {
 		cursor: pointer;
 		position: absolute;
 		right: 10px;
-		top: 10px;
+		top: -10px;
 		z-index: 10;
 		.icon {
 			color: #fff;
