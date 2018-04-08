@@ -89,7 +89,6 @@ $(document).ready(function() {
 
 	$(window).on('resize', function() {
 		detectDevice();
-		toggleSearchContainer(400);
 	});
 
 	$.material.init();
