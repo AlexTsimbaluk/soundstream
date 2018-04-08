@@ -3519,11 +3519,17 @@ ol {
   opacity: 0;
   position: absolute;
   top: -4px;
-  height: 480px;
   width: 320px;
+  /* @media (max-height : 540px) and (orientation: landscape) {
+		 height: 100vh;
+		left: -4px;
+		top: -4px; 
+	} */
 }
+[data-desktop] .searchContainer,
 [data-desktop][data-console] .searchContainer {
-  height: 100vh;
+  height: -webkit-calc(100% + 8px);
+  height: calc(100% + 8px);
   left: -4px;
   top: -4px;
 }
@@ -3542,13 +3548,6 @@ ol {
     -webkit-border-radius: 0;
             border-radius: 0;
     height: 100%;
-  }
-}
-@media (max-height: 540px) and (orientation: landscape) {
-  .searchContainer {
-    /* height: 100vh;
-		left: -4px;
-		top: -4px; */
   }
 }
 @media (max-height: 736px) {

@@ -171,7 +171,7 @@ $(document).ready(function() {
 			.removeAttr('data-smartphone')
 			.removeAttr('data-tab')
 			.removeAttr('data-desktop')
-			.removeAttr('data-keyboard')
+			.removeAttr('data-smartphone-keyboard')
 			.removeAttr('data-console')
 		;
 
@@ -1654,7 +1654,7 @@ $(document).ready(function() {
 					left: '-320px',
 					opacity: 1
 				}, time);
-			} else if($playerTab.length || $playerSmartphone.length) {
+			} else if($playerTab.length || $playerSmartphone.length || $playerSmartphoneKeyboard.length) {
 				$('#player')
 					.find('.playlistContainer')
 					.fadeOut(time / 2);
@@ -1678,7 +1678,7 @@ $(document).ready(function() {
 					left: '0',
 					opacity: 0
 				}, time);
-			} else if($playerTab.length || $playerSmartphone.length) {
+			} else if($playerTab.length || $playerSmartphone.length || $playerSmartphoneKeyboard.length) {
 				$('#player')
 					.find('.playlistContainer')
 					.fadeIn(time);
