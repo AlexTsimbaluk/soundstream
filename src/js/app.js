@@ -80,6 +80,7 @@ $(document).ready(function () {
 
 	$(window).on('resize', function () {
 		detectDevice();
+		toggleSearchContainer(400);
 	});
 
 	$.material.init();
@@ -149,14 +150,15 @@ $(document).ready(function () {
 
 		$('body').removeAttr('data-smartphone').removeAttr('data-tab').removeAttr('data-desktop').removeAttr('data-keyboard').removeAttr('data-console');
 
-		if (height <= 732) {
-			if (ratio >= 1.7 && ratio < 1.8) {
-				// if(screenRatio >= 1.7 && screenRatio < 1.8) {
-				device = 'smartphone';
-				$('body').attr('data-smartphone', 1);
-			} else if (ratio >= 1.09 && ratio < 1.25) {
+		if (height <= 736) {
+			consoleOutput('height <= 736');
+			if (ratio >= 1.09 && ratio < 1.25) {
 				device = 'smartphone-keyboard';
 				$('body').attr('data-keyboard', 1);
+			} else if (screenRatio >= 1.7 && screenRatio < 1.8 && ratio < 2) {
+				// if(ratio >= 1.7 && ratio < 1.8) {
+				device = 'smartphone';
+				$('body').attr('data-smartphone', 1);
 			} else {
 				device = 'desktop';
 				$('body').attr('data-desktop', 1);
@@ -165,6 +167,7 @@ $(document).ready(function () {
 				}
 			}
 		} else if (height <= 1024) {
+			console.log('height <= 1024');
 			if (screenRatio >= 1.3 && screenRatio < 1.4) {
 				device = 'tab';
 				$('body').attr('data-tab', 1);
@@ -1426,7 +1429,8 @@ $(document).ready(function () {
 				}, time);
 
 				$searchDesktop.animate({
-					left: '-100%',
+					// left: '-100%',
+					left: '-320px',
 					opacity: 1
 				}, time);
 			} else if ($playerTab.length || $playerSmartphone.length) {

@@ -2968,7 +2968,7 @@ ol {
   -webkit-animation: playerLeft linear 1.4s;
           animation: playerLeft linear 1.4s;
 }
-@media only screen and (min-width: 992px) {
+@media (min-width: 992px) {
   #player {
     opacity: .7;
     -webkit-transition: opacity .3s;
@@ -2978,7 +2978,7 @@ ol {
     opacity: 1;
   }
 }
-@media (max-height: 712px) and (orientation: portrait) {
+@media (max-height: 736px) and (orientation: portrait) {
   #player {
     height: 100%;
     top: 0;
@@ -3545,7 +3545,7 @@ ol {
     top: -4px;
   }
 }
-@media (max-height: 732px) {
+@media (max-height: 736px) {
 }
 .searchContainer.searchContainerFadeIn {
   -webkit-animation: searchContainerFadeIn linear 1.4s;
