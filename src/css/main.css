@@ -2925,7 +2925,6 @@ ol {
   top: -15px;
 }
 #player {
-  z-index: 2;
   background: rgba(17, 17, 17, 0.7);
   border: 4px solid #00bcd4;
   -webkit-border-radius: 5px;
@@ -2943,6 +2942,7 @@ ol {
   -webkit-transform: translate(-50%, -50%);
       -ms-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
+  z-index: 2;
 }
 #player p.runningString,
 #player div.runningString {
@@ -2967,6 +2967,9 @@ ol {
 #player.playerLeft {
   -webkit-animation: playerLeft linear 1.4s;
           animation: playerLeft linear 1.4s;
+}
+#player.flex.top {
+  overflow-x: visible;
 }
 @media only screen and (min-width: 992px) {
   #player {

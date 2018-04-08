@@ -150,8 +150,8 @@ $(document).ready(function () {
 		$('body').removeAttr('data-smartphone').removeAttr('data-tab').removeAttr('data-desktop').removeAttr('data-keyboard').removeAttr('data-console');
 
 		if (height <= 732) {
-			// if(ratio >= 1.7 && ratio < 1.8) {
-			if (screenRatio >= 1.7 && screenRatio < 1.8) {
+			if (ratio >= 1.7 && ratio < 1.8) {
+				// if(screenRatio >= 1.7 && screenRatio < 1.8) {
 				device = 'smartphone';
 				$('body').attr('data-smartphone', 1);
 			} else if (ratio >= 1.09 && ratio < 1.25) {
@@ -1149,6 +1149,7 @@ $(document).ready(function () {
 	}
 
 	function animateCloseButton(el) {
+		// el.mcs - объект с данными об элементе, который возвращает mCustomScrollbar
 		setTimeout(function () {
 			$('.searchContainer .close').animate({ top: -(el.mcs.top + 10) + 'px' }, 150);
 		}, 50);

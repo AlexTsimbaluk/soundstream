@@ -560,7 +560,6 @@ ul, ol {
 }
 
 #player {
-	z-index: 2;
 	p,
 	div {
 		&.runningString {
@@ -599,6 +598,11 @@ ul, ol {
 	top: 50vh;
 	animation-fill-mode: forwards;
 	transform: translate(-50%, -50%);
+	z-index: 2;
+	&.flex.top {
+		overflow-x: visible;
+		// overflow-y: hidden;
+	}
 	
 	
 	@media only screen and (min-width : 992px) {
