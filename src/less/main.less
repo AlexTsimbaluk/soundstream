@@ -599,9 +599,6 @@ ul, ol {
 	animation-fill-mode: forwards;
 	transform: translate(-50%, -50%);
 	z-index: 2;
-	&.flex.top {
-	}
-	
 	
 	@media (min-width : 992px) {
 		opacity: .7;
@@ -673,7 +670,10 @@ ul, ol {
 		right: 6px;
 		top: 2px;
 	}
-	 
+	.view {
+		height: 40px;
+	}
+
 	.find {
 		border-radius: 2px;
 		font-size: 1.4em;
@@ -730,12 +730,6 @@ ul, ol {
             }
 		}
 	}
-
-	.view {
-		height: 40px;
-	}
-
-
 
 	.playlistContainer {
 		height: ~"calc(100% - 250px)";
@@ -1004,10 +998,13 @@ ul, ol {
 	top: -4px;
 	height: 480px;
 	width: 320px;
-	[data-desktop] & {
-		
+	[data-desktop][data-console] & {
+		height: 100vh;
+		left: -4px;
+		top: -4px;
 	}
-	[data-smartphone] & {
+	[data-smartphone] &,
+	[data-smartphone-keyboard] & {
 		height: ~'calc(100% - 250px)';
 		width: 100%;
 		bottom: 0;
@@ -1020,9 +1017,9 @@ ul, ol {
 		height: 100%;
 	}
 	@media (max-height : 540px) and (orientation: landscape) {
-		height: 100vh;
+		/* height: 100vh;
 		left: -4px;
-		top: -4px;
+		top: -4px; */
 	}
 	@media (max-height: 736px) {
 		// height: 100vh;

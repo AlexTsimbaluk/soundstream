@@ -153,7 +153,7 @@ $(document).ready(function () {
 			consoleOutput('height <= 736');
 			if (ratio >= 1.09 && ratio < 1.25) {
 				device = 'smartphone-keyboard';
-				$('body').attr('data-keyboard', 1);
+				$('body').attr('data-smartphone-keyboard', 1);
 			} else if (screenRatio >= 1.7 && screenRatio < 1.8 && ratio < 2) {
 				// if(ratio >= 1.7 && ratio < 1.8) {
 				device = 'smartphone';
@@ -166,7 +166,7 @@ $(document).ready(function () {
 				}
 			}
 		} else if (height <= 1024) {
-			console.log('height <= 1024');
+			consoleOutput('height <= 1024');
 			if (screenRatio >= 1.3 && screenRatio < 1.4) {
 				device = 'tab';
 				$('body').attr('data-tab', 1);
@@ -1417,6 +1417,8 @@ $(document).ready(function () {
 		    $searchTab = $('[data-tab]').find('.searchContainer'),
 		    $playerSmartphone = $('[data-smartphone]').find('#player'),
 		    $searchSmartphone = $('[data-smartphone]').find('.searchContainer'),
+		    $playerSmartphoneKeyboard = $('[data-smartphone-keyboard]').find('#player'),
+		    $searchSmartphoneKeyboard = $('[data-smartphone-keyboard]').find('.searchContainer'),
 		    playerWidth = $('#player').outerWidth();
 
 		if (!$('#player').attr('data-search-container')) {

@@ -3045,6 +3045,9 @@ ol {
   right: 6px;
   top: 2px;
 }
+#player .view {
+  height: 40px;
+}
 #player .find {
   -webkit-border-radius: 2px;
           border-radius: 2px;
@@ -3095,9 +3098,6 @@ ol {
   position: absolute;
   right: 20px;
   top: 20px;
-}
-#player .view {
-  height: 40px;
 }
 #player .playlistContainer {
   height: -webkit-calc(100% - 250px);
@@ -3522,7 +3522,13 @@ ol {
   height: 480px;
   width: 320px;
 }
-[data-smartphone] .searchContainer {
+[data-desktop][data-console] .searchContainer {
+  height: 100vh;
+  left: -4px;
+  top: -4px;
+}
+[data-smartphone] .searchContainer,
+[data-smartphone-keyboard] .searchContainer {
   height: -webkit-calc(100% - 250px);
   height: calc(100% - 250px);
   width: 100%;
@@ -3540,9 +3546,9 @@ ol {
 }
 @media (max-height: 540px) and (orientation: landscape) {
   .searchContainer {
-    height: 100vh;
-    left: -4px;
-    top: -4px;
+    /* height: 100vh;
+		left: -4px;
+		top: -4px; */
   }
 }
 @media (max-height: 736px) {
