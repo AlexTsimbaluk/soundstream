@@ -1,4 +1,5 @@
-<div id="player" class="vmPlayer flex top">
+<!-- <div id="player" class="vmPlayer flex top overflow-sm-x overflow-md-x overflow-lg-x"> -->
+<div id="player" class="vmPlayer">
 	<div class="spinner">
 		<div class="bounce1"></div>
 		<div class="bounce2"></div>

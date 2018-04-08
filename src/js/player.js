@@ -1645,7 +1645,7 @@ $(document).ready(function() {
 				}, time);
 
 				$searchDesktop.animate({
-					left: '-=100%',
+					left: '-100%',
 					opacity: 1
 				}, time);
 			} else if($playerTab.length || $playerSmartphone.length) {
@@ -1669,7 +1669,7 @@ $(document).ready(function() {
 				}, time);
 
 				$searchDesktop.animate({
-					left: '+=100%',
+					left: '0',
 					opacity: 0
 				}, time);
 			} else if($playerTab.length || $playerSmartphone.length) {
