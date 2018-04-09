@@ -3535,9 +3535,11 @@ ol {
 }
 [data-smartphone] .searchContainer,
 [data-smartphone-keyboard] .searchContainer {
+  padding: 10px 0;
   height: -webkit-calc(100% - 250px);
   height: calc(100% - 250px);
-  width: 100%;
+  width: -webkit-calc(100% - 24px);
+  width: calc(100% - 24px);
   bottom: 0;
   top: auto;
 }

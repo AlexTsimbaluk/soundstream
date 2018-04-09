@@ -177,7 +177,7 @@ $(document).ready(function() {
 
 		if(height <= 736) {
 			consoleOutput('height <= 736');
-			if(ratio >= 1.09 && ratio < 1.25) {
+			if(ratio >= 1.01 && ratio < 1.25) {
 				device = 'smartphone-keyboard';
 				$('body').attr('data-smartphone-keyboard', 1);
 			} else if((screenRatio >= 1.7 && screenRatio < 1.8) && ratio < 2) {
@@ -2593,18 +2593,6 @@ $(document).ready(function() {
 		Чтобы на экранах в высоту меньше 640px у блока playlistContainer с треками 
 		выставить всю доступную высоту
 	*/
-
-	if(window.innerHeight <= 640 && window.innerWidth < 700) {
-		var _playlistContainerHeight = $('#player').height() 
-										- ($('#player .playlistsPanel').height()
-										+ $('#player .trackContainer').height())
-		;
-		consoleOutput(_playlistContainerHeight);
-		$('.searchContainer, .playlistContainer', '#player').height(_playlistContainerHeight);
-	}
-
-
-
 
 	var playlistContainer 	= $('#player .playlistContainer'),
 		// панелька для плейлистов
