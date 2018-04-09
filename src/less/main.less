@@ -128,7 +128,8 @@ html {
 body {
 	height: 100%;
 	font-size: 12px;
-    font-family: "RobotoRegular", sans-serif;
+    // font-family: @font-robotoregular;
+    font-family: @font-sfuidisplayregular;
     // overflow: hidden;
     // overflow-y: auto;
 
@@ -769,7 +770,8 @@ ul, ol {
 						// width: 15%;
 					}
 					.vmTitle {
-						// width: 62%;
+						font-family: @font-sfuidisplaythin;
+						font-size: 1.1em;
 						overflow-x: hidden;
 						text-align: center;
 					}
@@ -883,6 +885,7 @@ ul, ol {
 			}
 		}
 		.title {
+			font-family: @font-sfuidisplaymedium;
 			font-size: 1.2em;
 			max-height: 20px;
 			overflow: hidden;
@@ -891,6 +894,7 @@ ul, ol {
 			word-break: break-all;
 		}
 		.url {
+			font-family: @font-robotoregular;
 			font-size: 1.1em;
 			font-style: italic;
 			max-height: 20px;
@@ -1058,11 +1062,14 @@ ul, ol {
 	
 	.total {
 		border-bottom: 2px solid lighten(@cyan, 30%);
+		color: #fff;
 		display: inline-block;
+		font-family: @font-sfuidisplaylight;
 		font-size: 1.4em;
 		margin-bottom: 8px;
-		// padding-bottom: 5px;
-		// text-align: center;
+		.target {
+			font-family: @font-sfuidisplaythin;
+		}
 	}
 	.station,
 	.stationsBlockToggle {
@@ -1128,18 +1135,15 @@ ul, ol {
 		}
 	}
 }
+
 /* IE hacks */
 [data-useragent*="Trident"] #player .controls .volume {bottom: 13px;}
-
-
-
-
-
 
 /* Custom ScrollBar */
 .mCSB_inside > .mCSB_container {
 	margin-right: 10px;
 }
+
 
 .mCSB_scrollTools {
 	width: 30px;

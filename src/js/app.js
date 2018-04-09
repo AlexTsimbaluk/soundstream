@@ -1609,7 +1609,7 @@ $(document).ready(function () {
 	$('.showFieldSearch').click(function (e) {
 		$(this).toggleClass('active');
 
-		var searchInput = $(this).closest('.find').find('.searchInput');
+		var searchInput = $(this).closest('.find').find('.js-search-station-input');
 
 		if (searchInput.hasClass('visible') == false) {
 			searchInput.addClass('visible').animate({ opacity: 1, width: '100%' }, 100);
@@ -1623,7 +1623,7 @@ $(document).ready(function () {
 	});
 
 	// Поиск и показ найденных станций
-	$('#player .find input').on('keyup', function (e) {
+	$('.js-search-station-input').on('keyup', function (e) {
 		var target = $(this).val();
 
 		if (target.length > 2) {
@@ -1634,7 +1634,7 @@ $(document).ready(function () {
 				success: function success(data) {
 					var response = JSON.parse(data),
 					    result = $('.searchContainer .result'),
-					    markup = '<div class="total"><span>' + response.length + '</span> stations is found</div>';
+					    markup = '<div class="total"><span>' + response.length + '</span> stations is found on <span class="target">' + target + '<span></div>';
 
 					result.html('');
 

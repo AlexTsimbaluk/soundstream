@@ -27,10 +27,34 @@
   font-weight: normal;
 }
 @font-face {
+  font-family: 'SFUIDisplay-Medium';
+  src: url('../fonts/SFUIDisplay-Medium.otf');
+  src: url('../fonts/SFUIDisplay-Medium.otf') format('embedded-opentype'), url('../fonts/SFUIDisplay-Medium.otf') format('woff'), url('../fonts/SFUIDisplay-Medium.otf') format('truetype'), url('../fonts/SFUIDisplay-Medium.otf') format('svg');
+  src: local('SFUIDisplay-Medium'), url('../fonts/SFUIDisplay-Medium.otf');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'SFUIDisplay-Regular';
+  src: url('../fonts/SFUIDisplay-Regular.otf');
+  src: url('../fonts/SFUIDisplay-Regular.otf') format('embedded-opentype'), url('../fonts/SFUIDisplay-Regular.otf') format('woff'), url('../fonts/SFUIDisplay-Regular.otf') format('truetype'), url('../fonts/SFUIDisplay-Regular.otf') format('svg');
+  src: local('SFUIDisplay-Regular'), url('../fonts/SFUIDisplay-Regular.otf');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
   font-family: 'SFUIDisplay-Light';
   src: url('../fonts/SFUIDisplay-Light.otf');
   src: url('../fonts/SFUIDisplay-Light.otf') format('embedded-opentype'), url('../fonts/SFUIDisplay-Light.otf') format('woff'), url('../fonts/SFUIDisplay-Light.otf') format('truetype'), url('../fonts/SFUIDisplay-Light.otf') format('svg');
   src: local('SFUIDisplay-Light'), url('../fonts/SFUIDisplay-Light.otf');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'SFUIDisplay-Thin';
+  src: url('../fonts/SFUIDisplay-Thin.otf');
+  src: url('../fonts/SFUIDisplay-Thin.otf') format('embedded-opentype'), url('../fonts/SFUIDisplay-Thin.otf') format('woff'), url('../fonts/SFUIDisplay-Thin.otf') format('truetype'), url('../fonts/SFUIDisplay-Thin.otf') format('svg');
+  src: local('SFUIDisplay-Thin'), url('../fonts/SFUIDisplay-Thin.otf');
   font-weight: normal;
   font-style: normal;
 }
@@ -2371,7 +2395,7 @@ html {
 body {
   height: 100%;
   font-size: 12px;
-  font-family: "RobotoRegular", sans-serif;
+  font-family: 'SFUIDisplay-Regular', sans-serif;
   position: fixed;
   left: 0;
   right: 0;
@@ -3129,6 +3153,8 @@ ol {
   cursor: pointer;
 }
 #player .playlistsPanel .list.vmPlaylistsPanel .playlist .vmTitle {
+  font-family: 'SFUIDisplay-Thin', sans-serif;
+  font-size: 1.1em;
   overflow-x: hidden;
   text-align: center;
 }
@@ -3285,6 +3311,7 @@ ol {
 }
 #player .track .title,
 #player .station .title {
+  font-family: 'SFUIDisplay-Medium', sans-serif;
   font-size: 1.2em;
   max-height: 20px;
   overflow: hidden;
@@ -3294,6 +3321,7 @@ ol {
 }
 #player .track .url,
 #player .station .url {
+  font-family: 'RobotoRegular', sans-serif;
   font-size: 1.1em;
   font-style: italic;
   max-height: 20px;
@@ -3580,9 +3608,14 @@ ol {
 }
 .searchContainer .total {
   border-bottom: 2px solid #6eefff;
+  color: #fff;
   display: inline-block;
+  font-family: 'SFUIDisplay-Light', sans-serif;
   font-size: 1.4em;
   margin-bottom: 8px;
+}
+.searchContainer .total .target {
+  font-family: 'SFUIDisplay-Thin', sans-serif;
 }
 .searchContainer .station,
 .searchContainer .stationsBlockToggle {

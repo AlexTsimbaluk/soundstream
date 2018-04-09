@@ -58,11 +58,11 @@
 
 		<div class="find flex left">
 			<div class="size-16">
-				<input type="text" class="searchInput" placeholder="Search" />
+				<input type="text" class="js-search-station-input" placeholder="Search" />
 			</div>
 
 			<div class="child-center size-4">
-				<img class="showFieldSearch" src="img/icon-eye.png" alt="" title="Search" />
+				<img class="showFieldSearch" src="img/icon-eye.png" alt="" title="Search station" />
 			</div>
 
 			<div class="child-center size-4">
