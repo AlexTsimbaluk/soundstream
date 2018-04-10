@@ -1,5 +1,11 @@
 {
- "name": "App",
+ "name": "Radio Ra : Positive Radio ",
+ "short_name": "Radio Ra",
+ "description": "Player for icecast radio stations",
+ "lang": "en-GB",
+ "start_url": "/",
+ "display": "standalone",
+ "theme_color": "#00ff9e",
  "icons": [
   {
    "src": "\/android-icon-36x36.png",

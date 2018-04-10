@@ -8,7 +8,6 @@
 
 	<!-- META -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Access-Control-Allow-Origin" content="*">
     <meta http-equiv="Cache-Control" content="no-cache">
     
@@ -42,9 +41,23 @@
     <link rel="manifest" href="/manifest.json">
     
     <!-- PWA -->
-    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="theme-color" content="#00ff9e">
+
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    
+    <meta name="application-name" content="Radio Ra">
+    <meta name="apple-mobile-web-app-title" content="Radio Ra">
+    
+    <meta name="theme-color" content="#00ff9e">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <meta name="msapplication-navbutton-color" content="#00ff9e">
+    <meta name="msapplication-TileColor" content="#00ff9e">
     <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
-    <meta name="theme-color" content="#ffffff">
+    <meta name="msapplication-starturl" content="/">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- CSS -->
     <link rel="stylesheet" href="libs/font-awesome-4.3.0/css/font-awesome.min.css">
