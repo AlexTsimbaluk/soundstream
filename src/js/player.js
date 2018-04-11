@@ -3057,3 +3057,30 @@ $(document).ready(function() {
 		makeConfig();
 	}
 });
+
+
+// PWA
+
+// отменяем действие для prompt() по умолчанию
+// https://developers.google.com/web/updates/2015/03/increasing-engagement-with-app-install-banners-in-chrome-for-android?hl=en
+window.addEventListener('beforeinstallprompt', function(e) {
+	console.log('beforeinstallprompt Event fired');
+	e.preventDefault();
+	return false;
+});
+
+// предложить пользователю добавить сайт на главный экран
+window.addEventListener('beforeinstallprompt', function(e) {
+	// beforeinstallprompt Event fired
+	// e.userChoice will return a Promise.
+	e.userChoice.then(function(choiceResult) {
+		console.log(choiceResult.outcome);
+
+		if(choiceResult.outcome == 'dismissed') {
+			console.log('User cancelled home screen install');
+		}
+		else {
+			console.log('User added to home screen');
+		}
+	});
+});
