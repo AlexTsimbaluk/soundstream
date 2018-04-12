@@ -5,6 +5,7 @@
  "lang": "en-GB",
  "start_url": "/",
  "display": "standalone",
+ "orientation": "portrait",
  "theme_color": "#00ff9e",
  "background_color": "transparent",
  "icons": [
