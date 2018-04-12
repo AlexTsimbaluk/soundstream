@@ -21,6 +21,7 @@ $.ajaxSetup({
 		'use strict';
 
 		consoleOutput('XHR error');
+		console.log(_error);
 	}
 });
 
