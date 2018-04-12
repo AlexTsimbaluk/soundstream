@@ -2692,11 +2692,11 @@ $(document).ready(function () {
 
 // отменяем действие для prompt() по умолчанию
 // https://developers.google.com/web/updates/2015/03/increasing-engagement-with-app-install-banners-in-chrome-for-android?hl=en
-window.addEventListener('beforeinstallprompt', function (e) {
+/*window.addEventListener('beforeinstallprompt', function(e) {
 	console.log('beforeinstallprompt Event fired');
 	e.preventDefault();
 	return false;
-});
+});*/
 
 // предложить пользователю добавить сайт на главный экран
 window.addEventListener('beforeinstallprompt', function (e) {
