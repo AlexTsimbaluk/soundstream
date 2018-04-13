@@ -1879,18 +1879,7 @@ $(document).ready(function () {
 		toggleSearchContainer(600);
 	});
 
-	// Добавление станций в плейлист
-	// Доделать, чтобы станции добавлялись в активный плэйлист
-	/*$('.searchContainer').on('click', '.add', function(e) {
- 	addToPlaylist($(this)
- 					.parent()
- 					.data('stationId')
- 				)
- 	;
- });*/
-
 	$('.searchContainer').on('click', '.station', function (e) {
-		// addToPlaylist($(this).data('stationId'));
 		playlistManager.addTrackToPlaylist($(this).data('stationId'));
 	});
 
@@ -2689,7 +2678,6 @@ $(document).ready(function () {
 });
 
 // PWA
-
 // отменяем действие для prompt() по умолчанию
 // https://developers.google.com/web/updates/2015/03/increasing-engagement-with-app-install-banners-in-chrome-for-android?hl=en
 /*window.addEventListener('beforeinstallprompt', function(e) {
