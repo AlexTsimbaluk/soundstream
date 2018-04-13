@@ -15,6 +15,7 @@ $.ajaxSetup({
 	error: function (error, xhr, status, errorThrown) {
 		'use strict';
 		consoleOutput('XHR error');
+		console.log(error);
 	}
 });
 
