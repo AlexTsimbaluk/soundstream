@@ -288,58 +288,6 @@ $(document).ready(function() {
 	}
 
 
-	
-	// Добавить станцию в плейлист
-	function addToPlaylist(id) {
-		$.ajax({
-			data: {'action': 'getStation', 'id': id},
-			success: function(data) {
-				var response = JSON.parse(data),
-					playlist = playlistContainer.
-									find('.playlist[data-name="' 		+
-											playerState.currentPlaylist +
-														'"]')
-				;
-				var markup = '';
-				for(var i = 0; i < response.length; i++) {
-					var track = response[i];
-					markup += 
-							'<div class="track" data-station-id="' 	+
-							track.station_id 						+
-							'" data-station-title="' 				+
-							track.station_title 					+
-							'" data-station-url="' 					+
-							track.station_url 						+
-							'"><div class="delete">\
-							<i class="fa fa-minus"></i>\
-							</div><div class="title">' 				+
-							track.station_title 					+
-							'</div><div class="url">' 				+
-							track.station_url 						+
-							'</div></div>';
-
-					playerState
-						.playlists[playerState.currentPlaylist]
-						.tracks
-						.push(+track.station_id)
-					;
-					playerState
-						.playlists[playerState.currentPlaylist]
-						.currentTrack = {
-							id: track.station_id,
-							url: track.station_url,
-							title: track.station_title
-					};
-				}
-				localStorage.
-					setItem('playerState', JSON.stringify(playerState));
-
-				playlist.html(playlist.html() + markup);
-			}
-		});
-	}
-
-
 
 	// Конструктор объекта Playlist
 	function Playlist(name, opts) {
@@ -422,6 +370,9 @@ $(document).ready(function() {
 			localStorage.setItem('__playlists', JSON.stringify(__playlists));
 		};
 
+		// метод возвращает jquery коллекцию эементов треков,
+		// которая будет встроена в DOM методом this.makePlaylistTracks
+		// принимает массив track_id
 		this.makeTrack = function(tracksId) {
 			var tracks = tracksId;
 
@@ -443,17 +394,27 @@ $(document).ready(function() {
 
 				tracksArray.push($track);
 			}
+			console.log(tracksArray);
 
 			return tracksArray;
 		};
 
+		// метод добавляет в текущий плейлист треки
+		// принимает массив track_id
 		this.makePlaylistTracks = function(tracksId) {
-			// consoleOutput(tracksId);
 			var currentPlaylist = __playlists[playerState.currentPlaylist],
-				tracks 			= self.makeTrack(tracksId)
+				tracks 			= self.makeTrack(tracksId) // jquery collection 
 			;
 
-			for (var i = 0; i < tracks.length; i++) {
+			if(playlistContainer.hasClass('mCustomScrollbar')) {
+				playlistContainer.
+					find('.mCSB_container').
+					append(tracks);
+			} else {
+				playlistContainer.append(tracks);
+			}
+
+			/*for (var i = 0; i < tracks.length; i++) {
 				var $track = tracks[i];
 				if(playlistContainer.hasClass('mCustomScrollbar')) {
 					playlistContainer.
@@ -462,7 +423,7 @@ $(document).ready(function() {
 				} else {
 					playlistContainer.append($track);
 				}
-			}
+			}*/
 
 			if(!playlistContainer.hasClass('mCustomScrollbar')) {
 				$('.playlistContainer').mCustomScrollbar({
@@ -2187,6 +2148,7 @@ $(document).ready(function() {
 	});
 
 
+
 	$('.playlist-new').on('click', function(e) {
 		consoleOutput('::new playlist');
 
@@ -3049,6 +3011,7 @@ $(document).ready(function() {
 });
 
 
+
 // PWA
 // отменяем действие для prompt() по умолчанию
 // https://developers.google.com/web/updates/2015/03/increasing-engagement-with-app-install-banners-in-chrome-for-android?hl=en
@@ -3057,6 +3020,8 @@ $(document).ready(function() {
 	e.preventDefault();
 	return false;
 });*/
+
+
 
 // предложить пользователю добавить сайт на главный экран
 window.addEventListener('beforeinstallprompt', function(e) {

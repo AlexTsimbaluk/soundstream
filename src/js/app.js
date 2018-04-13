@@ -249,34 +249,6 @@ $(document).ready(function () {
 		titleContainer.addClass('runningString').parent().css({ 'width': '220px' });
 	}
 
-	// Добавить станцию в плейлист
-	function addToPlaylist(id) {
-		$.ajax({
-			data: { 'action': 'getStation', 'id': id },
-			success: function success(data) {
-				var response = JSON.parse(data),
-				    playlist = playlistContainer.find('.playlist[data-name="' + playerState.currentPlaylist + '"]');
-				var markup = '';
-				for (var i = 0; i < response.length; i++) {
-					var track = response[i];
-					markup += '<div class="track" data-station-id="' + track.station_id + '" data-station-title="' + track.station_title + '" data-station-url="' + track.station_url + '"><div class="delete">\
-							<i class="fa fa-minus"></i>\
-							</div><div class="title">' + track.station_title + '</div><div class="url">' + track.station_url + '</div></div>';
-
-					playerState.playlists[playerState.currentPlaylist].tracks.push(+track.station_id);
-					playerState.playlists[playerState.currentPlaylist].currentTrack = {
-						id: track.station_id,
-						url: track.station_url,
-						title: track.station_title
-					};
-				}
-				localStorage.setItem('playerState', JSON.stringify(playerState));
-
-				playlist.html(playlist.html() + markup);
-			}
-		});
-	}
-
 	// Конструктор объекта Playlist
 	function Playlist(name, opts) {
 		this.name = name;
@@ -345,6 +317,9 @@ $(document).ready(function () {
 			localStorage.setItem('__playlists', JSON.stringify(__playlists));
 		};
 
+		// метод возвращает jquery коллекцию эементов треков,
+		// которая будет встроена в DOM методом this.makePlaylistTracks
+		// принимает массив track_id
 		this.makeTrack = function (tracksId) {
 			var tracks = tracksId;
 
@@ -365,23 +340,34 @@ $(document).ready(function () {
 
 				tracksArray.push($track);
 			}
+			console.log(tracksArray);
 
 			return tracksArray;
 		};
 
+		// метод добавляет в текущий плейлист треки
+		// принимает массив track_id
 		this.makePlaylistTracks = function (tracksId) {
-			// consoleOutput(tracksId);
 			var currentPlaylist = __playlists[playerState.currentPlaylist],
-			    tracks = self.makeTrack(tracksId);
+			    tracks = self.makeTrack(tracksId) // jquery collection 
+			;
 
-			for (var i = 0; i < tracks.length; i++) {
-				var $track = tracks[i];
-				if (playlistContainer.hasClass('mCustomScrollbar')) {
-					playlistContainer.find('.mCSB_container').append($track);
-				} else {
-					playlistContainer.append($track);
-				}
+			if (playlistContainer.hasClass('mCustomScrollbar')) {
+				playlistContainer.find('.mCSB_container').append(tracks);
+			} else {
+				playlistContainer.append(tracks);
 			}
+
+			/*for (var i = 0; i < tracks.length; i++) {
+   	var $track = tracks[i];
+   	if(playlistContainer.hasClass('mCustomScrollbar')) {
+   		playlistContainer.
+   			find('.mCSB_container').
+   			append($track);
+   	} else {
+   		playlistContainer.append($track);
+   	}
+   }*/
 
 			if (!playlistContainer.hasClass('mCustomScrollbar')) {
 				$('.playlistContainer').mCustomScrollbar({
