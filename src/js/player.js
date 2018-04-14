@@ -3015,11 +3015,10 @@ $(document).ready(function() {
 		makeConfig();
 	}
 
-	for (var i = 33; i < 44025; i++) {
+	// for (var i = 33; i < 44025; i++) {
+	for (var i = 33; i < 4402; i++) {
 		// $('.symbols').append(String.fromCharCode(i) + '<br>');
 	}
-
-	$('.symbols').append(String.fromCharCode(65) + '<br>');
 });
 
 

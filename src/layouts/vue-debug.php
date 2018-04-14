@@ -52,4 +52,4 @@
 	<?php } ?>
 </div>
 
-<div class="vue-debug symbols"></div>
+<div class="vue-debug symbols overflow-y mCustomScrollbar"></div>

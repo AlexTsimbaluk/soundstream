@@ -3801,6 +3801,7 @@ canvas {
 .vue-debug {
   border: 1px solid #fff;
   color: #fff;
+  padding: 10px;
   width: -webkit-calc(100% - 320px);
   width: calc(100% - 320px);
   height: 100px;
@@ -3814,6 +3815,9 @@ canvas {
   .vue-debug {
     display: none;
   }
+}
+.symbols {
+  height: 100vh;
 }
 .console {
   background: rgba(255, 255, 255, 0.7);
