@@ -2341,9 +2341,11 @@ $(document).ready(function () {
 		consoleOutput('playerState == undefined');
 
 		// Объект плейлиста
-		var defaultPlaylist = new Playlist('~Nirvana~'); // ?? - нужен ??
+		var nirvanaPlaylist = new Playlist('~Nirvana~'); // ?? - нужен ??
+		var dubstepPlaylist = new Playlist('Dubstep');
+		var dubPlaylist = new Playlist('|_Dub_|');
 
-		defaultPlaylist.tracks = [1330, // graal future
+		nirvanaPlaylist.tracks = [1330, // graal future
 		1193, // graal space
 		883, // Drum and Bass) (Uturn Radio
 		3207, // TECHNO4EVER.FM HARD
@@ -2353,38 +2355,14 @@ $(document).ready(function () {
 		7942 // не воспроизводится - для отладки ошибок
 		];
 
-		defaultPlaylist.currentTrack = {
-			id: 1330,
-			url: 'http://graalradio.com:8123/future',
-			title: 'Graal Radio Future'
-			// scrollPosition 	: 0
-		};
-
-		__playlists['Default'] = defaultPlaylist;
-		__playlists['Default'].scrollPosition = 0;
-
-		var dubstepPlaylist = new Playlist('Dubstep');
-
 		dubstepPlaylist.tracks = [2599, // Walmer Radio
 		55, // Dub & Bass
 		2403, // DubTerrain.net
 		2409, // Dubstep.fm - 128k MP3
 		2410, // Dubstep.fm - 256k MP3
 		4055, // UFO TRAP Radio Station
-		885];
-
-		dubstepPlaylist.currentTrack = {
-			id: 2599,
-			url: 'http://sc3.dubplate.fm:8200/lofi_autodj',
-			title: 'Walmer Radio'
-			// scrollPosition - ???
-		};
-
-		__playlists['Dubstep'] = dubstepPlaylist;
-		// ???
-		// __playlists['Dubstep'].scrollPosition = 0;
-
-		var dubPlaylist = new Playlist('\\_Dub_/'); // ?? - нужен ??
+		885 // Dubstep) (Uturn Radio
+		];
 
 		dubPlaylist.tracks = [55, // Dub & Bass
 		2599, // Walmer Radio
@@ -2394,7 +2372,22 @@ $(document).ready(function () {
 		145, // Urban Boogie
 		7631, // Arctic Dub (Sursumcorda)
 		7656, // Anima Amoris [Dub Techno] 56 AACP anima.sknt.ru
-		7657];
+		7657 // Anima Amoris [Dub Techno] 320 MP anima.sknt.ru
+		];
+
+		nirvanaPlaylist.currentTrack = {
+			id: 1330,
+			url: 'http://graalradio.com:8123/future',
+			title: 'Graal Radio Future'
+			// scrollPosition 	: 0
+		};
+
+		dubstepPlaylist.currentTrack = {
+			id: 2599,
+			url: 'http://sc3.dubplate.fm:8200/lofi_autodj',
+			title: 'Walmer Radio'
+			// scrollPosition - ???
+		};
 
 		dubPlaylist.currentTrack = {
 			id: 55,
@@ -2402,12 +2395,15 @@ $(document).ready(function () {
 			title: 'Dub & Bass'
 		};
 
-		__playlists['Dub'] = dubPlaylist;
+		__playlists['~Nirvana~'] = nirvanaPlaylist;
+		__playlists['Dubstep'] = dubstepPlaylist;
+		__playlists['|_Dub_|'] = dubPlaylist;
+		// __playlists['Default'].scrollPosition    = 0;
 
 		// consoleOutput(__playlists['Default']);
 		// consoleOutput(playerState);
 
-		playerState.currentPlaylist = 'Default';
+		playerState.currentPlaylist = '~Nirvana~';
 		// playerState.nowPlaying = {};
 		playerState.volume = .27;
 		playerState.paused = true;
