@@ -1924,9 +1924,6 @@ $(document).ready(function() {
 			$(".spinner").show();
 			/*$.ajax({
 				data: {'action': 'getAllStations'},
-				beforeSend: function(){
-			        dateStart = new Date().getTime();
-			    },
 				success: function(data) {
 					var response = JSON.parse(data);
 						result = $('.searchContainer .result'),
@@ -1948,43 +1945,21 @@ $(document).ready(function() {
 									+ station.station_url
 									+ '</div></div>';
 					}
-
 					result.html(markup);
 
 					$(".spinner").hide();
-
-					if($('.searchContainer').hasClass('visible')) {
-						$('.searchContainer').removeClass('searchContainerFadeIn visible')
-											.addClass('searchContainerFadeOut')
-											.parent().removeClass('playerRight')
-											.addClass('playerLeft')
-						;
-					} else {
-						$('.searchContainer').removeClass('searchContainerFadeOut')
-											.addClass('searchContainerFadeIn visible')
-											.parent()
-											.removeClass('playerLeft')
-											.addClass('playerRight')
-						;
-					}
-
-					if(window.innerHeight <= 640 && window.innerWidth < 700) {
-						$('.playlistContainer').toggleClass('hidden');
-					}
-
-					var dateLoad = new Date().getTime();
-					consoleOutput((dateLoad - dateStart) + 'ms');
 				}
 			});*/
 
+			// всего станций
 			var size 		= 0;
 			for (var key in stationsArray) {
 				size++;
 			}
-			var response 		= stationsArray,
-				stationsOpened 	= playerState.search.stationsOpened || [],
-				// size 			= response.length,
-				result 			= $('.searchContainer .result'),
+			var response 		= stationsArray, // объект со всеми станциями
+				// последний открытый блок, если был
+				stationsOpened 	= playerState.search.stationsOpened || [], 
+				$result 			= $('.searchContainer .result'),
 				// станций в блоке и всего блоков
 				IN_BLOCK 		= 100,
 				totalBlocks 	= Math.ceil(size / IN_BLOCK),
@@ -1995,7 +1970,7 @@ $(document).ready(function() {
 			;
 			
 
-			result.html('');
+			$result.html('');
 
 			for (var i = 0; i < totalBlocks; i++) {
 				var from 	= i * 100,
@@ -2013,7 +1988,7 @@ $(document).ready(function() {
 							+ '</div></div>';
 			}
 
-			result.html(markup);
+			$result.html(markup);
 
 			// $('.stationsBlockToggle').on('click', function(e) {
 			$('[data-block-number]').on('click', function(e) {
@@ -2027,7 +2002,7 @@ $(document).ready(function() {
 						var station = _stations[i];
 						markup += '<div class="station" data-station-id="'
 									+ station.station_id
-									// + '"><div class="add"><i class="fa fa-plus"></i></div><div class="title">'
+									// + '"><div class="add"><i lass="fa fa-plus"></i></div><div class="title">'
 									+ '"><div class="title">'
 									+ station.station_title 
 									+ '</div><div class="url">'
@@ -2678,36 +2653,76 @@ $(document).ready(function() {
 
 		
 		// Объект плейлиста
-		var defaultPlaylist 		= new Playlist('Default');		// ?? - нужен ??
+		var defaultPlaylist 		= new Playlist('~Nirvana~');		// ?? - нужен ??
 
 		defaultPlaylist.tracks = [
+						1330,		// graal future
+						1193,		// graal space
 						883,		// Drum and Bass) (Uturn Radio
 						3207,		// TECHNO4EVER.FM HARD
 						884,		// TeaTime.FM - 24h Happy Hardcore, Drum and Bass, UK
 						3771,		// CoreTime.FM - 24h Hardcore, Industrial, Speedcore
-						1330,		// graal future
-						1193,		// graal space
-						2403,		// DubTerrain.net
-						7943,		// Massive DubStep Trap And Rave
 						3210,		// Make Some Noise
-						2400,		// Dubstep.fm
-						2599,		// Walmer Radio
-						4055,		// UFO TRAP Radio Station
-						6369,		// RapTrapRadio
-						55,			// Dub & Bass
-						885,		// Dubstep) (Uturn Radio
 						7942		// не воспроизводится - для отладки ошибок
 		];
 
 		defaultPlaylist.currentTrack = {
-				id 				:2400,
-				url 			:'http://stream.dubstep.fm:80/256mp3',
-				title 			:'Dubstep.fm - 256k MP3',
-				scrollPosition 	: 406
+				id 				: 1330,
+				url 			:'http://graalradio.com:8123/future',
+				title 			:'Graal Radio Future'
+				// scrollPosition 	: 0
 		};
 
 		__playlists['Default'] = defaultPlaylist;
 		__playlists['Default'].scrollPosition = 0;
+
+		var dubstepPlaylist 		= new Playlist('Dubstep');
+
+		dubstepPlaylist.tracks = [
+						2599,		// Walmer Radio
+						55,			// Dub & Bass
+						2403,		// DubTerrain.net
+						2409,		// Dubstep.fm - 128k MP3
+						2409,		// Dubstep.fm - 256k MP3
+						4055,		// UFO TRAP Radio Station
+						885,		// Dubstep) (Uturn Radio
+		];
+
+		dubstepPlaylist.currentTrack = {
+				id 				: 2599,
+				url 			:'http://sc3.dubplate.fm:8200/lofi_autodj',
+				title 			:'Walmer Radio'
+				// scrollPosition - ???
+		};
+
+		__playlists['Dubstep'] = dubstepPlaylist;
+		// ???
+		// __playlists['Dubstep'].scrollPosition = 0;
+
+		var dubPlaylist 		= new Playlist('\\_Dub_/');		// ?? - нужен ??
+
+		dubPlaylist.tracks = [
+						55,			// Dub & Bass
+						2599,		// Walmer Radio
+						2392,		// LanochedelhombrelobO - Dubfun - mp3 128kbs
+						6431,		// LanochedelhombrelobO - Dubfun - ogg 112 kbs
+						6416,		// Cyprus Dub Community Radio
+						145, 		// Urban Boogie
+						7631,		// Arctic Dub (Sursumcorda)
+						7656, 		// Anima Amoris [Dub Techno] 56 AACP anima.sknt.ru
+						7657, 		// Anima Amoris [Dub Techno] 320 MP anima.sknt.ru
+
+		];
+
+		dubPlaylist.currentTrack = {
+				id 				: 55,
+				url 			:'http://sc3.dubplate.fm:5000/dubstep/192',
+				title 			:'Dub & Bass'
+		};
+
+		__playlists['Dub'] = dubPlaylist;
+
+
 		// consoleOutput(__playlists['Default']);
 		// consoleOutput(playerState);
 
