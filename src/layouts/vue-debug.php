@@ -51,3 +51,5 @@
 		</label>
 	<?php } ?>
 </div>
+
+<div class="vue-debug symbols"></div>
