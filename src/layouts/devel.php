@@ -1,5 +1,4 @@
-<div class="vue-debug hidden">
-<!-- <div class="vue-debug"> -->
+<div class="devel hidden">
 	<!-- <div class="vmPlaylistsPanel">
 		<div
 			class="playlist sortable flex left"
@@ -52,4 +51,9 @@
 	<?php } ?>
 </div>
 
-<div class="vue-debug symbols overflow-y mCustomScrollbar"></div>
+<div class="devel overflow-y mCustomScrollbar">
+	<div class="symbols">
+		<input type="text" class="before-decode form-control">
+		<p class="after-decode"></p>
+	</div>
+</div>

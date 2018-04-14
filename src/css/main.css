@@ -3798,26 +3798,27 @@ canvas {
 #visFractal {
   top: 0;
 }
-.vue-debug {
+.devel {
   border: 1px solid #fff;
   color: #fff;
   padding: 10px;
+  text-align: right;
   width: -webkit-calc(100% - 320px);
   width: calc(100% - 320px);
-  height: 100px;
+  height: 100vh;
   max-width: 320px;
   position: absolute;
-  left: 0;
+  right: 0;
   top: 0;
   z-index: 2;
 }
 @media (max-width: 640px) {
-  .vue-debug {
+  .devel {
     display: none;
   }
 }
-.symbols {
-  height: 100vh;
+.devel .form-control {
+  color: #fff;
 }
 .console {
   background: rgba(255, 255, 255, 0.7);

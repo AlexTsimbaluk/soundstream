@@ -155,6 +155,138 @@ $(document).ready(function() {
 
 
 
+	// преобразовать принятую строку в такую же но как будто на другом языке
+	function decodeText(text) {
+		// console.log(String.fromCharCode(code));
+		// console.log(text.charCodeAt(0));
+		var symbolArray = getSymbolCode(text);
+		console.log(symbolArray);
+
+		for (var i = 0; i < symbolArray.length; i++) {
+			if((symbolArray[i] >= 65 && symbolArray[i] <= 90) ||
+			(symbolArray[i] >= 97 && symbolArray[i] <= 122) ||
+			(symbolArray[i] >= 65 && symbolArray[i] <= 90) ||
+			(symbolArray[i] >= 65 && symbolArray[i] <= 90)) {
+				decodeCode(symbolArray[i]);
+			}
+		}
+	}
+
+	function getSymbolCode(text) {
+		var symbolArray = (text + '').split('');
+
+		for (var i = 0; i < symbolArray.length; i++) {
+			symbolArray[i] = symbolArray[i].charCodeAt(0);
+		}
+
+		return symbolArray;
+	}
+
+	function decodeCode(code) {
+		var variants = [];
+
+		switch(code) {
+			case 65:
+				variants.push(916);
+
+			case 66:
+				variants.push(11394);
+
+			case 65:
+				variants.push(916);
+
+			case 65:
+				variants.push(916);
+
+			case 65:
+				variants.push(916);
+
+			case 65:
+				variants.push(916);
+
+			case 65:
+				variants.push(916);
+
+			case 65:
+				variants.push(916);
+
+			case 65:
+				variants.push(916);
+
+			case 65:
+				variants.push(916);
+
+			case 65:
+				variants.push(916);
+
+			case 65:
+				variants.push(916);
+
+			case 65:
+				variants.push(916);
+
+			case 65:
+				variants.push(916);
+
+			case 65:
+				variants.push(916);
+
+			case 65:
+				variants.push(916);
+
+			case 65:
+				variants.push(916);
+
+			case 65:
+				variants.push(916);
+
+			case 65:
+				variants.push(916);
+
+			case 65:
+				variants.push(916);
+
+			case 65:
+				variants.push(916);
+
+			case 65:
+				variants.push(916);
+
+			case 65:
+				variants.push(916);
+
+			case 65:
+				variants.push(916);
+
+			case 65:
+				variants.push(916);
+
+			case 65:
+				variants.push(916);
+
+			case 65:
+				variants.push(916);
+
+			case 65:
+				variants.push(916);
+
+			case 65:
+				variants.push(916);
+
+			case 65:
+				variants.push(916);
+
+			case 65:
+				variants.push(916);
+
+
+		}
+
+		return variants;
+	}
+
+
+
 	// определяем устройство
 	function detectDevice() {
 		console.log('::detectDevice');
@@ -2187,6 +2319,20 @@ $(document).ready(function() {
 	$('.clearConsole').on('click', function() {
 		$('.consoleList .mCSB_container').children().remove();
 		return false;
+	});
+
+	$('.before-decode').on('input', function(event) {
+		var $textInput = $(this);
+		var val = $textInput.val();
+		decodeText(val);
+	});
+
+	$('.before-decode').on('keypress', function(event) {
+		var $textInput = $(this);
+		var val = $textInput.val();
+
+		$('.after-decode').empty();
+		// $('.after-decode').append(decodeText(event.keyCode));
 	});
 
 	/*****************************************
