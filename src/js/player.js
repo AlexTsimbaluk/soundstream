@@ -2683,7 +2683,7 @@ $(document).ready(function() {
 						55,			// Dub & Bass
 						2403,		// DubTerrain.net
 						2409,		// Dubstep.fm - 128k MP3
-						2409,		// Dubstep.fm - 256k MP3
+						2410,		// Dubstep.fm - 256k MP3
 						4055,		// UFO TRAP Radio Station
 						885,		// Dubstep) (Uturn Radio
 		];
