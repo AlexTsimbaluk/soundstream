@@ -157,16 +157,20 @@ $(document).ready(function() {
 
 	// преобразовать принятую строку в такую же но как будто на другом языке
 	function decodeText(text) {
-		var symbolArray = getSymbolCode(text);
+		var symbolArray = (text + '').split('');
+		var codeArray = getSymbolCode(text);
 		var decodeArray = [];
 		var newText = ''; 
 
-		for (var i = 0; i < symbolArray.length; i++) {
-			if((symbolArray[i] >= 65 && symbolArray[i] <= 90) || 	// A -Z
-			(symbolArray[i] >= 97 && symbolArray[i] <= 122)) { 		// a - z
-				var newCode = decodeCode(symbolArray[i]);
-				var newSymbol = String.fromCharCode(newCode);
+		for (var i = 0; i < codeArray.length; i++) {
+			if((codeArray[i] >= 65 && codeArray[i] <= 90) || 	// A -Z
+			(codeArray[i] >= 97 && codeArray[i] <= 122)) { 		// a - z
+				var newCode = decodeCode(codeArray[i]);
+				var newSymbol = (newCode[getRandomInt(0, newCode.length - 1)]);
 				decodeArray.push(newSymbol);
+				console.log(symbolArray[i] + ' - ' + newCode);
+			} else {
+				decodeArray.push(symbolArray[i]);
 			}
 		}
 
@@ -175,19 +179,18 @@ $(document).ready(function() {
 	}
 
 	function getSymbolCode(text) {
-		var symbolArray = (text + '').split('');
+		var codeArray = (text + '').split('');
 
-		for (var i = 0; i < symbolArray.length; i++) {
-			symbolArray[i] = symbolArray[i].charCodeAt(0);
+		for (var i = 0; i < codeArray.length; i++) {
+			codeArray[i] = codeArray[i].charCodeAt(0);
 		}
 
-		return symbolArray;
+		return codeArray;
 	}
 
 	function decodeCode(code) {
 		var variants = [];
 		var newSymbol;
-		var newCode;
 
 		switch(code) {
 			case 65: // A
@@ -430,11 +433,11 @@ $(document).ready(function() {
 				break;
 		}
 
-		// console.log(variants);
+		for (var i = 0; i < variants.length; i++) {
+			variants[i] = String.fromCharCode(variants[i]);
+		}
 
-		newCode = variants[getRandomInt(0, variants.length - 1)];
-
-		return newCode;
+		return variants;
 	}
 
 
@@ -2479,7 +2482,7 @@ $(document).ready(function() {
 		var val = $textInput.val();
 		
 		// $('.after-decode').empty();
-		$('.after-decode').text(decodeText(val));
+		$('.after-decode').append('<div class="translated-text">' + decodeText(val) + '</div>');
 	});
 
 	$('.before-decode').on('keypress', function(event) {

@@ -3802,7 +3802,6 @@ canvas {
   border: 1px solid #fff;
   color: #fff;
   padding: 10px;
-  text-align: right;
   width: -webkit-calc(100% - 320px);
   width: calc(100% - 320px);
   height: 100vh;
@@ -3819,6 +3818,9 @@ canvas {
 }
 .devel .form-control {
   color: #fff;
+}
+.devel .translated-text {
+  font-size: 1.1em;
 }
 .console {
   background: rgba(255, 255, 255, 0.7);
