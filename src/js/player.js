@@ -157,19 +157,21 @@ $(document).ready(function() {
 
 	// преобразовать принятую строку в такую же но как будто на другом языке
 	function decodeText(text) {
-		// console.log(String.fromCharCode(code));
-		// console.log(text.charCodeAt(0));
 		var symbolArray = getSymbolCode(text);
-		console.log(symbolArray);
+		var decodeArray = [];
+		var newText = ''; 
 
 		for (var i = 0; i < symbolArray.length; i++) {
-			if((symbolArray[i] >= 65 && symbolArray[i] <= 90) ||
-			(symbolArray[i] >= 97 && symbolArray[i] <= 122) ||
-			(symbolArray[i] >= 65 && symbolArray[i] <= 90) ||
-			(symbolArray[i] >= 65 && symbolArray[i] <= 90)) {
-				decodeCode(symbolArray[i]);
+			if((symbolArray[i] >= 65 && symbolArray[i] <= 90) || 	// A -Z
+			(symbolArray[i] >= 97 && symbolArray[i] <= 122)) { 		// a - z
+				var newCode = decodeCode(symbolArray[i]);
+				var newSymbol = String.fromCharCode(newCode);
+				decodeArray.push(newSymbol);
 			}
 		}
+
+		newText = decodeArray.join('');
+		return newText;
 	}
 
 	function getSymbolCode(text) {
@@ -184,106 +186,257 @@ $(document).ready(function() {
 
 	function decodeCode(code) {
 		var variants = [];
+		var newSymbol;
+		var newCode;
 
 		switch(code) {
-			case 65:
+			case 65: // A
 				variants.push(916);
+				variants.push(66662);
+				variants.push(5122);
+				variants.push(8491);
+				variants.push(9074);
+				break;
 
-			case 66:
+			case 66: // B
 				variants.push(11394);
+				variants.push(5104);
+				variants.push(8492);
+				variants.push(65922);
+				break;
 
-			case 65:
+			case 67: // C
 				variants.push(916);
+				break;
 
-			case 65:
+			case 68: // D
 				variants.push(916);
+				break;
 
-			case 65:
+			case 69: // E
+				variants.push(7474);
+				variants.push(5067);
+				break;
+
+			case 70: // F
+				variants.push(8497);
+				variants.push(8457);
+				break;
+
+			case 71: // G
+				variants.push(5107);
+				break;
+
+			case 72: // H
 				variants.push(916);
+				break;
 
-			case 65:
+			case 73: // I
+				variants.push(5062);
+				break;
+
+			case 74: // J
 				variants.push(916);
+				break;
 
-			case 65:
+			case 75: // K
 				variants.push(916);
+				break;
 
-			case 65:
+			case 76: // L
 				variants.push(916);
+				break;
 
-			case 65:
+			case 77: // M
 				variants.push(916);
+				break;
 
-			case 65:
+			case 78: // N
 				variants.push(916);
+				break;
 
-			case 65:
+			case 79: // O
+				variants.push(9004);
+				break;
+
+			case 80: // P
+				variants.push(8471);
+				break;
+
+			case 81: // Q
+				variants.push(8474);
+				break;
+
+			case 82: // R
+				variants.push(5502);
+				variants.push(5504);
+				variants.push(5511);
+				variants.push(8479);
+				break;
+
+			case 83: // S
+				variants.push(5030);
+				variants.push(5077);
+				break;
+
+			case 84: // T
+				variants.push(65964);
+				variants.push(65966);
+				break;
+
+			case 85: // U
+				variants.push(65967);
+				break;
+
+			case 86: // V
 				variants.push(916);
+				break;
 
-			case 65:
+			case 87: // W
+				variants.push(5076);
+				variants.push(65510);
+				variants.push(9077);
+				break;
+
+			case 88: // X
 				variants.push(916);
+				break;
 
-			case 65:
+			case 89: // Y
+				variants.push(5033);
+				variants.push(5053);
+				variants.push(65510);
+				variants.push(65971);
+				variants.push(65912);
+				break;
+
+			case 90: // Z
 				variants.push(916);
+				break;
 
-			case 65:
+			case 97: // a
+				variants.push(65998);
+				variants.push(9078);
+				variants.push(9082);
+				variants.push(9091);
+				break;
+
+			case 98: // b
+				variants.push(6328);
+				break;
+
+			case 99: // c
 				variants.push(916);
+				break;
 
-			case 65:
+			case 100: // d
 				variants.push(916);
+				break;
 
-			case 65:
+			case 101: // e
+				variants.push(8493);
+				break;
+
+			case 102: // f
 				variants.push(916);
+				break;
 
-			case 65:
+			case 103: // g
 				variants.push(916);
+				break;
 
-			case 65:
+			case 104: // h
+				variants.push(5058);
+				break;
+
+			case 105: // i
 				variants.push(916);
+				break;
 
-			case 65:
+			case 106: // j
 				variants.push(916);
+				break;
 
-			case 65:
+			case 107: // k
+				variants.push(65944);
+				variants.push(65945);
+				break;
+
+			case 108: // l
 				variants.push(916);
+				break;
 
-			case 65:
+			case 109: // m
 				variants.push(916);
+				break;
 
-			case 65:
+			case 110: // n
+				variants.push(65950);
+				break;
+
+			case 111: // o
 				variants.push(916);
+				break;
 
-			case 65:
+			case 112: // p
 				variants.push(916);
+				break;
 
-			case 65:
+			case 113: // q
 				variants.push(916);
+				break;
 
-			case 65:
+			case 114: // r
+				variants.push(8253);
+				variants.push(8267);
+				variants.push(65958);
+				break;
+
+			case 115: // s
+				variants.push(5030);
+				break;
+
+			case 116: // t
+				variants.push(65963);
+				break;
+
+			case 117: // u
 				variants.push(916);
+				break;
 
-			case 65:
+			case 118: // v
 				variants.push(916);
+				break;
 
-			case 65:
+			case 119: // w
+				variants.push(5063);
+				variants.push(9081);
+				break;
+
+			case 120: // x
 				variants.push(916);
+				break;
 
-			case 65:
-				variants.push(916);
+			case 121: // y
+				variants.push(8509);
+				break;
 
-			case 65:
-				variants.push(916);
+			case 122: // z
+				variants.push(7612);
+				break;
 
-			case 65:
-				variants.push(916);
-
-			case 65:
-				variants.push(916);
-
-
+			default:
+				console.log('Передана не буква в латинской раскладке');
+				break;
 		}
 
-		return variants;
+		// console.log(variants);
+
+		newCode = variants[getRandomInt(0, variants.length - 1)];
+
+		return newCode;
 	}
+
 
 
 
@@ -2324,14 +2477,15 @@ $(document).ready(function() {
 	$('.before-decode').on('input', function(event) {
 		var $textInput = $(this);
 		var val = $textInput.val();
-		decodeText(val);
+		
+		// $('.after-decode').empty();
+		$('.after-decode').text(decodeText(val));
 	});
 
 	$('.before-decode').on('keypress', function(event) {
 		var $textInput = $(this);
 		var val = $textInput.val();
 
-		$('.after-decode').empty();
 		// $('.after-decode').append(decodeText(event.keyCode));
 	});
 
