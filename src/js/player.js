@@ -195,10 +195,16 @@ $(document).ready(function() {
 		switch(code) {
 			case 65: // A
 				variants.push(916);
+				variants.push(570);
+				variants.push(582);
+				variants.push(583);
 				variants.push(66662);
 				variants.push(5122);
 				variants.push(8491);
 				variants.push(9074);
+				variants.push(1126);
+				variants.push(42582);
+				variants.push(42584);
 				break;
 
 			case 66: // B
@@ -206,19 +212,24 @@ $(document).ready(function() {
 				variants.push(5104);
 				variants.push(8492);
 				variants.push(65922);
+				variants.push(579);
 				break;
 
 			case 67: // C
-				variants.push(916);
+				variants.push(1195);
 				break;
 
 			case 68: // D
-				variants.push(916);
+				variants.push(270);
+				variants.push(271);
+				variants.push(272);
+				variants.push(273);
 				break;
 
 			case 69: // E
 				variants.push(7474);
 				variants.push(5067);
+				variants.push(1214);
 				break;
 
 			case 70: // F
@@ -228,42 +239,72 @@ $(document).ready(function() {
 
 			case 71: // G
 				variants.push(5107);
+				variants.push(284);
+				variants.push(290);
 				break;
 
 			case 72: // H
-				variants.push(916);
+				variants.push(11406);
+				variants.push(1186);
+				variants.push(1188);
+				variants.push(292);
+				variants.push(294);
 				break;
 
 			case 73: // I
 				variants.push(5062);
+				variants.push(1031);
+				variants.push(302);
+				variants.push(303);
 				break;
 
 			case 74: // J
-				variants.push(916);
+				variants.push(308);
+				variants.push(309);
 				break;
 
 			case 75: // K
-				variants.push(916);
+				variants.push(11412);
+				variants.push(1179);
+				variants.push(1180);
+				variants.push(1182);
+				variants.push(1184);
+				variants.push(1310);
 				break;
 
 			case 76: // L
-				variants.push(916);
+				variants.push(316);
+				variants.push(317);
+				variants.push(318);
+				variants.push(319);
+				variants.push(320);
+				variants.push(321);
+				variants.push(322);
 				break;
 
 			case 77: // M
-				variants.push(916);
+				variants.push(11416);
 				break;
 
 			case 78: // N
-				variants.push(916);
+				variants.push(11418);
+				variants.push(330);
+				variants.push(327);
 				break;
 
 			case 79: // O
 				variants.push(9004);
+				variants.push(11408);
+				variants.push(1258);
+				variants.push(1256);
+				variants.push(336);
+				variants.push(556);
 				break;
 
 			case 80: // P
 				variants.push(8471);
+				variants.push(1166);
+				variants.push(1167);
 				break;
 
 			case 81: // Q
@@ -275,16 +316,22 @@ $(document).ready(function() {
 				variants.push(5504);
 				variants.push(5511);
 				variants.push(8479);
+				variants.push(11456);
+				variants.push(588);
+				variants.push(589);
 				break;
 
 			case 83: // S
 				variants.push(5030);
 				variants.push(5077);
+				variants.push(575);
 				break;
 
 			case 84: // T
 				variants.push(65964);
 				variants.push(65966);
+				variants.push(1196);
+				variants.push(42640);
 				break;
 
 			case 85: // U
@@ -292,17 +339,21 @@ $(document).ready(function() {
 				break;
 
 			case 86: // V
-				variants.push(916);
+				variants.push(11377);
+				variants.push(11380);
 				break;
 
 			case 87: // W
 				variants.push(5076);
 				variants.push(65510);
 				variants.push(9077);
+				variants.push(11440);
 				break;
 
 			case 88: // X
-				variants.push(916);
+				variants.push(11436);
+				variants.push(1276);
+				variants.push(1278);
 				break;
 
 			case 89: // Y
@@ -311,10 +362,15 @@ $(document).ready(function() {
 				variants.push(65510);
 				variants.push(65971);
 				variants.push(65912);
+				variants.push(590);
+				variants.push(591);
 				break;
 
 			case 90: // Z
-				variants.push(916);
+				variants.push(11404);
+				variants.push(11464);
+				variants.push(42560);
+				variants.push(42562);
 				break;
 
 			case 97: // a
@@ -322,6 +378,7 @@ $(document).ready(function() {
 				variants.push(9078);
 				variants.push(9082);
 				variants.push(9091);
+				variants.push(42583);
 				break;
 
 			case 98: // b
@@ -439,7 +496,6 @@ $(document).ready(function() {
 
 		return variants;
 	}
-
 
 
 
@@ -3316,11 +3372,6 @@ $(document).ready(function() {
 			audioApiElement.playStream(getCurrentTrack().url);
 		}
 		makeConfig();
-	}
-
-	// for (var i = 33; i < 44025; i++) {
-	for (var i = 33; i < 4402; i++) {
-		// $('.symbols').append(String.fromCharCode(i) + '<br>');
 	}
 });
 
