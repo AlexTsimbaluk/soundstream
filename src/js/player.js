@@ -322,8 +322,6 @@ $(document).ready(function() {
 				break;
 
 			case 83: // S
-				variants.push(5030);
-				variants.push(5077);
 				variants.push(575);
 				break;
 
