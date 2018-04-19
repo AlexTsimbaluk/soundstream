@@ -8,13 +8,6 @@ $user = "root";
 $password = "9";
 $database = "radio_ra";
 
-/*For server
-$host = "localhost";
-$user = "soundstream";
-$password = "123456Seven";
-$database = "stations_icecas";*/
-
-
 $link = mysqli_connect($host, $user, $password, $database);
 if(!$link) {
 	echo 'Ошибка подключения к MySQL<br>';

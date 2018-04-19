@@ -2703,46 +2703,53 @@ $(document).ready(function () {
 		$.ajax({
 			data: { 'action': 'getAllStations' },
 			success: function success(data) {
-				stationsArray = JSON.parse(data);
-				// consoleOutput(stationsArray);
-				var size = 0;
-				for (var key in stationsArray) {
-					size++;
-				}
-				var totalArrays = Math.ceil(size / 100)
-				// size 		= stationsArray.length
-				;
+				console.log(typeof data === 'undefined' ? 'undefined' : _typeof(data));
 
-				// массив имен станций
-				// нужен для правильного получения stationsIndex
-				var keys = [];
-
-				for (var key in stationsArray) {
-					keys.push(key);
-				}
-
-				for (var i = 0; i < totalArrays; i++) {
-					// debugger;
-					stationsArrayOn100[i] = []; // TODO здесь баги
-					for (var j = 0; j < 100; j++) {
-						var stationsIndex = keys[i * 100 + j];
-						// если последняя станция - break
-						// почему?
-						// return?
-						if (i == totalArrays - 1 && j == size % 100) {
-							break;
-						}
-						// TODO
-						//  сделать проверку что stationsArray[stationsIndex] не null
-						stationsArrayOn100[i][j] = stationsArray[stationsIndex];
+				if (typeof data != 'string') {
+					stationsArray = JSON.parse(data);
+					// consoleOutput(stationsArray);
+					var size = 0;
+					for (var key in stationsArray) {
+						size++;
 					}
+					var totalArrays = Math.ceil(size / 100)
+					// size 		= stationsArray.length
+					;
+
+					// массив имен станций
+					// нужен для правильного получения stationsIndex
+					var keys = [];
+
+					for (var key in stationsArray) {
+						keys.push(key);
+					}
+
+					for (var i = 0; i < totalArrays; i++) {
+						// debugger;
+						stationsArrayOn100[i] = []; // TODO здесь баги
+						for (var j = 0; j < 100; j++) {
+							var stationsIndex = keys[i * 100 + j];
+							// если последняя станция - break
+							// почему?
+							// return?
+							if (i == totalArrays - 1 && j == size % 100) {
+								break;
+							}
+							// TODO
+							//  сделать проверку что stationsArray[stationsIndex] не null
+							stationsArrayOn100[i][j] = stationsArray[stationsIndex];
+						}
+					}
+					// consoleOutput(stationsArray);
+
+					localStorage.setItem('stations', JSON.stringify(stationsArray));
+					localStorage.setItem('stationsOn100', JSON.stringify(stationsArrayOn100));
+
+					location.reload();
+				} else {
+					consoleOutput(data);
+					$('body').addClass('mysql-connect-error');
 				}
-				// consoleOutput(stationsArray);
-
-				localStorage.setItem('stations', JSON.stringify(stationsArray));
-				localStorage.setItem('stationsOn100', JSON.stringify(stationsArrayOn100));
-
-				location.reload();
 			}
 		});
 	}
