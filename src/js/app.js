@@ -2703,18 +2703,13 @@ $(document).ready(function () {
 		$.ajax({
 			data: { 'action': 'getAllStations' },
 			success: function success(data) {
-				console.log(typeof data === 'undefined' ? 'undefined' : _typeof(data));
-
-				if (typeof data != 'string') {
+				try {
 					stationsArray = JSON.parse(data);
-					// consoleOutput(stationsArray);
 					var size = 0;
 					for (var key in stationsArray) {
 						size++;
 					}
-					var totalArrays = Math.ceil(size / 100)
-					// size 		= stationsArray.length
-					;
+					var totalArrays = Math.ceil(size / 100);
 
 					// массив имен станций
 					// нужен для правильного получения stationsIndex
@@ -2725,7 +2720,6 @@ $(document).ready(function () {
 					}
 
 					for (var i = 0; i < totalArrays; i++) {
-						// debugger;
 						stationsArrayOn100[i] = []; // TODO здесь баги
 						for (var j = 0; j < 100; j++) {
 							var stationsIndex = keys[i * 100 + j];
@@ -2740,15 +2734,14 @@ $(document).ready(function () {
 							stationsArrayOn100[i][j] = stationsArray[stationsIndex];
 						}
 					}
-					// consoleOutput(stationsArray);
 
 					localStorage.setItem('stations', JSON.stringify(stationsArray));
 					localStorage.setItem('stationsOn100', JSON.stringify(stationsArrayOn100));
 
 					location.reload();
-				} else {
-					consoleOutput(data);
+				} catch (e) {
 					$('body').addClass('error-mysql-connect');
+					throw new Error(e + ':' + data);
 				}
 			}
 		});
