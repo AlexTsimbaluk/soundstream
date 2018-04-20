@@ -152,6 +152,8 @@ body {
 
 
 
+
+
 /* выделение текста */
 ::selection {
     background: #b3d4fc;
@@ -560,7 +562,7 @@ ul, ol {
 	}
 }
 
-#player {
+.vmPlayer {
 	p,
 	div {
 		&.runningString {
@@ -1366,5 +1368,15 @@ canvas {
 	}
 	.icon {
 		color: rgb(189, 189,189);
+	}
+}
+
+
+body {
+	&.error-mysql-connect {
+		.vmPlayer {
+			border: 0;
+			box-shadow: inset 0px 0px 20px 3px #f00;
+		}
 	}
 }

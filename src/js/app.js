@@ -1898,7 +1898,9 @@ $(document).ready(function () {
 
 	// TODO: в кликах на кнопку stop проверять player.paused
 	$('#player .stop').click(function (e) {
-		audioApiElement.stopStream();
+		if (!playerState.paused) {
+			audioApiElement.stopStream();
+		}
 	});
 
 	$('.playlistContainer').on('click', '.delete', function (e) {
@@ -2746,7 +2748,7 @@ $(document).ready(function () {
 					location.reload();
 				} else {
 					consoleOutput(data);
-					$('body').addClass('mysql-connect-error');
+					$('body').addClass('error-mysql-connect');
 				}
 			}
 		});

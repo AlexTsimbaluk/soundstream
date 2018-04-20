@@ -2948,7 +2948,7 @@ ol {
   right: -20px;
   top: -15px;
 }
-#player {
+.vmPlayer {
   background: rgba(17, 17, 17, 0.7);
   border: 4px solid #00bcd4;
   -webkit-border-radius: 5px;
@@ -2968,12 +2968,12 @@ ol {
           transform: translate(-50%, -50%);
   z-index: 2;
 }
-#player p.runningString,
-#player div.runningString {
+.vmPlayer p.runningString,
+.vmPlayer div.runningString {
   -webkit-animation: runningString linear infinite 17s;
           animation: runningString linear infinite 17s;
 }
-#player .overlayFull {
+.vmPlayer .overlayFull {
   background: rgba(0, 0, 0, 0.7);
   display: none;
   height: 100%;
@@ -2984,32 +2984,32 @@ ol {
   top: 0;
   z-index: 11;
 }
-#player.playerRight {
+.vmPlayer.playerRight {
   -webkit-animation: playerRight linear 1.4s;
           animation: playerRight linear 1.4s;
 }
-#player.playerLeft {
+.vmPlayer.playerLeft {
   -webkit-animation: playerLeft linear 1.4s;
           animation: playerLeft linear 1.4s;
 }
 @media (min-width: 992px) {
-  #player {
+  .vmPlayer {
     opacity: .7;
     -webkit-transition: opacity .3s;
     transition: opacity .3s;
   }
-  #player:hover {
+  .vmPlayer:hover {
     opacity: 1;
   }
 }
 @media (max-height: 736px) and (orientation: portrait) {
-  #player {
+  .vmPlayer {
     height: 100%;
     top: 0;
   }
 }
 @media (max-height: 540px) and (orientation: landscape) {
-  #player {
+  .vmPlayer {
     height: 100vh;
     top: 0;
     -webkit-transform: translate(-50%, 0);
@@ -3018,7 +3018,7 @@ ol {
   }
 }
 @media (max-width: 420px) {
-  #player {
+  .vmPlayer {
     border: 0;
     -webkit-border-radius: 0;
             border-radius: 0;
@@ -3033,13 +3033,13 @@ ol {
             transform: none;
   }
 }
-#player .trackContainer {
+.vmPlayer .trackContainer {
   background: url(../img/logo.jpg) no-repeat center;
   height: 208px;
   padding: 0 6px;
   position: relative;
 }
-#player .trackContainer .overlay {
+.vmPlayer .trackContainer .overlay {
   background: rgba(0, 0, 0, 0.6);
   -webkit-box-shadow: 0 0 12px 5px rgba(3, 119, 134, 0.8);
           box-shadow: 0 0 12px 5px rgba(3, 119, 134, 0.8);
@@ -3049,30 +3049,30 @@ ol {
   left: 0;
   top: 0;
 }
-#player .info {
+.vmPlayer .info {
   display: block;
   font-size: 1.2em;
   height: 18px;
   overflow: hidden;
   position: relative;
 }
-#player .info .trackTitle {
+.vmPlayer .info .trackTitle {
   height: 100%;
   position: absolute;
 }
-#player .info .trackTitle.runningString {
+.vmPlayer .info .trackTitle.runningString {
   -webkit-animation: runningString linear infinite 17s;
           animation: runningString linear infinite 17s;
 }
-#player .time {
+.vmPlayer .time {
   position: absolute;
   right: 6px;
   top: 2px;
 }
-#player .view {
+.vmPlayer .view {
   height: 40px;
 }
-#player .find {
+.vmPlayer .find {
   -webkit-border-radius: 2px;
           border-radius: 2px;
   font-size: 1.4em;
@@ -3081,10 +3081,10 @@ ol {
   text-align: right;
   position: relative;
 }
-#player .find .wrap {
+.vmPlayer .find .wrap {
   display: inline-block;
 }
-#player .find input {
+.vmPlayer .find input {
   background: rgba(51, 51, 51, 0.5);
   border: 1px solid #00bcd4;
   -webkit-border-radius: 4px;
@@ -3095,27 +3095,27 @@ ol {
   width: 0;
   position: relative;
 }
-#player .find input.visible {
+.vmPlayer .find input.visible {
   display: inline;
 }
-#player .find input:focus {
+.vmPlayer .find input:focus {
   -webkit-box-shadow: 0 0 5px 0 #0ff inset;
           box-shadow: 0 0 5px 0 #0ff inset;
 }
-#player .find .showFieldSearch,
-#player .find .showAll {
+.vmPlayer .find .showFieldSearch,
+.vmPlayer .find .showAll {
   cursor: pointer;
   height: 100%;
 }
-#player .find .showFieldSearch.active + span,
-#player .find .showFieldSearch:hover + span {
+.vmPlayer .find .showFieldSearch.active + span,
+.vmPlayer .find .showFieldSearch:hover + span {
   display: block;
   position: absolute;
   right: 56px;
   top: 20px;
 }
-#player .find .showAll.active + span,
-#player .find .showAll:hover + span {
+.vmPlayer .find .showAll.active + span,
+.vmPlayer .find .showAll:hover + span {
   display: block;
   -webkit-box-shadow: 0 0 12px 12px rgba(0, 255, 255, 0.3);
           box-shadow: 0 0 12px 12px rgba(0, 255, 255, 0.3);
@@ -3123,74 +3123,74 @@ ol {
   right: 20px;
   top: 20px;
 }
-#player .playlistContainer {
+.vmPlayer .playlistContainer {
   height: -webkit-calc(100% - 250px);
   height: calc(100% - 250px);
 }
-#player .playlistContainer .playlist {
+.vmPlayer .playlistContainer .playlist {
   position: relative;
 }
-#player .playlistsPanel {
+.vmPlayer .playlistsPanel {
   clear: both;
   height: 40px;
   margin: 4px 0;
   position: relative;
 }
-#player .playlistsPanel .list {
+.vmPlayer .playlistsPanel .list {
   float: left;
   height: 100%;
   width: -webkit-calc(100% - 44px);
   width: calc(100% - 44px);
   overflow-x: auto;
 }
-#player .playlistsPanel .list .mCSB_scrollTools.mCSB_scrollTools_horizontal {
+.vmPlayer .playlistsPanel .list .mCSB_scrollTools.mCSB_scrollTools_horizontal {
   bottom: -2px;
 }
-#player .playlistsPanel .list.vmPlaylistsPanel .playlist .icon {
+.vmPlayer .playlistsPanel .list.vmPlaylistsPanel .playlist .icon {
   font-size: 1.3em;
 }
-#player .playlistsPanel .list.vmPlaylistsPanel .playlist .vmAction {
+.vmPlayer .playlistsPanel .list.vmPlaylistsPanel .playlist .vmAction {
   cursor: pointer;
 }
-#player .playlistsPanel .list.vmPlaylistsPanel .playlist .vmTitle {
+.vmPlayer .playlistsPanel .list.vmPlaylistsPanel .playlist .vmTitle {
   font-family: 'SFUIDisplay-Thin', sans-serif;
   font-size: 1.1em;
   overflow-x: hidden;
   text-align: center;
 }
-#player .playlistsPanel .list.vmPlaylistsPanel .playlist input {
+.vmPlayer .playlistsPanel .list.vmPlaylistsPanel .playlist input {
   background: transparent;
   border: 0;
   border-bottom: 1px solid #00fa00;
   color: #010;
   text-align: center;
 }
-#player .playlistsPanel .nav {
+.vmPlayer .playlistsPanel .nav {
   cursor: default;
   height: 100%;
   float: right;
   width: 44px;
 }
-#player .playlistsPanel .nav li {
+.vmPlayer .playlistsPanel .nav li {
   float: left;
   padding: 0 8px;
 }
-#player .playlistsPanel .nav .playlist-control {
+.vmPlayer .playlistsPanel .nav .playlist-control {
   background-color: transparent;
   border: none;
 }
-#player .playlistsPanel .nav .icon {
+.vmPlayer .playlistsPanel .nav .icon {
   color: #aaa;
   cursor: pointer;
   font-size: 2.6em;
 }
-#player .playlistsPanel .nav .icon:hover {
+.vmPlayer .playlistsPanel .nav .icon:hover {
   color: #00bcd4;
 }
-#player .playlistsPanel .nav i + i {
+.vmPlayer .playlistsPanel .nav i + i {
   margin-left: 4px;
 }
-#player .playlistsPanel .playlist {
+.vmPlayer .playlistsPanel .playlist {
   background: #555;
   background: -webkit-gradient(linear, left top, left bottom, color-stop(25%, #555), color-stop(100%, #9f9f9f));
   background: -webkit-linear-gradient(top, #555 25%, #9f9f9f 100%);
@@ -3207,11 +3207,11 @@ ol {
   width: 84px;
 }
 @media (max-height: 640px) and (max-width: 360px) {
-  #player .playlistsPanel .playlist {
+  .vmPlayer .playlistsPanel .playlist {
     width: 94px;
   }
 }
-#player .playlistsPanel .playlist:hover {
+.vmPlayer .playlistsPanel .playlist:hover {
   background: #555;
   background: -webkit-gradient(linear, left top, left bottom, color-stop(25%, #555), color-stop(100%, #3ee1e1));
   background: -webkit-linear-gradient(top, #555 25%, #3ee1e1 100%);
@@ -3219,7 +3219,7 @@ ol {
   background: linear-gradient(to bottom, #555 25%, #3ee1e1 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#555, endColorstr=#3ee1e1, GradientType=0);
 }
-#player .playlistsPanel .playlist[data-current] {
+.vmPlayer .playlistsPanel .playlist[data-current] {
   background: #555;
   background: -webkit-gradient(linear, left top, left bottom, color-stop(25%, #555), color-stop(100%, rgba(0, 0, 0, 0.6)));
   background: -webkit-linear-gradient(top, #555 25%, rgba(0, 0, 0, 0.6) 100%);
@@ -3227,7 +3227,7 @@ ol {
   background: linear-gradient(to bottom, #555 25%, rgba(0, 0, 0, 0.6) 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#555, endColorstr=rgba(0, 0, 0, 0.6), GradientType=0);
 }
-#player .playlistsPanel .playlist + .playlist {
+.vmPlayer .playlistsPanel .playlist + .playlist {
   margin-left: 4px;
 }
 @-webkit-keyframes trackWaiting {
@@ -3274,8 +3274,8 @@ ol {
     left: 100%;
   }
 }
-#player .track,
-#player .station {
+.vmPlayer .track,
+.vmPlayer .station {
   -webkit-border-radius: 2px;
           border-radius: 2px;
   cursor: default;
@@ -3299,18 +3299,18 @@ ol {
 			// 100% { color: #00f; }
 		} */
 }
-#player .track.waiting,
-#player .station.waiting {
+.vmPlayer .track.waiting,
+.vmPlayer .station.waiting {
   -webkit-animation: trackWaiting 3s ease-in-out infinite;
           animation: trackWaiting 3s ease-in-out infinite;
 }
-#player .track.error-playing .url,
-#player .station.error-playing .url {
+.vmPlayer .track.error-playing .url,
+.vmPlayer .station.error-playing .url {
   -webkit-filter: blur(1px);
           filter: blur(1px);
 }
-#player .track .title,
-#player .station .title {
+.vmPlayer .track .title,
+.vmPlayer .station .title {
   font-family: 'SFUIDisplay-Medium', sans-serif;
   font-size: 1.2em;
   max-height: 20px;
@@ -3319,8 +3319,8 @@ ol {
   width: calc(100% - 26px);
   word-break: break-all;
 }
-#player .track .url,
-#player .station .url {
+.vmPlayer .track .url,
+.vmPlayer .station .url {
   font-family: 'RobotoRegular', sans-serif;
   font-size: 1.1em;
   font-style: italic;
@@ -3331,13 +3331,13 @@ ol {
   position: absolute;
   top: 60%;
 }
-#player .track .url.runningString,
-#player .station .url.runningString {
+.vmPlayer .track .url.runningString,
+.vmPlayer .station .url.runningString {
   -webkit-animation: runningStringReverse linear infinite 14s;
           animation: runningStringReverse linear infinite 14s;
 }
-#player .track .track-icon,
-#player .station .track-icon {
+.vmPlayer .track .track-icon,
+.vmPlayer .station .track-icon {
   background: transparent;
   -webkit-border-radius: 100%;
           border-radius: 100%;
@@ -3352,8 +3352,8 @@ ol {
   transition: all .3s;
 }
 @media only screen and (max-width: 700px) {
-  #player .track .track-icon,
-  #player .station .track-icon {
+  .vmPlayer .track .track-icon,
+  .vmPlayer .station .track-icon {
     -webkit-justify-content: space-around;
         -ms-flex-pack: distribute;
             justify-content: space-around;
@@ -3376,27 +3376,27 @@ ol {
   }
 }
 @media (max-width: 380px) and (orientation: portrait) {
-  #player .track .track-icon,
-  #player .station .track-icon {
+  .vmPlayer .track .track-icon,
+  .vmPlayer .station .track-icon {
     left: 82vw;
   }
 }
-#player .track .track-icon i,
-#player .station .track-icon i {
+.vmPlayer .track .track-icon i,
+.vmPlayer .station .track-icon i {
   font-size: 1.7em;
   font-weight: 100;
   margin-top: 2px;
 }
-#player .track .track-icon:hover,
-#player .station .track-icon:hover {
+.vmPlayer .track .track-icon:hover,
+.vmPlayer .station .track-icon:hover {
   background-color: rgba(0, 0, 0, 0.6);
 }
-#player .track .add,
-#player .station .add,
-#player .track .delete,
-#player .station .delete,
-#player .track .canplaytest,
-#player .station .canplaytest {
+.vmPlayer .track .add,
+.vmPlayer .station .add,
+.vmPlayer .track .delete,
+.vmPlayer .station .delete,
+.vmPlayer .track .canplaytest,
+.vmPlayer .station .canplaytest {
   background: transparent;
   -webkit-border-radius: 100%;
           border-radius: 100%;
@@ -3411,12 +3411,12 @@ ol {
   transition: all .3s;
 }
 @media only screen and (max-width: 700px) {
-  #player .track .add,
-  #player .station .add,
-  #player .track .delete,
-  #player .station .delete,
-  #player .track .canplaytest,
-  #player .station .canplaytest {
+  .vmPlayer .track .add,
+  .vmPlayer .station .add,
+  .vmPlayer .track .delete,
+  .vmPlayer .station .delete,
+  .vmPlayer .track .canplaytest,
+  .vmPlayer .station .canplaytest {
     -webkit-justify-content: space-around;
         -ms-flex-pack: distribute;
             justify-content: space-around;
@@ -3439,45 +3439,45 @@ ol {
   }
 }
 @media (max-width: 380px) and (orientation: portrait) {
-  #player .track .add,
-  #player .station .add,
-  #player .track .delete,
-  #player .station .delete,
-  #player .track .canplaytest,
-  #player .station .canplaytest {
+  .vmPlayer .track .add,
+  .vmPlayer .station .add,
+  .vmPlayer .track .delete,
+  .vmPlayer .station .delete,
+  .vmPlayer .track .canplaytest,
+  .vmPlayer .station .canplaytest {
     left: 82vw;
   }
 }
-#player .track .add i,
-#player .station .add i,
-#player .track .delete i,
-#player .station .delete i,
-#player .track .canplaytest i,
-#player .station .canplaytest i {
+.vmPlayer .track .add i,
+.vmPlayer .station .add i,
+.vmPlayer .track .delete i,
+.vmPlayer .station .delete i,
+.vmPlayer .track .canplaytest i,
+.vmPlayer .station .canplaytest i {
   font-size: 1.7em;
   font-weight: 100;
   margin-top: 2px;
 }
-#player .track .add:hover,
-#player .station .add:hover,
-#player .track .delete:hover,
-#player .station .delete:hover,
-#player .track .canplaytest:hover,
-#player .station .canplaytest:hover {
+.vmPlayer .track .add:hover,
+.vmPlayer .station .add:hover,
+.vmPlayer .track .delete:hover,
+.vmPlayer .station .delete:hover,
+.vmPlayer .track .canplaytest:hover,
+.vmPlayer .station .canplaytest:hover {
   background-color: rgba(0, 0, 0, 0.6);
 }
-#player .track .canplaytest,
-#player .station .canplaytest {
+.vmPlayer .track .canplaytest,
+.vmPlayer .station .canplaytest {
   right: 30px;
   display: none;
   opacity: 0;
 }
-#player .track:hover .add,
-#player .station:hover .add,
-#player .track:hover .delete,
-#player .station:hover .delete,
-#player .track:hover .canplaytest,
-#player .station:hover .canplaytest {
+.vmPlayer .track:hover .add,
+.vmPlayer .station:hover .add,
+.vmPlayer .track:hover .delete,
+.vmPlayer .station:hover .delete,
+.vmPlayer .track:hover .canplaytest,
+.vmPlayer .station:hover .canplaytest {
   -webkit-justify-content: space-around;
       -ms-flex-pack: distribute;
           justify-content: space-around;
@@ -3498,8 +3498,8 @@ ol {
   display: -ms-flexbox;
   display: flex;
 }
-#player .track.selected,
-#player .station.selected {
+.vmPlayer .track.selected,
+.vmPlayer .station.selected {
   background: #555;
   background: -webkit-gradient(linear, left top, right top, color-stop(0%, #555), color-stop(100%, #777));
   background: -webkit-linear-gradient(left, #555 0%, #777 100%);
@@ -3507,8 +3507,8 @@ ol {
   background: linear-gradient(to right, #555 0%, #777 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='@start', endColorstr='@stop', GradientType=1);
 }
-#player .track.visualisation:before,
-#player .station.visualisation:before {
+.vmPlayer .track.visualisation:before,
+.vmPlayer .station.visualisation:before {
   -webkit-box-shadow: 0px 0px 10px 12px rgba(255, 255, 255, 0.4);
           box-shadow: 0px 0px 10px 12px rgba(255, 255, 255, 0.4);
   content: "";
@@ -3959,4 +3959,9 @@ canvas {
 .config.button .icon,
 .config.button.btn .icon {
   color: #bdbdbd;
+}
+body.error-mysql-connect .vmPlayer {
+  border: 0;
+  -webkit-box-shadow: inset 0px 0px 20px 3px #f00;
+          box-shadow: inset 0px 0px 20px 3px #f00;
 }
