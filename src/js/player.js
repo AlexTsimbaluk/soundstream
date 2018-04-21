@@ -193,118 +193,109 @@ $(document).ready(function() {
 		var newSymbol;
 
 		switch(code) {
+			/* A - Z */
 			case 65: // A
-				variants.push(916);
 				variants.push(570);
 				variants.push(582);
-				variants.push(583);
-				variants.push(66662);
+				variants.push(916);
+				variants.push(1126);
 				variants.push(5122);
 				variants.push(8491);
-				variants.push(9074);
-				variants.push(1126);
+				variants.push(11375);
 				variants.push(42582);
 				variants.push(42584);
+				variants.push(66662);
 				break;
 
 			case 66: // B
-				variants.push(11394);
-				variants.push(5104);
+				variants.push(579);
 				variants.push(8492);
 				variants.push(65922);
-				variants.push(579);
 				break;
 
 			case 67: // C
 				variants.push(1195);
+				variants.push(42814);
 				break;
 
 			case 68: // D
 				variants.push(270);
-				variants.push(271);
 				variants.push(272);
-				variants.push(273);
+				
 				break;
 
 			case 69: // E
-				variants.push(7474);
-				variants.push(5067);
+				variants.push(582);
 				variants.push(1214);
+				variants.push(8493);
 				break;
 
 			case 70: // F
-				variants.push(8497);
 				variants.push(8457);
+				variants.push(8497);
 				break;
 
 			case 71: // G
-				variants.push(5107);
 				variants.push(284);
 				variants.push(290);
+				variants.push(42912);
 				break;
 
 			case 72: // H
-				variants.push(11406);
-				variants.push(1186);
-				variants.push(1188);
 				variants.push(292);
 				variants.push(294);
+				variants.push(1186);
+				variants.push(1188);
+				variants.push(42922);
 				break;
 
 			case 73: // I
-				variants.push(5062);
-				variants.push(1031);
 				variants.push(302);
-				variants.push(303);
+				variants.push(1031);
 				break;
 
 			case 74: // J
 				variants.push(308);
-				variants.push(309);
 				break;
 
 			case 75: // K
-				variants.push(11412);
-				variants.push(1179);
 				variants.push(1180);
 				variants.push(1182);
 				variants.push(1184);
 				variants.push(1310);
+				variants.push(42816);
+				variants.push(42914);
 				break;
 
 			case 76: // L
-				variants.push(316);
 				variants.push(317);
-				variants.push(318);
 				variants.push(319);
-				variants.push(320);
 				variants.push(321);
-				variants.push(322);
+				variants.push(573);
+				variants.push(42824);
 				break;
 
 			case 77: // M
-				variants.push(11416);
+				variants.push(11374);
+				variants.push(43005);
 				break;
 
 			case 78: // N
-				variants.push(11418);
-				variants.push(330);
 				variants.push(327);
+				variants.push(42916);
+				
 				break;
 
 			case 79: // O
-				variants.push(9004);
-				variants.push(11408);
-				variants.push(1258);
-				variants.push(1256);
 				variants.push(336);
 				variants.push(556);
+				
 				break;
 
 			case 80: // P
-				variants.push(8471);
 				variants.push(1166);
-				variants.push(1167);
+				variants.push(42832);
+				variants.push(42834);
 				break;
 
 			case 81: // Q
@@ -312,24 +303,25 @@ $(document).ready(function() {
 				break;
 
 			case 82: // R
+				variants.push(588);
 				variants.push(5502);
 				variants.push(5504);
-				variants.push(5511);
+				variants.push(8267);
+				variants.push(8476);
+				variants.push(8477);
 				variants.push(8479);
-				variants.push(11456);
-				variants.push(588);
-				variants.push(589);
+				variants.push(42918);
 				break;
 
 			case 83: // S
-				variants.push(575);
+				variants.push(11390);
+				variants.push(42920);
 				break;
 
 			case 84: // T
-				variants.push(65964);
-				variants.push(65966);
 				variants.push(1196);
-				variants.push(42640);
+				variants.push(42825);
+				variants.push(65966);
 				break;
 
 			case 85: // U
@@ -338,154 +330,217 @@ $(document).ready(function() {
 
 			case 86: // V
 				variants.push(11377);
-				variants.push(11380);
 				break;
 
 			case 87: // W
-				variants.push(5076);
 				variants.push(65510);
-				variants.push(9077);
-				variants.push(11440);
 				break;
 
 			case 88: // X
-				variants.push(11436);
 				variants.push(1276);
 				variants.push(1278);
 				break;
 
 			case 89: // Y
-				variants.push(5033);
-				variants.push(5053);
-				variants.push(65510);
+				variants.push(590);
 				variants.push(65971);
 				variants.push(65912);
-				variants.push(590);
-				variants.push(591);
 				break;
 
 			case 90: // Z
-				variants.push(11404);
-				variants.push(11464);
-				variants.push(42560);
-				variants.push(42562);
+				variants.push(11391);
+				variants.push(65973);
 				break;
 
+			/* a - z */
 			case 97: // a
-				variants.push(65998);
+				variants.push(170);
+				variants.push(583);
+				variants.push(8119);
+				variants.push(8071);
+				variants.push(9074);
 				variants.push(9078);
 				variants.push(9082);
 				variants.push(9091);
 				variants.push(42583);
+				variants.push(65998);
 				break;
 
 			case 98: // b
-				variants.push(6328);
+				variants.push(384);
+				variants.push(389);
+				variants.push(65920);
 				break;
 
 			case 99: // c
-				variants.push(916);
+				variants.push(162);
+				variants.push(263);
+				variants.push(265);
+				variants.push(267);
+				variants.push(267);
+				variants.push(269);
+				variants.push(1021);
+				variants.push(1022);
+				variants.push(1023);
 				break;
 
 			case 100: // d
-				variants.push(916);
+				variants.push(271);
+				variants.push(273);
+				variants.push(545);
 				break;
 
 			case 101: // e
+				variants.push(583);
 				variants.push(8493);
 				break;
 
 			case 102: // f
-				variants.push(916);
+				variants.push(402);
+				variants.push(981);
 				break;
 
 			case 103: // g
-				variants.push(916);
+				variants.push(285);
+				variants.push(287);
+				variants.push(289);
+				variants.push(291);
+				variants.push(485);
+				variants.push(487);
+				variants.push(42913);
 				break;
 
 			case 104: // h
+				variants.push(293);
+				variants.push(295);
 				variants.push(5058);
 				break;
 
 			case 105: // i
-				variants.push(916);
+				variants.push(297);
+				variants.push(299);
+				variants.push(301);
+				variants.push(303);
 				break;
 
 			case 106: // j
-				variants.push(916);
+				variants.push(309);
 				break;
 
 			case 107: // k
+				variants.push(311);
+				variants.push(1179);
+				variants.push(42915);
 				variants.push(65944);
 				variants.push(65945);
 				break;
 
 			case 108: // l
-				variants.push(916);
+				variants.push(314);
+				variants.push(316);
+				variants.push(318);
+				variants.push(320);
+				variants.push(322);
 				break;
 
 			case 109: // m
-				variants.push(916);
+				// variants.push(916);
 				break;
 
 			case 110: // n
+				variants.push(324);
+				variants.push(326);
+				variants.push(328);
+				variants.push(329);
+				variants.push(330);
+				variants.push(331);
+				variants.push(42917);
 				variants.push(65950);
 				break;
 
 			case 111: // o
-				variants.push(916);
+				variants.push(1256);
+				variants.push(1258);
+				variants.push(9004);
 				break;
 
 			case 112: // p
-				variants.push(916);
+				variants.push(1167);
 				break;
 
 			case 113: // q
-				variants.push(916);
+				variants.push(491);
+				variants.push(493);
 				break;
 
 			case 114: // r
+				variants.push(589);
 				variants.push(8253);
 				variants.push(8267);
+				variants.push(42919);
 				variants.push(65958);
 				break;
 
 			case 115: // s
-				variants.push(5030);
+				variants.push(349);
+				variants.push(351);
+				variants.push(353);
+				variants.push(575);
+				variants.push(42921);
 				break;
 
 			case 116: // t
+				variants.push(355);
+				variants.push(357);
+				variants.push(359);
+				variants.push(566);
 				variants.push(65963);
+				variants.push(65964);
 				break;
 
 			case 117: // u
-				variants.push(916);
+				variants.push(359);
+				variants.push(361);
+				variants.push(363);
+				variants.push(365);
+				variants.push(367);
+				variants.push(369);
+				variants.push(371);
 				break;
 
 			case 118: // v
-				variants.push(916);
+				variants.push(11380);
 				break;
 
 			case 119: // w
-				variants.push(5063);
+				variants.push(4287);
+				variants.push(9077);
 				variants.push(9081);
 				break;
 
 			case 120: // x
-				variants.push(916);
+				variants.push(967);
+				variants.push(1008);
 				break;
 
 			case 121: // y
+				variants.push(591);
 				variants.push(8509);
 				break;
 
 			case 122: // z
-				variants.push(7612);
+				variants.push(549);
+				variants.push(576);
+				variants.push(65974);
 				break;
 
 			default:
 				console.log('Передана не буква в латинской раскладке');
 				break;
+		}
+
+		if(!variants.length) {
+			variants.push(code);
 		}
 
 		for (var i = 0; i < variants.length; i++) {
