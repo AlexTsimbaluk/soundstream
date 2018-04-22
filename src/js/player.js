@@ -361,7 +361,6 @@ $(document).ready(function() {
 				variants.push(9074);
 				variants.push(9078);
 				variants.push(9082);
-				variants.push(9091);
 				variants.push(42583);
 				variants.push(65998);
 				break;
@@ -397,7 +396,9 @@ $(document).ready(function() {
 
 			case 102: // f
 				variants.push(402);
+				variants.push(589);
 				variants.push(981);
+				variants.push(42919);
 				break;
 
 			case 103: // g
@@ -473,11 +474,9 @@ $(document).ready(function() {
 				variants.push(493);
 				break;
 
-			case 114: // r
-				variants.push(589);
+			case 114: // r			
 				variants.push(8253);
 				variants.push(8267);
-				variants.push(42919);
 				variants.push(65958);
 				break;
 
@@ -548,6 +547,32 @@ $(document).ready(function() {
 		}
 
 		return variants;
+	}
+
+	function translateText(originalText) {
+		console.log('::translateText');
+
+		var $elements = $('.track .title');
+
+		if(!originalText) {
+			$elements.each(function(index, el) {
+				var $el = $(el);
+				var originalText = $el.text()
+				var translatedText = decodeText(originalText);
+
+				if(!$el.attr('data-orirginal-text')) {
+					$el.attr('data-orirginal-text', originalText);
+				}
+				$el.text(translatedText);
+			});
+		} else {
+			$elements.each(function(index, el) {
+				var $el = $(el);
+				var originalText = $el.attr('data-orirginal-text');
+
+				$el.text(originalText);
+			});
+		}
 	}
 
 
@@ -1112,12 +1137,12 @@ $(document).ready(function() {
 			if(playerState.visualisations['visTriangle'].state) {
 		        drawTriangle();
 			}
-			if(playerState.visualisations['allEnabled'].state) {
+			/*if(playerState.visualisations['allEnabled'].state) {
 		        drawEqLeft();
 		        drawEqRight();
 		        drawVisVolume();
 		        drawTriangle();
-			}
+			}*/
 
 	        
 	        consoleOutput('AudioApiElement::playStream::End');
@@ -1916,7 +1941,10 @@ $(document).ready(function() {
 		for (var i = 0, size = visOrder.length; i < size; i++) {
 			var markup = '<label title="' + visOrder[i] + '"><input type="checkbox" data-animation-name="' + visOrder[i] + '" data-animation-state="' + vis[visOrder[i]].state + '" class="toggle-animation" /><div class="button btn"><div class="iconWrapper"><div class="icon">' + vis[visOrder[i]].icon + '</div></div></div></label>';
 			
-			$('.animation-settings').append(markup);
+			$('.animation-settings')
+				.append(markup)
+				.addClass('flex')
+			;
 
 			if(vis[visOrder[i]].state) {
 				$('[data-animation-name=' + visOrder[i] + ']').prop('checked', true);
@@ -2102,13 +2130,14 @@ $(document).ready(function() {
 		consoleOutput($(this).position().top);
 	});
 
+
+
 	// TODO: в кликах на кнопку stop проверять player.paused
 	$('#player .stop').click(function(e) {
 		if(!playerState.paused) {
 			audioApiElement.stopStream();
 		}
 	});
-
 
 	$('.playlistContainer').on('click', '.delete', function(e) {
 		var id = $(this)
@@ -2603,6 +2632,18 @@ $(document).ready(function() {
 		// $('.after-decode').append(decodeText(event.keyCode));
 	});
 
+	$('.translate-text').on('click', function() {
+		// если уже переведено, то вызываем translateText() с флагом true,
+		// который говорит о том что нужно вернуть оригинальный текст
+		if($(this).attr('data-translated')) {
+			$(this).removeAttr('data-translated');
+			translateText(true);
+		} else {
+			$(this).attr('data-translated', 1);
+			translateText(false);
+		}
+	});
+
 	/*****************************************
 	REGISTRATION
 	******************************************/
@@ -2931,6 +2972,8 @@ $(document).ready(function() {
 
 	
 
+	
+
 
 	/*
 		Чтобы на экранах в высоту меньше 640px у блока playlistContainer с треками 
@@ -3137,12 +3180,16 @@ $(document).ready(function() {
 		playerState.paused = true;
 
 		playerState.visualisations = {};
-		playerState.visualisations.order = ['allEnabled', 'visEqLeft', 'analyserVisVolume', 'visEqRight', 'visTriangle'];
-		playerState.visualisations['allEnabled'] = {
+
+		// пока убираю allEnabled для вкл/выкл всех анимаций
+		// playerState.visualisations.order = ['allEnabled', 'visEqLeft', 'analyserVisVolume', 'visEqRight', 'visTriangle'];
+		/*playerState.visualisations['allEnabled'] = {
 			icon: 'flash_auto',
 			name: 'allEnabled',
 			state: false
-		};
+		};*/
+
+		playerState.visualisations.order = ['visEqLeft', 'analyserVisVolume', 'visEqRight', 'visTriangle'];
 		playerState.visualisations['visEqLeft'] = {
 			icon: 'graphic_eq',
 			name: 'visEqLeft',

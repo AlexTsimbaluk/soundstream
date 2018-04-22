@@ -70,16 +70,7 @@
 			</div>
 		</div>
 
-
-		<div class="userPanel hidden">
-			<ul class="userActions">
-				<li><button class="showFormReg">Reg</button></li>
-				<li><button class="showFormSign">Auth</button></li>
-				<li><a href="sql/db_queries.php" class="runSql">SQL</a></li>
-			</ul>
-		</div>
-
-		<div class="flex left animation-settings controls">
+		<div class="left animation-settings controls">
 			<label>
 				<div class="downloadConfig config button btn" title="Download file with your configuration">
 					<a href="config.txt" download class="iconWrapper">
@@ -112,20 +103,21 @@
 					</div>
 				</label>
 			<?php } ?>
-			<!-- <label>
-				<input type="checkbox" data-animation-name="allEnabled" data-animation-state class="toggle-animation" />
-				<div class=" button btn">
-					<div class="iconWrapper">
-						<div class="icon"></div>
-					</div>
-				</div>
-			</label> -->
 
 			<?php if(isset($_SESSION['login'])) { ?>
 				<p class="user-name">
 					<?php echo $_SESSION['login'] ?>
 				</p>
 			<?php } ?>
+
+			<!-- кнопка для перевода текста -->
+			<label>
+				<div class="translate-text config button btn" title="Translate">
+					<div class="iconWrapper">
+						<div class="icon">translate</div>
+					</div>
+				</div>
+			</label>
 		</div>
 
 		<div class="flex left controls track-control">
@@ -269,6 +261,7 @@
 			</li>
 		</ul>
 	</div>
+
 
 	<div class="playlistContainer grow-1 size-12"></div>
 

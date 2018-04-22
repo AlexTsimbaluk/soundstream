@@ -2412,15 +2412,6 @@ body .container-default {
   top: 0;
   bottom: 0;
 }
-/* выделение текста */
-::-moz-selection {
-  background: #b3d4fc;
-  text-shadow: none;
-}
-::selection {
-  background: #b3d4fc;
-  text-shadow: none;
-}
 a {
   color: #000;
 }
@@ -3927,7 +3918,6 @@ canvas {
 .toggle-animation + .button.btn {
   border: 0;
   background: transparent;
-  width: auto;
 }
 .toggle-animation + .button:hover,
 .toggle-animation + .button.btn:hover {
