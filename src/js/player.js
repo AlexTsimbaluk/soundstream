@@ -168,7 +168,7 @@ $(document).ready(function() {
 				var newCode = decodeCode(codeArray[i]);
 				var newSymbol = (newCode[getRandomInt(0, newCode.length - 1)]);
 				decodeArray.push(newSymbol);
-				console.log(symbolArray[i] + ' - ' + newCode);
+				// console.log(symbolArray[i] + ' - ' + newCode);
 			} else {
 				decodeArray.push(symbolArray[i]);
 			}
@@ -549,13 +549,9 @@ $(document).ready(function() {
 		return variants;
 	}
 
-	function translateText(originalText) {
-		console.log('::translateText');
-
-		var $elements = $('.track .title');
-
-		if(!originalText) {
-			$elements.each(function(index, el) {
+	function translateCollection($collection, needTranslate) {
+		if(needTranslate) {
+			$collection.each(function(index, el) {
 				var $el = $(el);
 				var originalText = $el.text()
 				var translatedText = decodeText(originalText);
@@ -566,12 +562,48 @@ $(document).ready(function() {
 				$el.text(translatedText);
 			});
 		} else {
-			$elements.each(function(index, el) {
+			$collection.each(function(index, el) {
 				var $el = $(el);
 				var originalText = $el.attr('data-orirginal-text');
 
 				$el.text(originalText);
 			});
+		}
+	}
+
+	function translateText(init) {
+		console.log('::translateText');
+		/*if(init) {
+			console.log('init');
+			if(playerState.translated) {
+				$('.translate-text').attr('data-translated', 1);
+			} else {
+				$('.translate-text').removeAttr('data-translated');
+			}
+			return;
+		}*/
+
+		var $elements = $('.track .title');
+
+		// клик по кнопке перевода, или нужен перевод после загрузки страницы
+		if((!playerState.translated && !init) || (playerState.translated && init)) {
+			console.log('need translate');
+			console.log(playerState.translated);
+
+			translateCollection($elements, true);
+			$('.translate-text').attr('data-translated', 1);
+
+			playerState.translated = true;
+			localStorage.setItem('playerState', JSON.stringify(playerState));
+		} else {
+			console.log('need original');
+			console.log(playerState.translated);
+
+			translateCollection($elements, false);
+			$('.translate-text').removeAttr('data-translated');
+
+			playerState.translated = false;
+			localStorage.setItem('playerState', JSON.stringify(playerState));
 		}
 	}
 
@@ -2635,13 +2667,14 @@ $(document).ready(function() {
 	$('.translate-text').on('click', function() {
 		// если уже переведено, то вызываем translateText() с флагом true,
 		// который говорит о том что нужно вернуть оригинальный текст
-		if($(this).attr('data-translated')) {
+		/*if($(this).attr('data-translated')) {
 			$(this).removeAttr('data-translated');
 			translateText(true);
 		} else {
 			$(this).attr('data-translated', 1);
 			translateText(false);
-		}
+		}*/
+		translateText();
 	});
 
 	/*****************************************
@@ -3012,7 +3045,8 @@ $(document).ready(function() {
 			paused: player.paused,
 			search: {
 				stationsOpened: []
-			}
+			},
+			translated: false
 		},
 
 		// Массив со всеми станциями
@@ -3408,6 +3442,12 @@ $(document).ready(function() {
 			consoleOutput('make tracks:begin');
 			playlistManager.makePlaylistTracks(playlistTracks);
 			consoleOutput('make tracks:end');
+
+			// if(playerState.translated) {
+			consoleOutput('translate text:begin');
+			translateText(true);
+			consoleOutput('translate text:end');
+			// }
 		} else {
 			consoleOutput('Выбранный плейлист пуст - нет треков');
 		}
@@ -3456,6 +3496,8 @@ $(document).ready(function() {
 		        consoleOutput('vmCurrentTrackTitle::destroyed');
 		    }
 		});
+
+
 
 		if(!playerState.paused) {
 			// если плейлист играющего(!) текущего трека != playerState.currentPlaylist
