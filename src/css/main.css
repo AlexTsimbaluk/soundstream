@@ -3895,6 +3895,7 @@ canvas {
           transform: translate(-50%, -50%);
 }
 .animation-settings {
+  height: auto;
   -webkit-box-pack: left;
   -webkit-justify-content: left;
       -ms-flex-pack: left;
@@ -3908,7 +3909,7 @@ canvas {
   top: -4px;
 }
 .animation-settings label {
-  margin: 0 auto;
+  margin: 6px auto;
 }
 .animation-settings label .button {
   width: auto;
@@ -3920,6 +3921,7 @@ canvas {
 .toggle-animation + .button.btn {
   border: 0;
   background: transparent;
+  height: auto;
   width: auto;
 }
 .toggle-animation + .button:hover,
@@ -3940,6 +3942,7 @@ canvas {
 .config.button.btn {
   border: 0;
   background: transparent;
+  height: auto;
 }
 .config:hover,
 .config.button:hover,
@@ -3952,6 +3955,11 @@ canvas {
 .config.button .icon,
 .config.button.btn .icon {
   color: #bdbdbd;
+}
+.config.translate-text:not([data-translated]) .icon,
+.config.button.translate-text:not([data-translated]) .icon,
+.config.button.btn.translate-text:not([data-translated]) .icon {
+  color: rgba(189, 189, 189, 0.4);
 }
 body.error-mysql-connect .vmPlayer {
   border: 0;

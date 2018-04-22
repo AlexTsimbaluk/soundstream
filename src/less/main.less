@@ -1306,6 +1306,7 @@ canvas {
 }
 
 .animation-settings {
+	height: auto;
 	justify-content: left;
 	position: relative;
 	.user-name {
@@ -1315,7 +1316,7 @@ canvas {
 		top: -4px;
 	}
 	label {
-		margin: 0 auto;
+		margin: 6px auto;
 		.button {
 			width: auto;
 		}
@@ -1330,6 +1331,7 @@ canvas {
 	+ .button.btn {
 		border: 0;
 		background: transparent;
+		height: auto;
 		width: auto;
 		&:hover {
 			background: transparent;
@@ -1354,12 +1356,20 @@ canvas {
 .config.button.btn {
 	border: 0;
 	background: transparent;
+	height: auto;
 	&:hover {
 		background: transparent;
 		box-shadow: none;
 	}
 	.icon {
 		color: rgb(189, 189,189);
+	}
+	&.translate-text {
+		&:not([data-translated]) {
+			.icon {
+				color: rgba(189, 189,189, .4);
+			}
+		}
 	}
 }
 
