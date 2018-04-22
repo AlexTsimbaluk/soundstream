@@ -3909,6 +3909,8 @@ canvas {
 }
 .animation-settings label {
   margin: 0 auto;
+}
+.animation-settings label .button {
   width: auto;
 }
 .toggle-animation {
@@ -3918,6 +3920,7 @@ canvas {
 .toggle-animation + .button.btn {
   border: 0;
   background: transparent;
+  width: auto;
 }
 .toggle-animation + .button:hover,
 .toggle-animation + .button.btn:hover {

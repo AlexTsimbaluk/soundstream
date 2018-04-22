@@ -31,7 +31,7 @@
 	</div>
 <?php } ?>
 
-<?php if(true) { ?>
+<?php if(false) { ?>
 	<div class="devel overflow-y mCustomScrollbar">
 		<div class="symbols">
 			<input type="text" class="before-decode form-control">
