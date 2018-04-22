@@ -1212,6 +1212,15 @@ canvas {
 	.translated-text {
 		font-size: 1.1em;
 	}
+	.after-decode {}
+	.clearSymbols {
+		background: transparent;
+		border: 0;
+		position: absolute;
+		right: .7em;
+		top: 6.5em;
+		z-index: 2;
+	}
 }
 
 .console {
@@ -1226,9 +1235,7 @@ canvas {
 	z-index: 1;
 	.clearConsole {
 		background: transparent;
-		background: rgba(255, 255, 255, 0);
 		border: 0;
-		// cursor: pointer;
 		position: absolute;
 		right: .7em;
 		top: .5em;

@@ -32,10 +32,19 @@
 <?php } ?>
 
 <?php if(false) { ?>
-	<div class="devel overflow-y mCustomScrollbar">
-		<div class="symbols">
-			<input type="text" class="before-decode form-control">
-			<p class="after-decode"></p>
+	<div class="devel ">
+		<div class="symbols flex top h-fill">
+			<div class="shrink-1">
+				<input type="text" class="before-decode form-control">
+			</div>
+
+			<div class="grow-1 size-12">
+				<div class="after-decode mCustomScrollbar h-fill"></div>
+
+				<button class="clearSymbols">
+					<div class="icon">not_interested</div>
+				</button>
+			</div>
 		</div>
 	</div>
 <?php } ?>

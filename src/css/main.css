@@ -3813,6 +3813,14 @@ canvas {
 .devel .translated-text {
   font-size: 1.1em;
 }
+.devel .clearSymbols {
+  background: transparent;
+  border: 0;
+  position: absolute;
+  right: .7em;
+  top: 6.5em;
+  z-index: 2;
+}
 .console {
   background: rgba(255, 255, 255, 0.7);
   color: #000;
@@ -3827,7 +3835,6 @@ canvas {
 }
 .console .clearConsole {
   background: transparent;
-  background: rgba(255, 255, 255, 0);
   border: 0;
   position: absolute;
   right: .7em;

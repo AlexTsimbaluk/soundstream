@@ -169,6 +169,16 @@ $(document).ready(function() {
 				var newSymbol = (newCode[getRandomInt(0, newCode.length - 1)]);
 				decodeArray.push(newSymbol);
 				// console.log(symbolArray[i] + ' - ' + newCode);
+				if($('.after-decode').length) {
+					$('.after-decode .mCSB_container')
+						.append(
+							'<div class="translated-text">'
+								+ symbolArray[i]
+								+ ' - '
+								+ newCode
+								+ '</div>'
+						);
+				}
 			} else {
 				decodeArray.push(symbolArray[i]);
 			}
@@ -2654,7 +2664,9 @@ $(document).ready(function() {
 		var val = $textInput.val();
 		
 		// $('.after-decode').empty();
-		$('.after-decode').append('<div class="translated-text">' + decodeText(val) + '</div>');
+		// $('.after-decode .mCSB_container').append('<div class="translated-text">' + decodeText(val) + '</div>');
+		decodeText(val);
+		$textInput.val('');
 	});
 
 	$('.before-decode').on('keypress', function(event) {
@@ -2664,16 +2676,12 @@ $(document).ready(function() {
 		// $('.after-decode').append(decodeText(event.keyCode));
 	});
 
+	$('.clearSymbols').on('click', function() {
+		$('.after-decode .mCSB_container').empty();
+		return false;
+	});
+
 	$('.translate-text').on('click', function() {
-		// если уже переведено, то вызываем translateText() с флагом true,
-		// который говорит о том что нужно вернуть оригинальный текст
-		/*if($(this).attr('data-translated')) {
-			$(this).removeAttr('data-translated');
-			translateText(true);
-		} else {
-			$(this).attr('data-translated', 1);
-			translateText(false);
-		}*/
 		translateText();
 	});
 
