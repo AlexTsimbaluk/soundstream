@@ -2927,6 +2927,8 @@ $(document).ready(function() {
 		translateText();
 	});
 
+
+
 	/*****************************************
 	REGISTRATION
 	******************************************/
@@ -3252,8 +3254,6 @@ $(document).ready(function() {
 		});
 		return false;
 	});
-
-	
 
 	
 
