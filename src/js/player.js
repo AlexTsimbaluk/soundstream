@@ -832,10 +832,40 @@ $(document).ready(function() {
 		}
 	}
 
-	function translateText(init) {
+	function translateAllText(needTranslate) {
+		/*var childNodes = document.body.children;
+		console.log(childNodes);
+
+		if(needTranslate) {
+
+		} else {
+
+		}
+
+		for (var i = 0; i < childNodes.length; i++) {
+			// отфильтровать не-элементы
+			if(childNodes[i].nodeType != 1){
+				continue;
+			}
+
+			var __ = childNodes[i].children;
+
+			if(__.length) {
+				// for (var i = 0; i < __.length; i++) {
+				// 	// console.log(__);
+				// }
+				console.log(__.length);
+			}
+
+		}*/
+
+		// var $tags = 
+	}
+
+	function translateText($elements, init) {
 		console.log('::translateText');
 
-		var $elements = $('.track .url');
+		// var $elements = $('.track .url');
 
 		// клик по кнопке перевода, или нужен перевод после загрузки страницы
 		if((!playerState.translated && !init) || (playerState.translated && init)) {
@@ -845,6 +875,8 @@ $(document).ready(function() {
 			translateCollection($elements, true);
 			$('.translate-text').attr('data-translated', 1);
 
+			// translateAllText(true);
+
 			playerState.translated = true;
 			localStorage.setItem('playerState', JSON.stringify(playerState));
 		} else {
@@ -853,6 +885,8 @@ $(document).ready(function() {
 
 			translateCollection($elements, false);
 			$('.translate-text').removeAttr('data-translated');
+
+			// translateAllText(false);
 
 			playerState.translated = false;
 			localStorage.setItem('playerState', JSON.stringify(playerState));
@@ -2924,7 +2958,9 @@ $(document).ready(function() {
 	});
 
 	$('.translate-text').on('click', function() {
-		translateText();
+		translateText(
+			$('.title, .url, .playlist .vmTitle, .adminItem .button:not(.showConsole):not(.data-toggle), .remove a, form button'), false
+		);
 	});
 
 
@@ -3695,7 +3731,10 @@ $(document).ready(function() {
 
 			// if(playerState.translated) {
 			consoleOutput('translate text:begin');
-			translateText(true);
+			translateText(
+				$('.title, .url, .playlist .vmTitle, .adminItem .button:not(.showConsole):not(.data-toggle), .remove a, form button'), true
+			);
+			// translateText($('.url'), true);
 			consoleOutput('translate text:end');
 			// }
 		} else {
@@ -3766,8 +3805,13 @@ $(document).ready(function() {
 			audioApiElement.playStream(getCurrentTrack().url);
 		}
 		makeConfig();
+
+		console.log('' + $('div').get(0));
+		console.log($('.vmPlayer').text());
 	}
 });
+
+
 
 
 
