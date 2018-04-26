@@ -893,6 +893,17 @@ $(document).ready(function() {
 		}
 	}
 
+	function translateTarget() {
+		return $(
+			'.title, '
+			+ ' .url, '
+		    + ' .playlist .vmTitle, '
+		    + ' .adminItem .button:not(.showConsole):not(.data-toggle), '
+		    + ' .remove a, '
+		    + ' form button'
+	    );
+	}
+
 
 
 	// определяем устройство
@@ -2958,10 +2969,13 @@ $(document).ready(function() {
 	});
 
 	$('.translate-text').on('click', function() {
-		translateText(
+		/*translateText(
 			$('.title, .url, .playlist .vmTitle, .adminItem .button:not(.showConsole):not(.data-toggle), .remove a, form button'), false
-		);
+		);*/
+		translateText(translateTarget(), false);
+		console.log(playerState.translated);
 	});
+
 
 
 
@@ -3731,10 +3745,10 @@ $(document).ready(function() {
 
 			// if(playerState.translated) {
 			consoleOutput('translate text:begin');
-			translateText(
+			/*translateText(
 				$('.title, .url, .playlist .vmTitle, .adminItem .button:not(.showConsole):not(.data-toggle), .remove a, form button'), true
-			);
-			// translateText($('.url'), true);
+			);*/
+			translateText(translateTarget(), true);
 			consoleOutput('translate text:end');
 			// }
 		} else {
@@ -3806,12 +3820,9 @@ $(document).ready(function() {
 		}
 		makeConfig();
 
-		console.log('' + $('div').get(0));
-		console.log($('.vmPlayer').text());
+		// console.log('' + $('div').get(0));
 	}
 });
-
-
 
 
 
