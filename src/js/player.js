@@ -41,10 +41,6 @@ function getParams() {
 	return $_GET; 
 }
 
-function d(str) {
-	'use strict';
-	$('.debug').html(str);
-}
 // Получение случайного числа в заданном диапазоне
 function getRandomInt(min, max) {
 	'use strict';
@@ -832,36 +828,6 @@ $(document).ready(function() {
 		}
 	}
 
-	function translateAllText(needTranslate) {
-		/*var childNodes = document.body.children;
-		console.log(childNodes);
-
-		if(needTranslate) {
-
-		} else {
-
-		}
-
-		for (var i = 0; i < childNodes.length; i++) {
-			// отфильтровать не-элементы
-			if(childNodes[i].nodeType != 1){
-				continue;
-			}
-
-			var __ = childNodes[i].children;
-
-			if(__.length) {
-				// for (var i = 0; i < __.length; i++) {
-				// 	// console.log(__);
-				// }
-				console.log(__.length);
-			}
-
-		}*/
-
-		// var $tags = 
-	}
-
 	function translateText($elements, init) {
 		console.log('::translateText');
 
@@ -1267,12 +1233,12 @@ $(document).ready(function() {
 	}
 
 	function AudioApiElement(audioElement) {
-	    var $playerTag = document.getElementById(audioElement);
 	    var self = this;
-	    
+	    var $playerTag = document.getElementById(audioElement);
 
 	    var source = audioCtx.createMediaElementSource($playerTag);
 	    var analyserEqLeft, analyserEqRight, analyserVolume, analyserTriangle;
+
 	    analyserEqLeft =
 				new Analyser(
 				source,
@@ -1358,8 +1324,7 @@ $(document).ready(function() {
 				posLeft = 0;
 			}
 			
-			$('.playlistContainer')
-				.mCustomScrollbar('scrollTo', posLeft);
+			$('.playlistContainer').mCustomScrollbar('scrollTo', posLeft);
 
 
 			// при старте воспроизведения
@@ -1384,12 +1349,7 @@ $(document).ready(function() {
 	    	};
 
 	    	// Изменим объект состояния
-	    	/*playerState.playlists[getCurrentPlaylist()].currentTrack =
-	    														_currentTrack;*/
-
-			__playlists[getCurrentPlaylist()].currentTrack =
-    														_currentTrack;
-			// vmCurrentTrackTitle.title = _currentTrack.title;
+			__playlists[getCurrentPlaylist()].currentTrack = _currentTrack;
 
 	        $playerTag.src = streamUrl;
 	        $playerTag.crossOrigin = 'anonymous';
@@ -1398,22 +1358,9 @@ $(document).ready(function() {
 	        }, 3000);
 
 	        var playPromise = $playerTag.play();
-	        // $(".spinner").show();
 
 	        // В конце if проверить PromiseStatus, если он rejected
 	        if (playPromise !== undefined) {
-				/*playPromise.then(function() {
-					consoleOutput('Promise::Automatic playback started!');
-					$(".spinner").hide();
-				}).catch(function(error) {
-					$(".spinner").hide();
-					consoleOutput('Promise::Automatic playback failed...');
-					consoleOutput(error);
-					self.stopStream();
-					$('.playlistContainer .track[data-current-track]').
-					removeAttr('data-current-track');
-				});*/
-
 				playPromise.then(function() {
 					consoleOutput('AudioApiElement::playPromise::Success::Begin');					
 			        consoleOutput('AudioApiElement::playPromise::Success::End');
@@ -1429,27 +1376,19 @@ $(document).ready(function() {
 	        }
 
 	        playerState.paused = $playerTag.paused;
-			// playerState.playingTrack = _currentTrack;
-			// playerState.lastActivePlaylist = playerState.currentPlaylist;
-
-			// vmCurrentTrackTitle.trackTitle = playerState.playingTrack.title;
-			// vmCurrentTrackTitle.trackTitle = _currentTrack.title;
 
 			if(!playerState.nowPlaying.playlistName) {
-				playerState.nowPlaying.playlistName =
-							playerState.currentPlaylist;
+				playerState.nowPlaying.playlistName = playerState.currentPlaylist;
 				playerState.nowPlaying.track = _currentTrack;
-			} else if(playerState.nowPlaying.playlistName ==
-							playerState.currentPlaylist) {
+			} else if(playerState.nowPlaying.playlistName
+				== playerState.currentPlaylist) {
 				playerState.nowPlaying.track = _currentTrack;
-			} else if(playerState.nowPlaying.playlistName !=
-							playerState.currentPlaylist) {
+			} else if(playerState.nowPlaying.playlistName
+				!= playerState.currentPlaylist) {
 				consoleOutput('pppp');
-				playerState.nowPlaying.playlistName =
-							playerState.currentPlaylist;
+				playerState.nowPlaying.playlistName = playerState.currentPlaylist;
 				playerState.nowPlaying.track = _currentTrack;
 			}
-			// __playlists.nowPlaying.playlistName = playerState.currentPlaylist;
 
 	        localStorage.setItem('playerState', JSON.stringify(playerState));
 			localStorage.setItem('__playlists', JSON.stringify(__playlists));
@@ -1466,14 +1405,7 @@ $(document).ready(function() {
 			if(playerState.visualisations['visTriangle'].state) {
 		        drawTriangle();
 			}
-			/*if(playerState.visualisations['allEnabled'].state) {
-		        drawEqLeft();
-		        drawEqRight();
-		        drawVisVolume();
-		        drawTriangle();
-			}*/
-
-	        
+			
 	        consoleOutput('AudioApiElement::playStream::End');
 	        // TODO: добавить на играющий трек эквалайзер
 	    };
@@ -1482,7 +1414,6 @@ $(document).ready(function() {
 			visualisationStop();
 			$('#player .play').removeClass('visualisation');
 
-			// playerState.playingTrack = {};
 			vmCurrentTrackTitle.title = '';
 
 			$('#player .info .trackTitle').html('')
@@ -1492,8 +1423,6 @@ $(document).ready(function() {
 			$playerTag.pause();
 
 			audioCbElement.stopStream();
-			// $playerTag.currentTime = 0;
-			// playerState.paused = $playerTag.paused;
 			consoleOutput('AudioApiElement::stopStream');
 			localStorage.setItem('playerState', JSON.stringify(playerState));
 	    };
@@ -3337,10 +3266,7 @@ $(document).ready(function() {
 			playlists: {},
 			playlistsOrder: [],
 			currentPlaylist: '',
-			// lastActivePlaylist: '',
 			nowPlaying: {},
-			// volume : player.volume,
-			// volume: audioApiElement ? audioApiElement.getVolume() : .2,
 			volume: .27,
 			paused: player.paused,
 			search: {
@@ -3503,13 +3429,9 @@ $(document).ready(function() {
 		__playlists['~Nirvana~']       	= nirvanaPlaylist;
 		__playlists['Dubstep']       	= dubstepPlaylist;
 		__playlists['|_Dub_|']           	= dubPlaylist;
-		// __playlists['Default'].scrollPosition    = 0;
-
-		// consoleOutput(__playlists['Default']);
-		// consoleOutput(playerState);
 
 		playerState.currentPlaylist = '~Nirvana~';
-		// playerState.nowPlaying = {};
+		
 		playerState.volume = .27;
 		playerState.paused = true;
 
@@ -3667,13 +3589,14 @@ $(document).ready(function() {
 
 		consoleOutput($('.vmPlaylistsPanel'));
 
-		$('.playlistsPanel .list').mCustomScrollbar({
-			axis: 'x',
-			// theme:'dark',
-			advanced:{
-				autoExpandHorizontalScroll: true
-			}
-		});
+		$('.playlistsPanel .list')
+			.mCustomScrollbar({
+				axis: 'x',
+				// theme:'dark',
+				advanced:{
+					autoExpandHorizontalScroll: true
+				}
+			});
 
 		// хак
 		$('.playlistsPanel .list').
@@ -3691,24 +3614,15 @@ $(document).ready(function() {
 			.attr('data-current', 1);
 
 		consoleOutput($playlistsPanel
-					.find('[data-current]')
-					.attr('data-scroll-left'));
+			.find('[data-current]')
+			.attr('data-scroll-left'));
 
 		$('.playlistsPanel').
-				find('.list').
-				mCustomScrollbar('scrollTo',
-									$playlistsPanel
-										.find('[data-current]')
-										.attr('data-scroll-left')
-								);
-
-
-		/*$('.playlistsPanel').
-				find('.list').
-				// mCustomScrollbar('scrollTo', __playlists[playerState.currentPlaylist].scrollPosition);
-				mCustomScrollbar('scrollTo', $playlistsPanel
-												.find('[data-current]')
-												.attr('data-scroll-left'));*/
+			find('.list').
+			mCustomScrollbar('scrollTo',
+				$playlistsPanel
+					.find('[data-current]')
+					.attr('data-scroll-left'));
 
 		// Задаем свойства объекта Audio свойствами объекта playerState
 		// Выставляем громкость
@@ -3721,20 +3635,13 @@ $(document).ready(function() {
 		$('#player .volume .val').html(Math.floor(audioCbElement.getVolume() * 100));
 		// Рисуем соответствующий регулятор
 		drawWolumeBar();
-		
-		// Создаем контейнер для треков текущего (активного) плейлиста
-		/*playlistContainer.append(__playlists[playerState.currentPlaylist].
-									htmlEl
-								);*/
 
 		// Получить массив с id треков плейлиста и сформировать его
-		var playlistTracks = __playlists[playerState.currentPlaylist]
-								.tracks
-		;
+		var playlistTracks = __playlists[playerState.currentPlaylist].tracks;
 
 		var playlistPanelWidth = $playlistsPanel
-									.find('.playlist:first')
-									.innerWidth();
+			.find('.playlist:first')
+			.innerWidth();
 
 		__playlists.playlistPanelWidth = playlistPanelWidth;
 
@@ -3743,14 +3650,9 @@ $(document).ready(function() {
 			playlistManager.makePlaylistTracks(playlistTracks);
 			consoleOutput('make tracks:end');
 
-			// if(playerState.translated) {
 			consoleOutput('translate text:begin');
-			/*translateText(
-				$('.title, .url, .playlist .vmTitle, .adminItem .button:not(.showConsole):not(.data-toggle), .remove a, form button'), true
-			);*/
 			translateText(translateTarget(), true);
 			consoleOutput('translate text:end');
-			// }
 		} else {
 			consoleOutput('Выбранный плейлист пуст - нет треков');
 		}
@@ -3800,27 +3702,13 @@ $(document).ready(function() {
 		    }
 		});
 
-
-
 		if(!playerState.paused) {
-			// если плейлист играющего(!) текущего трека != playerState.currentPlaylist
-			// сделать что то(?)
-			/*if(__playlists[playerState.currentPlaylist].tracks.length) {
-				audioApiElement.playStream(getCurrentTrack().url);
-			} else {
-				consoleOutput('няма трэкау');
-				vmPlaylist.setCurrentPlaylist(0, playerState.nowPlaying.playlistName);
-				audioApiElement.playStream(playerState.nowPlaying.track.url);
-			}*/
-
 			if(!__playlists[playerState.currentPlaylist].tracks.length) {
 				vmPlaylist.setCurrentPlaylist(0, playerState.nowPlaying.playlistName);
 			}
 			audioApiElement.playStream(getCurrentTrack().url);
 		}
 		makeConfig();
-
-		// console.log('' + $('div').get(0));
 	}
 });
 
