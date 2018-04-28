@@ -864,7 +864,7 @@ $(document).ready(function() {
 			'.title, '
 			+ ' .url, '
 		    + ' .playlist .vmTitle, '
-		    + ' .adminItem .button:not(.showConsole):not(.data-toggle), '
+		    + ' .adminItem .nav-btn:not(.showConsole):not([data-toggle="dropdown"]), '
 		    + ' .remove a, '
 		    + ' form button'
 	    );
@@ -982,21 +982,6 @@ $(document).ready(function() {
 		
 		consoleOutput(titleContainerWidth);
 		consoleOutput(titleContainer.text());
-
-
-		/*if(titleContainerWidth > 220) {
-			if(window.innerWidth > 700) {
-				titleContainer.addClass('runningString')
-								.parent()
-								.css({'width':'220px'});
-			} else {
-				titleContainer.html(title.substr(0, maxSize) + '...');
-			}
-		} else {
-			titleContainer.removeClass('runningString')
-							.parent()
-							.css({'width':'auto'});
-		}*/
 
 		titleContainer
 			.addClass('runningString')
@@ -1577,6 +1562,7 @@ $(document).ready(function() {
 
      		visualisation();
      		
+     		consoleOutput('fffffffff');
      		consoleOutput(getCurrentTrack().title);
 
      		consoleOutput(vmCurrentTrackTitle.title);
