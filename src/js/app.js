@@ -1634,7 +1634,6 @@ $(document).ready(function () {
 		for (var bin = 0; audioApiElement.streamDataEqLeft && bin < audioApiElement.streamDataEqLeft.length; bin++) {
 			var val = audioApiElement.streamDataEqLeft[bin];
 			canvas.ctx.fillStyle = 'rgb(' + val + ',' + val + ',' + val + ')';
-			// canvas.ctx.fillStyle = 'rgb(' + (255 - val) + ',' + (255 - val) + ',' + (255 - val) + ')';
 			canvas.ctx.fillRect(bin, canvas.canvasHeight / 2 + 1, 1, Math.floor(-val / 1.5));
 			canvas.ctx.fillRect(bin, canvas.canvasHeight / 2 - 1, 1, Math.floor(val / 1.5));
 		}
@@ -1698,11 +1697,23 @@ $(document).ready(function () {
 	};
 
 	function drawTriangle() {
-		var maxValue = window.innerHeight > 510 ? 510 : Math.ceil(window.innerHeight / 2);
-		// получаем canvas
-		var canvas = new AudioCanvas('visTriangle', 540, maxValue * 2);
+		var canvas;
+		if (window.innerHeight < 510) {
+			var canvasHeight = window.innerHeight;
+			var ratio = (canvasHeight / 510).toFixed(1);
+			// var canvasWidth = window.innerHeight;
+			canvas = new AudioCanvas('visTriangle', 540, canvasHeight);
+			canvas.ctx.translate(canvas.canvasWidth / 2, canvas.canvasHeight / 2);
+			canvas.ctx.scale(ratio, ratio);
+		} else {
+			canvas = new AudioCanvas('visTriangle', 540, 510);
+			canvas.ctx.translate(canvas.canvasWidth / 2, canvas.canvasHeight / 2);
+		}
+
+		// var maxValue = (window.innerHeight > 510) ? 510 : (Math.ceil(window.innerHeight / 2));
+		// var canvas = new AudioCanvas('visTriangle', 540, maxValue * 2);
+
 		canvas.ctx.clearRect(0, 0, canvas.canvasWidth, canvas.canvasHeight);
-		canvas.ctx.translate(canvas.canvasWidth / 2, canvas.canvasHeight / 2);
 
 		var fib = 1.6180339;
 
