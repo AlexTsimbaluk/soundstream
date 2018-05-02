@@ -1079,7 +1079,6 @@ $(document).ready(function () {
 
 				tracksArray.push($track);
 			}
-			console.log(tracksArray);
 
 			return tracksArray;
 		};
@@ -1095,6 +1094,10 @@ $(document).ready(function () {
 				playlistContainer.find('.mCSB_container').append(tracks);
 			} else {
 				playlistContainer.append(tracks);
+			}
+
+			if (playerState.translated) {
+				translateCollection($('.title, .url'), true);
 			}
 
 			/*for (var i = 0; i < tracks.length; i++) {
@@ -1611,6 +1614,19 @@ $(document).ready(function () {
 	// Принимает DOM-элемент и размеры
 	function AudioCanvas(id, width, height) {
 		var canvas = document.getElementById(id);
+
+		/*if(window.innerHeight < 510) {
+  	var canvasHeight = window.innerHeight;
+  	var ratio = (canvasHeight / 510).toFixed(1);
+  	// var canvasWidth = window.innerHeight;
+  	canvas = new AudioCanvas('visTriangle', 540, canvasHeight);
+  	canvas.ctx.translate(canvas.canvasWidth / 2, canvas.canvasHeight / 2);
+  	canvas.ctx.scale(ratio, ratio);
+  } else {
+  	canvas = new AudioCanvas('visTriangle', 540, 510);
+  	canvas.ctx.translate(canvas.canvasWidth / 2, canvas.canvasHeight / 2);
+  }*/
+
 		canvas.width = width;
 		canvas.height = height;
 		this.ctx = canvas.getContext("2d");
@@ -1622,7 +1638,9 @@ $(document).ready(function () {
 	// которая принимает объект с настройками (анализатора например (fft)),
 	// и колбэк - функцию рисования
 
-
+	// TODO!!!
+	// все canvas для визуализаций звука определить в AudioApiElement,
+	// а функции рисования будут их принимать
 	function drawEqLeft() {
 		// левый eq
 		var maxValue = window.innerHeight > 510 ? 510 : Math.ceil(window.innerHeight / 2);
