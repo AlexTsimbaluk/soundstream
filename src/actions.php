@@ -47,7 +47,7 @@ if ($_POST['action'] == 'getAllStations') {
 }
 
 // Уникальное посещение
-if ($_POST['action'] == 'addVisit' 
+if ($_POST['action'] == 'addVisit'
 		&& !empty($_POST['cookie'])
 		&& !empty($_POST['useragent'])
 		&& !empty($_POST['platform'])
@@ -69,7 +69,7 @@ if ($_POST['action'] == 'addVisit'
 }
 
 // Не уникальное посещение
-if ($_POST['action'] == 'addHit' 
+if ($_POST['action'] == 'addHit'
 		&& !empty($_POST['cookie'])
 		&& !empty($_POST['timeonsite'])) {
 
@@ -82,7 +82,7 @@ if ($_POST['action'] == 'addHit'
 	addHit($hit);
 }
 
-// Проверка на уникальность за сегодня 
+// Проверка на уникальность за сегодня
 if ($_POST['action'] == 'checkUniqToday' && !empty($_POST['cookie'])) {
 	checkUniqToday($_POST['cookie']);
 }
