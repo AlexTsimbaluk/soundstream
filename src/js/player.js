@@ -2919,7 +2919,9 @@ $(document).ready(function() {
 		console.log(playerState.translated);
 	});
 
-
+	$('.set-title').on('click', function() {
+		vmCurrentTrackTitle.trackTitle = getCurrentTrack().title;
+	});
 
 
 	/*****************************************
