@@ -3,21 +3,21 @@
 session_start();
 
 /*For home*/
-/*$host = "localhost";
+$host = "localhost";
 $user = "root";
 $password = "9";
-$database = "radio_ra";*/
+$database = "radio_ra";
 
 /*For remote server*/
-$host = "greenradiora.ru";
+/*$host = "greenradiora.ru";
 $user = "nowtaxi_sanek";
 $password = "h347bH12";
-$database = "nowtaxi_radiora";
+$database = "nowtaxi_radiora";*/
 
 $link = mysqli_connect($host, $user, $password, $database);
 if(!$link) {
 	echo 'Ошибка подключения к MySQL<br>';
-	echo mysqli_error($link);
+	echo mysqli_error();
 	exit();
 } else {
 	// echo 'Connect to MySQL<br>';
