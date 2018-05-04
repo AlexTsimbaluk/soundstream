@@ -9,7 +9,7 @@ $password = "9";
 $database = "radio_ra";
 
 /*For remote server*/
-/*$host = "greenradiora.ru";
+/*$host = "nowtaxi.mysql";
 $user = "nowtaxi_sanek";
 $password = "h347bH12";
 $database = "nowtaxi_radiora";*/
