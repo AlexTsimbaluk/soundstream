@@ -44,7 +44,7 @@
 	<div class="trackContainer">
 		<div class="overlay"></div>
 
-		<div class="info" title="track">
+		<div class="info">
 			<div class="trackTitle currentTrackTitle">
 				{{ title }}
 			</div>
@@ -70,9 +70,16 @@
 			</div>
 		</div>
 
-		<div class="left animation-settings controls">
+		<div class="left animation-settings controls set-title">
 			<label>
-				<div class="downloadConfig config button btn" title="Download file with your configuration">
+				<div class="config button btn" >
+					<div class="iconWrapper">
+						<div class="icon">text_format</div>
+					</div>
+				</div>
+			</label>
+			<label>
+				<div class="downloadConfig config button btn hidden" title="Download file with your configuration">
 					<a href="config.txt" download class="iconWrapper">
 						<span class="icon">file_download</span>
 					</a>
@@ -283,6 +290,10 @@
 
 
 <audio id="playerTag" data-audio-api></audio>
+
+<!-- Warning:  mysqli_connect(): (HY000/2002): Connection refused in /home/nowtaxi/greenradiora.ru/docs/db_connection.php on line 17
+Ошибка подключения к MySQL
+Warning:  mysqli_error() expects parameter 1 to be mysqli, boolean given in /home/nowtaxi/greenradiora.ru/docs/db_connection.php on line 20 -->
 
 <!--
 beatnbreaks
