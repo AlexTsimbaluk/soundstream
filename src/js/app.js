@@ -1715,21 +1715,26 @@ $(document).ready(function () {
 
 	function drawTriangle() {
 		var canvas;
-		if (window.innerHeight < 510) {
-			var canvasHeight = window.innerHeight;
-			var ratio = (canvasHeight / 510).toFixed(1);
-			// var canvasWidth = window.innerHeight;
-			canvas = new AudioCanvas('visTriangle', 540, canvasHeight);
-			canvas.ctx.translate(canvas.canvasWidth / 2, canvas.canvasHeight / 2);
-			canvas.ctx.scale(ratio, ratio);
-		} else {
-			canvas = new AudioCanvas('visTriangle', 540, 510);
-			canvas.ctx.translate(canvas.canvasWidth / 2, canvas.canvasHeight / 2);
-		}
+		// TODO сделать чтобы canvas правильно мастабировался и не обрезался
+		// если высота меньше 510
+		/*if(window.innerHeight < 510) {
+  	var canvasHeight = window.innerHeight;
+  	var ratio = (canvasHeight / 510).toFixed(1);
+  	// var canvasWidth = window.innerHeight;
+  	canvas = new AudioCanvas('visTriangle', 540, canvasHeight);
+  	canvas.ctx.translate(canvas.canvasWidth / 2, canvas.canvasHeight / 2);
+  	canvas.ctx.scale(ratio, ratio);
+  } else {
+  	canvas = new AudioCanvas('visTriangle', 540, 510);
+  	canvas.ctx.translate(canvas.canvasWidth / 2, canvas.canvasHeight / 2);
+  }*/
 
 		// var maxValue = (window.innerHeight > 510) ? 510 : (Math.ceil(window.innerHeight / 2));
 		// var canvas = new AudioCanvas('visTriangle', 540, maxValue * 2);
 
+		// canvas = new AudioCanvas('visTriangle', 540, 510);
+		canvas = new AudioCanvas('visTriangle', 540, $('body').height());
+		canvas.ctx.translate(canvas.canvasWidth / 2, canvas.canvasHeight / 2);
 		canvas.ctx.clearRect(0, 0, canvas.canvasWidth, canvas.canvasHeight);
 
 		var fib = 1.6180339;
@@ -1737,7 +1742,10 @@ $(document).ready(function () {
 		// при fftSize > 64 тормозит
 		for (var bin = 0; audioApiElement.streamDataTriangle && bin < audioApiElement.streamDataTriangle.length; bin++) {
 			// var val = audioApiElement.streamDataTriangle[bin] % 50;
-			var val = audioApiElement.streamDataTriangle[bin] % 10;
+			if (bin % 6 == 0) {
+				continue;
+			}
+			var val = audioApiElement.streamDataTriangle[bin] % 7;
 
 			// canvas.ctx.strokeStyle = 'rgb(' + (val) + ',' + (val) + ',' + (val) + ')';
 			canvas.ctx.strokeStyle = 'rgb(255, 255, 255)';
