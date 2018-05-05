@@ -3036,8 +3036,8 @@ ol {
   }
 }
 .vmPlayer .trackContainer {
-  background: url(../img/logo.jpg) no-repeat center;
-  height: 208px;
+  background: url(../img/logo.jpg) no-repeat center / cover;
+  height: 175px;
   padding: 0 6px;
   position: relative;
 }
@@ -3127,8 +3127,8 @@ ol {
   top: 20px;
 }
 .vmPlayer .playlistContainer {
-  height: -webkit-calc(100% - 250px);
-  height: calc(100% - 250px);
+  height: -webkit-calc(100% - 223px);
+  height: calc(100% - 223px);
 }
 .vmPlayer .playlistContainer .playlist {
   position: relative;
@@ -3796,7 +3796,7 @@ canvas {
 }
 #analyserVisVolume {
   left: 0;
-  bottom: 30px;
+  bottom: 0;
 }
 #visFractal {
   top: 0;

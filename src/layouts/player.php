@@ -166,7 +166,9 @@
 		<canvas id="analyserVisVolume" width="288" height="20"></canvas>
 		
 		<?php
+		if(isset($_SESSION['dev'])) {
 	        include_once 'layouts/nav-player.php';
+	    }
 	    ?>
 	</div>
 
