@@ -2053,9 +2053,9 @@ $(document).ready(function() {
 		for(var i = 0; i < removeList.length; i++) {
 						markup += '<li class="remove" data-change-prop="'
 								+ removeList[i].prop
-								+ '"><a href="#">'
+								+ '"><button class="remove-btn">'
 								+ removeList[i].name
-								+ '</a></li>';
+								+ '</button></li>';
 		}
 		$removeList.html(markup);
 
@@ -2130,9 +2130,9 @@ $(document).ready(function() {
 		for(var i = 0; i < removeList.length; i++) {
 						markup += '<li class="remove" data-change-item="'
 						+ removeList[i].item
-						+ '"><a href="#">'
+						+ '"><button class="remove-btn">'
 						+ removeList[i].name
-						+ '</a></li>'
+						+ '</button></li>';
 		}
 		$removeList.html(markup);
 

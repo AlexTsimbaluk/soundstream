@@ -295,10 +295,6 @@
 
 <audio id="playerTag" data-audio-api></audio>
 
-<!-- Warning:  mysqli_connect(): (HY000/2002): Connection refused in /home/nowtaxi/greenradiora.ru/docs/db_connection.php on line 17
-Ошибка подключения к MySQL
-Warning:  mysqli_error() expects parameter 1 to be mysqli, boolean given in /home/nowtaxi/greenradiora.ru/docs/db_connection.php on line 20 -->
-
 <!--
 beatnbreaks
  http://stream.nauticradio.net:14280/

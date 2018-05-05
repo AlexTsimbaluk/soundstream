@@ -1938,7 +1938,7 @@ $(document).ready(function () {
 		removeList.push({ prop: 'volume', name: 'Volume' });
 
 		for (var i = 0; i < removeList.length; i++) {
-			markup += '<li class="remove" data-change-prop="' + removeList[i].prop + '"><a href="#">' + removeList[i].name + '</a></li>';
+			markup += '<li class="remove" data-change-prop="' + removeList[i].prop + '"><button class="remove-btn">' + removeList[i].name + '</button></li>';
 		}
 		$removeList.html(markup);
 
@@ -2002,7 +2002,7 @@ $(document).ready(function () {
 		removeList.push({ item: 'localStorage', name: 'localStorage' });
 
 		for (var i = 0; i < removeList.length; i++) {
-			markup += '<li class="remove" data-change-item="' + removeList[i].item + '"><a href="#">' + removeList[i].name + '</a></li>';
+			markup += '<li class="remove" data-change-item="' + removeList[i].item + '"><button class="remove-btn">' + removeList[i].name + '</button></li>';
 		}
 		$removeList.html(markup);
 
