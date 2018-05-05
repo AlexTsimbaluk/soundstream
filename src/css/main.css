@@ -3056,6 +3056,7 @@ ol {
           animation: runningString linear infinite 17s;
 }
 .vmPlayer .time {
+  width: 50px;
   position: absolute;
   right: 6px;
   top: 2px;
