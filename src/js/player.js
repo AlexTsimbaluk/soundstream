@@ -1711,7 +1711,6 @@ $(document).ready(function() {
 	// TODO: Сделать функцию,
 	// которая принимает объект с настройками (анализатора например (fft)),
 	// и колбэк - функцию рисования
-
 	// TODO!!!
 	// все canvas для визуализаций звука определить в AudioApiElement,
 	// а функции рисования будут их принимать
@@ -2922,6 +2921,7 @@ $(document).ready(function() {
 	$('.set-title').on('click', function() {
 		vmCurrentTrackTitle.trackTitle = getCurrentTrack().title;
 	});
+
 
 
 	/*****************************************

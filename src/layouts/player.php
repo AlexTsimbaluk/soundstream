@@ -71,51 +71,52 @@
 		</div>
 
 		<div class="left animation-settings controls set-title">
-			<label>
-				<div class="config button btn" >
-					<div class="iconWrapper">
-						<div class="icon">text_format</div>
-					</div>
-				</div>
-			</label>
-			<label>
-				<div class="downloadConfig config button btn hidden" title="Download file with your configuration">
-					<a href="config.txt" download class="iconWrapper">
-						<span class="icon">file_download</span>
-					</a>
-				</div>
-			</label>
-			<label>
-				<div class="showFormReg config button btn" data-form=".form-reg" title="Register">
-					<div class="iconWrapper">
-						<div class="icon">person_add</div>
-					</div>
-				</div>
-			</label>
-
-			<?php if(isset($_SESSION['auth'])) { ?>
+			<!-- не будем рендерить то что нужно для разработки и не до конца реализованное -->
+			<?php if(isset($_SESSION['dev'])) { ?>
 				<label>
-					<div class="logout config button btn" title="Logout">
-						<div class="iconWrapper <?php echo $_SESSION['login']; ?>">
-							<div class="icon">exit_to_app</div>
-						</div>
+					<div class="downloadConfig config button btn" title="Download file with your configuration">
+						<a href="config.txt" download class="iconWrapper">
+							<span class="icon">file_download</span>
+						</a>
 					</div>
 				</label>
-			<?php } else { ?>
+				
 				<label>
-					<div class="showFormSign config button btn" data-form=".form-auth" title="Sign in">
+					<div class="showFormReg config button btn" data-form=".form-reg" title="Register">
 						<div class="iconWrapper">
-							<div class="icon">forward</div>
+							<div class="icon">person_add</div>
 						</div>
 					</div>
 				</label>
+				
+				<?php if(isset($_SESSION['auth'])) { ?>
+					<label>
+						<div class="logout config button btn" title="Logout">
+							<div class="iconWrapper <?php echo $_SESSION['login']; ?>">
+								<div class="icon">exit_to_app</div>
+							</div>
+						</div>
+					</label>
+				<?php } else { ?>
+					<label>
+						<div class="showFormSign config button btn" data-form=".form-auth" title="Sign in">
+							<div class="iconWrapper">
+								<div class="icon">forward</div>
+							</div>
+						</div>
+					</label>
+				<?php } ?>
+				
+				<?php if(isset($_SESSION['login'])) { ?>
+					<p class="user-name">
+						<?php echo $_SESSION['login'] ?>
+					</p>
+				<?php } ?>
 			<?php } ?>
 
-			<?php if(isset($_SESSION['login'])) { ?>
-				<p class="user-name">
-					<?php echo $_SESSION['login'] ?>
-				</p>
-			<?php } ?>
+			
+
+
 
 			<!-- кнопка для перевода текста -->
 			<label>
@@ -126,6 +127,9 @@
 				</div>
 			</label>
 		</div>
+
+		<?php if(isset($_SESSION['dev'])) { ?>
+		<?php } ?>
 
 		<div class="flex left controls track-control">
 			<div class="play button btn">
