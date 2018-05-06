@@ -1498,9 +1498,7 @@ $(document).ready(function () {
 
 			visualisation();
 
-			consoleOutput('fffffffff');
-			consoleOutput(getCurrentTrack().title);
-
+			console.log(getCurrentTrack().title);
 			consoleOutput(vmCurrentTrackTitle.title);
 			consoleOutput(vmCurrentTrackTitle.trackTitle);
 			vmCurrentTrackTitle.trackTitle = getCurrentTrack().title;
@@ -2684,10 +2682,6 @@ $(document).ready(function () {
   );*/
 		translateText(translateTarget(), false);
 		console.log(playerState.translated);
-	});
-
-	$('.set-title').on('click', function () {
-		vmCurrentTrackTitle.trackTitle = getCurrentTrack().title;
 	});
 
 	/*****************************************
