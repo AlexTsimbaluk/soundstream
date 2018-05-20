@@ -139,7 +139,7 @@ $(document).ready(function () {
 		var newText = '';
 
 		for (var i = 0; i < codeArray.length; i++) {
-			if (codeArray[i] >= 65 && codeArray[i] <= 90 || // A -Z
+			if (codeArray[i] >= 32 && codeArray[i] <= 90 || // A -Z
 			codeArray[i] >= 97 && codeArray[i] <= 122) {
 				// a - z
 				var newCode = decodeCode(codeArray[i]);
@@ -176,7 +176,175 @@ $(document).ready(function () {
 		var newSymbol;
 
 		switch (code) {
+			/* Пунктуация, пробел, частые символы, цифры */
+
+			case 32:
+				// пробел
+
+				break;
+
+			case 33:
+				// !
+
+				break;
+
+			case 34:
+				// "
+
+				break;
+
+			case 35:
+				// #
+
+				break;
+
+			case 36:
+				// $
+
+				break;
+
+			case 37:
+				// %
+
+				break;
+
+			case 38:
+				// &
+
+				break;
+
+			case 39:
+				// '
+
+				break;
+
+			case 40:
+				// (
+
+				break;
+
+			case 41:
+				// )
+
+				break;
+
+			case 42:
+				// *
+
+				break;
+
+			case 43:
+				// +
+
+				break;
+
+			case 44:
+				// ,
+
+				break;
+
+			case 45:
+				// -
+
+				break;
+
+			case 46:
+				// .
+
+				break;
+
+			case 47:
+				// /
+
+				break;
+
+			case 48:
+				// 0
+
+				break;
+
+			case 49:
+				// 1
+
+				break;
+
+			case 50:
+				// 2
+
+				break;
+
+			case 51:
+				// 3
+
+				break;
+
+			case 52:
+				// 4
+
+				break;
+
+			case 53:
+				// 5
+
+				break;
+
+			case 54:
+				// 6
+
+				break;
+
+			case 55:
+				// 7
+
+				break;
+
+			case 56:
+				// 8
+
+				break;
+
+			case 57:
+				// 9
+
+				break;
+
+			case 58:
+				// :
+
+				break;
+
+			case 59:
+				// ;
+
+				break;
+
+			case 60:
+				// <
+
+				break;
+
+			case 61:
+				// =
+
+				break;
+
+			case 62:
+				// >
+
+				break;
+
+			case 63:
+				// ?
+
+				break;
+
+			case 64:
+				// @
+
+				break;
+
 			/* A - Z */
+
 			case 65:
 				// A
 				variants.push(570);
@@ -886,7 +1054,8 @@ $(document).ready(function () {
 	}
 
 	function translateTarget() {
-		return $('.title, ' + ' .url, ' + ' .playlist .vmTitle, ' + ' .adminItem .nav-btn:not(.showConsole):not([data-toggle="dropdown"]), ' + ' .remove a, ' + ' form button');
+		return $('.title, ' + ' .url, ' + ' .playlist .vmTitle, ' + ' .currentTrackTitle' // не переводит - ??
+		+ ' .adminItem .nav-btn:not(.showConsole):not([data-toggle="dropdown"]), ' + ' .remove a, ' + ' form button');
 	}
 
 	// определяем устройство
