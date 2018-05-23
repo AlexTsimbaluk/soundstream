@@ -31,7 +31,7 @@
 	</div>
 <?php } ?>
 
-<?php if(false) { ?>
+<?php if(1) { ?>
 	<div class="devel ">
 		<div class="symbols flex top h-fill">
 			<div class="shrink-1">

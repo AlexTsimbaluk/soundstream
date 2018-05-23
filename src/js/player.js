@@ -205,7 +205,69 @@ $(document).ready(function() {
 			/* Пунктуация, пробел, частые символы, цифры */
 
 			case 32: // пробел
+				variants.push(8258);
+				variants.push(8277);
+				variants.push(9752);
+				variants.push(9784);
+				variants.push(9880);
+				variants.push(9884);
+				variants.push(9909);
+				variants.push(10018);
+				variants.push(10019);
+				variants.push(10020);
+				variants.push(10021);
+				variants.push(10022);
+				variants.push(10023);
+				// variants.push(10024);
+				variants.push(10025);
+				variants.push(10026);
+				variants.push(10027);
+				variants.push(10028);
+				variants.push(10029);
+				variants.push(10030);
+				variants.push(10031);
+				variants.push(10032);
+				variants.push(10033);
+				variants.push(10034);
+				variants.push(10035);
+				variants.push(10036);
+				variants.push(10037);
+				variants.push(10038);
+				variants.push(10039);
+				variants.push(10040);
+				variants.push(10041);
+				variants.push(10042);
+				variants.push(10043);
+				variants.push(10044);
+				variants.push(10045);
+				variants.push(10046);
+				variants.push(10047);
+				variants.push(10048);
+				variants.push(10049);
+				variants.push(10050);
+				variants.push(10051);
+				variants.push(10052);
+				variants.push(10053);
+				variants.push(10054);
+				variants.push(10055);
+				variants.push(10056);
+				variants.push(10057);
+				variants.push(10058);
+				variants.push(10059);
+				
+				/*variants.push(42340);
+				variants.push(42341);
+				variants.push(6821);
+				variants.push(127808);
+				variants.push(127799);
+				variants.push(127800);
+				variants.push(127801);
+				variants.push(127802);
+				variants.push(127803);
+				variants.push(127804);
+				variants.push(128144);*/
 
+				// variants.push();
 				break;
 
 			case 33: // !
