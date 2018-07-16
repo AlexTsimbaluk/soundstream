@@ -3210,6 +3210,10 @@ $(document).ready(function () {
 		return false;
 	});
 
+	$('.extra-mode').on('click', function (e) {
+		console.log('::extra-mode');
+	});
+
 	/*
  	Чтобы на экранах в высоту меньше 640px у блока playlistContainer с треками 
  	выставить всю доступную высоту

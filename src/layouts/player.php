@@ -59,6 +59,8 @@
 		<div class="find flex left">
 			<div class="size-16">
 				<input type="text" class="js-search-station-input" placeholder="Search" />
+
+				<input type="text" class="js-extra-mode-password" placeholder="Password" />
 			</div>
 
 			<div class="child-center size-4">
@@ -123,6 +125,15 @@
 				<div class="translate-text config button btn" title="Translate">
 					<div class="iconWrapper">
 						<div class="icon">translate</div>
+					</div>
+				</div>
+			</label>
+
+			<!-- войти в dev-режим -->
+			<label>
+				<div class="extra-mode config button btn">
+					<div class="iconWrapper">
+						<div class="icon">settings</div>
 					</div>
 				</div>
 			</label>
@@ -308,4 +319,4 @@ beatnbreaks
 
 
 <!-- <audio class="walmer hidden" src="http://ml1.t4e.dj:80/dublovers_high.aac" controls></audio> -->
-<!-- <audio class="walmer hidden" src="http://stream1.ml0.t4e.dj:80/dublovers_high.mp3|DubLovers.FM|Dubstep+Drumstep|DE|128" controls></audio> -->
+<!-- <audio class="walmer hidden" src="http://stream1.ml0.t4e.dj:80/dublovers_high.mp3|DubLovers.FM|Dubstep+Drumstep|DE|128" controls></audio>

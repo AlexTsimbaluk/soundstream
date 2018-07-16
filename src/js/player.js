@@ -3452,6 +3452,12 @@ $(document).ready(function() {
 		return false;
 	});
 
+	$('.extra-mode').on('click', function(e) {
+		console.log('::extra-mode');
+		
+		
+	});
+
 	
 
 
