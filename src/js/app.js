@@ -20,7 +20,7 @@ $.ajaxSetup({
 	error: function error(_error, xhr, status, errorThrown) {
 		'use strict';
 
-		consoleOutput('XHR error');
+		console.log('XHR error');
 		console.log(_error);
 	}
 });
@@ -98,11 +98,11 @@ $(document).ready(function () {
 		var imageArr = new Array(10);
 		for (var i = 0; i < imageArr.length; i++) {
 			var path = '/img/bg/bg' + (i + 1) + '.jpg';
-			// consoleOutput(path);
+			// console.log(path);
 			imageArr[i] = path;
 		}
 		// imageArr.sort(compareRandom);
-		// consoleOutput(imageArr);
+		// console.log(imageArr);
 
 		$.mbBgndGallery.buildGallery({
 			containment: "body",
@@ -1135,7 +1135,7 @@ $(document).ready(function () {
 		$('body').removeAttr('data-smartphone').removeAttr('data-tab').removeAttr('data-desktop').removeAttr('data-smartphone-keyboard').removeAttr('data-console');
 
 		if (height <= 736) {
-			consoleOutput('height <= 736');
+			console.log('height <= 736');
 			if (ratio >= 1.01 && ratio < 1.25) {
 				device = 'smartphone-keyboard';
 				$('body').attr('data-smartphone-keyboard', 1);
@@ -1151,7 +1151,7 @@ $(document).ready(function () {
 				}
 			}
 		} else if (height <= 1024) {
-			consoleOutput('height <= 1024');
+			console.log('height <= 1024');
 			if (screenRatio >= 1.3 && screenRatio < 1.4) {
 				device = 'tab';
 				$('body').attr('data-tab', 1);
@@ -1169,12 +1169,12 @@ $(document).ready(function () {
 				$('body').attr('data-console', 1);
 			}
 		}
-		consoleOutput(device);
-		consoleOutput(width);
-		consoleOutput(height);
-		consoleOutput(screenHeight);
-		consoleOutput(ratio);
-		consoleOutput(screenRatio);
+		console.log(device);
+		console.log(width);
+		console.log(height);
+		console.log(screenHeight);
+		console.log(ratio);
+		console.log(screenRatio);
 
 		$('body').attr('data-screen-width', width);
 		$('body').attr('data-screen-height', height);
@@ -1183,7 +1183,7 @@ $(document).ready(function () {
 
 	// Отобразить название станции при воспроизведении
 	function displayState() {
-		consoleOutput('function::displayState');
+		console.log('function::displayState');
 		var title = getCurrentTrack().title,
 		    titleSize = title.length,
 		    titleContainer = $('#player .info .trackTitle'),
@@ -1197,13 +1197,13 @@ $(document).ready(function () {
 
 		// изменим свойство за которым следит Vue
 		// vmCurrentTrackTitle.title = title;
-		consoleOutput(title);
+		console.log(title);
 
-		/*consoleOutput(vmCurrentTrackTitle.title);
-  consoleOutput(vmCurrentTrackTitle.trackTitle);
+		/*console.log(vmCurrentTrackTitle.title);
+  console.log(vmCurrentTrackTitle.trackTitle);
   vmCurrentTrackTitle.trackTitle = title;
-  consoleOutput(vmCurrentTrackTitle.title);
-  consoleOutput(vmCurrentTrackTitle.trackTitle);*/
+  console.log(vmCurrentTrackTitle.title);
+  console.log(vmCurrentTrackTitle.trackTitle);*/
 
 		// titleContainer.html(title);
 
@@ -1213,8 +1213,8 @@ $(document).ready(function () {
 		ratio = titleContainerWidth / titleSize;
 		maxSize = Math.floor(maxWidth / ratio) - 5;
 
-		consoleOutput(titleContainerWidth);
-		consoleOutput(titleContainer.text());
+		console.log(titleContainerWidth);
+		console.log(titleContainer.text());
 
 		titleContainer.addClass('runningString').parent().css({ 'width': '220px' });
 	}
@@ -1282,7 +1282,7 @@ $(document).ready(function () {
 
 			__playlists[playerState.currentPlaylist].tracks.push(+trackId);
 
-			consoleOutput(__playlists);
+			console.log(__playlists);
 
 			localStorage.setItem('__playlists', JSON.stringify(__playlists));
 		};
@@ -1295,7 +1295,7 @@ $(document).ready(function () {
 
 			var templateTrack = $('.template-track').html(),
 			    tracksArray = [];
-			// consoleOutput($(templateTrack));
+			// console.log($(templateTrack));
 
 			for (var i = 0; i < tracks.length; i++) {
 				var track = stationsArray[tracks[i]];
@@ -1420,6 +1420,10 @@ $(document).ready(function () {
 		var self = this;
 		var $playerTag = document.getElementById(audioElement);
 
+		// audioCtx = new (window.AudioContext || window.webkitAudioContext);
+		// audioCtx.resume();
+
+		console.log(audioCtx.state);
 		var source = audioCtx.createMediaElementSource($playerTag);
 		var analyserEqLeft, analyserEqRight, analyserVolume, analyserTriangle;
 
@@ -1434,6 +1438,8 @@ $(document).ready(function () {
 		this.streamDataTriangle = analyserTriangle.streamData;
 
 		audioBindAll($playerTag, 'AudioApiElement');
+
+		console.log(audioCtx.state);
 
 		this.visStart = function (visName) {
 			switch (visName) {
@@ -1478,8 +1484,12 @@ $(document).ready(function () {
 		};
 
 		this.playStream = function (streamUrl) {
-			consoleOutput('AudioApiElement::playStream::Begin');
-			consoleOutput(streamUrl);
+			console.log('AudioApiElement::playStream::Begin');
+			console.log(streamUrl);
+			console.log(audioCtx.state);
+
+			// audioCtx = new (window.AudioContext || window.webkitAudioContext);
+			// audioCtx.resume();
 
 			// jquery-объект трека, который надо играть
 			var currentTrackEl = $('[data-station-url="' + streamUrl + '"]');
@@ -1499,7 +1509,7 @@ $(document).ready(function () {
 			// closest('.playlist').
 			parent().find('[data-current-track]').removeAttr('data-current-track');
 
-			consoleOutput(currentTrackEl);
+			console.log(currentTrackEl);
 
 			// а затем установим data-current-track нужному треку
 			currentTrackEl.attr('data-current-track', 1);
@@ -1521,23 +1531,63 @@ $(document).ready(function () {
 				$playerTag.crossOrigin = 'anonymous';
 			}, 3000);
 
+			// Google изменил политику
+			// https://developers.google.com/web/updates/2017/09/autoplay-policy-changes#webaudio
+			// https://developers.google.com/web/updates/2017/06/play-request-was-interrupted
+			// https://webaudio.github.io/web-audio-api/#dfn-allowed-to-start
+			// https://sites.google.com/a/chromium.org/dev/audio-video/autoplay
+
+			// https://github.com/GoogleChromeLabs/airhorn/pull/37
+			// https://github.com/GoogleChromeLabs/airhorn/pull/37/commits/f097c2853523c0c788489d77bdd291efc4e59a42
+
+			// Due to upcoming Autoplay policy changes,
+			// an AudioContext must be created or resumed
+			// after the document received a user gesture to enable audio playback.
+
+			// audioCtx = new (window.AudioContext || window.webkitAudioContext);
+			// audioCtx.resume();
+
+
 			var playPromise = $playerTag.play();
 
 			// В конце if проверить PromiseStatus, если он rejected
 			if (playPromise !== undefined) {
 				playPromise.then(function () {
-					consoleOutput('AudioApiElement::playPromise::Success::Begin');
-					consoleOutput('AudioApiElement::playPromise::Success::End');
+					console.log('AudioApiElement::playPromise::Success::Begin');
+					console.log('AudioApiElement::playPromise::Success::End');
 				}).catch(function () {
-					consoleOutput('AudioApiElement::playPromise::Failed::Begin');
+					console.log('AudioApiElement::playPromise::Failed::Begin');
 
 					self.stopStream();
 
 					audioCbElement.playStream(streamUrl);
-					consoleOutput('Start audioCbElement');
-					consoleOutput('AudioApiElement::playPromise::Failed::End');
+					console.log('Start audioCbElement');
+					console.log('AudioApiElement::playPromise::Failed::End');
 				});
 			}
+
+			/*$playerTag.load();
+   fetch(streamUrl)
+   .then(response => {
+   console.log(response);
+   return response.blob();
+   })
+   .then(response => {
+   console.log(response);
+   $playerTag.srcObject = response;
+   // $playerTag.src = URL.createObjectURL(response);
+   return $playerTag.play();
+   })
+   .then(_ => {
+   console.log('AudioApiElement::Fetch Api::Success::Begin');					
+     console.log('AudioApiElement::Fetch Api::Success::End');
+   }).catch(e => {
+   console.log('AudioApiElement::Fetch Api::Failed::Begin');
+   		// self.stopStream();
+   audioCbElement.playStream(streamUrl);
+   console.log('Start audioCbElement');
+   console.log('AudioApiElement::Fetch Api::Failed::End');
+   });*/
 
 			playerState.paused = $playerTag.paused;
 
@@ -1547,7 +1597,7 @@ $(document).ready(function () {
 			} else if (playerState.nowPlaying.playlistName == playerState.currentPlaylist) {
 				playerState.nowPlaying.track = _currentTrack;
 			} else if (playerState.nowPlaying.playlistName != playerState.currentPlaylist) {
-				consoleOutput('pppp');
+				console.log('pppp');
 				playerState.nowPlaying.playlistName = playerState.currentPlaylist;
 				playerState.nowPlaying.track = _currentTrack;
 			}
@@ -1568,7 +1618,7 @@ $(document).ready(function () {
 				drawTriangle();
 			}
 
-			consoleOutput('AudioApiElement::playStream::End');
+			console.log('AudioApiElement::playStream::End');
 			// TODO: добавить на играющий трек эквалайзер
 		};
 		// TODO: добавить сюда остановку анимации
@@ -1583,7 +1633,7 @@ $(document).ready(function () {
 			$playerTag.pause();
 
 			audioCbElement.stopStream();
-			consoleOutput('AudioApiElement::stopStream');
+			console.log('AudioApiElement::stopStream');
 			localStorage.setItem('playerState', JSON.stringify(playerState));
 		};
 		this.setVolume = function (vol) {
@@ -1601,17 +1651,17 @@ $(document).ready(function () {
 		audioBindAll(player, 'AudioCbElement');
 
 		this.playStream = function (streamUrl) {
-			consoleOutput('AudioCbElement::playStream::Begin');
+			console.log('AudioCbElement::playStream::Begin');
 			player.src = streamUrl;
 
 			player.play();
 			// $(".spinner").show();
 
-			consoleOutput(player.paused);
+			console.log(player.paused);
 			playerState.paused = player.paused;
 
 			localStorage.setItem('playerState', JSON.stringify(playerState));
-			consoleOutput('AudioCbElement::playStream::End');
+			console.log('AudioCbElement::playStream::End');
 		};
 		this.stopStream = function () {
 			visualisationStop();
@@ -1621,7 +1671,7 @@ $(document).ready(function () {
 			player.pause();
 			player.currentTime = 0;
 			playerState.paused = player.paused;
-			consoleOutput('AudioCbElement::stopStream');
+			console.log('AudioCbElement::stopStream');
 			localStorage.setItem('playerState', JSON.stringify(playerState));
 		};
 		this.setVolume = function (vol) {
@@ -1635,87 +1685,88 @@ $(document).ready(function () {
 	// https://developer.mozilla.org/ru/docs/Web/Guide/Events/Media_events
 	function audioBindProgress(player, name) {
 		player.addEventListener('progress', function (e) {
-			consoleOutput(name + '::Event.type::' + e.type);
+			console.log(name + '::Event.type::' + e.type);
 		});
 	}
 
 	function audioBindVolume(player, name) {
 		player.addEventListener('volumechange', function (e) {
-			consoleOutput(name + '::Event.type::' + e.type);
+			console.log(name + '::Event.type::' + e.type);
 		});
 	}
 
 	function audioBindAll(player, name) {
 		player.addEventListener('abort', function (e) {
-			consoleOutput(name + '::Event.type::' + e.type);
+			console.log(name + '::Event.type::' + e.type);
 			$(".spinner").hide();
 		});
 		player.addEventListener('canplay', function (e) {
-			consoleOutput(name + '::Event.type::' + e.type);
+			console.log(name + '::Event.type::' + e.type);
+			// player.play();
 		});
 		player.addEventListener('canplaythrough', function (e) {
-			consoleOutput(name + '::Event.type::' + e.type);
+			console.log(name + '::Event.type::' + e.type);
 		});
 		player.addEventListener('durationchange', function (e) {
-			// consoleOutput(name + '::Event.type::' + e.type);
+			// console.log(name + '::Event.type::' + e.type);
 		});
 		player.addEventListener('emptied', function (e) {
-			consoleOutput(name + '::Event.type::' + e.type);
+			console.log(name + '::Event.type::' + e.type);
 			$(".spinner").hide();
 		});
 		player.addEventListener('encrypted', function (e) {
-			consoleOutput(name + '::Event.type::' + e.type);
+			console.log(name + '::Event.type::' + e.type);
 		});
 		player.addEventListener('ended', function (e) {
-			consoleOutput(name + '::Event.type::' + e.type);
+			console.log(name + '::Event.type::' + e.type);
 		});
 		player.addEventListener('error', function (e) {
-			consoleOutput(name + '::Event.type::' + e.type);
+			console.log(name + '::Event.type::' + e.type);
+			console.log('Error::' + e.code + ':: ' + e.message);
+			console.log(e);
 			$(".spinner").hide();
 			// if(!$('.track.visualisation').length) {
 			if (playerState.paused) {
-				consoleOutput('paused');
+				console.log('paused');
 				$('.track.waiting').removeClass('waiting').addClass('error-playing');
-			} else {
-				consoleOutput('это невозможно');
 			}
 		});
 		player.addEventListener('interruptbegin', function (e) {
-			consoleOutput(name + '::Event.type::' + e.type);
+			console.log(name + '::Event.type::' + e.type);
 		});
 		player.addEventListener('interruptend', function (e) {
-			consoleOutput(name + '::Event.type::' + e.type);
+			console.log(name + '::Event.type::' + e.type);
 		});
 		player.addEventListener('loadeddata', function (e) {
-			consoleOutput(name + '::Event.type::' + e.type);
+			console.log(name + '::Event.type::' + e.type);
 		});
 		player.addEventListener('loadedmetadata', function (e) {
-			consoleOutput(name + '::Event.type::' + e.type);
+			console.log(name + '::Event.type::' + e.type);
 		});
 		player.addEventListener('loadstart', function (e) {
-			consoleOutput(name + '::Event.type::' + e.type);
+			console.log(name + '::Event.type::' + e.type);
 		});
 		player.addEventListener('mozaudioavailable', function (e) {
-			consoleOutput(name + '::Event.type::' + e.type);
+			console.log(name + '::Event.type::' + e.type);
 		});
 		player.addEventListener('pause', function (e) {
-			consoleOutput(name + '::Event.type::' + e.type);
+			console.log(name + '::Event.type::' + e.type);
 
-			consoleOutput('pause::' + player.paused);
+			console.log('pause::' + player.paused);
 			player.currentTime = 0;
 			playerState.paused = player.paused;
 
 			visualisationStop();
 		});
 		player.addEventListener('play', function (e) {
-			consoleOutput(name + '::Event.type::' + e.type);
+			console.log(name + '::Event.type::' + e.type);
 			$(".spinner").show();
 			$('[data-current-track]').addClass('waiting');
 		});
 		player.addEventListener('playing', function (e) {
-			consoleOutput(name + '::Event.type::' + e.type);
+			console.log(name + '::Event.type::' + e.type);
 
-			consoleOutput('pause::' + player.paused);
+			console.log('pause::' + player.paused);
 			playerState.paused = player.paused;
 
 			$(".spinner").hide();
@@ -1730,22 +1781,22 @@ $(document).ready(function () {
 			visualisation();
 
 			console.log(getCurrentTrack().title);
-			consoleOutput(vmCurrentTrackTitle.title);
-			consoleOutput(vmCurrentTrackTitle.trackTitle);
+			console.log(vmCurrentTrackTitle.title);
+			console.log(vmCurrentTrackTitle.trackTitle);
 			vmCurrentTrackTitle.trackTitle = getCurrentTrack().title;
-			consoleOutput(vmCurrentTrackTitle.title);
-			consoleOutput(vmCurrentTrackTitle.trackTitle);
+			console.log(vmCurrentTrackTitle.title);
+			console.log(vmCurrentTrackTitle.trackTitle);
 
 			displayState();
 		});
 		player.addEventListener('ratechange', function (e) {
-			consoleOutput(name + '::Event.type::' + e.type);
+			console.log(name + '::Event.type::' + e.type);
 		});
 		player.addEventListener('seeked', function (e) {
-			consoleOutput(name + '::Event.type::' + e.type);
+			console.log(name + '::Event.type::' + e.type);
 		});
 		player.addEventListener('seeking', function (e) {
-			consoleOutput(name + '::Event.type::' + e.type);
+			console.log(name + '::Event.type::' + e.type);
 		});
 		player.addEventListener('timeupdate', function (e) {
 			var time = Math.ceil(player.currentTime);
@@ -1757,14 +1808,14 @@ $(document).ready(function () {
 			$('#player .time .seconds').html(sec);
 		});
 		player.addEventListener('stalled', function (e) {
-			consoleOutput(name + '::Event.type::' + e.type);
+			console.log(name + '::Event.type::' + e.type);
 			$(".spinner").hide();
 		});
 		player.addEventListener('suspend', function (e) {
-			// consoleOutput(name + '::Event.type::' + e.type);
+			// console.log(name + '::Event.type::' + e.type);
 		});
 		player.addEventListener('waiting', function (e) {
-			consoleOutput(name + '::Event.type::' + e.type);
+			console.log(name + '::Event.type::' + e.type);
 		});
 	}
 
@@ -2044,7 +2095,7 @@ $(document).ready(function () {
 	// Визуализация выбранного играющего трека и кнопки play
 	// TODO: переделать на requestAnimationFrame
 	function visualisation() {
-		consoleOutput('visualisation::Begin');
+		console.log('visualisation::Begin');
 		visualisationStop();
 
 		var el = $('.playlistContainer [data-station-id="' + getCurrentTrack().id + '"]');
@@ -2068,18 +2119,18 @@ $(document).ready(function () {
 				$('#player .play.visualisation .outer').css({ 'borderTopColor': 'hsl(' + (360 - stepBorder1) % 360 + ', 100%, 50%)' });
 			}, 50);
 		}
-		consoleOutput('visualisation::End');
+		console.log('visualisation::End');
 	}
 
 	// Остановка визуализации
 	function visualisationStop() {
-		consoleOutput('visualisationStop::Begin');
+		console.log('visualisationStop::Begin');
 		clearInterval(intervalVis);
 		var el = $('.playlistContainer [data-station-id="' + getCurrentTrack().id + '"]');
 		el.removeClass('visualisation').css({ 'backgroundImage': 'none' }).removeAttr('style').find('.url').removeClass('runningString');
 		$('#player .play').removeClass('visualisation').css({ 'boxShadow': 'none', 'borderColor': '#0ff' }).removeAttr('style');
 		// $('#player .play span').remove();
-		consoleOutput('visualisationStop::End');
+		console.log('visualisationStop::End');
 	}
 
 	function drawWolumeBar() {
@@ -2096,7 +2147,7 @@ $(document).ready(function () {
 		    targetCountBar = Math.floor(maxBar / 10 * q),
 		    barMaxHeight = canvasVolumeHeight,
 		    barStepHeight = barMaxHeight / maxBar;
-		// consoleOutput(maxBar);
+		// console.log(maxBar);
 
 		for (var i = 0; i < targetCountBar; i++) {
 			ctxVolume.fillStyle = 'hsl(' + i * maxHue / targetCountBar + ', 100%, 50%)';
@@ -2108,7 +2159,7 @@ $(document).ready(function () {
   ctxVolume.fill();*/
 
 		startHue += 15 % 360;
-		// consoleOutput(startHue);
+		// console.log(startHue);
 	}
 
 	function animateCloseButton(el) {
@@ -2123,7 +2174,7 @@ $(document).ready(function () {
 	}
 
 	function getCurrentTrack() {
-		// consoleOutput(__playlists[getCurrentPlaylist()].currentTrack);
+		// console.log(__playlists[getCurrentPlaylist()].currentTrack);
 		return __playlists[getCurrentPlaylist()].currentTrack;
 	}
 
@@ -2148,12 +2199,12 @@ $(document).ready(function () {
 			playUrl = $sibling.attr('data-station-url');
 			return playUrl;
 		} else {
-			consoleOutput('no siblings');
+			console.log('no siblings');
 		}
 	}
 
 	function debugPlayerState() {
-		// consoleOutput('::debugPlayerState');
+		// console.log('::debugPlayerState');
 		var $debugLs = $('[data-remove="prop"]'),
 		    $removeButton = $debugLs.find('.removeItem'),
 		    $removeList = $debugLs.find('.removeItemList'),
@@ -2174,8 +2225,8 @@ $(document).ready(function () {
 		$('[data-change-prop]').on('click', function (e) {
 			var prop = $(this).attr('data-change-prop');
 
-			consoleOutput(prop);
-			consoleOutput($removeButton);
+			console.log(prop);
+			console.log($removeButton);
 
 			$removeButton.attr('data-remove-prop', prop);
 			$removeButton.removeAttr('disabled');
@@ -2189,19 +2240,19 @@ $(document).ready(function () {
 				switch (prop) {
 					case 'search.stationsOpened':
 						delete playerState.search.stationsOpened;
-						consoleOutput('delete playerState.' + prop);
+						console.log('delete playerState.' + prop);
 						break;
 
 					case 'volume':
 						delete playerState.volume;
-						consoleOutput('delete playerState.' + prop);
+						console.log('delete playerState.' + prop);
 						break;
 
 					default:
 						break;
 				}
 
-				consoleOutput(playerState);
+				console.log(playerState);
 				localStorage.setItem('playerState', JSON.stringify(playerState));
 
 				$(this).html('Reset').attr('disabled', 'disabled').attr('title', 'Change prop of playerState').removeAttr('data-remove-prop');
@@ -2213,7 +2264,7 @@ $(document).ready(function () {
 	}
 
 	function debugLocalStorage() {
-		// consoleOutput('::debugLocalStorage');
+		// console.log('::debugLocalStorage');
 		var $debugLs = $('[data-remove="item"]'),
 		    $removeButton = $debugLs.find('.removeItem'),
 		    $removeList = $debugLs.find('.removeItemList'),
@@ -2239,7 +2290,7 @@ $(document).ready(function () {
 			var $option = $(this),
 			    item = $option.attr('data-change-item');
 
-			consoleOutput($option);
+			console.log($option);
 
 			$removeButton.attr('data-remove-item', item);
 			$removeButton.removeAttr('disabled');
@@ -2253,35 +2304,35 @@ $(document).ready(function () {
 				if ($option.attr('data-change-item') == 'stations' || $option.attr('data-change-item') == 'stationsOn100') {
 					var $optionStations = [$removeList.find('[data-change-item="stations"]'), $removeList.find('[data-change-item="stationsOn100"]')];
 				}
-				consoleOutput($option);
+				console.log($option);
 
 				switch (item) {
 					case 'playerState':
 						localStorage.removeItem(item);
-						consoleOutput('delete ' + item);
+						console.log('delete ' + item);
 						break;
 
 					case 'stations':
 					case 'stationsOn100':
 						localStorage.removeItem('stations');
 						localStorage.removeItem('stationsOn100');
-						consoleOutput('delete ' + item);
-						consoleOutput('delete ' + item + 'On100');
+						console.log('delete ' + item);
+						console.log('delete ' + item + 'On100');
 						break;
 
 					case 'uniqHash':
 						localStorage.removeItem(item);
-						consoleOutput('delete ' + item);
+						console.log('delete ' + item);
 						break;
 
 					case 'userStatus':
 						localStorage.removeItem(item);
-						consoleOutput('delete ' + item);
+						console.log('delete ' + item);
 						break;
 
 					case 'localStorage':
 						localStorage.clear();
-						consoleOutput('delete ' + item);
+						console.log('delete ' + item);
 						location.reload();
 						break;
 
@@ -2338,16 +2389,16 @@ $(document).ready(function () {
 	}
 
 	function getObjectProperties(obj) {
-		consoleOutput('::getObjectProperties');
+		console.log('::getObjectProperties');
 		for (var key in obj) {
-			consoleOutput(key + ' : ' + obj[key]);
+			console.log(key + ' : ' + obj[key]);
 			if (_typeof(obj[key]) === 'object') {
 				var _o = obj[key];
 				// if(typeof +obj[key] == 'number') {
 				/*if(!isNaN(parseFloat(key))) {
-    	consoleOutput('number');
+    	console.log('number');
     }*/
-				// consoleOutput('Тип ' + typeof key);
+				// console.log('Тип ' + typeof key);
 				getObjectProperties(_o);
 			}
 		}
@@ -2431,9 +2482,9 @@ $(document).ready(function () {
 	}
 
 	$('#player .prev').click(function (e) {
-		consoleOutput('prev');
+		console.log('prev');
 		var playUrl = getSibling('prev');
-		consoleOutput(playUrl);
+		console.log(playUrl);
 		if (playUrl) {
 			audioApiElement.stopStream();
 			audioApiElement.playStream(playUrl);
@@ -2441,9 +2492,9 @@ $(document).ready(function () {
 	});
 
 	$('#player .next').click(function (e) {
-		consoleOutput('next');
+		console.log('next');
 		var playUrl = getSibling('next');
-		consoleOutput(playUrl);
+		console.log(playUrl);
 		if (playUrl) {
 			audioApiElement.stopStream();
 			audioApiElement.playStream(playUrl);
@@ -2474,7 +2525,7 @@ $(document).ready(function () {
 			audioApiElement.playStream(url);
 		}
 
-		consoleOutput($(this).position().top);
+		console.log($(this).position().top);
 	});
 
 	// TODO: в кликах на кнопку stop проверять player.paused
@@ -2497,12 +2548,12 @@ $(document).ready(function () {
 
 	$('.playlistContainer').on('click', '.canplaytest', function (e) {
 		var url = $(e.target).closest('.track').data('stationUrl');
-		consoleOutput(url);
+		console.log(url);
 		e.stopPropagation();
 	});
 
 	$('.toAdmin').on('click', function (e) {
-		consoleOutput('toAdmin');
+		console.log('toAdmin');
 		$('body').addClass('admin');
 
 		$.ajax({
@@ -2512,7 +2563,7 @@ $(document).ready(function () {
 				$('#player').hide();
 
 				$('.toPlayer').on('click', function (e) {
-					consoleOutput('toPlayer');
+					console.log('toPlayer');
 					$('.admin-wrapper').remove();
 					$('body').removeClass('admin');
 					$('#player').fadeIn(300);
@@ -2726,22 +2777,22 @@ $(document).ready(function () {
 					$(this).after(markup);
 					$(this).attr('data-show', 'open');
 
-					consoleOutput(stationsOpened);
+					console.log(stationsOpened);
 					stationsOpened.push(index);
-					consoleOutput(stationsOpened);
+					console.log(stationsOpened);
 
 					if (stationsOpened.length > 3) {
-						consoleOutput('лишний ' + stationsOpened[0]);
+						console.log('лишний ' + stationsOpened[0]);
 
 						$('[data-stations-number="' + stationsOpened[0] + '"]').remove();
 						$('[data-block-number="' + stationsOpened[0] + '"]').attr('data-show', 'closed');
 
-						consoleOutput(stationsOpened);
+						console.log(stationsOpened);
 						stationsOpened.shift();
-						consoleOutput(stationsOpened);
+						console.log(stationsOpened);
 					}
 
-					consoleOutput('stationsBlockToggle №' + index + ' opened');
+					console.log('stationsBlockToggle №' + index + ' opened');
 
 					/*localStorage.setItem('playerState', JSON.stringify(playerState));
      return false;*/
@@ -2749,26 +2800,26 @@ $(document).ready(function () {
 					// TODO: при скрытии списка станций удалять его номер из этого массива
 					// https://learn.javascript.ru/array-iteration#filter
 					var _stationsOpened = stationsOpened.filter(function (el) {
-						consoleOutput('filter');
+						console.log('filter');
 						return el != index;
 					});
 
 					stationsOpened = _stationsOpened;
-					consoleOutput(stationsOpened);
+					console.log(stationsOpened);
 
 					$(this).next('[data-stations-number]').remove();
 					$(this).attr('data-show', 'closed');
 
-					consoleOutput('stationsBlockToggle №' + index + ' removed');
+					console.log('stationsBlockToggle №' + index + ' removed');
 
 					// return false;
 				}
 
 				playerState.search.stationsOpened = stationsOpened;
 
-				consoleOutput(stationsOpened);
-				consoleOutput(playerState.search);
-				consoleOutput(playerState.search.stationsOpened);
+				console.log(stationsOpened);
+				console.log(playerState.search);
+				console.log(playerState.search.stationsOpened);
 
 				localStorage.setItem('playerState', JSON.stringify(playerState));
 				return false;
@@ -2780,7 +2831,7 @@ $(document).ready(function () {
 				    markupStationsList = '';
 
 				stationsOpened = [];
-				consoleOutput('targetBlock is ' + targetBlock);
+				console.log('targetBlock is ' + targetBlock);
 				// $('[data-block-number="' + targetBlock + '"]').click();
 				var _stations = stationsArrayOn100[targetBlock];
 				markupStationsList += '<div class="stationsBlockList" data-stations-number=' + targetBlock + '>';
@@ -2794,10 +2845,10 @@ $(document).ready(function () {
 				// $targetBlock.attr('data-show', 'open');
 				$targetBlock.attr('data-show', 'open').after(markupStationsList);
 
-				consoleOutput(stationsOpened);
+				console.log(stationsOpened);
 				stationsOpened.push(targetBlock);
-				consoleOutput('stationsBlockToggle №' + targetBlock + ' opened');
-				consoleOutput(stationsOpened);
+				console.log('stationsBlockToggle №' + targetBlock + ' opened');
+				console.log(stationsOpened);
 
 				localStorage.setItem('playerState', JSON.stringify(playerState));
 			}
@@ -2826,14 +2877,14 @@ $(document).ready(function () {
 	});
 
 	$('.playlist-new').on('click', function (e) {
-		consoleOutput('::new playlist');
+		console.log('::new playlist');
 
 		var defaultPLName = new Date().getTime().toString().substr(6);
 
 		var pl = new Playlist(defaultPLName);
 
 		/*__playlists[defaultPLName] = pl;
-  consoleOutput(__playlists['Default']);*/
+  console.log(__playlists['Default']);*/
 
 		/*playerState
   	.playlists[playerState.currentPlaylist]
@@ -2847,7 +2898,7 @@ $(document).ready(function () {
 
 		playerState.currentPlaylist = defaultPLName;
 
-		consoleOutput($playlistsPanel.find('[data-name=' + defaultPLName + ']'));
+		console.log($playlistsPanel.find('[data-name=' + defaultPLName + ']'));
 
 		// var scrollPosition = $playlistsPanel.find('[data-current]').position().left;
 
@@ -2860,7 +2911,7 @@ $(document).ready(function () {
 	$('.playlistsPanel').on('click', '.vmTitle', function () {
 		var $pl = $(this).closest('.playlist');
 		if (!$pl.attr('data-current')) {
-			consoleOutput('::Change playlist::' + $pl.attr('data-name'));
+			console.log('::Change playlist::' + $pl.attr('data-name'));
 
 			/*playlistManager.
    	// setCurrent($pl.attr('data-name'), $pl.attr('data-scroll-left'));
@@ -2868,7 +2919,7 @@ $(document).ready(function () {
 
 			// mCustomScrollbar('scrollTo', $pl.attr('data-scroll-left'));
 		} else {
-			consoleOutput('Плейлист уже выбран');
+			console.log('Плейлист уже выбран');
 		}
 	});
 
@@ -3282,13 +3333,15 @@ $(document).ready(function () {
 	    canvasVolumeWidth = canvasVolume.width,
 	    canvasVolumeHeight = canvasVolume.height;
 
+	console.log(audioCtx.state);
+
 	canvasVolume.width = 100;
 	canvasVolume.height = 30;
 
 	// Погнали!!!;)
 	// Состояние пользователя - зарегистрирован или нет, авторизован или нет
 	if (localStorage.getItem('userStatus') == undefined) {
-		consoleOutput('userStatus == undefined');
+		console.log('userStatus == undefined');
 		localStorage.setItem('userStatus', JSON.stringify(userStatus));
 	} else {
 		userStatus = JSON.parse(localStorage.userStatus);
@@ -3297,7 +3350,7 @@ $(document).ready(function () {
 	}
 
 	if (localStorage.getItem('stations') == undefined) {
-		consoleOutput('stations == undefined');
+		console.log('stations == undefined');
 		$.ajax({
 			data: { 'action': 'getAllStations' },
 			success: function success(data) {
@@ -3346,7 +3399,7 @@ $(document).ready(function () {
 	}
 
 	if (localStorage.getItem('playerState') == undefined) {
-		consoleOutput('playerState == undefined');
+		console.log('playerState == undefined');
 
 		// Объект плейлиста
 		var nirvanaPlaylist = new Playlist('~Nirvana~'); // ?? - нужен ??
@@ -3456,8 +3509,8 @@ $(document).ready(function () {
 		stationsArray = JSON.parse(localStorage.getItem('stations'));
 		stationsArrayOn100 = JSON.parse(localStorage.getItem('stationsOn100'));
 
-		consoleOutput(playerState);
-		consoleOutput(__playlists);
+		console.log(playerState);
+		console.log(__playlists);
 
 		debugPlayerState();
 		debugLocalStorage();
@@ -3483,8 +3536,8 @@ $(document).ready(function () {
 			},
 			methods: {
 				setCurrentPlaylist: function setCurrentPlaylist(index, name) {
-					consoleOutput(playerState.playlistsOrder[index]);
-					consoleOutput(name);
+					console.log(playerState.playlistsOrder[index]);
+					console.log(name);
 
 					$('.playlistsPanel').find('.list').mCustomScrollbar('scrollTo', $playlistsPanel.find('[data-name="' + name + '"]').attr('data-scroll-left'));
 
@@ -3507,24 +3560,24 @@ $(document).ready(function () {
 					localStorage.setItem('__playlists', JSON.stringify(__playlists));
 				},
 				deletePlaylist: function deletePlaylist(index, name) {
-					consoleOutput(this.playlistsOrder);
-					consoleOutput(playerState.playlistsOrder[index]);
-					consoleOutput(__playlists);
-					consoleOutput(__playlists[playerState.playlistsOrder[index]]);
+					console.log(this.playlistsOrder);
+					console.log(playerState.playlistsOrder[index]);
+					console.log(__playlists);
+					console.log(__playlists[playerState.playlistsOrder[index]]);
 
 					delete __playlists[playerState.playlistsOrder[index]];
 					this.playlistsOrder.splice(index, 1);
 
 					playerState.playlistsOrder = this.playlistsOrder;
-					consoleOutput(this.playlistsOrder);
+					console.log(this.playlistsOrder);
 
 					localStorage.setItem('playerState', JSON.stringify(playerState));
 					localStorage.setItem('__playlists', JSON.stringify(__playlists));
 				},
 				changeEditMode: function changeEditMode(index, event) {
-					consoleOutput(index);
-					// consoleOutput($(event.target));
-					consoleOutput(this.playlistEdited);
+					console.log(index);
+					// console.log($(event.target));
+					console.log(this.playlistEdited);
 					this.edited = !this.edited;
 					if (this.edited) {
 						this.playlistEdited = index;
@@ -3537,7 +3590,7 @@ $(document).ready(function () {
 
 					playerState.playlistsOrder[index] = newName;
 
-					consoleOutput($(event.target));
+					console.log($(event.target));
 					if ($(event.target).closest('.playlist').attr('data-current')) {
 						playerState.currentPlaylist = newName;
 					}
@@ -3552,7 +3605,7 @@ $(document).ready(function () {
 			}
 		});
 
-		consoleOutput($('.vmPlaylistsPanel'));
+		console.log($('.vmPlaylistsPanel'));
 
 		$('.playlistsPanel .list').mCustomScrollbar({
 			axis: 'x',
@@ -3573,7 +3626,7 @@ $(document).ready(function () {
 
 		$playlistsPanel.find('[data-name="' + playerState.currentPlaylist + '"]').attr('data-current', 1);
 
-		consoleOutput($playlistsPanel.find('[data-current]').attr('data-scroll-left'));
+		console.log($playlistsPanel.find('[data-current]').attr('data-scroll-left'));
 
 		$('.playlistsPanel').find('.list').mCustomScrollbar('scrollTo', $playlistsPanel.find('[data-current]').attr('data-scroll-left'));
 
@@ -3597,15 +3650,15 @@ $(document).ready(function () {
 		__playlists.playlistPanelWidth = playlistPanelWidth;
 
 		if (playlistTracks.length > 0) {
-			consoleOutput('make tracks:begin');
+			console.log('make tracks:begin');
 			playlistManager.makePlaylistTracks(playlistTracks);
-			consoleOutput('make tracks:end');
+			console.log('make tracks:end');
 
-			consoleOutput('translate text:begin');
+			console.log('translate text:begin');
 			translateText(translateTarget(), true);
-			consoleOutput('translate text:end');
+			console.log('translate text:end');
 		} else {
-			consoleOutput('Выбранный плейлист пуст - нет треков');
+			console.log('Выбранный плейлист пуст - нет треков');
 		}
 
 		var vmCurrentTrackTitle = new Vue({
@@ -3620,36 +3673,36 @@ $(document).ready(function () {
 						return this.trackTitle;
 					},
 					set: function set(title) {
-						consoleOutput(title);
-						consoleOutput(getCurrentTrack().title);
+						console.log(title);
+						console.log(getCurrentTrack().title);
 						this.trackTitle = title;
 						// this.trackTitle = getCurrentTrack().title;
 					}
 				}
 			},
 			beforeCreate: function beforeCreate() {
-				consoleOutput('vmCurrentTrackTitle::beforeCreate');
+				console.log('vmCurrentTrackTitle::beforeCreate');
 			},
 			created: function created() {
-				consoleOutput('vmCurrentTrackTitle::created');
+				console.log('vmCurrentTrackTitle::created');
 			},
 			beforeMount: function beforeMount() {
-				consoleOutput('vmCurrentTrackTitle::beforeMount');
+				console.log('vmCurrentTrackTitle::beforeMount');
 			},
 			mounted: function mounted() {
-				consoleOutput('vmCurrentTrackTitle::mounted');
+				console.log('vmCurrentTrackTitle::mounted');
 			},
 			beforeUpdate: function beforeUpdate() {
-				consoleOutput('vmCurrentTrackTitle::beforeUpdate');
+				console.log('vmCurrentTrackTitle::beforeUpdate');
 			},
 			updated: function updated() {
-				consoleOutput('vmCurrentTrackTitle::updated');
+				console.log('vmCurrentTrackTitle::updated');
 			},
 			beforeDestroy: function beforeDestroy() {
-				consoleOutput('vmCurrentTrackTitle::beforeDestroy');
+				console.log('vmCurrentTrackTitle::beforeDestroy');
 			},
 			destroyed: function destroyed() {
-				consoleOutput('vmCurrentTrackTitle::destroyed');
+				console.log('vmCurrentTrackTitle::destroyed');
 			}
 		});
 
