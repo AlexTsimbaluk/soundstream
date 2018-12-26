@@ -3,6 +3,19 @@
 require_once './db_connection.php';
 require_once './functions.php';
 
+// header("Access-Control-Allow-Origin: http://greenra");
+// header("Access-Control-Allow-Credentials: true");
+// header("Access-Control-Allow-Origin: *");
+
+/*header("Access-Control-Allow-Origin: http://greenra, http://localhost:8080");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, X-Requested-With");*/
+
+// header("Access-Control-Allow-Headers: Content-Type");
+// header('Content-type: application/json');
+// header("Content-Type: text/plain");
+// header("Access-Control-Expose-Headers: Content-Type");
+
 /*
 * Registraiton & Authorization
 */
@@ -43,6 +56,10 @@ if ($_POST['action'] == 'search' && !empty($_POST['target'])) {
 
 // Получение всех станций и показ результатов
 if ($_POST['action'] == 'getAllStations') {
+	header("Access-Control-Allow-Origin: http://greenra, http://localhost:8080");
+	header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+	header("Access-Control-Allow-Headers: Content-Type, X-Requested-With");
+	
 	getAllStations();
 }
 
