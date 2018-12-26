@@ -1742,6 +1742,7 @@ $(document).ready(function () {
 		});
 		player.addEventListener('loadedmetadata', function (e) {
 			console.log(name + '::Event.type::' + e.type);
+			console.log(player.mozGetMetadata());
 		});
 		player.addEventListener('loadstart', function (e) {
 			console.log(name + '::Event.type::' + e.type);
@@ -3389,7 +3390,7 @@ $(document).ready(function () {
 					localStorage.setItem('stations', JSON.stringify(stationsArray));
 					localStorage.setItem('stationsOn100', JSON.stringify(stationsArrayOn100));
 
-					location.reload();
+					// location.reload();
 				} catch (e) {
 					$('body').addClass('error-mysql-connect');
 					throw new Error(e + ':' + data);

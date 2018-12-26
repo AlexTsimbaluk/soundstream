@@ -1782,6 +1782,7 @@ $(document).ready(function() {
         });
         player.addEventListener('loadedmetadata', (e)=> {
      		console.log(name + '::Event.type::' + e.type);
+     		console.log(player.mozGetMetadata());
         });
         player.addEventListener('loadstart', (e)=> {
      		console.log(name + '::Event.type::' + e.type);
