@@ -199,109 +199,110 @@ clear.onclick = function() {
 	contextSquare.fillRect(0, 0, canvasSquare.width, canvasSquare.height);
 } */
 
-  
-// Инициализация переменных
-var canvasTriangle    = document.getElementById("triangle");
-var contextTriangle       = canvasTriangle.getContext("2d");
-canvasTriangle.width  = 540;
-canvasTriangle.height = 480;
-contextTriangle.translate(240, 240);
-var x = canvasTriangle.width / 2;
-var y = canvasTriangle.height / 2;
-var ln    = 120;
-var minLn = 2;
-// var qt = 120;
-contextTriangle.lineWidth   = 1;
-contextTriangle.beginPath();
-contextTriangle.save();
-drawFractal1(120);
-// drawFractal1(60);
-drawFractalTriangle(55);
-// drawFractalTriangle(20);
+if(false) {
+	// Инициализация переменных
+	var canvasTriangle    = document.getElementById("triangle");
+	var contextTriangle       = canvasTriangle.getContext("2d");
+	canvasTriangle.width  = 540;
+	canvasTriangle.height = 480;
+	contextTriangle.translate(240, 240);
+	var x = canvasTriangle.width / 2;
+	var y = canvasTriangle.height / 2;
+	var ln    = 120;
+	var minLn = 2;
+	// var qt = 120;
+	contextTriangle.lineWidth   = 1;
+	contextTriangle.beginPath();
+	contextTriangle.save();
+	drawFractal1(120);
+	// drawFractal1(60);
+	drawFractalTriangle(55);
+	// drawFractalTriangle(20);
 
-function drawFractal1(qt1) {
-  for (var i = 0; i < qt1; i++) {
-    contextTriangle.strokeRect(0, 0, 100, 133);
-    if (i % 2 == 0) {
-      contextTriangle.strokeStyle = "rgb(0," + Math.floor(255 - 255 / qt1 * i) + "," + Math.floor(255 - 255 / qt1 * i) + ")";
-    } else {
-      contextTriangle.strokeStyle = "rgb(" + Math.floor(0 + 255 / qt1 * i) + "," + Math.floor(0 + 255 / qt1 * i) + ",255)";
-    }
-    contextTriangle.stroke();
-    contextTriangle.rotate(2 * Math.PI * 4 / (qt1 - 1));
-  // console.log(contextTriangle.strokeStyle);
-  }
+	function drawFractal1(qt1) {
+	  for (var i = 0; i < qt1; i++) {
+	    contextTriangle.strokeRect(0, 0, 100, 133);
+	    if (i % 2 == 0) {
+	      contextTriangle.strokeStyle = "rgb(0," + Math.floor(255 - 255 / qt1 * i) + "," + Math.floor(255 - 255 / qt1 * i) + ")";
+	    } else {
+	      contextTriangle.strokeStyle = "rgb(" + Math.floor(0 + 255 / qt1 * i) + "," + Math.floor(0 + 255 / qt1 * i) + ",255)";
+	    }
+	    contextTriangle.stroke();
+	    contextTriangle.rotate(2 * Math.PI * 4 / (qt1 - 1));
+	  // console.log(contextTriangle.strokeStyle);
+	  }
 
-  for (var i = 0; i < qt1; i++) {
-    contextTriangle.strokeRect(0, 0, 45, 45);
-    if (i % 2 == 0) {
-      contextTriangle.strokeStyle = "rgb(0," + Math.floor(0 + 255 / qt1 * i) + "," + Math.floor(255 - 255 / qt1 * i) + ")";
-      contextTriangle.stroke();
-    } else {
-      contextTriangle.strokeStyle = "rgb(" + Math.floor(0 + 255 / qt1 * i) + "," + Math.floor(255 - 255 / qt1 * i) + ",0)";
-      contextTriangle.stroke();
-    }
-    contextTriangle.rotate(2 * Math.PI * 4 / (qt1 - 1));
-  }
-}
+	  for (var i = 0; i < qt1; i++) {
+	    contextTriangle.strokeRect(0, 0, 45, 45);
+	    if (i % 2 == 0) {
+	      contextTriangle.strokeStyle = "rgb(0," + Math.floor(0 + 255 / qt1 * i) + "," + Math.floor(255 - 255 / qt1 * i) + ")";
+	      contextTriangle.stroke();
+	    } else {
+	      contextTriangle.strokeStyle = "rgb(" + Math.floor(0 + 255 / qt1 * i) + "," + Math.floor(255 - 255 / qt1 * i) + ",0)";
+	      contextTriangle.stroke();
+	    }
+	    contextTriangle.rotate(2 * Math.PI * 4 / (qt1 - 1));
+	  }
+	}
 
-function drawFractalTriangle(qt1) {
-	if (qt1 > 50) {
-		for (var i = 0; i < qt1; i++) {
-			contextTriangle.moveTo(240,40);
-			contextTriangle.lineTo(40,240);
-			contextTriangle.lineTo(440,240);
-			contextTriangle.lineTo(240,40);
-			contextTriangle.stroke();
-			if (i % 2 == 0) {
-				// contextTriangle.strokeStyle = "rgb(0," + Math.floor(255 - 255 / qt1 * i) + "," + Math.floor(255 - 255 / qt1 * i) + ")";
-			} else if (i % 3 == 0) { 
-				contextTriangle.strokeStyle = "rgb(," + Math.floor(0 + 255 / qt1 * i) + "0," + Math.floor(0 + 255 / qt1 * i) + ")";
-			} else  { 
-				contextTriangle.strokeStyle = "rgb(" + Math.floor(255 - 255 / qt1 * i) + "," + Math.floor(0 + 255 / qt1 * i) + ",0)";
+	function drawFractalTriangle(qt1) {
+		if (qt1 > 50) {
+			for (var i = 0; i < qt1; i++) {
+				contextTriangle.moveTo(240,40);
+				contextTriangle.lineTo(40,240);
+				contextTriangle.lineTo(440,240);
+				contextTriangle.lineTo(240,40);
+				contextTriangle.stroke();
+				if (i % 2 == 0) {
+					// contextTriangle.strokeStyle = "rgb(0," + Math.floor(255 - 255 / qt1 * i) + "," + Math.floor(255 - 255 / qt1 * i) + ")";
+				} else if (i % 3 == 0) { 
+					contextTriangle.strokeStyle = "rgb(," + Math.floor(0 + 255 / qt1 * i) + "0," + Math.floor(0 + 255 / qt1 * i) + ")";
+				} else  { 
+					contextTriangle.strokeStyle = "rgb(" + Math.floor(255 - 255 / qt1 * i) + "," + Math.floor(0 + 255 / qt1 * i) + ",0)";
+				}
+				contextTriangle.stroke();
+				contextTriangle.rotate(2 * Math.PI * 4 / (qt1 - 1));
+	    		// contextTriangle.scale(0.5);
 			}
-			contextTriangle.stroke();
-			contextTriangle.rotate(2 * Math.PI * 4 / (qt1 - 1));
-    		// contextTriangle.scale(0.5);
-		}
-	} else {
-		for (var i = 0; i < qt1; i++) {
-			contextTriangle.moveTo(240,40);
-			contextTriangle.lineTo(40,240);
-			contextTriangle.lineTo(440,240);
-			contextTriangle.lineTo(240,40);
-			contextTriangle.stroke();
-			if (i % 2 == 0) {
-				contextTriangle.strokeStyle = "rgb(" + Math.floor(255 - 255 / qt1 * i) + "0," + Math.floor(255 - 255 / qt1 * i) + ")";
-			} else if (i % 3 == 0) { 
-				contextTriangle.strokeStyle = "rgb(0," + Math.floor(0 + 255 / qt1 * i) + "," + Math.floor(0 + 255 / qt1 * i) + ")";
-			} else  { 
-				contextTriangle.strokeStyle = "rgb(" + Math.floor(255 - 255 / qt1 * i) + "," + Math.floor(0 + 255 / qt1 * i) + "," + Math.floor(255 - 255 / qt1 * i) + ")";
+		} else {
+			for (var i = 0; i < qt1; i++) {
+				contextTriangle.moveTo(240,40);
+				contextTriangle.lineTo(40,240);
+				contextTriangle.lineTo(440,240);
+				contextTriangle.lineTo(240,40);
+				contextTriangle.stroke();
+				if (i % 2 == 0) {
+					contextTriangle.strokeStyle = "rgb(" + Math.floor(255 - 255 / qt1 * i) + "0," + Math.floor(255 - 255 / qt1 * i) + ")";
+				} else if (i % 3 == 0) { 
+					contextTriangle.strokeStyle = "rgb(0," + Math.floor(0 + 255 / qt1 * i) + "," + Math.floor(0 + 255 / qt1 * i) + ")";
+				} else  { 
+					contextTriangle.strokeStyle = "rgb(" + Math.floor(255 - 255 / qt1 * i) + "," + Math.floor(0 + 255 / qt1 * i) + "," + Math.floor(255 - 255 / qt1 * i) + ")";
+				}
+				contextTriangle.stroke();
+				contextTriangle.rotate(2 * Math.PI * 4 / (qt1 - 1));
+	    		// contextTriangle.scale(0.5);
 			}
-			contextTriangle.stroke();
-			contextTriangle.rotate(2 * Math.PI * 4 / (qt1 - 1));
-    		// contextTriangle.scale(0.5);
 		}
 	}
+
+
+	var colorsArray = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'];
+	var color = new Array(6);
+	var setColor, fullColor, setColorBg, fullColorBg;
+
+	function setC() {
+		color[0] = colorsArray[Math.floor(Math.random() * colorsArray.length)];
+		color[1] = colorsArray[Math.floor(Math.random() * colorsArray.length)];
+		color[2] = colorsArray[Math.floor(Math.random() * colorsArray.length)];
+		color[3] = colorsArray[Math.floor(Math.random() * colorsArray.length)];
+		color[4] = colorsArray[Math.floor(Math.random() * colorsArray.length)];
+		color[5] = colorsArray[Math.floor(Math.random() * colorsArray.length)];
+		var stringColor = color.toString();
+		setColor = stringColor.replace(/,/g, '');
+		fullColor = '#' + setColor;
+		canvasTriangle.style.borderColor = fullColor;
+
+		return fullColor;
+	}
+	setInterval(setC, 100);
 }
-
-
-var colorsArray = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'];
-var color = new Array(6);
-var setColor, fullColor, setColorBg, fullColorBg;
-
-function setC() {
-	color[0] = colorsArray[Math.floor(Math.random() * colorsArray.length)];
-	color[1] = colorsArray[Math.floor(Math.random() * colorsArray.length)];
-	color[2] = colorsArray[Math.floor(Math.random() * colorsArray.length)];
-	color[3] = colorsArray[Math.floor(Math.random() * colorsArray.length)];
-	color[4] = colorsArray[Math.floor(Math.random() * colorsArray.length)];
-	color[5] = colorsArray[Math.floor(Math.random() * colorsArray.length)];
-	var stringColor = color.toString();
-	setColor = stringColor.replace(/,/g, '');
-	fullColor = '#' + setColor;
-	canvasTriangle.style.borderColor = fullColor;
-
-	return fullColor;
-}
-setInterval(setC, 100);
